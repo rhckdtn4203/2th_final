@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	 	<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+	 	<property name="url" value="jdbc:oracle:thin:@www.sysout.co.kr:1521:xe"></property>
+	 	<property name="username" value="kh7b"></property>
+	 	<property name="password" value="kh7b"></property>
+	 </bean>
+	 
+	 <bean id="dbcpSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	 	<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+	 	<property name="url" value="jdbc:oracle:thin:@www.sysout.co.kr:1521:xe"></property>
+	 	<property name="username" value="kh7b"></property>
+	 	<property name="password" value="kh7b"></property>
+	 	
+	 	<property name="maxTotal" value="20"></property>
+	 	<property name="maxIdle" value="10"></property>
+	 	<property name="maxWaitMillis" value="3000"></property>
+	 </bean>
+	 
+	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	 	<property name="dataSource" ref="dbcpSource"></property>
+	 </bean>
+	 
+	 <bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="dbcpSource"></property>
+	 	<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
+	 	<property name="mapperLocations" value="classpath:/mybatis/mapper/**/*-mapper.xml"></property>
+	 </bean>
+	 
+	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	 	<constructor-arg index="0" ref="factory"></constructor-arg>
+	 </bean>
+	 
+	 <context:component-scan base-package="com.kh.khblind">
+	  	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	 </context:component-scan>
+	 
+	<tx:annotation-driven/>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dbcpSource"></property>
+	</bean>
+
+</beans>
