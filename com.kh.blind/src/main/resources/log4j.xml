@@ -75,7 +75,7 @@
 			<param name="ConversionPattern" value="%-5p(%d{yyyy-MM-dd HH:mm:ss}) : %c - %m%n" />
 		</layout>
 	</appender>
-	
+	Can't connect to any repository: 
 	<root>
 		<priority value="debug" />
 		<appender-ref ref="console" />
