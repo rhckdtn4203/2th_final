@@ -43,6 +43,25 @@
 	  	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	 </context:component-scan>
 	 
+	 <!-- 이메일 발송 도구 등록 (JavaMailSenderImpl) -->
+	 <bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}"></property>
+		<property name="port" value="${email.port}"></property>
+		<property name="username" value="${email.username}"></property>
+		<property name="password" value="${email.password}"></property>
+		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.debug">true</prop>
+			</props>
+		</property>
+	 </bean>
+	
+	 <!-- property file 등록 -->
+	 <context:property-placeholder location="classpath:/properties/**/*.properties"/>
+	 
 	<tx:annotation-driven/>
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dbcpSource"></property>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="cert">
+
+	<insert id="insert" parameterType="CertDto">
+		merge into email_cert C using dual on(#{email} = C.email)
+		when matched then
+			update set C.email_cert_no = #{emailCertNo} , C.email_cert_time = sysdate
+		when not matched then
+			insert(email, email_cert_no, email_cert_time) values(#{email}, #{emailCertNo}, sysdate)
+	</insert>
+	
+	<select id="check" parameterType="CertDto" resultType="CertDto">
+		<![CDATA[
+			select * from email_cert 
+			where 
+				email = #{email} and 
+				email_cert_no = #{emailCertNo} and 
+				email_cert_time >= sysdate - 10/24/60
+		]]>
+	</select>
+	
+	<delete id="deleteByEmail" parameterType="string">
+		delete email_cert where email = #{email}
+	</delete>
+	
+	<delete id="deleteByTime">
+		<![CDATA[ 
+			delete email_cert where email_cert_time < sysdate - 10/24/60
+		]]>
+	</delete>
+	
+</mapper>
