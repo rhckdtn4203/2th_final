@@ -11,9 +11,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 
-<!-- 	<typeAliases> -->
-<!-- 		<package name=(         )/> -->
-<!-- 	</typeAliases> -->
+	<typeAliases>
+		<package name="com.kh.khblind.member.cert.entity"/>
+	</typeAliases>
 
 	<environments default="development">
 		<environment id="development">
