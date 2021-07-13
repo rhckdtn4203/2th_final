@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.kh.khblind.pay.vo.PayApprovePrepareVO;
 import com.kh.khblind.pay.vo.PayApproveVO;
 import com.kh.khblind.pay.vo.PayReadyPrepareVO;
 import com.kh.khblind.pay.vo.PayReadyVO;
+import com.kh.khblind.pay.vo.PaySearchVO;
 
 @Controller
 @RequestMapping("/pay")
@@ -68,12 +70,16 @@ public class PayController {
 		// 승인 정보를 DB에 저장(PayApproveVO)하는 작업 수행
 		
 		// 결제 성공 알림 페이지 
-		return "redirect:result_success";
+		return "redirect:result_success?tid="+approveVO.getTid();
 	}
 	
 	// 결제 성공 알림 페이지 
 	@GetMapping("/result_success")
-	public String resultSuccess() {
+	public String resultSuccess(
+			@RequestParam String tid,
+			Model model) throws URISyntaxException {
+		PaySearchVO searchVO = payService.search(tid);
+		model.addAttribute("searchVO",searchVO);
 		return "pay/resultSuccess";
 	}
 	

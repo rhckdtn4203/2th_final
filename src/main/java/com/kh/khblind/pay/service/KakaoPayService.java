@@ -15,6 +15,7 @@ import com.kh.khblind.pay.vo.PayApprovePrepareVO;
 import com.kh.khblind.pay.vo.PayApproveVO;
 import com.kh.khblind.pay.vo.PayReadyPrepareVO;
 import com.kh.khblind.pay.vo.PayReadyVO;
+import com.kh.khblind.pay.vo.PaySearchVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,6 +93,34 @@ public class KakaoPayService implements PayService{
 		PayApproveVO approveVO = 
 							template.postForObject(uri, entity, PayApproveVO.class);
 		return approveVO;
+	}
+	
+	
+	@Override
+	public PaySearchVO search(String tid) throws URISyntaxException {
+		//[1] 요청 도구 생성
+		RestTemplate template = new RestTemplate();
+		
+		//[2] Http Header 생성(ex : 편지봉투)
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", kakaoAk);
+		headers.add("Content-type", contentType);
+		
+		//[3] Http Body 생성(ex : 편지내용)
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("cid", cid);
+		body.add("tid", tid);
+		
+		//[4] Http Header / Body 합성
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
+		
+		//[5] 목적지 주소 작성
+		URI uri = new URI("https://kapi.kakao.com/v1/payment/order");
+		
+		//[6] 전송
+		PaySearchVO searchVO = template.postForObject(uri, entity, PaySearchVO.class);
+		
+		return searchVO;
 	}
 
 }
