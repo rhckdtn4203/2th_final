@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 public class CategoryDto {
 private int boardCategoryNo;
 private String boardCategoryName;
+
 }
