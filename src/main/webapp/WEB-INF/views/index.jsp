@@ -9,5 +9,4 @@
 <body>
 
 <h1>홈</h1>
-</body>
-</html>
+<a href="${pageContext.request.contextPath}/admin/category">관리자 카테고리</a>
