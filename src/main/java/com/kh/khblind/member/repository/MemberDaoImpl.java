@@ -1,9 +1,5 @@
 package com.kh.khblind.member.repository;
 
-import java.lang.reflect.Member;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,6 +23,24 @@ public class MemberDaoImpl implements MemberDao {
 		sqlss.insert("member.signup", dto);
 	}
 
+//마이페이지
+	@Override
+	public MemberDto mypage(int memberNo) {
+		MemberDto dto = sqlss.selectOne("member.mypage", memberNo);
+		return dto;
+	}
 
+//마이페이지 수정	
+	@Override
+	public boolean changeinfo(MemberDto dto) {
+		int count = sqlss.update("member.changeinfo", dto);
+		return count > 0;
+	}
+
+//회원 탈퇴
+	@Override
+	public void exit(int memberNo) {
+		sqlss.delete("member.exit", memberNo);
+	}
 
 }
