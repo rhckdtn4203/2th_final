@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<typeAliases>
 		<package name="com.kh.khblind.member.cert.entity"/>
+		<package name="com.kh.khblind.member.entity"/>
 	</typeAliases>
 
 	<environments default="development">
