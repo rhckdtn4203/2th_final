@@ -46,7 +46,7 @@ public class MemberController {
 	public String login(@ModelAttribute MemberDto dto, HttpSession session) {
 		MemberDto isLogin = dao.login(dto);
 		if (isLogin != null) {
-			session.setAttribute("memberNo", isLogin.getMemberNo());
+			session.setAttribute("MeberDto", isLogin);
 			return "redirect:/";
 		} else {
 			return "redirect:login?error";
