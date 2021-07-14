@@ -10,3 +10,7 @@
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+<h1>홈</h1>
+<a href="${pageContext.request.contextPath}/admin/category">관리자 카테고리</a>
+

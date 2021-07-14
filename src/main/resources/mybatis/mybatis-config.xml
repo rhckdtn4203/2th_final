@@ -9,13 +9,20 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="cacheEnabled" value="true"/>
 		<setting name="lazyLoadingEnabled" value="true"/>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	
 	</settings>
 
 	<typeAliases>
 		<package name="com.kh.khblind.member.cert.entity"/>
 		<package name="com.kh.khblind.member.entity"/>
 		<package name="com.kh.khblind.board.vote.entity"/>
-		<package name="com.kh.khblind.company.entity"/>
-	</typeAliases>
 
+		<package name="com.kh.khblind.admin.category.entity"/>
+		<package name="com.kh.khblind.company.entity"/>
+		
+	</typeAliases>
+	
 </configuration>
+
+
+
