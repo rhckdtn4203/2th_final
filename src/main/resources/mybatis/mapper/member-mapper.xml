@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<select id="login" parameterType="MemberDto" resultType="MemberDto">
+		select * from member where member_id=#{memberId} and
+		member_pw=#{memberPw}
+	</select>
+
+	<insert id="signup" parameterType="MemberDto">
+
+		insert into member values
+		(member_seq.nextval,
+		default, default, default, #{memberName},
+		#{memberNick}, #{memberId}, #{memberPw},
+		#{memberPhone},
+		#{memberEmail})
+	</insert>
+
+	<select id="mypage" parameterType="int" resultType="MemberDto">
+		select * from member where member_no = #{memberNo}
+	</select>
+	
+	<update id="changeinfo" parameterType="MemberDto">
+	update member set 
+	member_nick = #{memberNick}, 
+	member_phone = #{memberPhone}, 
+	member_email = #{memberEmail} 
+	where member_no = #{memberNo} 
+	</update>
+	
+	<delete id="exit" parameterType="int">
+	delete member where member_no = #{memberNo} 
+	</delete>
+
+</mapper>

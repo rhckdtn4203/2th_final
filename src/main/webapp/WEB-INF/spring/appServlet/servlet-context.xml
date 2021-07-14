@@ -21,7 +21,5 @@
 	<resources location="/resources/css/" mapping="/css/**"></resources>
 	<resources location="/resources/image/" mapping="/img/**"></resources>
 	<resources location="/resources/js/" mapping="/js/**"></resources>
-	
-	
 
 </beans:beans>
