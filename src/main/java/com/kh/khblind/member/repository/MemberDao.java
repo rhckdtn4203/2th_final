@@ -6,5 +6,8 @@ public interface MemberDao {
 	
 	MemberDto login(MemberDto dto);
 	void insert(MemberDto dto);
+	MemberDto mypage(int memberNo);
+	boolean changeinfo(MemberDto dto);
+	void exit(int memberNo);
 	
 }

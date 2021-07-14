@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="category">
+	<!-- 카테고리 입력 -->
+	<insert id="insert">
+	insert into board_category values(BOARD_CATEGORY_SEQ.nextval,#{boardCategoryName})
+	</insert>
+	<!-- 카테고리 삭제 -->
+	<delete id="delete" parameterType="int">
+	delete from board_category where BOARD_CATEGORY_NO = #{boardCategoryNo}
+	</delete>
+	<!-- 카테고리 수정 -->
+	<update id="edit" parameterType="CategoryDto">
+	update board_category set board_category_name=#{boardCategoryName} where board_category_no = #{boardCategoryNo}
+	</update>
+	<select id="list" resultType="categoryDto">
+	select * from board_category 
+	</select>
+</mapper>
