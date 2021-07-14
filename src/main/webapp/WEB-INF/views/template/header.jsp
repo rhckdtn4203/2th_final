@@ -32,18 +32,17 @@
 					<ul>
 						<c:choose>
 							<c:when test="${isLogin}">
-								<li><a href="${root}/index">홈</a></li>
+								<li><a href="${root}">홈</a></li>
+								<li><a href="${root}#">기업리뷰</a></li>
+								<li><a href="${root}/member/login">로그인</a></li>
+								<li><a href="${root}/member/signup">회원 가입</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="${root}">홈</a></li>
 								<li><a href="${root}#">기업리뷰</a></li>
 								<li><a href="${root}#">글쓰기</a></li>
 								<li><a href="${root}/member/logout">로그아웃</a></li>
-								<li><a href="${root}/member/myinfo">내 정보 보기</a></li>
-
-							</c:when>
-							<c:otherwise>
-								<li><a href="${root}/index">홈</a></li>
-								<li><a href="${root}#">기업리뷰</a></li>
-								<li><a href="${root}/member/login">로그인</a></li>
-								<li><a href="${root}/member/regist">회원 가입</a></li>
+								<li><a href="${root}/member/mypage">내 정보 보기</a></li>
 							</c:otherwise>	
 						</c:choose>
 					</ul>

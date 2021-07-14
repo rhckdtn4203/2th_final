@@ -9,7 +9,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="cacheEnabled" value="true"/>
 		<setting name="lazyLoadingEnabled" value="true"/>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
-	
 	</settings>
 
 	<typeAliases>
@@ -19,11 +18,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 		<package name="com.kh.khblind.admin.category.entity"/>
 		<package name="com.kh.khblind.company.entity"/>
-		
 	</typeAliases>
 	
-
-	
 </configuration>
+
 
 
