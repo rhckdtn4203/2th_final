@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pay">
+	
+	<!-- 시퀀스 생성 -->
+	<select id="sequence" resultType="int">
+		select pay_seq.nextval from dual
+	</select>
+	
+	<!-- 준비 데이터 등록 -->
+	<insert id="ready" parameterType="PayDto">
+		insert into pay values(
+			#{payNo},
+			#{payTid},
+			#{payBuyer},
+			'준비',
+			sysdate
+		)
+	</insert>
+	
+	<!-- 승인 데이터 등록 -->
+	<update id="approve" parameterType="int">
+		update pay
+		set pay_status='승인'
+		where pay_no = #{payNo}
+	</update>
+	
+	<!-- 취소 데이터 등록 -->
+	<update id="cancel" parameterType="int">
+		update pay
+		set pay_status='취소'
+		where pay_no = #{payNo}
+	</update>
+	
+	<!-- 
+		조회
+		1. 회원 1명의 전체 결제내역 조회
+		2. 결제내역 1개에 대한 단일조회
+	-->
+	<select id="list" resultType="PayDto" parameterType="int">
+		select * from pay
+		where pay_buyer = #{payBuyer}
+		order by payment_no desc
+	</select>
+	
+	<select id="get" resultType="PayDto" parameterType="int">
+		select * from pay
+		where pay_no = #{payNo}
+	</select>
+	
+</mapper>

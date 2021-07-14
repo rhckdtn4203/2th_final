@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
  <style>
         th{
             display:table-cell;
@@ -18,7 +17,6 @@
         }
     </style>
 <body>
-
 <h1>회원 플러스 소개</h1>
 <table>
             <tr>
@@ -50,21 +48,11 @@
          
          <br><br>
          <hr>
-
-<h1>등급 업그레이드 결제</h1>
-<h4>준회원, 정회원만 결제 후 + 등급이 되실 수 있습니다.</h4>
-
-<form action="upgrade" method="post">
-	<div class="row text-left">
-		<label> 회원 플러스 </label> <!-- 상품의 이름 -->
-	</div>
-		<input type="hidden" name="item_name" value="회원 플러스">
-	<div class="row text-left">
-		<label>주문 수량</label><!-- 주문 수량  -->
-		<input type="number" name="quantity" value="0" max="1" required>
-	</div>
-		<input type="hidden" name="total_amount" value="5000">
-	<div class="row">
-			<input type="submit" value="결제" class="form-btn form-btn-positive">
-	</div>
-</form>
+         <form action="upgrade" method="post">
+         	<input type="hidden" name="memberNo" value="${memberDto.no}">
+         	<input type="number" name="quantity" value="0" max="1" required>
+         	<input type="submit" value="결제하기">
+         </form>
+</body>         
+         
+         

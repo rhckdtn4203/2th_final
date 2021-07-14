@@ -9,5 +9,6 @@ public interface MemberDao {
 	MemberDto mypage(int memberNo);
 	boolean changeinfo(MemberDto dto);
 	void exit(int memberNo);
+	void gradeup(int memberNo);
 	
 }

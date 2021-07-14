@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.pay.entity.PayDto;
+import com.kh.khblind.pay.repository.PayDao;
 import com.kh.khblind.pay.service.PayService;
 import com.kh.khblind.pay.vo.PayApprovePrepareVO;
 import com.kh.khblind.pay.vo.PayApproveVO;
@@ -27,23 +29,56 @@ public class PayController {
 	@Autowired
 	private PayService payService;
 	
+	@Autowired
+	private PayDao payDao;
+	
 	@GetMapping("/upgrade")
 	public String upgrade() {
 		return "/pay/upgrade";
 	}
 	
-	@PostMapping("/upgrade")
-	public String upgrade(
-			HttpSession session,
-			@ModelAttribute PayReadyPrepareVO PrepareVO) throws URISyntaxException {
+	//@PostMapping("/upgrade")
+	//public String upgrade(
+			//HttpSession session,
+			//@ModelAttribute PayReadyPrepareVO PrepareVO) throws URISyntaxException {
 		
 		// 결제 준비 요청 보내기 
-		PayReadyVO readyVO = payService.ready(PrepareVO);
+		//PayReadyVO readyVO = payService.ready(PrepareVO);
 		
 		// 승인 요청을 위해 정보를 DB/세션 등에 저장해야 함
 		// = partner_order_id, partner_user_id,tid
-		session.setAttribute("partner_order_id",PrepareVO.getPartner_order_id());
-		session.setAttribute("partner_user_id",PrepareVO.getPartner_user_id());
+		//session.setAttribute("partner_order_id",PrepareVO.getPartner_order_id());
+		//session.setAttribute("partner_user_id",PrepareVO.getPartner_user_id());
+		//session.setAttribute("tid",readyVO.getTid());
+		
+		// 사용자에게 결제 페이지 주소로 재접속 지시를 내린다(리다이렉트)
+		//return "redirect:"+readyVO.getNext_redirect_pc_url();
+	//}
+	
+	@PostMapping("/upgrade")
+	public String upgrade(
+			HttpSession session,
+			@ModelAttribute PayReadyPrepareVO prepareVO) throws URISyntaxException {
+		
+		// 결제 준비 요청 보내기 
+		int memberNo = (int)session.getAttribute("memberDto.memberNo");
+		prepareVO.setPartner_user_id(String.valueOf(memberNo));
+		int payNo = payDao.getSequence();
+		prepareVO.setPartner_order_id(String.valueOf(payNo));
+		
+		// 승인 요청을 위해 정보를 DB/세션 등에 저장해야 함
+		PayReadyVO readyVO = payService.ready(prepareVO);
+		
+		PayDto payDto = PayDto.builder()
+									.payNo(payNo)
+									.payTid(readyVO.getTid())
+									.paytBuyer(memberNo)
+						.build();
+		
+		payDao.ready(payDto);
+		
+		session.setAttribute("partner_order_id",payNo);
+		session.setAttribute("partner_user_id",memberNo);
 		session.setAttribute("tid",readyVO.getTid());
 		
 		// 사용자에게 결제 페이지 주소로 재접속 지시를 내린다(리다이렉트)
@@ -84,6 +119,15 @@ public class PayController {
 	}
 	
 	
+	
+	@GetMapping("/upgradeinfo")
+	public String upgradeinfo(HttpSession session,
+								@RequestParam int quantity,
+								Model model) {
+		int memberNo = (int) session.getAttribute("memberNo");
+		
+		return "pay/upgradeinfo";
+	}
 	
 	
 	
