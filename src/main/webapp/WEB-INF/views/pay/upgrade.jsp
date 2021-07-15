@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  <style>
         th{
             display:table-cell;
@@ -20,6 +21,7 @@
 <body>
 
 <h1>회원 플러스 소개</h1>
+<div class="row" align="center">
 <table>
             <tr>
                 <th>등급 번호</th>
@@ -47,11 +49,11 @@
                 <td>자신의 기업 커뮤니티 이용권, 자신의 업종 뿐만 아니라 모든 업종의 커뮤니티 이용권</td>
             </tr>
          </table>
-         
+</div>
          <br><br>
          <hr>
 
-<h1>등급 업그레이드 결제</h1>
+<h1>회원 플러스 결제</h1>
 <h4>준회원, 정회원만 결제 후 + 등급이 되실 수 있습니다.</h4>
 
 <form action="upgrade" method="post">
@@ -61,10 +63,12 @@
 		<input type="hidden" name="item_name" value="회원 플러스">
 	<div class="row text-left">
 		<label>주문 수량</label><!-- 주문 수량  -->
-		<input type="number" name="quantity" value="0" max="1" required>
+		<input type="number" name="quantity" value="0" max="1" min="0" required>
 	</div>
 		<input type="hidden" name="total_amount" value="5000">
 	<div class="row">
 			<input type="submit" value="결제" class="form-btn form-btn-positive">
 	</div>
 </form>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

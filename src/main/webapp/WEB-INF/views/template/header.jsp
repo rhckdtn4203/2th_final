@@ -43,6 +43,7 @@
 								<li><a href="${root}#">글쓰기</a></li>
 								<li><a href="${root}/member/logout">로그아웃</a></li>
 								<li><a href="${root}/member/mypage">내 정보 보기</a></li>
+								<li><a href="${root}/pay/upgrade">회원플러스 결제</a></li>
 							</c:otherwise>	
 						</c:choose>
 					</ul>

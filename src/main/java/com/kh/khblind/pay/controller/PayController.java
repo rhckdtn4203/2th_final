@@ -61,7 +61,7 @@ public class PayController {
 			@ModelAttribute PayReadyPrepareVO prepareVO) throws URISyntaxException {
 		
 		// 결제 준비 요청 보내기 
-		int memberNo = (int)session.getAttribute("memberDto.memberNo");
+		int memberNo = (int)session.getAttribute("memberNo");
 		prepareVO.setPartner_user_id(String.valueOf(memberNo));
 		int payNo = payDao.getSequence();
 		prepareVO.setPartner_order_id(String.valueOf(payNo));
