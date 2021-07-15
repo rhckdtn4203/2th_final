@@ -35,7 +35,7 @@ li.write {
 					<a href="#">회원 기능</a>
 					<ul>
 						<c:choose>
-							<c:when test="${isLogin}">
+							<c:when test="${dtoss == null}">
 								<li><a href="${root}">홈</a></li>
 								<li><a href="${root}#">기업리뷰</a></li>
 								<li><a href="${root}/member/login">로그인</a></li>
