@@ -55,6 +55,7 @@
 
 <h1>회원 플러스 결제</h1>
 <h4>준회원, 정회원만 결제 후 + 등급이 되실 수 있습니다.</h4>
+<p> 현재 ${dtoss.memberNick}님은 ${dtoss.gradeNo} 등급 입니다.</p>
 
 <form action="upgrade" method="post">
 	<div class="row text-left">

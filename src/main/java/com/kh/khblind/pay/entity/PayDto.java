@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class PayDto {
 	private int payNo;
 	private String payTid;
-	private int paytBuyer;
+	private int payBuyer;
 	private String payStatus;
 	private Date payTime;
 }

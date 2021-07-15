@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.member.entity.MemberDto;
+import com.kh.khblind.member.repository.MemberDao;
 import com.kh.khblind.pay.entity.PayDto;
 import com.kh.khblind.pay.repository.PayDao;
 import com.kh.khblind.pay.service.PayService;
@@ -32,37 +34,25 @@ public class PayController {
 	@Autowired
 	private PayDao payDao;
 	
+	@Autowired
+	private MemberDao memberDao;
+	
 	@GetMapping("/upgrade")
 	public String upgrade() {
 		return "/pay/upgrade";
 	}
-	
-	//@PostMapping("/upgrade")
-	//public String upgrade(
-			//HttpSession session,
-			//@ModelAttribute PayReadyPrepareVO PrepareVO) throws URISyntaxException {
 		
-		// 결제 준비 요청 보내기 
-		//PayReadyVO readyVO = payService.ready(PrepareVO);
-		
-		// 승인 요청을 위해 정보를 DB/세션 등에 저장해야 함
-		// = partner_order_id, partner_user_id,tid
-		//session.setAttribute("partner_order_id",PrepareVO.getPartner_order_id());
-		//session.setAttribute("partner_user_id",PrepareVO.getPartner_user_id());
-		//session.setAttribute("tid",readyVO.getTid());
-		
-		// 사용자에게 결제 페이지 주소로 재접속 지시를 내린다(리다이렉트)
-		//return "redirect:"+readyVO.getNext_redirect_pc_url();
-	//}
-	
 	@PostMapping("/upgrade")
 	public String upgrade(
 			HttpSession session,
 			@ModelAttribute PayReadyPrepareVO prepareVO) throws URISyntaxException {
 		
 		// 결제 준비 요청 보내기 
-		int memberNo = (int)session.getAttribute("memberNo");
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		int memberNo = dto.getMemberNo();
+		
 		prepareVO.setPartner_user_id(String.valueOf(memberNo));
+		
 		int payNo = payDao.getSequence();
 		prepareVO.setPartner_order_id(String.valueOf(payNo));
 		
@@ -72,7 +62,7 @@ public class PayController {
 		PayDto payDto = PayDto.builder()
 									.payNo(payNo)
 									.payTid(readyVO.getTid())
-									.paytBuyer(memberNo)
+									.payBuyer(memberNo)
 						.build();
 		
 		payDao.ready(payDto);
@@ -92,9 +82,9 @@ public class PayController {
 			@ModelAttribute PayApprovePrepareVO prepareVO) throws URISyntaxException {
 		
 		// 세션에서 데이터 추출
-		prepareVO.setPartner_order_id((String)session.getAttribute("partner_order_id"));
-		prepareVO.setPartner_user_id((String)session.getAttribute("partner_user_id"));
-		prepareVO.setTid((String)session.getAttribute("tid"));
+		prepareVO.setPartner_order_id(String.valueOf(session.getAttribute("partner_order_id")));
+		prepareVO.setPartner_user_id(String.valueOf(session.getAttribute("partner_user_id")));
+		prepareVO.setTid(String.valueOf(session.getAttribute("tid")));
 		
 		session.removeAttribute("partner_order_id");
 		session.removeAttribute("partner_user_id");
@@ -115,23 +105,12 @@ public class PayController {
 			Model model) throws URISyntaxException {
 		PaySearchVO searchVO = payService.search(tid);
 		model.addAttribute("searchVO",searchVO);
+		
+		// 결제 후 member의 grade 올리기
+		int memberNo = Integer.valueOf(searchVO.getPartner_user_id());
+		memberDao.gradeup(memberNo);
+		
 		return "pay/resultSuccess";
 	}
-	
-	
-	
-	@GetMapping("/upgradeinfo")
-	public String upgradeinfo(HttpSession session,
-								@RequestParam int quantity,
-								Model model) {
-		int memberNo = (int) session.getAttribute("memberNo");
 		
-		return "pay/upgradeinfo";
-	}
-	
-	
-	
-	
-	
-	
 }
