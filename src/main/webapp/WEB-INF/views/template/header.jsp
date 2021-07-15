@@ -1,3 +1,4 @@
+  
 <%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -40,6 +41,7 @@ li.write {
 					<li class="write"><a href="${root}/boardWrite">글쓰기</a></li>
 					<li><a href="${root}/member/logout">로그아웃</a></li>
 					<li><a href="${root}/member/mypage">내 정보 보기</a></li>
+					<li><a href="${root}/pay/upgrade">회원플러스 결제</a></li>
 				</c:if>
 
 				<c:if test="${dtoss == null }">
@@ -53,5 +55,4 @@ li.write {
 
 			</ul>
 
-		</nav>
-	
+		</nav>	
