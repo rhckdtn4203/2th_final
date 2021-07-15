@@ -9,7 +9,8 @@
 		<h2>로그인</h2>
 	</div>
 	
-	<form action="login" method="post">
+	
+	<form action="${pageContext.request.contextPath}/member/login" method="post">
 		<div class="row text-left">
 			<label>아이디</label>
 			<input type="text" name="memberId" required class="form-input form-input-underline">
@@ -22,13 +23,14 @@
 			<input type="submit" value="로그인" class="form-btn form-btn-positive">
 		</div>
 	</form>
+
 	
-	<!-- 오류인 상황에는 오류 메세지를 추가해준다 -->
+<%-- 	<!-- 오류인 상황에는 오류 메세지를 추가해준다 -->
 	<c:if test="${param.error != null}">
 		<div class="row">
 			<h5 class="error">정보가 일치하지 않습니다</h5>
 		</div>
-	</c:if>
+	</c:if> --%>
 	
 	<div class="row">
 		<h4><a href="#">아이디가 기억나지 않습니다.</a></h4>

@@ -26,8 +26,18 @@
 	}
 </style>
 <script>
-	
+	$(function(){
+		$("#confrirm-link").click(function(e){
+			
+			//var message=$(this).attr("data-message")||"이동하시겠습니까?";
+			var choice = window.confirm("정말 탈퇴하시겠습니까?");
+			if(!choice){
+			e.preventDefault();				
+			}
+		});
+	});
 </script>
+
 <div class="container-600">
 	<div class="row">
 		<h2>나의 정보</h2>
@@ -35,25 +45,21 @@
 	<div class="row">
 			<table class="table table-border">
 				<tr>
-					<th>회원번호</th>
-					<td>${myInfo.memberNo}</td>
+					<th>아이디:</th>
+					<td>${dtoss.memberId}</td>
 				</tr>
 				<tr>
-					<th>아이디</th>
-					<td>${myInfo.memberId}</td>
-				</tr>
-				<tr>
-					<th>닉네임</th>
-					<td>${myInfo.memberNick}</td>
+					<th>닉네임:</th>
+					<td>${dtoss.memberNick}</td>
 				</tr>
 			
 				<tr>
-					<th>전화번호</th>
-					<td>${myInfo.memberPhone}</td>
+					<th>전화번호:</th>
+					<td>${dtoss.memberPhone}</td>
 				</tr>
 				<tr>
-					<th>이메일</th>
-					<td>${myInfo.memberEmail}</td>
+					<th>이메일:</th>
+					<td>${dtoss.memberEmail}</td>
 				</tr>
 				<tr>
 			
@@ -64,7 +70,7 @@
 	<div class="row">
 		<a href="${pageContext.request.contextPath}/member/change_pw" class="link-btn">비밀번호 변경</a>
 		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
-		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn confirm-link" data-message="정말 탈퇴하시겠습니까?">회원 탈퇴</a>
+		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link">회원 탈퇴</a>
 	</div>
 	
 	<div class="row text-left">

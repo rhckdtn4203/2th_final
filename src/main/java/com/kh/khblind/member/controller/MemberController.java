@@ -3,6 +3,7 @@ package com.kh.khblind.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +45,9 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto dto, HttpSession session) {
-		MemberDto isLogin = dao.login(dto);
-		if (isLogin != null) {
-			session.setAttribute("MeberDto", isLogin);
+		MemberDto dtoPack = dao.login(dto);
+		if (dtoPack != null) {
+			session.setAttribute("dtoss", dtoPack);
 			return "redirect:/";
 		} else {
 			return "redirect:login?error";
@@ -56,16 +57,18 @@ public class MemberController {
 	// 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("memberNo");
+		session.removeAttribute("dtoss");
 		return "redirect:/";
 	}
 
 	// 마이페이지
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
-		int memberNo = (int) session.getAttribute("memberNo");
-		MemberDto isMypage = dao.mypage(memberNo);
-		model.addAttribute("mypage",isMypage);
+
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		int memberNo = dto.getMemberNo();
+		MemberDto dtoPack = dao.mypage(memberNo);
+		model.addAttribute("dtoPack", dtoPack);
 
 		return "member/mypage";
 	}
@@ -73,40 +76,42 @@ public class MemberController {
 	// 마이페이지 수정
 	@GetMapping("/changeinfo")
 	public String changeinfo(HttpSession session, Model model) {
-		int memberNo = (int) session.getAttribute("memberNo");
-		MemberDto isMyInfo = dao.mypage(memberNo);
-		model.addAttribute("myInfo", isMyInfo);
-		
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		model.addAttribute("dtoPack", dao.mypage(dto.getMemberNo()));
+
 		return "member/changeinfo";
+	}
+
+	@PostMapping("/changeinfo")
+	public String changeinfo(@ModelAttribute MemberDto dto) {
+		boolean result = dao.changeinfo(dto);
+
+		if (result) {
+			return "redirect:changeinfo";
+
+		} else {
+			return "redirect:changeinfo?error";
+		}
 
 	}
-@PostMapping("/changeinfo")	
-public String changeinfo(@ModelAttribute MemberDto dto) {
-	boolean result= dao.changeinfo(dto);
-	
-	if(result) {
-		return "redirect:mypage";
-		
-	}
-	else {
-		return "redirect:changeinfo?error";
-	}
-	
-}
 
 	// 회원 탈퇴
-	@GetMapping("/exit")
+	@RequestMapping("/exit")
 	public String exit(HttpSession session) {
-		int memberNo = (int) session.getAttribute("memberNo");
+		
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		int memberNo = dto.getMemberNo();
 		dao.exit(memberNo);
-		session.removeAttribute("memberNo");
-
+		session.removeAttribute("dtoss");
+		
+		
 		return "redirect:deletecount";
 	}
 
+
 	@GetMapping("/deletecount")
 	public String deletecount() {
-		return "deletecount";
+		return "member/goodbye";
+		
 	}
-
 }

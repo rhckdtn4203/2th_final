@@ -6,7 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="member">
 
-	<select id="login" parameterType="MemberDto" resultType="MemberDto">
+	<select id="login" parameterType="MemberDto"
+		resultType="MemberDto">
 		select * from member where member_id=#{memberId} and
 		member_pw=#{memberPw}
 	</select>
@@ -22,19 +23,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="mypage" parameterType="int" resultType="MemberDto">
-		select * from member where member_no = #{memberNo}
+		select * from
+		member where member_no = #{memberNo}
 	</select>
-	
+
 	<update id="changeinfo" parameterType="MemberDto">
-	update member set 
-	member_nick = #{memberNick}, 
-	member_phone = #{memberPhone}, 
-	member_email = #{memberEmail} 
-	where member_no = #{memberNo} 
+		update member set
+		member_nick = #{memberNick},
+		member_phone = #{memberPhone},
+		member_email = #{memberEmail}
+		where member_no = #{memberNo}
 	</update>
-	
-	<delete id="exit" parameterType="int">
-	delete member where member_no = #{memberNo} 
+
+	<delete id="exit" parameterType="int"> 
+	delete from member where member_no = #{memberNo} 
 	</delete>
 	
 	<!-- 결제 (회원 등급 업데이트) -->
@@ -42,5 +44,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set grade_no=grade_no+1 where member_no=#{memberNo}
 	</update>
 	
-	
+
 </mapper>
