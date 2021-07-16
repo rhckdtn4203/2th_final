@@ -16,6 +16,7 @@ import com.kh.khblind.board.entity.BoardEditVO;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.repository.BoardDao;
+import com.kh.khblind.member.entity.MemberDto;
 
 @Controller
 public class BoardController {
@@ -41,12 +42,18 @@ public class BoardController {
 		@ModelAttribute BoardDto boardDto
 //		@ModelAttribute BoardWriteVO boardWriteVO
 		) {
-		int memberNo = (int)session.getAttribute("memberNo");
+		
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		int memberNo = memberDto.getMemberNo();
+		
+//		int memberNo = 2; //임시데이터
 		boardDto.setMemberNo(memberNo);
 		
 		//DB조회 1개(시퀀스번호)
 		int boardNo = boardDao.getSequence();
 		boardDto.setBoardNo(boardNo);
+		
+		System.out.println("[여기는 컨트롤러]boardDto = " + boardDto);
 		
 		boardDao.insert(boardDto);
 		return "redirect:boardDetail?boardNo="+boardNo;//상세페이지로 가면서 번호주기
