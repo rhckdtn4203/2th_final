@@ -19,6 +19,14 @@
 li.write {
 	float: right;
 }
+
+.company-logo{
+  color : #636e72;
+  text-decoration: none;
+  font-size: 40px;
+  font-weight: bold;
+  text-align : center;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,7 +35,7 @@ li.write {
 
 <body>
 		<header>
-			<h1>Blind</h1>
+			<a href="${root}" class="company-logo">Blind</a>
 		</header>
 		<nav>
 			<!-- 메뉴 -->
