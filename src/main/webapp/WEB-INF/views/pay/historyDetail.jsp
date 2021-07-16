@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
-
-<h1>결제가 완료되었습니다.</h1>
-<h3> 재로그인 후 등급이 반영됩니다. 반드시 로그아웃 후 다시 로그인 하세요</h3>
-<hr>
-
 <h2>결제 상세 내역</h2>
 
 <ul>
@@ -90,4 +83,3 @@
 	</li>
 </ul>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

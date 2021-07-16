@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh.khblind.member.repository.MemberDao;
+import com.kh.khblind.pay.entity.PayDto;
+import com.kh.khblind.pay.repository.PayDao;
 import com.kh.khblind.pay.vo.PayApprovePrepareVO;
 import com.kh.khblind.pay.vo.PayApproveVO;
 import com.kh.khblind.pay.vo.PayCancelPrepareVO;
@@ -25,6 +29,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class KakaoPayService implements PayService{
 	
+	@Autowired
+	private PayDao payDao;
+	
+	@Autowired
+	private MemberDao memberDao;
+	
+	
 	public static final String cid = "TC0ONETIME";
 	public static final String adminKey = "35653eec91c802cc306677b8a75fc4c6";
 	public static final String kakaoAk = "KakaoAK " + adminKey;
@@ -33,6 +44,11 @@ public class KakaoPayService implements PayService{
 	@Override
 	public PayReadyVO ready(PayReadyPrepareVO payReadyPrepareVO) throws URISyntaxException {
 		
+		// 주문번호 생성 
+		int payNo = payDao.getSequence();
+		payReadyPrepareVO.setPartner_order_id(String.valueOf(payNo));
+		
+		// 요청 도구 생성 
 		RestTemplate template = new RestTemplate();
 		
 		// Http Header 생성
@@ -64,6 +80,20 @@ public class KakaoPayService implements PayService{
 		// 전송 
 		PayReadyVO readyVO = template.postForObject(uri, entity,PayReadyVO.class); // 응답 후 JSON 수신
 		
+		// DB 등록 
+		PayDto payDto = PayDto.builder()
+										.payNo(Integer.valueOf(payReadyPrepareVO.getPartner_order_id()))
+										.payTid(readyVO.getTid())
+										.payBuyer(Integer.valueOf(payReadyPrepareVO.getPartner_user_id()))
+								.build();
+			
+		 
+		payDao.ready(payDto);
+		
+		// 컨트롤러에서 사용할 수 있도록 추가 데이터 세팅하여 반환 
+		readyVO.setPartner_order_id(payReadyPrepareVO.getPartner_order_id());
+		readyVO.setPartner_user_id(payReadyPrepareVO.getPartner_user_id());
+		
 		return readyVO;
 	}
 
@@ -94,6 +124,14 @@ public class KakaoPayService implements PayService{
 		// 전송 
 		PayApproveVO approveVO = 
 							template.postForObject(uri, entity, PayApproveVO.class);
+		
+		// DB의 결제 상태를 승인으로 변경
+		payDao.approve(Integer.parseInt(payApprovePrepareVO.getPartner_order_id()));
+		
+		// 결제 후 member의 grade 올리기
+		int memberNo = Integer.valueOf(approveVO.getPartner_user_id());
+		memberDao.gradeup(memberNo);
+		
 		return approveVO;
 	}
 	
