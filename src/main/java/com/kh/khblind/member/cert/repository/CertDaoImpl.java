@@ -33,4 +33,9 @@ public class CertDaoImpl implements CertDao {
 		sqlSession.delete("cert.deleteByTime");
 	}
 
+	@Override
+	public void upgrade(int memberNo) {
+		sqlSession.update("cert.upgrade", memberNo);
+	}
+
 }

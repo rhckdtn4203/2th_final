@@ -89,4 +89,9 @@ public class CertServiceImpl implements CertService {
 		certDao.clear();
 	}
 
+	@Override
+	public void upgrade(int memberNo) {
+		certDao.upgrade(memberNo);
+	}
+
 }

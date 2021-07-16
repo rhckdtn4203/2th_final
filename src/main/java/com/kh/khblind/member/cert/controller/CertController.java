@@ -3,6 +3,7 @@ package com.kh.khblind.member.cert.controller;
 import java.io.IOException;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,9 +44,14 @@ public class CertController {
 	}
 	
 	@PostMapping("/certInsert")
-	public String certInsert(@ModelAttribute CertDto certDto, RedirectAttributes attr) {
+	public String certInsert(
+			@ModelAttribute CertDto certDto, 
+			HttpSession session, 
+			RedirectAttributes attr) {
 		boolean result = certService.checkCertification(certDto);
 		if(result) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			certService.upgrade(memberNo);
 			return "redirect:certSuccess";
 		}
 		else {
