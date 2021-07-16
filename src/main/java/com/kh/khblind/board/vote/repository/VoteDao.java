@@ -28,7 +28,7 @@ public interface VoteDao {
 		//6. 투표 선택지 정보불러오기		
 		List<VoteOptionInfoVo> getVoteOptionInfo(int boardNo);
 		//7. 투표하기(ajax이므로 다시 투표정보를 불러와야한다.)
-		VoteViewInfoVo voting(VoteResultDto voteResultDto);
+		boolean voting(VoteResultDto voteResultDto);
 		//8. 총투표개수 가져오기
 		int getAllCount(int boardNo);
 		

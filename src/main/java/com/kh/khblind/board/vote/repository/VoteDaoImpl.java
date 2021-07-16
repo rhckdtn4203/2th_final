@@ -147,9 +147,17 @@ public class VoteDaoImpl implements VoteDao {
 	}
 
 	@Override
-	public VoteViewInfoVo voting(VoteResultDto voteResultDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean voting(VoteResultDto voteResultDto) {
+
+		try {
+			sqlSession.insert("vote.voting", voteResultDto);
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 	@Override

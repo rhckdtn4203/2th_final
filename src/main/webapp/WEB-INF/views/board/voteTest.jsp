@@ -67,10 +67,7 @@
         <div><br><br><br>
 
             <p>
-                <a href=/kr/tag/#소개>#소개</a> <a href=/kr/tag/#일상>#일상</a> 
-안녕하세요! 이건 테스트입니다.
-
-<a href=/kr/tag/#삼성>#삼성</a> # LG <a href=/kr/tag/#프로젟트>#프로젟트</a> # 석현
+				되라되라
             </p>
 
             
@@ -129,16 +126,23 @@
 				$.ajax({
 					url: "${pagecontext.request.contextpath}/khblind/board/voting",
 					data:{
-						topicNo: topicNo,
-						optionNo : optionNo,
+						voteTopicNo: topicNo,
+						voteOptionNo : optionNo
+						},
 						type: "GET",
 						success:function(resp){
 							
+							for(var i=0; i<resp.length; i++){
+								
+								var target = $("#option-"+ resp[i].voteOptionNo +"-gauge");
+								
+								target.css("width", resp[i].voteOptionPercent +"%");
+								target.attr("aria-valuenow", resp[i].voteOptionPercent);
+								target.text(resp[i].voteOptionPercent +"% "+"("+ resp[i].voteOptionCount +"표)");
+								
+							}
 							
-							
-						}
-					},
-					
+						}					
 				})
 			})
 			
