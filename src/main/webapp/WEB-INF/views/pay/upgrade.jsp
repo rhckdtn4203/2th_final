@@ -18,8 +18,20 @@
             border:1px solid black;
         }
     </style>
+    
+  <script>
+  		$(function(){
+  			$("#send").click(function(e){
+  				var grade = ${dtoss.gradeNo};
+  				if(grade==2 || grade ==4){
+  					window.alert("이미 플러스 회원입니다.");
+  					e.preventDefault();	
+  				}
+  			});
+  		});
+  
+  </script>  
 <body>
-
 <h1>회원 플러스 소개</h1>
 <div class="row" align="center">
 <table>
@@ -36,7 +48,7 @@
             <tr>
                 <td>2</td>
                 <td>준회원 +</td>
-                <td>자신의 업종 뿐만 아니라 모든 업종의 커뮤니티 이용권</td>
+                <td>자신의 업종 + 모든 업종의 커뮤니티 이용권</td>
             </tr>
             <tr>
                 <td>3</td>
@@ -46,7 +58,7 @@
             <tr>
                 <td>4</td>
                 <td>정회원 + </td>
-                <td>자신의 기업 커뮤니티 이용권, 자신의 업종 뿐만 아니라 모든 업종의 커뮤니티 이용권</td>
+                <td>자신의 기업 커뮤니티 이용권, 자신의 업종 + 모든 업종의 커뮤니티 이용권</td>
             </tr>
          </table>
 </div>
@@ -68,7 +80,7 @@
 	</div>
 		<input type="hidden" name="total_amount" value="5000">
 	<div class="row">
-			<input type="submit" value="결제" class="form-btn form-btn-positive">
+			<input type="submit" value="결제" class="form-btn form-btn-positive" id="send">
 	</div>
 </form>
 
