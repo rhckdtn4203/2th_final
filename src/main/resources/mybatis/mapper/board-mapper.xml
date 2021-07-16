@@ -9,10 +9,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select board_seq.nextval from dual
 	 </select>
 	 
+	 <select id="getBoardDetail" parameterType="int" resultType="BoardDto">
+	 	select * from board where board_no = #{boardNo}
+	 </select>
+	 
 	 <insert id="insert" parameterType="BoardDto">
 	 	insert into board values(#{boardNo}, #{memberNo}, #{boardTitle}, #{boardContent}, 0, sysdate)
-	 	<!-- 작성일(sysdate)에 왜 빨간줄이? -->
 	 </insert>
+	 
+	 <select id="find" parameterType="int" resultType="BoardMemberVO">
+	 	select * from board_detail_view where board_no = #{boardNo}
+	 </select>
+	 
+	 <update id="edit" parameterType="BoardDto">
+	 	update board set board_title = #{boardTitle}, board_content = #{boardContent} where board_no = #{boardNo}  
+	 </update>
+	 
+	 <delete id="delete" parameterType="int">
+	 	delete board where board_no = #{boardNo}
+	 </delete>
 </mapper>
 
 
