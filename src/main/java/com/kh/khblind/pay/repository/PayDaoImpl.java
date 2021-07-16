@@ -1,5 +1,7 @@
 package com.kh.khblind.pay.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,23 @@ public class PayDaoImpl implements PayDao {
 	public void ready(PayDto payDto) {
 		sqlSession.insert("pay.ready",payDto);
 		
+	}
+
+	@Override
+	public void approve(int payNo) {
+		sqlSession.update("pay.approve",payNo);
+		
+	}
+
+	@Override
+	public List<PayDto> list(int payBuyer) {
+		
+		return sqlSession.selectList("pay.list",payBuyer);
+	}
+
+	@Override
+	public PayDto get(int payNo) {
+		return sqlSession.selectOne("pay.get",payNo);
 	}
 	
 	

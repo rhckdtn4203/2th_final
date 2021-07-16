@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="list" resultType="PayDto" parameterType="int">
 		select * from pay
 		where pay_buyer = #{payBuyer}
-		order by payment_no desc
+		order by pay_no desc
 	</select>
 	
 	<select id="get" resultType="PayDto" parameterType="int">
