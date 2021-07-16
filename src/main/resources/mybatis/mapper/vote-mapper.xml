@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="vote">
+	
+	<!-- insert 1. 투표 주제 DB에 추가-->
+	<insert id="insertTopic" parameterType="VoteTopicDto">
+		insert into vote_topic values(vote_topic_seq.nextVal, #{boardNo}, #{voteTopicTitle}, sysdate)
+	</insert>
+	
+	<!-- insert 2. 투표 항목 DB에 추가-->
+	<insert id="insertOption" parameterType="voteOptionDto">
+		insert into vote_option values(vote_option_seq.nextVal, #{voteTopicNo}, #{voteOptionName})
+	</insert>
+	
+	<!-- insert 3. 투표를 DB에 추가-->
+	<insert id="voting" parameterType="voteResultDto">
+		insert into vote_result values(vote_result_seq.nextval, #{memberNo}, #{voteTopicNo}, #{voteOptionNo})
+	</insert>
+	
+	
+	<!-- select 1. 해당게시글에 투표가 있는지 없는지 -->
+	<select id="isExistInDB" parameterType="int" resultType="VoteTopicDto">
+		select * from vote_topic where board_no = #{boardNo}
+	</select>
+	
+	<!-- select 2. 현재 시퀀스 번호 가져오기--> 
+	<select id="getSeqCurrVal" parameterType="int" resultType="int">
+		select vote_topic_seq.currVal from dual
+	</select>
+	
+	<!-- select 3.  해당게시글에 투표의 주제 가져오기-->
+		<select id="getTopicInfo" parameterType="int" resultType="voteTopicDto" >
+			select * from vote_topic where board_no=#{boardNo}
+		</select>
+	
+	<!-- select 4. 해당게시글에 투표의 투표 선택지 결과 -->
+	<select id="getOptionInfo" parameterType="int" resultType="VoteOptionInfoVo">
+		select vo.vote_option_no, vo.vote_option_name, count(vr.vote_option_no) vote_option_count
+		from 
+		    vote_option vo left outer join vote_result vr on vo.vote_option_no = vr.vote_option_no
+		    where vo.vote_topic_no = 
+		        (select vote_topic_no from vote_topic where board_no=#{boardNo})
+		group by vo.vote_option_no, vo.vote_option_name
+		order by vo.vote_option_no asc
+	</select>
+	
+	<!-- select 5. 해당게시글에 총 투표한 개수 (퍼센트에 이용)-->
+	<select id="getAllCount" parameterType="int" resultType="int">
+			select count(vote_result_no)
+				from vote_result 
+					where vote_topic_no=
+					(select vote_topic_no from vote_topic where board_no=#{boardNo})
+	</select>
+
+</mapper>
