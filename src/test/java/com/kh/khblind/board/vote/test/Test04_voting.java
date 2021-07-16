@@ -1,4 +1,4 @@
-package com.kh.blind.board.vote.test;
+package com.kh.khblind.board.vote.test;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -8,34 +8,32 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.kh.khblind.board.vote.entity.VoteTopicDto;
+import com.kh.khblind.board.vote.entity.VoteResultDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
 @WebAppConfiguration
-public class Test01_isExistInDB {
-
+public class Test04_voting {
+	
 	@Autowired
 	private SqlSession sqlSession;
-
+	
 	@Test
-	public void Test1() {
-
-		VoteTopicDto isExistInDB = new VoteTopicDto();
-		int boardNo = 1;
-		try {
-			isExistInDB = sqlSession.selectOne("vote.isExistInDB", boardNo);
-			
-			if(isExistInDB != null) {
-				System.out.println("있다 " + isExistInDB);
-			}
-			else {
-				System.out.println("없다 " + isExistInDB);
-			}
-		} catch (NullPointerException e) {
-			System.out.println("없다" + isExistInDB);
-		}
-
+	public void test01() {
+		int memberNoV= 8;
+		int voteTopicNoV=8;
+		int voteOptionNoV=13;
+		
+		VoteResultDto voteResultDto =  VoteResultDto.builder()
+													.memberNo(memberNoV)
+													.voteTopicNo(voteTopicNoV)
+													.voteOptionNo(voteOptionNoV)
+													.build();
+		
+		
+		int count = sqlSession.insert("vote.voting", voteResultDto);
+		
+		
 	}
 }
