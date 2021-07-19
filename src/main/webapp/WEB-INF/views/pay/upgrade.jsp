@@ -62,6 +62,8 @@
             </tr>
          </table>
 </div>
+
+<h3><a href="history">지난 결제내역 보기</a></h3>
          <br><br>
          <hr>
 

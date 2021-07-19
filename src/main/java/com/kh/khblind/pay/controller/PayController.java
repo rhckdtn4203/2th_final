@@ -30,12 +30,7 @@ public class PayController {
 	
 	@Autowired
 	private PayService payService;
-	
-	@Autowired
-	private PayDao payDao;
-	
-	@Autowired
-	private MemberDao memberDao;
+		
 	
 	@GetMapping("/upgrade")
 	public String upgrade() {
@@ -53,22 +48,12 @@ public class PayController {
 		
 		prepareVO.setPartner_user_id(String.valueOf(memberNo));
 		
-		int payNo = payDao.getSequence();
-		prepareVO.setPartner_order_id(String.valueOf(payNo));
 		
-		// 승인 요청을 위해 정보를 DB/세션 등에 저장해야 함
+		// payService.ready는 카카오페이에 준비요청을 발송하는 기능
 		PayReadyVO readyVO = payService.ready(prepareVO);
 		
-		PayDto payDto = PayDto.builder()
-									.payNo(payNo)
-									.payTid(readyVO.getTid())
-									.payBuyer(memberNo)
-						.build();
-		
-		payDao.ready(payDto);
-		
-		session.setAttribute("partner_order_id",payNo);
-		session.setAttribute("partner_user_id",memberNo);
+		session.setAttribute("partner_order_id",readyVO.getPartner_order_id());
+		session.setAttribute("partner_user_id",readyVO.getPartner_user_id());
 		session.setAttribute("tid",readyVO.getTid());
 		
 		// 사용자에게 결제 페이지 주소로 재접속 지시를 내린다(리다이렉트)
@@ -81,7 +66,7 @@ public class PayController {
 			HttpSession session,
 			@ModelAttribute PayApprovePrepareVO prepareVO) throws URISyntaxException {
 		
-		// 세션에서 데이터 추출
+		// 세션에서 데이터 추출 후 삭제 
 		prepareVO.setPartner_order_id(String.valueOf(session.getAttribute("partner_order_id")));
 		prepareVO.setPartner_user_id(String.valueOf(session.getAttribute("partner_user_id")));
 		prepareVO.setTid(String.valueOf(session.getAttribute("tid")));
@@ -91,9 +76,7 @@ public class PayController {
 		session.removeAttribute("tid");
 		
 		PayApproveVO approveVO = payService.approve(prepareVO);
-		
-		// 승인 정보를 DB에 저장(PayApproveVO)하는 작업 수행
-		
+			
 		// 결제 성공 알림 페이지 
 		return "redirect:result_success?tid="+approveVO.getTid();
 	}
@@ -106,11 +89,37 @@ public class PayController {
 		PaySearchVO searchVO = payService.search(tid);
 		model.addAttribute("searchVO",searchVO);
 		
-		// 결제 후 member의 grade 올리기
-		int memberNo = Integer.valueOf(searchVO.getPartner_user_id());
-		memberDao.gradeup(memberNo);
+		
 		
 		return "pay/resultSuccess";
 	}
+	
+	@Autowired
+	private PayDao payDao;
+	
+	// 결제 내역 보기 페이지
+	@GetMapping("/history")
+	public String history(
+			HttpSession session,
+			Model model) {
 		
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		int memberNo = dto.getMemberNo();
+		
+		model.addAttribute("list",payDao.list(memberNo));
+		
+		return "pay/history";
+	}
+	
+	@GetMapping("/historyDetail")
+	public String historyDetail(@RequestParam int payNo, Model model) throws URISyntaxException {
+		// 결제 정보 조회
+		PayDto payDto = payDao.get(payNo);
+		model.addAttribute("payDto", payDto);
+		
+		PaySearchVO searchVO = payService.search(payDto.getPayTid());
+		model.addAttribute("searchVO", searchVO);
+		
+		return "pay/historyDetail";
+	}
 }
