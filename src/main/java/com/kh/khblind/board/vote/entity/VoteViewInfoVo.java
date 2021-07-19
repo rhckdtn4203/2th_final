@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class VoteViewInfoVo {
-	private int voteTopicNo;
+	private Integer voteTopicNo;
+	private int boardNo;
 	private String voteTopicTitle;
 	private Date voteTopicExpire;
 	private List<VoteOptionInfoVo> voteOptionInfoVoList;
+	boolean didYouVote;
 }
