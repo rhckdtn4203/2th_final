@@ -174,9 +174,48 @@ public class VoteDaoImpl implements VoteDao {
 	}
 
 	@Override
-	public List<VoteOptionInfoVo> getVoteCurrentInfo() {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean didYouVote(VoteResultDto voteResultDto) {
+		try {
+			
+			int didYouVote = sqlSession.selectOne("vote.didYouVote", voteResultDto);
+			
+			if(didYouVote!=0) {//투표를했다.
+				return true;
+			}else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return true;
+		}
+	}
+
+	@Override
+	public int getSelectedOptionNoThatTopic(VoteResultDto voteResultDto) {
+		
+		try {
+				
+			int seletedOptionNo = sqlSession.selectOne("vote.getSelectedOptionNoThatTopic", voteResultDto);
+			System.out.println("seletedOptionNo = " + seletedOptionNo );
+			return seletedOptionNo;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	@Override
+	public int getSingleVoteOptionCount(int voteOptionNo) {
+		try {
+			int voteOptionCount = sqlSession.selectOne("vote.getSingleVoteOptionCount", voteOptionNo);
+			
+			return voteOptionCount;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}	
 	}
 
 

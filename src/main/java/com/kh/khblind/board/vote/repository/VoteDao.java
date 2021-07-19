@@ -31,8 +31,13 @@ public interface VoteDao {
 		boolean voting(VoteResultDto voteResultDto);
 		//8. 총투표개수 가져오기
 		int getAllCount(int boardNo);
+		//9.투표했는지 확인하기
+		boolean didYouVote(VoteResultDto voteResultDto);
+		//10. 회원번호와 투표주제번호로 투표선택지 번호 가져오기
+		int getSelectedOptionNoThatTopic (VoteResultDto voteResultDto);
 		
-		//8. 실시간 투표결과 가져오기(ajax용)
-		List<VoteOptionInfoVo> getVoteCurrentInfo();
+		
+		//11. 실시간 투표 때 쓸 카운트만 구하는 거
+		int getSingleVoteOptionCount(int voteOptionNo);
 	
 }
