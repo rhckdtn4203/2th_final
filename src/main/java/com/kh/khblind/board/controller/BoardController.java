@@ -1,5 +1,6 @@
 package com.kh.khblind.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardDto;
-import com.kh.khblind.board.entity.BoardEditVO;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.member.entity.MemberDto;
 
@@ -50,8 +51,8 @@ public class BoardController {
 			//준비 : DB조회 1개(시퀀스번호) + 세션 1개(회원번호) + 파라미터 3개(제목,내용,해시태그)
 			
 		HttpSession session,	
-		@ModelAttribute BoardDto boardDto
-//		@ModelAttribute BoardWriteVO boardWriteVO
+		@ModelAttribute BoardDto boardDto,
+		@ModelAttribute BoardWriteVO boardWriteVO
 		) {
 		
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
@@ -67,7 +68,29 @@ public class BoardController {
 		System.out.println("[여기는 컨트롤러]boardDto = " + boardDto);
 		
 		boardDao.insert(boardDto);
+		
+		List<String> hashtagList = new ArrayList<>(); 
+	      hashtagList = boardDao.getHash(boardWriteVO); 
+	      
+	      List<Integer> hashtagNumList = boardDao.getHashNum(hashtagList);
+	      List<HashtagLinkDto> hashtagLinklist = new ArrayList<HashtagLinkDto>();
+	      for(int hashtagNo : hashtagNumList){
+	         HashtagLinkDto hashtagLinkDto = HashtagLinkDto.builder() 
+	         .boardNo(boardNo)
+	          .hashtagNo(hashtagNo)
+	          .build();
+	         System.out.println("82 - " +hashtagLinkDto );
+	         hashtagLinklist.add(hashtagLinkDto);
+	         }
+	      boardDao.insertHashlink(hashtagLinklist);
+	  
+
+		
+		
+		
 		return "redirect:boardDetail?boardNo="+boardNo;//상세페이지로 가면서 번호주기
+		
+		
 	}
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
@@ -86,6 +109,8 @@ public class BoardController {
 		else {
 			return "글없다페이지";
 		}
+		
+		
 	}
 	
 	@GetMapping("/boardEdit")
