@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -21,5 +23,23 @@
 	<resources location="/resources/css/" mapping="/css/**"></resources>
 	<resources location="/resources/image/" mapping="/img/**"></resources>
 	<resources location="/resources/js/" mapping="/js/**"></resources>
+
+	<!-- 
+		웹소켓 서버를 등록하고 접속 주소를 설정
+		= 웹소켓 서버는 Spring Bean 으로 등록해야 한다.
+	 -->
+	<beans:bean id="realtimeVoteServer" class="com.kh.khblind.board.vote.webSocket.WebSocketRealtimeVoteChannelServer"></beans:bean>
+
+	
+	<websocket:handlers>
+		<!-- 
+			투표서버 할당
+		-->
+		<websocket:mapping handler="realtimeVoteServer" path="/realtimeVote"/>
+	
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></beans:bean>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
 
 </beans:beans>
