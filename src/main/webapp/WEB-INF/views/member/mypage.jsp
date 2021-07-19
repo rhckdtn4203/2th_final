@@ -68,6 +68,9 @@
 	
 	<!-- 이용 가능한 메뉴 구성 -->
 	<div class="row">
+		<c:if test="${dtoss.gradeNo == 1 || dtoss.gradeNo == 2}">
+			<a href="${pageContext.request.contextPath}/cert/emailInsert" class="link-btn">이메일 인증</a>
+		</c:if>
 		<a href="${pageContext.request.contextPath}/member/change_pw" class="link-btn">비밀번호 변경</a>
 		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
 		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link">회원 탈퇴</a>

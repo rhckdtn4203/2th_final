@@ -16,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.khblind.member.cert.entity.CertDto;
 import com.kh.khblind.member.cert.service.CertService;
+import com.kh.khblind.member.entity.MemberDto;
+import com.kh.khblind.member.repository.MemberDao;
 
 @Controller
 @RequestMapping("/cert")
@@ -24,20 +26,26 @@ public class CertController {
 	@Autowired
 	private CertService certService;
 	
-	// 테스트) 이메일 입력 페이지
+	@Autowired
+	private MemberDao memberDao;
+	
+	// 이메일 입력 페이지
 	@GetMapping("/emailInsert")
 	public String emailInsert() {
 		return "cert/emailInsert";
 	}
 	
 	@PostMapping("/emailInsert")
-	public String emailInsert(@RequestParam String email, RedirectAttributes attr) throws MessagingException, IOException {
-		certService.sendCertification(email);
+	public String emailInsert(@RequestParam String email, 
+			HttpSession session, 
+			RedirectAttributes attr) 
+					throws MessagingException, IOException {
+		certService.sendCertification(email, session);
 		attr.addAttribute("email", email);
 		return "redirect:certInsert";
 	}
 	
-	// 테스트) 인증번호 입력 페이지
+	// 인증번호 입력 페이지
 	@GetMapping("/certInsert")
 	public String certInsert() {
 		return "cert/certInsert";
@@ -50,8 +58,16 @@ public class CertController {
 			RedirectAttributes attr) {
 		boolean result = certService.checkCertification(certDto);
 		if(result) {
-			int memberNo = (int)session.getAttribute("memberNo");
+			MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+			int memberNo = dto.getMemberNo();
 			certService.upgrade(memberNo);
+			
+			// 세션 초기화 및 다시 넣기
+			session.removeAttribute("dtoss");
+			
+			MemberDto memberDto = memberDao.mypage(memberNo);
+			session.setAttribute("dtoss", memberDto);
+			
 			return "redirect:certSuccess";
 		}
 		else {
@@ -62,7 +78,7 @@ public class CertController {
 		}
 	}
 	
-	// 테스트) 인증 성공 페이지
+	// 인증 성공 페이지
 	@GetMapping("/certSuccess")
 	public String certSuccess() {
 		return "cert/certSuccess";
