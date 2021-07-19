@@ -41,6 +41,13 @@ public class PayDaoImpl implements PayDao {
 	public PayDto get(int payNo) {
 		return sqlSession.selectOne("pay.get",payNo);
 	}
+
+	@Override
+	public void cancel(int payNo) {
+		// 데이터를 지우지 않고 상태를 '취소'로 업데이트
+		sqlSession.update("pay.cancel",payNo);
+		
+	}
 	
 	
 }

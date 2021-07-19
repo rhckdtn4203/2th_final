@@ -20,6 +20,7 @@ import com.kh.khblind.pay.repository.PayDao;
 import com.kh.khblind.pay.service.PayService;
 import com.kh.khblind.pay.vo.PayApprovePrepareVO;
 import com.kh.khblind.pay.vo.PayApproveVO;
+import com.kh.khblind.pay.vo.PayCancelPrepareVO;
 import com.kh.khblind.pay.vo.PayReadyPrepareVO;
 import com.kh.khblind.pay.vo.PayReadyVO;
 import com.kh.khblind.pay.vo.PaySearchVO;
@@ -121,5 +122,16 @@ public class PayController {
 		model.addAttribute("searchVO", searchVO);
 		
 		return "pay/historyDetail";
+	}
+	
+	// 결제 취소 
+	@GetMapping("/payCancel")
+	public String payCancel(
+			// payNo,cancel_amount를 수신한다.
+			@ModelAttribute PayCancelPrepareVO prepareVO) throws URISyntaxException {
+		
+		payService.cancel(prepareVO);
+		
+		return "redirect:historyDetail?payNo="+prepareVO.getPayNo();
 	}
 }
