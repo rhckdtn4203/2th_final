@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-    
+
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <h2>결제 상세 내역</h2>
 
 <ul>
@@ -18,8 +20,7 @@
 			<c:when test="${searchVO.status == 'AUTH_PASSWORD'}">비밀번호 인증 완료</c:when>
 			<c:when test="${searchVO.status == 'ISSUED_SID'}">SID 발급 완료</c:when>
 			<c:when test="${searchVO.status == 'SUCCESS_PAYMENT'}">결제 성공</c:when>
-			<c:when test="${searchVO.status == 'PART_CANCEL_PAYMENT'}">결제 부분 취소</c:when>
-			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제 전체 취소</c:when>
+			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제 취소</c:when>
 			<c:when test="${searchVO.status == 'FAIL_AUTH_PASSWORD	'}">사용자 비밀번호 인증 실패</c:when>
 			<c:when test="${searchVO.status == 'QUIT_PAYMENT'}">사용자 결제 중단</c:when>
 			<c:when test="${searchVO.status == 'FAIL_PAYMENT'}">결제 승인 실패</c:when>
@@ -83,3 +84,7 @@
 	</li>
 </ul>
 
+<h1><a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}">결제 취소 </a></h1>
+
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

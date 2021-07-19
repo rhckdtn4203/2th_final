@@ -25,8 +25,7 @@
 			<c:when test="${searchVO.status == 'AUTH_PASSWORD'}">비밀번호 인증 완료</c:when>
 			<c:when test="${searchVO.status == 'ISSUED_SID'}">SID 발급 완료</c:when>
 			<c:when test="${searchVO.status == 'SUCCESS_PAYMENT'}">결제 성공</c:when>
-			<c:when test="${searchVO.status == 'PART_CANCEL_PAYMENT'}">결제 부분 취소</c:when>
-			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제 전체 취소</c:when>
+			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제  취소</c:when>
 			<c:when test="${searchVO.status == 'FAIL_AUTH_PASSWORD	'}">사용자 비밀번호 인증 실패</c:when>
 			<c:when test="${searchVO.status == 'QUIT_PAYMENT'}">사용자 결제 중단</c:when>
 			<c:when test="${searchVO.status == 'FAIL_PAYMENT'}">결제 승인 실패</c:when>
