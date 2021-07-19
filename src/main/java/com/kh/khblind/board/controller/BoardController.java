@@ -1,5 +1,7 @@
 package com.kh.khblind.board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.admin.category.entity.CategoryDto;
+import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardEditVO;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -24,13 +28,20 @@ public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
 	
+	@Autowired
+	private CategoryDao categoryDao;
+	
 	@RequestMapping("/")
 	public String home() {
 		return "home";
 	}
 	
 	@GetMapping("/boardWrite")
-	public String boardWrite() {
+	public String boardWrite(Model model) {
+		
+		List<CategoryDto> categoryDtoList = categoryDao.list();
+		model.addAttribute("categoryList", categoryDtoList);
+		
 		return "board/boardWrite";
 	}
 	
