@@ -25,18 +25,18 @@
 	</form>
 
 	
-<%-- 	<!-- 오류인 상황에는 오류 메세지를 추가해준다 -->
+	<!-- 오류인 상황에는 오류 메세지를 추가해준다 -->
 	<c:if test="${param.error != null}">
 		<div class="row">
 			<h5 class="error">정보가 일치하지 않습니다</h5>
 		</div>
-	</c:if> --%>
+	</c:if>
 	
 	<div class="row">
-		<h4><a href="#">아이디가 기억나지 않습니다.</a></h4>
+		<h4><a href="${pageContext.request.contextPath}/member/find_id">아이디가 기억나지 않습니다.</a></h4>
 	</div>
 	<div class="row">
-		<h4><a href="#">비밀번호가 기억나지 않습니다.</a></h4>
+		<h4><a href="${pageContext.request.contextPath}/member/find_pw">비밀번호가 기억나지 않습니다.</a></h4>
 	</div>
 </div>
 

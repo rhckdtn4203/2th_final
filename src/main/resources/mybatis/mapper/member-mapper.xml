@@ -27,22 +27,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		member where member_no = #{memberNo}
 	</select>
 
-	<update id="changeinfo" parameterType="MemberDto">
+	<update id="changeinfo" parameterType="map">
 		update member set
 		member_nick = #{memberNick},
-		member_phone = #{memberPhone},
-		member_email = #{memberEmail}
-		where member_no = #{memberNo}
+		member_phone = #{memberPhone}
+		where
+		member_no = #{memberNo}
 	</update>
 
-	<delete id="exit" parameterType="int"> 
-	delete from member where member_no = #{memberNo} 
-	</delete>
-	
-	<!-- 결제 (회원 등급 업데이트) -->
-	<update	id="gradeup" parameterType="MemberDto">
-		update member set grade_no=grade_no+1 where member_no=#{memberNo}
+	<update id="change_pw" parameterType="map">
+		update member set
+		member_pw= #{newPw}
+		where member_no= #{memberNo} and member_pw= #{curPw}
 	</update>
-	
+
+	<delete id="exit" parameterType="int">
+		delete from member where member_no = #{memberNo}
+	</delete>
+
+	<!-- 결제 (회원 등급 업데이트) -->
+	<update id="gradeup" parameterType="MemberDto">
+		update member set
+		grade_no=grade_no+1 where member_no=#{memberNo}
+	</update>
+
 
 </mapper>

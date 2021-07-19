@@ -26,7 +26,7 @@
 	}
 </style>
 <script>
-	$(function(){
+	 $(function(){
 		$("#confrirm-link").click(function(e){
 			
 			//var message=$(this).attr("data-message")||"이동하시겠습니까?";
@@ -35,7 +35,12 @@
 			e.preventDefault();				
 			}
 		});
+	}); 
+	
+	$("#confrirm-link").on("click",function(event){
+	    event.preventDefault();
 	});
+
 </script>
 
 <div class="container-600">
@@ -68,9 +73,9 @@
 	
 	<!-- 이용 가능한 메뉴 구성 -->
 	<div class="row">
-		<a href="${pageContext.request.contextPath}/member/change_pw" class="link-btn">비밀번호 변경</a>
+		
 		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
-		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link">회원 탈퇴</a>
+		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" data-display-name="bye">회원 탈퇴</a>
 	</div>
 	
 	<div class="row text-left">
@@ -101,6 +106,13 @@
 	</div>
 </div>
 
+
+<script>
+
+function preventClick(e){
+	e.preventDefalut()
+}
+</script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 

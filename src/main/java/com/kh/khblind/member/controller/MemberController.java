@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
@@ -87,14 +88,43 @@ public class MemberController {
 		boolean result = dao.changeinfo(dto);
 
 		if (result) {
-			return "redirect:changeinfo";
+			return "redirect:changeinfo_success";
 
 		} else {
 			return "redirect:changeinfo?error";
-		}
-
+		}		
+		
 	}
+	@GetMapping("/changeinfo_success")
+	public String changeinfo() {
+		
+		return "member/changeinfo_success";
+	}
+	
+	//비밀번호 변경
+	@GetMapping("/change_pw")
+	public String change_pw() {
 
+		return "member/change_pw";
+	}
+	
+	@PostMapping("/change_pw")
+	public String changePw(HttpSession session, @RequestParam String newPw, @RequestParam String curPw) {
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		boolean result =dao.change_pw(newPw,dto.getMemberNo(),curPw);
+		if(result) {
+			return "redirect:change_pw_success";
+		}
+		else {
+			return "redirect:change_pw?error";
+		}
+	}
+	@GetMapping("/change_pw_success")
+	public String changePw() {
+		
+		return "member/change_pw_success";
+	}
+	
 	// 회원 탈퇴
 	@RequestMapping("/exit")
 	public String exit(HttpSession session) {
@@ -107,7 +137,6 @@ public class MemberController {
 		
 		return "redirect:deletecount";
 	}
-
 
 	@GetMapping("/deletecount")
 	public String deletecount() {

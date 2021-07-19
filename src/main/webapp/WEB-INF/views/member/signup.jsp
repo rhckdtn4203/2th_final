@@ -33,7 +33,7 @@
 		<div class="row text-left">
 			<label>전화번호</label>
 			<input type="text" name="memberPhone" required class="form-input form-input-underline"
-						placeholder="- 를 포함하여 입력 (예 : 010-XXXX-XXXX)">
+						placeholder="-를 포함하여 입력 (예 : 010-XXXX-XXXX)">
 		</div>
 		<div class="row text-left">
 			<label>이메일</label>
