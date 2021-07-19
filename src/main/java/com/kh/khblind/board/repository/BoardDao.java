@@ -1,7 +1,12 @@
 package com.kh.khblind.board.repository;
 
+import java.util.List;
+
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
+import com.kh.khblind.board.entity.BoardSearchListVO;
+import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.HashtagLinkDto;
 
 public interface BoardDao {
 	//시퀀스 번호를 생성하는 기능
@@ -16,5 +21,15 @@ public interface BoardDao {
 	boolean edit(BoardDto boardDto);
 	//게시글 삭제 기능
 	boolean delete(int boardNo);
+	
+	//해시태그 기능
+	List<String> getHash(BoardWriteVO boardWriteVO);
+	int insertHash(String hashtagName);
+	List<Integer> getHashNum(List<String> hashtag);
+	int searchHashNum(String hashTag);
+	void insertHashlink(List<HashtagLinkDto> hashtagLinklist);
+	String searchHash(String searchWord);
+	List<BoardSearchListVO> hashTagSearch(String searchWord);
+	int getHashSequence();
 
 }
