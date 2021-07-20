@@ -7,7 +7,7 @@
 
   <script>
   		$(function(){
-  			$("#cancelduring").click(function(e){
+  			$("#cancel").click(function(e){
   				
   				var approve = ${payDto.payTime};
   				var approveArr = approve.split('-');
@@ -110,7 +110,7 @@
 </ul>
 
 <c:if test="${searchVO.status == 'SUCCESS_PAYMENT}">
-	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancelduring">결제 취소 </a>
+	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancel">결제 취소 </a>
 </c:if>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
