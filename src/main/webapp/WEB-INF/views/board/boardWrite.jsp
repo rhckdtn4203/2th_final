@@ -22,10 +22,10 @@
             $("#that").attr("name", "");
             $("#that").attr("value", "");
 
-            $("#that").attr("name", "categoryNo");
+            $("#that").attr("name", "boardCategoryNo");
             
             $("#select2").change(function(){
-                $("#that").attr("value", $(this).val());
+                $("#that").attr("value", $("#select2").val());
             });
             
         }
