@@ -9,12 +9,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
+import com.kh.khblind.board.entity.JobCategoryGroupDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -31,6 +34,24 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void insert(BoardDto boardDto) {
 		sqlSession.insert("board.insert", boardDto);
+		
+	}
+	
+	@Override
+	public void boardCategoryInsert(BoardCategoryGroupDto baordCategoryGroupDto) {
+		sqlSession.insert("board.boardCategoryInsert", baordCategoryGroupDto);
+		
+	}
+	
+	@Override
+	public void jobCategoryInsert(JobCategoryGroupDto jobCategoryGroupDto) {
+		sqlSession.insert("board.jobCategoryInsert", jobCategoryGroupDto);
+		
+	}
+	
+	@Override
+	public void companyInsert(CompanyGroupDto companyGroupDto) {
+		sqlSession.insert("board.companyInsert", companyGroupDto);
 		
 	}
 
@@ -156,5 +177,10 @@ public class BoardDaoImpl implements BoardDao {
 	      
 	      
 	   }
+
+
+	
+
+	
 	   
 	}
