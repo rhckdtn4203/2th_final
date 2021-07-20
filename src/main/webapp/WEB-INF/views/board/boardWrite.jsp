@@ -1,74 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="${root}/css/common.css">
-	<link rel="stylesheet" type="text/css" href="${root}/css/menu.css">
-	<link rel="stylesheet" type="text/css" href="${root}/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="${root}/css/test.css">
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.s1').hide();
-			$('.s0').change(function(){
-				$('.s1').hide();
-				$('.s'+$(this).val()+'').show();
-			})
-		});
-	</script>
+	<script>
+	$(function(){
+    $("#select2").hide();
+    
+    $("#select1").change(function(){
+
+        if($(this).val()=="토픽")
+        {
+            $("#select2").show();
+
+            $("#that").attr("name", "");
+            $("#that").attr("value", "");
+
+            $("#that").attr("name", "boardCategoryNo");
+            
+            $("#select2").change(function(){
+                $("#that").attr("value", $("#select2").val());
+            });
+            
+        }
+        else if($(this).val()=="업종")
+        {
+            $("#select2").hide();
+
+            $("#that").attr("name", "");
+            $("#that").attr("value", "");
+
+            $("#that").attr("name", "jobCategoryNo");
+            $("#that").attr("value", "${dtoss.jobCategoryNo}");
+        }
+        else if($(this).val()=="기업")
+        {
+            $("#select2").hide();
+
+            $("#that").attr("name", "");
+            $("#that").attr("value", "");
+
+            $("#that").attr("name", "companyNo");
+            $("#that").attr("value", "${dtoss.companyNo}");
+        }
+
+    });
+});
+</script>
 	
 </head>	
 <body>
-	<main>
-		<header>
-			
-		</header>
-		<nav>
-			<!-- 메뉴 -->
-			<ul class="menu">
-				<li>
-					<a href="${root}/board/boardWrite">홈</a>
-				</li> 
-				<li>
-					<a href="#">기업 리뷰</a>
-				</li>
-			</ul>
-		</nav>
+
+	<form action="boardWrite" method="post">
 		
-		<h2>게시글 등록</h2>
-		
-		<form action="boardWrite" method="post">
-		
-				<h3>등록 위치 선택</h3>
-				<!-- 토픽을 클릭하면 다른 select가 뜨게 됌 -->
-					<select class="s0">
-						<option value="1">토픽</option>
-						<option>내 회사</option>
-						<option>업종</option>
-					</select>
-					
-					<select class="s1">
-						<option>토픽을 선택해주세요</option><!-- 나중에 토픽들 다 뜨도록 반복문 처리해야 함 -->
-						<option>여행</option>
-						<option>회사 생활</option>
-					</select>
-			<br><br>	
-					
-			제목 : <input type="text" name="boardTitle" required>
-			<br><br>
+
+        <select id="select1">
+            <option id="0">(선택해주세요)</option>
+            <option id="a">토픽</option>
+            <option id="b">업종</option>
+            <option id="c">기업</option>
+        </select>
+
+        <select id="select2">
+            <option class="subOption" value="">(선택해주세요)</option>
+            <!-- 밑에 꺼 반복문화 -->
+           	<c:forEach var="categoryDto" items="${categoryList}" >
+           		<option class="subOption" value="${categoryDto.boardCategoryNo}">${categoryDto.boardCategoryName}</option>           
+            </c:forEach>
+        </select>
+
+        <input id="that" type="text" name="" value=""> <!-- 나중에 hidden으로 바꾸기 -->
+
+        	<br><br>
+        	제목 : <input type="text" name="boardTitle" required>
+        	<br><br>
 			내용 : <textarea name="boardContent" required></textarea>
-			<br><br>
-			<!-- 해시태그수정후 작성  -->
-<!-- 			해시태그  : <input type="text" name="boardHashtag"> -->
 			<br><br>
 			<input type="submit" value="등록">
 		</form>
-	</main>	
+	
 	</body>
 </html>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
