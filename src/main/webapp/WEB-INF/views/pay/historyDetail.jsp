@@ -4,31 +4,32 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-
-  <script>
-  		$(function(){
-  			$("#cancel").click(function(e){
-  				
-  				var approve = ${payDto.payTime};
-  				var approveArr = approve.split('-');
-
-  				var now = new Date();
-  				var nowArr = now.split('-');
+<script>
+	$(function(){
+		$("#cancel").click(function(e){
+			// pay테이블에 저장된 결제 승인 시간 
+			var approve = "${payDto.payTime}";
+			
+			// 결제 날짜를 년도,월,일로 나눠서 Date()함수에 넣음 
+			var ayear = approve.substr(0,4);
+			var amonth = approve.substr(5,2);
+			var aday = approve.substr(8,2);
+			
+			var adate = new Date(ayear,amonth-1,aday);
 		
-  				var approveCompare = new Date(approveArr[0],approveArr[1],approveArr[2]);
-  				var nowCompare = new Date(nowArr[0],nowArr[1],nowArr[2]);
-  				
-  				
-	  			if(approveCompare.getTime()< nowCompare.getTime()){
-	  				window.alert("취소 가능기간이 지났습니다.(취소는 결제한 당일만 가능합니다.)");
-	  				e.preventDefault();	
-	  			}
-  				
-  			});
-  		});
-  
-  </script>  
-
+			// 결제한 날짜와 오늘날짜를 초로 변환 
+			var asecond = adate.getTime();	
+			var now = new Date().getTime();
+			
+			// 결제한 날짜 초 + (1000*하루의 초) 보다 현재시간이 더 지났다면 결제 취소 못함
+			if(asecond+(1000 * 3600 * 24 * 1)<now){
+				window.alert("취소 가능기간이 지났습니다.(취소는 결제 후 하루동안만 가능합니다.)");
+				e.preventDefault();
+			}
+			
+		});
+	});
+</script>
 <h2>결제 상세 내역</h2>
 <p>${payDto.payStatus} , ${payDto.payTime} </p>
 <ul>
@@ -76,13 +77,13 @@
 		상품명 : ${searchVO.item_name}
 		<c:if test="${searchVO.item_code != null}">(코드 : ${searchVO.item_code})</c:if>
 	</li>
-	<li>
+	<li >
 		상품 수량 : ${searchVO.quantity}
 	</li>
 	<li>
 		결제 시작 : ${searchVO.created_at}
 	</li>
-	<li>
+	<li id="approve">
 		결제 완료 : ${searchVO.approved_at}
 	</li>
 	<c:if test="${searchVO.canceled_at != null}">
@@ -109,7 +110,7 @@
 	</li>
 </ul>
 
-<c:if test="${searchVO.status == 'SUCCESS_PAYMENT}">
+<c:if test="${searchVO.status == 'SUCCESS_PAYMENT'}">
 	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancel">결제 취소 </a>
 </c:if>
 
