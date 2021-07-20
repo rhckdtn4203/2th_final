@@ -4,8 +4,33 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>결제 상세 내역</h2>
 
+  <script>
+  		$(function(){
+  			$("#cancelduring").click(function(e){
+  				
+  				var approve = ${payDto.payTime};
+  				var approveArr = approve.split('-');
+
+  				var now = new Date();
+  				var nowArr = now.split('-');
+		
+  				var approveCompare = new Date(approveArr[0],approveArr[1],approveArr[2]);
+  				var nowCompare = new Date(nowArr[0],nowArr[1],nowArr[2]);
+  				
+  				
+	  			if(approveCompare.getTime()< nowCompare.getTime()){
+	  				window.alert("취소 가능기간이 지났습니다.(취소는 결제한 당일만 가능합니다.)");
+	  				e.preventDefault();	
+	  			}
+  				
+  			});
+  		});
+  
+  </script>  
+
+<h2>결제 상세 내역</h2>
+<p>${payDto.payStatus} , ${payDto.payTime} </p>
 <ul>
 	<li>거래번호 : ${searchVO.tid}</li>
 	<li>
@@ -84,7 +109,8 @@
 	</li>
 </ul>
 
-<h1><a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}">결제 취소 </a></h1>
-
+<c:if test="${searchVO.status == 'SUCCESS_PAYMENT}">
+	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancelduring">결제 취소 </a>
+</c:if>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
