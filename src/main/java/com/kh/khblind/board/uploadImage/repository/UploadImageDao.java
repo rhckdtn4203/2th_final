@@ -16,15 +16,9 @@ public interface UploadImageDao {
 	//폴더이름 정하기
 	String getImageFolderName(int boardNo);
 	//변환작업 거치기
-	void convertImage(ConvertImageVo convertImageVo) throws IOException;
-	
-	//랜버트 관련
-//	List<String> makeRandomFileName();
-//	List<Integer> getRotationValue(List<String> uploadOriginalFile);
-//	String convertFile(List<String> fileNameList);
-//	void deleteOrigin(String uploadPath);
-//	
-//	//DB관련
-//	int getSequence();
-//	boolean insert(PictureDto pictureDto);
+	List<String> convertImage(ConvertImageVo convertImageVo) throws IOException;
+	//원본 파일 지우기
+	boolean deleteOrigin(ConvertImageVo convertImageVo, List<String> deleteFileList);
+	//썸네일만들기
+	boolean makeThumb (ConvertImageVo convertImageVo, String firstFileFinalName) throws IOException;
 }

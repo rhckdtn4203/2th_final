@@ -1,6 +1,5 @@
 package com.kh.khblind.board.uploadImage.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -9,16 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.khblind.board.uploadImage.entity.UploadImageVo;
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
-import com.kh.khblind.member.entity.MemberDto;
 
 @Controller
 @RequestMapping("/board")
@@ -45,22 +41,32 @@ public class UploadImageController {
 		System.out.println("[콘]- rotationValueList" + rotationValueList);
 		
 		//3. 폴더 이름을 미리 정한다.
-		int tempBoardNo = 2000;
-		String FolderName = uploadImageDao.getImageFolderName(tempBoardNo);
-		System.out.println("[콘]- FolderName" + FolderName);
+		int tempBoardNo = 2034;
+		String superFolderName = uploadImageDao.getImageFolderName(tempBoardNo);
+		System.out.println("[콘]- FolderName" + superFolderName);
 		
 		//4. 1과 2를 활용하여 파일 리사이즈를 거친다
 		ConvertImageVo convertImageVo =ConvertImageVo.builder()
 														.fileNameList(fileNameList)
 														.rotationValueList(rotationValueList)
-														.FolderName(FolderName)
+														.superFolderName(superFolderName)
+														.folderName(Integer.toString(tempBoardNo))
 														.build();
+		System.out.println("convertImageVo" + convertImageVo);
 		
-		uploadImageDao.convertImage(convertImageVo);
+		List<String> readyFileNameList = uploadImageDao.convertImage(convertImageVo);
 		
-//		uploadImageDao.convertFile(fileNameList);
+		System.out.println("지울까하는데...");
+		//5. 삭제하기
+		boolean deleteSuccess = uploadImageDao.deleteOrigin(convertImageVo, readyFileNameList);
+		System.out.println("삭제 성공 = " + deleteSuccess);
 		
-		
+		//6. 썸네일 만들기
+		String firstFileFullName = readyFileNameList.get(0);
+		String firstFileFinalName = firstFileFullName.replace("-ready", "");
+		boolean makeThumbSuccess = uploadImageDao.makeThumb(convertImageVo, firstFileFinalName);
+		System.out.println("썸네일 성공 = " + makeThumbSuccess);
+
 		
 		return "/board/사진 업로드 성공!";
 	}

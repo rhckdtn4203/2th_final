@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class ConvertImageVo {
 	List<String> fileNameList;
 	List<Integer> rotationValueList;
-	String FolderName;
+	String superFolderName;
+	String folderName;
 }
