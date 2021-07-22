@@ -83,7 +83,7 @@
 	<li>
 		결제 시작 : ${searchVO.created_at}
 	</li>
-	<li id="approve">
+	<li>
 		결제 완료 : ${searchVO.approved_at}
 	</li>
 	<c:if test="${searchVO.canceled_at != null}">
