@@ -10,4 +10,6 @@ public class PayCancelPrepareVO {
 	private String tid;
 	private int cancel_amount;
 	private int cancel_tax_free_amount;
+	
+	private int payNo;
 }

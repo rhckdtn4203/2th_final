@@ -10,4 +10,5 @@ public interface PayDao {
 	void approve(int payNo);
 	List<PayDto> list(int payBuyer);
 	PayDto get(int payNo);
+	void cancel(int payNo);
 }
