@@ -38,11 +38,10 @@ public class CertDaoImpl implements CertDao {
 	public void upgrade(int memberNo) {
 		sqlSession.update("cert.upgrade", memberNo);
 	}
-
+  
 	@Override
 	public boolean checkCompany(String companyDomain) {
 		CompanyDto check = sqlSession.selectOne("cert.checkCompany", companyDomain);
 		return check != null;
 	}
-
 }
