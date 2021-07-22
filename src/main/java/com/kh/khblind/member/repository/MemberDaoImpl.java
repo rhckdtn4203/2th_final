@@ -43,10 +43,17 @@ public class MemberDaoImpl implements MemberDao {
 		sqlss.delete("member.exit", memberNo);
 	}
 	
-	// 회원 등급 업데이트 (결제) 
+	// 회원 등급 올리기 (결제) 
 	@Override
 	public void gradeup(int memberNo) {
 		sqlss.update("member.gradeup", memberNo);
+		
+	}
+	
+	// 회원 등급 내리기 (결제)
+	@Override
+	public void gradedown(int memberNo) {
+		sqlss.update("member.gradedown",memberNo);
 		
 	}
 	

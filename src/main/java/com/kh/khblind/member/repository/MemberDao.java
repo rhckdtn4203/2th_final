@@ -10,5 +10,5 @@ public interface MemberDao {
 	boolean changeinfo(MemberDto dto);
 	void exit(int memberNo);
 	void gradeup(int memberNo);
-	
+	void gradedown(int memberNo);
 }
