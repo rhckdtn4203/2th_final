@@ -8,4 +8,5 @@ public interface CertDao {
 	void deleteByEmail(String email);
 	void clear();
 	void upgrade(int memberNo);
+	boolean checkCompany(String companyDomain);
 }

@@ -35,7 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<update id="upgrade">
-		update member set grade_no = grade_no + 2 where member_no = ${memberNo}
+		update member set grade_no = grade_no + 2 where member_no = #{memberNo}
 	</update>
 	
+	<select id="checkCompany" resultType="CompanyDto" parameterType="String">
+		select * from company where company_domain = #{companyDomain}
+	</select>
+  
 </mapper>
