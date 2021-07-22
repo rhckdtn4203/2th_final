@@ -7,9 +7,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="company">
 
 	<insert id="insert" parameterType="CompanyDto">
-		insert into company values(company_seq.nextval, 
-		#{companyName}, #{companyUrl}, 
-		#{companyDomain}, #{companyAddr})
+		insert into company values(
+			company_seq.nextval, 
+			#{companyName}, #{companyUrl}, 
+			#{companyDomain}, #{companyAddr}
+		)
 	</insert>
+	
+	<insert id="regist" parameterType="CompanyRegistDto">
+		insert into company_regist values(
+			company_regist_seq.nextval,
+			#{companyRegistName}, #{companyRegistDomain}
+		)
+	</insert>
+	
+	<select id="registList" resultType="CompanyRegistDto">
+		select * from company_regist
+	</select>
 	
 </mapper>

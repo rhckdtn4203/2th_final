@@ -15,6 +15,6 @@
 		<br><span style="color:red;">메일 주소를 확인해주시고, 등록이 안된 회사라면 다음 방식을 이용해주십시오.</span>
 		<br>
 		<br><a href="#">사원증으로 인증하기</a>
-		<br><a href="#">회사 등록하기</a>
+		<br><a href="${pageContext.request.contextPath}/company/registCompany">회사 등록 신청하기</a>
 	</c:if>
 </form>
