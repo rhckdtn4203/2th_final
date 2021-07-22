@@ -50,10 +50,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- select 5. 해당게시글에 총 투표한 개수 (퍼센트에 이용)-->
 	<select id="getAllCount" parameterType="int" resultType="int">
-			select count(vote_result_no)
-				from vote_result 
-					where vote_topic_no=
-					(select vote_topic_no from vote_topic where board_no=#{boardNo})
+		select count(vote_result_no)
+			from vote_result 
+				where vote_topic_no=
+				(select vote_topic_no from vote_topic where board_no=#{boardNo})
 	</select>
 
+	<!-- select6. 로그인한 사람이 해당 투표를 했는지 안했는지 알려줌 -->
+	<select id="didYouVote" parameterType="VoteResultDto" resultType="int">
+		select count(vote_result_no) count from vote_result where vote_topic_no = #{voteTopicNo} and member_no =#{memberNo}
+	</select> 
+		
+		
+	<!-- select7. 로그인한 사람이 해당 투표를 했는지 안했는지 알려줌 -->
+	<select id="getSelectedOptionNoThatTopic" parameterType="VoteResultDto" resultType="int">
+		select vote_option_no seletedOptionNo from vote_result where vote_topic_no = #{voteTopicNo} and member_no = #{memberNo}
+	</select> 
+	
+	<!-- select8. 투표결과 테이블에서 특정 투표선택지 개수만 세기 -->
+	<select id="getSingleVoteOptionCount" parameterType="int" resultType="int">
+		select count(vote_option_no) from vote_result where vote_option_no = #{voteOptionNo}
+	</select>
+		 
 </mapper>

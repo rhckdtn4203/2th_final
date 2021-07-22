@@ -17,6 +17,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	insert into board values(#{boardNo}, #{memberNo}, #{boardTitle}, #{boardContent}, 0, sysdate)
 	 </insert>
 	 
+	 <insert id="boardCategoryInsert" parameterType="BoardCategoryGroupDto">
+	 	insert into board_category_group values(#{boardCategoryNo}, #{boardNo})
+	 </insert>
+	 
+	 <insert id="jobCategoryInsert" parameterType="JobCategoryGroupDto">
+	 	insert into job_category_group values(#{jobCategoryNo}, #{boardNo})
+	 </insert>
+	 
+	 <insert id="companyInsert" parameterType="CompanyGroupDto">
+	 	insert into company_group values(#{companyNo}, #{boardNo})
+	 </insert>
+	 
 	 <select id="find" parameterType="int" resultType="BoardMemberVO">
 	 	select * from board_detail_view where board_no = #{boardNo}
 	 </select>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="hashtag">
+	<select id="getSequence" resultType="int">
+	select hashtag_seq.currval from dual
+	</select>
+	<insert id="insertHash" parameterType="string">
+	insert into hashtag values(hashtag_seq.nextval,#{hashtagName}) 
+	</insert>
+	<select id="searchHash" resultType="HashtagDto" parameterType="string">
+	select * from hashtag where hashtag_name = #{hashtagName}
+	</select>
+	<insert id="hashtaglinkinsert"> 
+	insert into hashtag_link values(#{boardNo},#{hashtagNo})
+	</insert>
+	<select id="hashTagSearch" resultType="BoardSearchListVO">
+	select BG.board_category_no,BC.board_category_name,HS.board_title,HS.board_content,
+	HS.board_count,HS.board_date,HS.company_name,HS.member_name
+	from
+	board_category_group BG 
+	left outer join board_category BC on BC.board_category_no = BG.board_category_no
+	inner join Hashtag_search_viewB HS on HS.board_no = BG.board_no where hs.hashtag_name=#{searchWord}
+	</select>
+	
+	
+</mapper>

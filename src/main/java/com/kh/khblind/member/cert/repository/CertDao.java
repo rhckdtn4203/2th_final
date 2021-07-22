@@ -7,4 +7,5 @@ public interface CertDao {
 	boolean check(CertDto certDto);
 	void deleteByEmail(String email);
 	void clear();
+	void upgrade(int memberNo);
 }
