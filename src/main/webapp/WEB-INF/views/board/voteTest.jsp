@@ -192,11 +192,12 @@
 								type: "GET",
 								success:function(resp){
 								
-										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
-										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
+// 										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
+// 										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
 										var target = $("#option-"+ resp.voteOptionNo +"-gauge");
 										
-										target.removeClass("vote-progress-bg-2"); ///여기서 부터 할것
+										target.removeClass("vote-progress-bg-2");
+										target.addClass("vote-progress-bg-4", {duration:500}).removeClass("vote-progress-bg-4", {duration:500});
 										
 // 										target.animate( {'background-color':'MediumSeaGreen'}, 2000, 'swing');
 
