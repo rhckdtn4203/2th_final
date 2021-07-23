@@ -40,6 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <delete id="delete" parameterType="int">
 	 	delete board where board_no = #{boardNo}
 	 </delete>
+	 
+	 <select id="getCompanyBoardList" parameterType="int" resultType="CompanyBoardDto">
+	 	select * from company_board_view where company_no = #{companyNo}
+	 </select>
+	 
+	 <select id="getJobCategoryBoardList" parameterType="int" resultType="JobCategoryBoardDto">
+	 	select * from job_category_board_view where job_category_no = #{jobCategoryNo}
+	 </select>
 </mapper>
 
 
