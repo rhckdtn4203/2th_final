@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	
+	<!-- 시퀀스 생성 -->
+	<select id="sequence" resultType="int">
+		select search_seq.nextval from dual
+	</select>
+	
+	<!-- 검색어 입력-->
+	<insert id="insert" parameterType="SearchDto">
+		insert into search values(
+			#{searchNo},
+			#{searchKeyword},
+			0
+		)
+	</insert>
+	
+	<!-- 검색어가 존재한다면 -->
+	<update id="update" parameterType="String">
+		update search
+		set search_count = search_count+1
+		where search_keyword = #{searchKeyword}
+	</update>
+	
+	<!-- 검색시 보여줄 게시판 리스트 -->
+	<!-- instr, like -->
+	<select id="list" resultType="BoardDto" parameterType="String">
+		select * from board
+		where instr(board_title,#{searchKeyword})>0 
+			or instr(board_content,#{searchKeyword})>0
+		order by board_date desc
+	</select>
+	
+	<select id="get" resultType="SearchDto" parameterType="String">
+		select * from search
+		where search_keyword = #{searchKeyword}
+	</select>
+	
+</mapper>

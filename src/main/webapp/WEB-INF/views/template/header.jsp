@@ -31,6 +31,7 @@ li.write {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${root}/js/confirm-link.js"></script>
+
 </head>
 
 <body>
@@ -64,3 +65,34 @@ li.write {
 			</ul>
 
 		</nav>	
+		
+		<!-- 검색창  -->
+		<form action="search/insert" method="post">
+			<input type="text" name="searchKeyword" placeholder="키워드로 입력하세요.">
+			<input type="submit" value="검색" id="search">
+		</form>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
