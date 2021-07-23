@@ -9,4 +9,5 @@ public interface CompanyDao {
 	void insert(CompanyDto companyDto);
 	void registCompany(CompanyRegistDto companyRegistDto);
 	List<CompanyRegistDto> companyRegistList();
+	boolean companyRegistDelete(int companyRegistNo);
 }

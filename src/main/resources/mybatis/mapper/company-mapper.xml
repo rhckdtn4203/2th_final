@@ -25,4 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from company_regist
 	</select>
 	
+	<delete id="companyRegistDelete" parameterType="int">
+		delete company_regist where company_regist_no = #{companyRegistNo}
+	</delete>
+	
 </mapper>

@@ -30,4 +30,10 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.selectList("company.registList");
 	}
 
+	@Override
+	public boolean companyRegistDelete(int companyRegistNo) {
+		int count = sqlSession.delete("company.companyRegistDelete", companyRegistNo);
+		return count > 0;
+	}
+
 }
