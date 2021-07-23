@@ -2,11 +2,21 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
 
+<script>
+	$(function(){
+		window.alert("로그아웃 후 다시 로그인해 주세요.");
+		location.href = "${root}/member/logout" ;
+		
+		
+	});
+</script>
+
 <h1>결제가 완료되었습니다.</h1>
-<h3> 재로그인 후 등급이 반영됩니다. 반드시 로그아웃 후 다시 로그인 하세요</h3>
+
 <hr>
 
 <h2>결제 상세 내역</h2>
@@ -25,8 +35,7 @@
 			<c:when test="${searchVO.status == 'AUTH_PASSWORD'}">비밀번호 인증 완료</c:when>
 			<c:when test="${searchVO.status == 'ISSUED_SID'}">SID 발급 완료</c:when>
 			<c:when test="${searchVO.status == 'SUCCESS_PAYMENT'}">결제 성공</c:when>
-			<c:when test="${searchVO.status == 'PART_CANCEL_PAYMENT'}">결제 부분 취소</c:when>
-			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제 전체 취소</c:when>
+			<c:when test="${searchVO.status == 'CANCEL_PAYMENT'}">결제  취소</c:when>
 			<c:when test="${searchVO.status == 'FAIL_AUTH_PASSWORD	'}">사용자 비밀번호 인증 실패</c:when>
 			<c:when test="${searchVO.status == 'QUIT_PAYMENT'}">사용자 결제 중단</c:when>
 			<c:when test="${searchVO.status == 'FAIL_PAYMENT'}">결제 승인 실패</c:when>

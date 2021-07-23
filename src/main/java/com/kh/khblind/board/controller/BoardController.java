@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +21,16 @@ import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CommentsVO;
+import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
+import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 import com.kh.khblind.board.repository.BoardDao;
+import com.kh.khblind.board.repository.CommentDao;
 import com.kh.khblind.member.entity.MemberDto;
-
+@RequestMapping("/board")
 @Controller
 public class BoardController {
 	
@@ -35,10 +40,11 @@ public class BoardController {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	@RequestMapping("/")
-	public String home() {
-		return "home";
-	}
+	@Autowired
+	private CommentDao commentDao;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model) {
@@ -126,7 +132,9 @@ public class BoardController {
 		
 		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
 		BoardMemberVO boardMemberVO = boardDao.find(boardNo);
-
+		List<CommentsVO> commentsList = sqlSession.selectList("comments.list",boardNo);
+	      
+	      model.addAttribute("commentsList", commentsList);
 		model.addAttribute("boardDto", boardDto);
 		model.addAttribute("boardMemberVO", boardMemberVO);
 
@@ -137,8 +145,40 @@ public class BoardController {
 		else {
 			return "글없다페이지";
 		}
-		
-		
+	}
+		@PostMapping("commentInsert")
+		   public String commentInsert(
+		         HttpSession session,
+		         @RequestParam String commentContent, int boardNo) {
+		       //세션 1개(회원번호)
+		         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		         int memberNo = memberDto.getMemberNo();
+		         CommentsVO commentsVO = new CommentsVO();
+		         commentsVO.builder()
+		                  .boardNo(boardNo)
+		                  .memberNo(memberNo)
+		                  .commentsContent(commentContent)
+		         .build();
+		         commentDao.commentInsert(commentsVO);
+		      return "redirect:board/boardDetail?boardNo="+boardNo;
+		   }
+		   @PostMapping("nestedCommentInsert")
+		   public String nestedCommentInsert(
+		         HttpSession session,
+		         @RequestParam String commentContent, int boardNo,int superNo
+		         ) {
+		       //세션 1개(회원번호)
+		         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		         int memberNo = memberDto.getMemberNo();
+		         CommentsVO commentsVO = new CommentsVO();
+		         commentsVO.builder()
+		                  .boardNo(boardNo)
+		                  .commentsSuperNo(superNo)
+		                  .memberNo(memberNo)
+		                  .commentsContent(commentContent)
+		         .build();
+		         commentDao.nestedCommentInsert(commentsVO);
+		      return "redirect:board/boardDetail?boardNo="+boardNo;	
 	}
 	
 	@GetMapping("/boardEdit")
@@ -165,6 +205,43 @@ public class BoardController {
 			) {
 		boardDao.delete(boardNo);
 		return "redirect:/board/boardList"; //목록으로 리다이렉트
+	}
+	
+	@GetMapping("/boardList")
+	public String boardList(HttpSession session,  Model model, @RequestParam String type) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		//기업별 게시판 목록
+		if(type.equals("companyBoard")){
+			int companyNo = memberDto.getCompanyNo();	
+			List<CompanyBoardDto> companyBoardList = boardDao.getCompanyBoardList(companyNo);
+			model.addAttribute("companyBoardList", companyBoardList);
+			
+				if(companyBoardList != null) {
+					return "/board/boardList";
+				}
+				else {
+					return "글없다페이지";
+				}
+		}
+		
+		//업종별 게시판 목록
+		else if(type.equals("jobCategoryBoard")) {
+			int jobCategoryNo = memberDto.getJobCategoryNo();
+			List<JobCategoryBoardDto> jobCategoryBoardList = boardDao.getJobCategoryBoardList(jobCategoryNo);
+			model.addAttribute("jobCategoryBoardList", jobCategoryBoardList);
+			
+				if(jobCategoryBoardList != null) {
+					return "/board/boardList";
+				}
+				else {
+					return "글없다페이지";
+				}
+		}
+		//type = 이도저도 아닌거 들어올때의 경우의 수
+		else {
+			return "에러페이지 404";
+		}
+			
 	}
 	
 

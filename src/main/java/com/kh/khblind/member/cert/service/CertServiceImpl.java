@@ -32,6 +32,15 @@ public class CertServiceImpl implements CertService {
 	@Autowired
 	private RandomService randomService;
 
+	// DB에 회사가 존재하는지 확인
+	@Override
+	public boolean checkCompany(String email) {
+		String companyDomain = email.substring(email.lastIndexOf("@"));
+		boolean result = certDao.checkCompany(companyDomain);
+		
+		return result;
+	}
+
 	// 인증번호 발송 기능
 	@Override
 	@Transactional

@@ -40,9 +40,16 @@ public class CertController {
 			HttpSession session, 
 			RedirectAttributes attr) 
 					throws MessagingException, IOException {
-		certService.sendCertification(email, session);
-		attr.addAttribute("email", email);
-		return "redirect:certInsert";
+		boolean check = certService.checkCompany(email);
+		
+		if(check) {
+			certService.sendCertification(email, session);
+			attr.addAttribute("email", email);
+			return "redirect:certInsert";
+		}
+		else {
+			return "redirect:emailInsert?error";
+		}
 	}
 	
 	// 인증번호 입력 페이지

@@ -14,9 +14,11 @@ import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
+import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 
 @Repository
@@ -178,9 +180,18 @@ public class BoardDaoImpl implements BoardDao {
 	      
 	   }
 
+		@Override
+		public List<CompanyBoardDto> getCompanyBoardList(int companyNo) {
+			List<CompanyBoardDto> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", companyNo);
+			return companyBoardList;
+		}
 
-	
+		@Override
+		public List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo) {
+			List<JobCategoryBoardDto> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", jobCategoryNo);
+			return jobCategoryBoardList;
+		}
 
-	
-	   
+
+   
 	}

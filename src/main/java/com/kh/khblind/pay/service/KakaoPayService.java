@@ -165,6 +165,9 @@ public class KakaoPayService implements PayService{
 
 	@Override
 	public PayCancelVO cancel(PayCancelPrepareVO prepareVO) throws URISyntaxException {
+		
+		PayDto payDto = payDao.get(prepareVO.getPayNo());
+		
 		//[1] 요청 도구 생성
 		RestTemplate template = new RestTemplate();
 			
@@ -176,7 +179,7 @@ public class KakaoPayService implements PayService{
 		//[3] Http Body 생성(ex : 편지내용)
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("cid", cid);
-		body.add("tid", prepareVO.getTid());
+		body.add("tid", payDto.getPayTid());
 		body.add("cancel_amount", String.valueOf(prepareVO.getCancel_amount()));
 		body.add("cancel_tax_free_amount", String.valueOf(prepareVO.getCancel_tax_free_amount()));
 				
@@ -189,7 +192,14 @@ public class KakaoPayService implements PayService{
 		//[6] 전송
 		PayCancelVO cancelVO = 
 					template.postForObject(uri, entity, PayCancelVO.class);
-	
+		
+		// DB상태를 취소로 변경하는 코드 
+		payDao.cancel(prepareVO.getPayNo());
+		
+		// 결제 취소 후 member의 grade 내리기
+		int memberNo = payDto.getPayBuyer();
+		memberDao.gradedown(memberNo);
+		
 		return cancelVO;	
 	}
 

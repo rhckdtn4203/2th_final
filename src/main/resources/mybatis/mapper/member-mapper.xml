@@ -44,5 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set grade_no=grade_no+1 where member_no=#{memberNo}
 	</update>
 	
+	<!-- 결제 취소하면 등급 내리기 -->
+	<update	id="gradedown" parameterType="MemberDto">
+		update member set grade_no=grade_no-1 where member_no=#{memberNo}
+	</update>
 
 </mapper>
