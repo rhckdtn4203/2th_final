@@ -30,6 +30,7 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
+import com.kh.khblind.board.uploadImage.entity.BoardImageDto;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
 
 //import com.drew.imaging.ImageMetadataReader;
@@ -83,10 +84,9 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			try {
 				Metadata metadata = ImageMetadataReader.readMetadata(target);
 				Directory directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-				System.out.println("directory" + directory);
-				orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-				System.out.println(orientation);
-
+				if (directory != null) {
+					orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+				}
 			} catch (ImageProcessingException e) {
 				e.printStackTrace();
 				System.out.println("ImageProcessingException" + "이미지 문제");
@@ -131,12 +131,16 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		for (int i = 0; i < convertImageVo.getFileNameList().size(); i++) {
 			
-			String finalFolderName = SavedDir + "\\" + convertImageVo.getSuperFolderName()  +"\\" + convertImageVo.getFolderName();
+			String finalFolderName = SavedDir + "\\" + convertImageVo.getSuperFolderName()  +"\\" + convertImageVo.getFolderName() +"\\";
 			File checkFolder = new File(finalFolderName);
 			if(!checkFolder.exists()) {
+				checkFolder.mkdirs();
 				System.out.println("없어서 만듦" + checkFolder);
-				checkFolder.mkdir();
-			};
+				System.out.println("그래서 있어?" + checkFolder.exists());
+			}
+			else {
+				System.out.println("있어서 안 만들어!" + checkFolder);
+			}
 			
 			// 1. 랜덤 파일이름 만들기 (겹치지 않을 때까지)
 			boolean isSameName = true;
@@ -152,7 +156,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 				randomFileName = random.ints(start, end + 1).limit(length)
 						.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
 
-				File sameNameFile = new File(finalFolderName, randomFileName);
+				File sameNameFile = new File(finalFolderName, randomFileName + ".jpg");
 				if (!sameNameFile.exists()) {
 					isSameName = false;
 					System.out.println("만들어진 파일명 : " + randomFileName);
@@ -168,7 +172,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			File inputFile = new File(RawDir, convertImageVo.getFileNameList().get(i));
 //			File outputFile = new File(finalFolderName, randomFileName);
 			String outputFilePath = finalFolderName + "\\" + randomFileName + "-ready.jpg";
-			System.out.println("최종 파일 경로 " + outputFilePath);
+			System.out.println("최종 파일 경로 가 있나요? " + outputFilePath);
 //			String outputPath2 = outputFile.getPath();
 
 //			System.out.println("outputPath" + outputPath);
@@ -193,7 +197,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			Graphics g = newImage.getGraphics();
 			g.drawImage(resizedImage, 0, 0, null);
 			g.dispose();
-
+			System.out.println(200);
 			ImageIO.write(newImage, imgFormat, new File(outputFilePath));
 
 			// 3. 이미지 회전해주기
@@ -236,6 +240,12 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			
 			readyFileNameList.add(randomFileName + "-ready.jpg");
 			System.out.println("끝");
+			
+			BoardImageDto boardImageDto = BoardImageDto.builder()
+					.boardNo(convertImageVo.getBoardNo())
+					.boardImageUrl(finalFolderName +"/"+ randomFileName + ".jpg")
+					.build();
+			sqlSession.insert("upload-image.insert", boardImageDto);
 		}
 		return readyFileNameList;
 	}
@@ -253,7 +263,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			
 			String finalFolderName = SavedDir + "\\" + convertImageVo.getSuperFolderName()  +"\\" + convertImageVo.getFolderName();
 			
-			//2ready파일을 지웁니다.
+			//2. ready파일을 지웁니다.
 			for(int i = 0; i<readyFileNameList.size(); i++) {
 				File deleteReadyFile = new File(finalFolderName, readyFileNameList.get(i));
 				System.out.println("삭제할 파일은 " +deleteReadyFile+"존재하는가? " + deleteReadyFile.exists());
@@ -286,4 +296,5 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		return false;
 	}
+
 } 
