@@ -44,7 +44,7 @@
 				<td>${companyRegistDto.companyRegistDomain }</td>
 				<td>
 					<input class="companyRegist" type="button" value="등록">
-					<input class="companyRegistDelete" type="button" value="삭제" onclick="deleteCompanyRegist(${companyRegistDto.companyRegistNo})">
+					<input class="companyRegistDelete" type="button" value="삭제">
 				</td>
 			</tr>
 		</c:forEach>
