@@ -9,26 +9,29 @@
 <table border="1" width="700" align="center">
 	<thead>
 		<tr>
-			<th>번호></th>
+			<th>번호</th>
 			<th width="40%">제목</th>
 			<th>내용</th>
 			<th>작성자</th>
-			<th>내용</th>
-			<th>좋아요 수</th>
+			<th>조회수</th>
+			<th>작성일</th>
 			<th>댓글 수</th>
+			<th>좋아요수</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- for~ -->
+		<c:forEach var="companyBoardDto" items="${companyBoardList}">
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>	
+			<td>"${companyBoardDto.companyNo}"</td>
+			<td>"${companyBoardDto.boardTitle}"</td>
+			<td>"${companyBoardDto.boardContent}"</td>
+			<td>"${companyBoardDto.memberNick}"</td>
+			<td>"${companyBoardDto.boardCount}"</td>
+			<td>"${companyBoardDto.boardDate}"</td>
+			<td>?</td>
+			<td>?</td>
+		</tr>
+		</c:forEach>	
 	</tbody>
 </table>
 
