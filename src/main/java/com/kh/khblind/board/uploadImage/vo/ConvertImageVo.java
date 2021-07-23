@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class ConvertImageVo {
+	int boardNo;
 	List<String> fileNameList;
 	List<Integer> rotationValueList;
 	String superFolderName;
