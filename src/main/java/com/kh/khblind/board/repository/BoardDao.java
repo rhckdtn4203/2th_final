@@ -7,8 +7,10 @@ import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
+import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 
 public interface BoardDao {
@@ -37,5 +39,10 @@ public interface BoardDao {
 	String searchHash(String searchWord);
 	List<BoardSearchListVO> hashTagSearch(String searchWord);
 	int getHashSequence();
+	
+	//기업별 목록조회 기능
+	List<CompanyBoardDto> getCompanyBoardList(int companyNo);
+	//업종별 목록조회 기능
+	List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo);
 
 }
