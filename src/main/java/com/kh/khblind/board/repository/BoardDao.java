@@ -2,11 +2,13 @@ package com.kh.khblind.board.repository;
 
 import java.util.List;
 
+import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CheckBoardTypeDto;
 import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
@@ -44,10 +46,17 @@ public interface BoardDao {
 	List<CompanyBoardDto> getCompanyBoardList(int companyNo);
 	//업종별 목록조회 기능
 	List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo);
+	//토픽별 목록조회 기능
+	List<BoardCategoryBoardDto> getBoardCategoryBoardList(int boardCategoryNo);
 	
 	//기업 이름 조회 기능
 	String getCompanyName(int companyNo);
 	//업종 이름 조회 기능
 	String getJobCategoryName(int jobCategoryNo);
+	//토픽 이름 조회 기능
+	String getBoardCategoryName(int boardCategoryNo);
+	
+	//주제 종료 조회 기능
+	CheckBoardTypeDto getBoardType(int boardNo);
 
 }
