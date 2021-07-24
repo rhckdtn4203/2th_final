@@ -1,5 +1,6 @@
 package com.kh.khblind.board.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
+import com.kh.khblind.board.entity.BoardEditGetInfoVO;
 import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
+import com.kh.khblind.board.entity.BoardWriteFullVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
@@ -31,6 +35,11 @@ import com.kh.khblind.board.entity.JobCategoryGroupDto;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.board.repository.BoardLikeDao;
 import com.kh.khblind.board.repository.CommentDao;
+import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
+import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
+import com.kh.khblind.board.vote.entity.VoteInsertInfoVo;
+import com.kh.khblind.board.vote.entity.VoteTopicDto;
+import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
 @RequestMapping("/board")
 @Controller
@@ -38,6 +47,12 @@ public class BoardController {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private UploadImageDao  uploadImageDao;
+	
+	@Autowired
+	private VoteDao voteDao;
 	
 	@Autowired
 	private CategoryDao categoryDao;
@@ -65,72 +80,152 @@ public class BoardController {
 			//준비 : DB조회 1개(시퀀스번호) + 세션 1개(회원번호) + 파라미터 3개(제목,내용,해시태그)
 			
 		HttpSession session,	
-		@ModelAttribute BoardDto boardDto,
-		@ModelAttribute BoardWriteVO boardWriteVO,
-		@ModelAttribute BoardCategoryGroupDto boardCategoryGroupDto,
-		@ModelAttribute JobCategoryGroupDto jobCategoryGroupDto,
-		@ModelAttribute CompanyGroupDto companyGroupDto
-
-		) {
-		//세션 1개(회원번호)
+		@ModelAttribute BoardWriteFullVO boardWriteFullVO
+		) throws IOException {
+		/*
+		 * 아래와 같은 순서로 진행된다.
+		 * 1.재료모으기
+		 * 2.등록
+		 * 3.그룹등록 
+		 */
+		
+		System.out.println(boardWriteFullVO);
+		
+		//재료 모으기1-1. 회원번호
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		int memberNo = memberDto.getMemberNo();		
-//		int memberNo = 2; //임시데이터
-		boardDto.setMemberNo(memberNo);
-		
-		//DB조회 1개(시퀀스번호)
+		//재료 모으기1-2. 글번호
 		int boardNo = boardDao.getSequence();
-		boardDto.setBoardNo(boardNo);
 		
-		System.out.println("[여기는 컨트롤러]boardDto = " + boardDto);
-		
+		//등록2-1-1. 게시글 등록
+		BoardDto boardDto = BoardDto.builder()
+									.boardNo(boardNo)
+									.memberNo(memberNo)
+									.boardTitle(boardWriteFullVO.getBoardTitle())
+									.boardContent(boardWriteFullVO.getBoardContent())
+									.build();
 		boardDao.insert(boardDto);
 		
-//		if(that의 name에 속성값이 boardCategoryNo면 밑에 등록메소드가 실행되게 )	
-		if(boardCategoryGroupDto.getBoardCategoryNo() != 0) {
-		//게시판 카테고리 insert
-		//boardCategoryNo는 사용자가 select한 값이 바로 name으로 넘어가 categoryNo에 들어가므로 여기서 안가져와도 된다.
-		boardCategoryGroupDto.setBoardNo(boardNo);
-		boardDao.boardCategoryInsert(boardCategoryGroupDto);
-		}
-		
-//		else if(that의 name에 속성값에 jobCategoryNo면 밑에 등록메소드가 실행되게)
-		else if(jobCategoryGroupDto.getJobCategoryNo() != 0) {		
-//		int jobCategoryNo = memberDto.getJobCategoryNo();
-		jobCategoryGroupDto.setBoardNo(boardNo);
-		boardDao.jobCategoryInsert(jobCategoryGroupDto);
-		}
-		//기업 insert
-		else{//(나머지는 이 밑에 등록메소드가 실행되게)
-		
-//		int companyNo = memberDto.getCompanyNo();
-		companyGroupDto.setBoardNo(boardNo);
-		boardDao.companyInsert(companyGroupDto);
-		}
-		
+		//등록2-1-2.해시태그 등록
 		//해시태그 insert
-		List<String> hashtagList = new ArrayList<>(); 
-	      hashtagList = boardDao.getHash(boardWriteVO); 
-	      
-	      List<Integer> hashtagNumList = boardDao.getHashNum(hashtagList);
-	      List<HashtagLinkDto> hashtagLinklist = new ArrayList<HashtagLinkDto>();
-	      for(int hashtagNo : hashtagNumList){
-	         HashtagLinkDto hashtagLinkDto = HashtagLinkDto.builder() 
-	         .boardNo(boardNo)
-	          .hashtagNo(hashtagNo)
-	          .build();
-	        
-	         hashtagLinklist.add(hashtagLinkDto);
-	         }
-	      boardDao.insertHashlink(hashtagLinklist);
-	  
+		List<String> hashtagList = new ArrayList<>();
+		BoardWriteVO boardWriteVO =  BoardWriteVO.builder()
+													.hashtagNo(boardWriteFullVO.getHashtagNo())
+													.hashtagName(boardWriteFullVO.getHashtagName())
+													.boardContent(boardWriteFullVO.getBoardContent())
+													.boardNo(boardNo)
+													.build();
+		hashtagList = boardDao.getHash(boardWriteVO);
+
+		List<Integer> hashtagNumList = boardDao.getHashNum(hashtagList);
+		List<HashtagLinkDto> hashtagLinklist = new ArrayList<HashtagLinkDto>();
+		for (int hashtagNo : hashtagNumList) {
+			HashtagLinkDto hashtagLinkDto = HashtagLinkDto.builder().boardNo(boardNo).hashtagNo(hashtagNo).build();
+
+			hashtagLinklist.add(hashtagLinkDto);
+		}
+		boardDao.insertHashlink(hashtagLinklist);
+		
+		//등록2-2. 이미지 등록(이미지가 있으면)
+		if(boardWriteFullVO.getImages().get(0).getOriginalFilename() !="") {
+			//2-2-1. 단순 업로드를 하면서 파일이름 리스트를 내뱉는다.
+			List<MultipartFile> images = boardWriteFullVO.getImages();
+			
+			List<String> fileNameList = uploadImageDao.uploadOriginalFile(images, memberNo);
+			if(fileNameList==null) {return "/board/파일업로드실패/이유는-서버에업로드가되지않음";}	
+			
+			//2-2-2. 1에서 받은 리스트를 활용하여 각 이미지의 로테이션 번호로 회전해야할 각도 리스트를 가져온다.
+			List<Integer> rotationValueList = uploadImageDao.getRotationValue(fileNameList);
+			
+			//2-2-3. 폴더 이름을 미리 정한다.
+			String superFolderName = uploadImageDao.getImageFolderName(boardNo);
+			
+			//2-2-4. 1과 2를 활용하여 파일 변환을 거친다
+			ConvertImageVo convertImageVo =ConvertImageVo.builder()
+															.boardNo(boardNo)
+															.fileNameList(fileNameList)
+															.rotationValueList(rotationValueList)
+															.superFolderName(superFolderName)
+															.folderName(Integer.toString(boardNo))
+															.build();
+			System.out.println("convertImageVo" + convertImageVo);
+			
+			List<String> readyFileNameList = uploadImageDao.convertImage(convertImageVo);
+			
+			//2-2-5. 삭제하기
+			boolean deleteSuccess = uploadImageDao.deleteOrigin(convertImageVo, readyFileNameList);
+			System.out.println("삭제?" + deleteSuccess);
+			
+			//2-2-6. 썸네일 만들기
+			String firstFileFullName = readyFileNameList.get(0);
+			String firstFileFinalName = firstFileFullName.replace("-ready", "");
+			boolean makeThumbSuccess = uploadImageDao.makeThumb(convertImageVo, firstFileFinalName);
+			System.out.println("썸네일 생성?" + makeThumbSuccess);
+			
+			//2-2-7. DB에 등록
+		}else {System.out.println("이미지 없음");}
 
 		
 		
+		//2-3.투표 등록(투표가 있다면)
+		if(boardWriteFullVO.getVoteTopicOption().size()!=0 || boardWriteFullVO.getVoteTopicTitle()!=null) {
+			//파라미터값들로 받은 데이터가 담긴 "voteInsertInfoVo"를 쪼갭니다.(1.투표 주제 추가에 필요한 Dto / 2.투표 선택지(들) 추가에 필요한 VO)
+
+			//2-3-1. 투표 주제 추가
+			VoteTopicDto voteTopicDto = VoteTopicDto.builder()
+												.boardNo(boardNo)
+												.voteTopicTitle(boardWriteFullVO.getVoteTopicTitle())
+												//.voteTopicExpire(voteTopicExpire)
+												.build();
+												
+			//투표 주제를 추가하는 기능에 활용
+			voteDao.insertTopic(voteTopicDto);
+			
+		
+			//투표 선택지(들) 추가에 필요한 VO 생성 (반복 추가) 
+			int seqCurrVal = voteDao.getSeqCurrVal(); //이건 제가 필요해서 넣은 것 아마 해시태그에서는 현재 board_seq_currVal이 아닐까 싶어요
+
+			VoteInsertInfoVo voteInsertOptionInfo = VoteInsertInfoVo.builder()
+															.boardNo(boardNo)//종속된 board_no(게시글 번호)
+															.voteTopicNo(seqCurrVal)//종속된 vote_topic_no
+															.voteTopicOption(boardWriteFullVO.getVoteTopicOption()) //List<String> 형태
+															.build();
+		
+			//투표 선택지(들)를 추가하는 기능에 활용
+			voteDao.insertOption(voteInsertOptionInfo);
+		}
+
+		
+		//3. 상황에 따라 그룹에 등록한다.
+
+		//상황3-a. 토픽 게시글 등록(boardCategory)
+		if(boardWriteFullVO.getBoardCategoryNo() != 0) {
+			BoardCategoryGroupDto boardCategoryGroupDto = BoardCategoryGroupDto.builder()
+																					.boardCategoryNo(boardWriteFullVO.getBoardCategoryNo())
+																					.boardNo(boardNo)
+																					.build();
+			boardDao.boardCategoryInsert(boardCategoryGroupDto);
+		}
+
+		//상황3-b. 업종 게시글 등록(getJobCategory)
+		else if(boardWriteFullVO.getJobCategoryNo() != 0) {	
+			JobCategoryGroupDto jobCategoryGroupDto = JobCategoryGroupDto.builder()
+																					.jobCategoryNo(boardWriteFullVO.getBoardCategoryNo())
+																					.boardNo(boardNo)
+																					.build();
+			boardDao.jobCategoryInsert(jobCategoryGroupDto);
+		}
+		else{//(나머지는 기업 등록메소드가 실행되게)
+		CompanyGroupDto companyGroupDto = CompanyGroupDto.builder()
+																	.companyNo(boardWriteFullVO.getCompanyNo())
+																	.boardNo(boardNo)
+																	.build();
+		boardDao.companyInsert(companyGroupDto);
+		}
 		return "redirect:boardDetail?boardNo="+boardNo;//상세페이지로 가면서 번호주기
 		
-		
 	}
+	
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
 	public String boardDetail(int boardNo, Model model,HttpSession session) {
@@ -210,13 +305,31 @@ public class BoardController {
 		      return "redirect:board/boardDetail?boardNo="+boardNo;	
 	}
 	
-	@GetMapping("/boardEdit")
-	public String boardEdit(int boardNo, Model model) {
-		//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
-		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
-		model.addAttribute("boardDto", boardDto);
-		return "/board/boardEdit";
-	}
+			@GetMapping("/boardEdit")
+			public String boardEdit(int boardNo, Model model, HttpSession session) {
+				//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
+				BoardDto boardDto = boardDao.getBoardDetail(boardNo);
+				
+		        MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		        int memberNo = memberDto.getMemberNo();
+		        
+//				String jobCategoryName = boardDao.getJobCategoryName(memberNo);
+//				String companyName = boardDao.getCompanyName(memberNo);
+				
+				String jobCategoryName = "베이컨트!!";
+				String companyName = "샐텍토!";
+		        
+				BoardEditGetInfoVO boardEditGetInfoVO = BoardEditGetInfoVO.builder()
+															.boardNo(boardDto.getBoardNo())
+															.memberNo(boardDto.getMemberNo())
+															.boardTitle(boardDto.getBoardTitle())
+															.boardContent(boardDto.getBoardContent())
+															.jobCategoryName(jobCategoryName)
+															.companyName(companyName)
+															.build();
+				model.addAttribute("boardEditGetInfoVO", boardEditGetInfoVO);
+				return "/board/boardEdit";
+			}
 	
 	@PostMapping("/boardEdit")
 	public String boardEdit(
