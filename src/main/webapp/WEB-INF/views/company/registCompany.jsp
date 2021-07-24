@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+	$(function() {
+		$(".insert-btn").click(function() {
+			alert("신청 완료");
+		});
+	});
+</script>
 
 <h1>회사 신청하기</h1>
 <h5>
@@ -10,5 +19,5 @@
 <form action="registCompany" method="post">
 	<input type="text" name="companyRegistName" placeholder="회사 이름">
 	<input type="text" name="companyRegistDomain" placeholder="회사 이메일 주소">
-	<input type="submit" value="신청하기">
+	<input class="insert-btn" type="submit" value="신청하기">
 </form>

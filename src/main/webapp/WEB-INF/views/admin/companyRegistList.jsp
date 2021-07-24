@@ -18,9 +18,23 @@
 		$(".companyRegist").click(function(){
 			var companyRegistName = $(this).parents("tr").children().eq(1).text();
 			var companyRegistDomain = $(this).parents("tr").children().eq(2).text();
-			
-			location.href='insertCompany?companyName='+companyRegistName
-					+'&companyDomain='+companyRegistDomain;
+
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/companyRegistList",
+				data:{
+					companyRegistName : companyRegistName
+				},
+				type:"post",
+				success:function(resp) { //"Y"는 없는 도메인, "N"은 이미 존재하는 도메인으로 처리
+					if(resp === "Y") {
+						location.href='insertCompany?companyName='+companyRegistName
+						+'&companyDomain='+companyRegistDomain;
+					}
+					else if(resp === "N"){
+						alert("이미 존재하는 회사입니다");
+					}
+				}
+			});
 		});
 	});
 </script>
@@ -43,8 +57,8 @@
 				<td>${companyRegistDto.companyRegistName }</td>
 				<td>${companyRegistDto.companyRegistDomain }</td>
 				<td>
-					<input class="companyRegist" type="button" value="등록">
-					<input class="companyRegistDelete" type="button" value="삭제">
+					<input type="button" class="companyRegist" name="companyRegist" value="등록">
+					<input type="button" class="companyRegistDelete" name="companyRegistDelete" value="삭제">
 				</td>
 			</tr>
 		</c:forEach>

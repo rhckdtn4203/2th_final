@@ -36,4 +36,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		return count > 0;
 	}
 
+	@Override
+	public boolean companyExist(String companyName) {
+		return sqlSession.selectOne("company.exist", companyName) != null;
+	}
+
 }

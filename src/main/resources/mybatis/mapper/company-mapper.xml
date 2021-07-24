@@ -29,4 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete company_regist where company_regist_no = #{companyRegistNo}
 	</delete>
 	
+	<select id="exist" parameterType="String" resultType="CompanyDto">
+		select * from company where company_name = #{companyName}
+	</select>
+	
 </mapper>

@@ -10,4 +10,5 @@ public interface CompanyDao {
 	void registCompany(CompanyRegistDto companyRegistDto);
 	List<CompanyRegistDto> companyRegistList();
 	boolean companyRegistDelete(int companyRegistNo);
+	boolean companyExist(String companyName);
 }

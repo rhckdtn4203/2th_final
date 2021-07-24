@@ -9,40 +9,19 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-		$(function() {
-			$(".insert-btn").click(function() {
-				window.alert("추가 완료");
-			});
-		});
-		
-		$(function(){
-			//아이디 입력창의 input/blur 시점에 비동기통신을 이용하여 화면을 유지한 채로 중복검사 수행
-			$("input[name=companyDomain]").blur(function(){
-				//this : 입력창
-				var companyDomain = $(this).val();
-				var isTrue = false;
-				
-				if(isTrue) return;
-				
-				$.ajax({
-					url:"${pageContext.request.contextPath}/admin/insertCompany",
-					data:{
-						companyDomain : companyDomain
-					},
-					type:"post",
-					success:function(resp){ //"Y"는 없는 도메인, "N"은 이미 존재하는 도메인으로 처리
-						if(resp === "Y") {
-							$("input[name=companyDomain] + span").text("등록 가능한 회사 메일 주소입니다.");
-							isTrue = true;
-						}
-						else if(resp === "N"){
-							$("input[name=companyDomain] + span").text("이미 존재하는 회사 메일 주소입니다.");
-						}
-					}
-				});
-				
-			});		
-		});
+		function submitCheck() {
+			var regexp = /^@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+			var result = regexp.test($("#companyDomain").val());
+
+			if(result) {
+				alert("추가 완료");
+				return true;
+			}
+			else {
+				alert("입력한 항목이 제대로 작성되었는지 확인바랍니다.");
+				return false;
+			}
+		};
 	</script>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -72,10 +51,10 @@
     
 	<h1>회사 추가 페이지</h1>
 	
-	<form action="insertCompany" method="post">
+	<form action="insertCompany" method="post" onsubmit="return submitCheck();">
 		<input type="text" name="companyName" value="${param.companyName}" placeholder="회사 이름" required>
 		<input type="text" name="companyUrl" placeholder="회사 홈페이지 URL" required>
-		<input type="text" name="companyDomain" value="${param.companyDomain}" placeholder="회사 메일 도메인 주소" required>
+		<input type="text" name="companyDomain" id="companyDomain" value="${param.companyDomain}" placeholder="회사 메일 도메인 주소" required>
 		<span></span>
 		<br><br>
 		<input type="button" id="execDaumPostcode" value="주소 찾기"><br>

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khblind.company.entity.CompanyDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
@@ -24,7 +25,8 @@ public class CompanyController {
 	}
 	
 	@PostMapping("/admin/insertCompany")
-	public String insertCompany(@ModelAttribute CompanyDto companyDto) {
+	public String insertCompany(
+			@ModelAttribute CompanyDto companyDto) {
 		companyDao.insert(companyDto);
 		return "redirect:insertCompany";
 	}
@@ -44,6 +46,17 @@ public class CompanyController {
 	public String companyRegistList(Model model) {
 		model.addAttribute("list", companyDao.companyRegistList());
 		return "admin/companyRegistList";
+	}
+	
+	@PostMapping("/admin/companyRegistList")
+	@ResponseBody
+	public String companyRegistList(@RequestParam String companyRegistName) {
+		if(companyDao.companyExist(companyRegistName)) {
+			return "N";
+		}
+		else {
+			return "Y";
+		}
 	}
 	
 	@GetMapping("/admin/companyRegistList/delete")
