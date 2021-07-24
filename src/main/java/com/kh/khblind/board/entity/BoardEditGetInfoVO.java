@@ -16,6 +16,6 @@ public class BoardEditGetInfoVO {
 	private String boardCount;
 	private Date boardDate;
 	
-	private String jobCategoryName;
-	private String companyName;
+	private String boardTypeName;
+	private String typeName;
 }
