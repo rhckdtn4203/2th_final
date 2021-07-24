@@ -49,12 +49,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from job_category_board_view where job_category_no = #{jobCategoryNo}
 	 </select>
 	 
+	 <select id="getBoardCategoryBoardList" parameterType="int" resultType="BoardCategoryBoardDto">
+	 	select * from board_category_board_view where board_category_no = #{boardCategoryNo}
+	 </select>
+	 
 	 <select id="getCompanyName" parameterType="int" resultType="string">
 	 	select company_name from company where company_no = #{companyNo} 
 	 </select>
 	 
 	 <select id="getJobCategoryName" parameterType="int" resultType="string">
 	 	select job_category_name from job_category where job_category_no = #{jobCategoryNo}
+	 </select>
+	 
+	 <select id="getBoardCategoryName" parameterType="int" resultType="string">
+		select board_category_name from board_category where board_category_no =#{board_category_no}
+	</select>
+	
+	 <select id="getBoardType" parameterType="int" resultType="CheckBoardTypeDto">
+	 	select * from check_board_type_view where board_no = #{boardNo}
 	 </select>
 </mapper>
 

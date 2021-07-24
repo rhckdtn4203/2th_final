@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
+import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardEditGetInfoVO;
@@ -350,7 +351,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/boardList")
-	public String boardList(HttpSession session,  Model model, @RequestParam String type) {
+	public String boardList(HttpSession session,  Model model, @RequestParam String type, @RequestParam(required = false) int boardCategoryNo) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		//기업별 게시판 목록
 		if(type.equals("companyBoard")){
@@ -379,6 +380,21 @@ public class BoardController {
 					return "글없다페이지";
 				}
 		}
+		
+		else if(type.equals("boardCategoryBoard")) {
+			List<BoardCategoryBoardDto> boardCategoryBoardList =  boardDao.getBoardCategoryBoardList(boardCategoryNo);
+			System.out.println("[콘] boardCategoryBoardList = " + boardCategoryBoardList);
+
+			model.addAttribute("boardCategoryBoardList", boardCategoryBoardList);
+			
+				if(boardCategoryBoardList != null) {
+					return "/board/boardList";
+				}
+				else {
+					return "글없다페이지";
+				}
+		}
+		
 		//type = 이도저도 아닌거 들어올때의 경우의 수
 		else {
 			return "에러페이지 404";
