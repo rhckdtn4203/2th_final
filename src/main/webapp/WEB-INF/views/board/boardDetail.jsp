@@ -4,7 +4,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<script>
+ $(function(){ 
+ $(".deleteLike").click(function(){ 
+	  $(".boardLikeInsertForm").submit(); 
+	   }); 
+	   });
+ </script> 
+ <script>
+ $(function(){ 
+ $(".board_unlike_btn").click(function(){ 
+	  $(".boardLikeDeleteForm").submit(); 
+	   }); 
+	   });
+ </script> 
 
+
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<script>
+$(function(){
+
+   $(".notLogin").click(function(e){
+      e.preventDefault()
+      window.alert("로그인이 필요한 기능입니다")
+      });
+   });
+
+</script>
 <script>
 //대댓글 입력창 클릭시 대댓글 입력창 추가 스크립트
 $(function(){
@@ -51,6 +77,32 @@ border: 1px red dotted;
 <a href="${root}/board/boardEdit?boardNo=${boardDto.boardNo}">수정</a>
 <a href="${root}/board/boardDelete?boardNo=${boardDto.boardNo}">삭제</a> 
 <a href="#">목록</a>   
+
+<!-- 좋아요를 클릭한상태 -->
+
+<c:if test="${isLiked == 2}">
+<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}"><i class="fas fa-thumbs-up fa-3x"></i></a>
+</c:if>
+<c:if test="${isLiked == 1}">
+<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
+<i class="far fa-thumbs-up fa-3x"></i></a>
+</c:if>
+<c:if test="${empty dtoss}">
+<div class="notLogin">
+<i class="far fa-thumbs-up fa-3x"></i>
+</div>
+</c:if>
+
+<!-- <form class="boardLikeDeleteForm" action="boardLike" -->
+
+
+<!-- <form class="boardLikeInsertForm" action="boardLikeInsert"> -->
+<!-- <input type="hidden" name ="board_no"> -->
+<!-- </form>  -->
+
+
+
+
 
 <!-- 댓글영역 -->
 

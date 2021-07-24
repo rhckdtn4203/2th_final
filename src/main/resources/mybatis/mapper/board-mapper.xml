@@ -48,6 +48,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="getJobCategoryBoardList" parameterType="int" resultType="JobCategoryBoardDto">
 	 	select * from job_category_board_view where job_category_no = #{jobCategoryNo}
 	 </select>
+	 
+	 <select id="getCompanyName" parameterType="int" resultType="string">
+	 	select company_name from company where company_no = #{companyNo} 
+	 </select>
+	 
+	 <select id="getJobCategoryName" parameterType="int" resultType="string">
+	 	select job_category_name from job_category where job_category_no = #{jobCategoryNo}
+	 </select>
 </mapper>
 
 

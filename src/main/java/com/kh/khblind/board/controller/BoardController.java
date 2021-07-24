@@ -19,6 +19,7 @@ import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
+import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.CommentsVO;
@@ -28,6 +29,7 @@ import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 import com.kh.khblind.board.repository.BoardDao;
+import com.kh.khblind.board.repository.BoardLikeDao;
 import com.kh.khblind.board.repository.CommentDao;
 import com.kh.khblind.member.entity.MemberDto;
 @RequestMapping("/board")
@@ -45,6 +47,9 @@ public class BoardController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private BoardLikeDao boardLikeDao;
 	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model) {
@@ -128,10 +133,30 @@ public class BoardController {
 	}
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
-	public String boardDetail(int boardNo, Model model) {
-		
+	public String boardDetail(int boardNo, Model model,HttpSession session) {
 		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
 		BoardMemberVO boardMemberVO = boardDao.find(boardNo);
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+        int memberNo = memberDto.getMemberNo();
+	      if(memberDto != null) {
+	        
+	        BoardLikeDto boardLikeDto = BoardLikeDto.builder()
+	         .boardNo(boardNo)
+	         .memberNo(memberNo)
+	      .build();
+      
+      
+	      	boolean isLiked=boardLikeDao.boardLikeExist(boardLikeDto);
+	      	if(isLiked) {
+	      		System.out.println("킹");
+	          	model.addAttribute("isLiked", 1);
+	      	}
+	      	else {
+	      		System.out.println("퀸");
+	         	model.addAttribute("isLiked", 2);
+	      	}
+
+      
 		List<CommentsVO> commentsList = sqlSession.selectList("comments.list",boardNo);
 	      
 	      model.addAttribute("commentsList", commentsList);
@@ -141,11 +166,15 @@ public class BoardController {
 		if(boardDto != null) { //Dto가 null이 아니면
 
 			return "/board/boardDetail";
-			}
+		}
 		else {
 			return "글없다페이지";
 		}
+		
 	}
+		return "????";
+	}
+
 		@PostMapping("commentInsert")
 		   public String commentInsert(
 		         HttpSession session,
@@ -243,6 +272,40 @@ public class BoardController {
 		}
 			
 	}
+	
+	@GetMapping("boardLikeInsert")
+	   public String boardLike(HttpSession session,int boardNo) {
+		
+		
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+	         int memberNo = memberDto.getMemberNo(); 
+	         if(memberDto !=null) {
+	         
+	         BoardLikeDto boardLikeDto =BoardLikeDto.builder()
+	            .boardNo(boardNo)
+	            .memberNo(memberNo)
+	         .build();
+	         boardLikeDao.boardLike(boardLikeDto);}
+	         
+	         return "redirect:boardDetail?boardNo="+boardNo;
+	         
+	   }
+	   @GetMapping("boardUnLikeInsert")
+	   public String boardUnLike(int boardNo,HttpSession session) {
+//		   int boardNo=boardDao.getSequence();
+		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+	         int memberNo = memberDto.getMemberNo(); 
+	         if(memberDto !=null) {
+	         
+	         BoardLikeDto boardLikeDto =  BoardLikeDto.builder()
+	            .boardNo(boardNo)
+	            .memberNo(memberNo)
+	         .build();
+	         boardLikeDao.boardUnlike(boardLikeDto);}
+	         
+	         return "redirect:boardDetail?boardNo="+boardNo;
+	         
+	   }
 	
 
 }
