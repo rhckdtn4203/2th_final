@@ -20,6 +20,7 @@
 		</tr>
 	</thead>
 	<tbody>
+		<c:if test="${companyBoardList != null}">
 		<c:forEach var="companyBoardDto" items="${companyBoardList}">
 		<tr>
 			<td>"${companyBoardDto.companyNo}"</td>
@@ -31,7 +32,23 @@
 			<td>?</td>
 			<td>?</td>
 		</tr>
-		</c:forEach>	
+		</c:forEach>
+		</c:if>
+		
+		<c:if test="${jobCategoryBoardList != null}">
+		<c:forEach var="jobCategoryBoardDto" items="${jobCategoryBoardList}">
+		<tr>
+			<td>"${jobCategoryBoardDto.jobCategoryNo}"</td>
+			<td>"${jobCategoryBoardDto.boardTitle}"</td>
+			<td>"${jobCategoryBoardDto.boardContent}"</td>
+			<td>"${jobCategoryBoardDto.memberNick}"</td>
+			<td>"${jobCategoryBoardDto.boardCount}"</td>
+			<td>"${jobCategoryBoardDto.boardDate}"</td>
+			<td>?</td>
+			<td>?</td>
+		</tr>
+		</c:forEach>
+		</c:if>	
 	</tbody>
 </table>
 

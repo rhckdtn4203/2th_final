@@ -44,5 +44,10 @@ public interface BoardDao {
 	List<CompanyBoardDto> getCompanyBoardList(int companyNo);
 	//업종별 목록조회 기능
 	List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo);
+	
+	//기업 이름 조회 기능
+	String getCompanyName(int companyNo);
+	//업종 이름 조회 기능
+	String getJobCategoryName(int jobCategoryNo);
 
 }
