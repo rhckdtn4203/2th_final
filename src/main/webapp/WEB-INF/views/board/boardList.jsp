@@ -48,6 +48,21 @@
 			<td>?</td>
 		</tr>
 		</c:forEach>
+		</c:if>
+		
+		<c:if test="${boardCategoryBoardList != null}">
+		<c:forEach var="boardCategoryBoardDto" items="${boardCategoryBoardList}">
+		<tr>
+			<td>"${boardCategoryBoardDto.boardCategoryNo}"</td>
+			<td>"${boardCategoryBoardDto.boardTitle}"</td>
+			<td>"${boardCategoryBoardDto.boardContent}"</td>
+			<td>"${boardCategoryBoardDto.memberNick}"</td>
+			<td>"${boardCategoryBoardDto.boardCount}"</td>
+			<td>"${boardCategoryBoardDto.boardDate}"</td>
+			<td>?</td>
+			<td>?</td>
+		</tr>
+		</c:forEach>
 		</c:if>	
 	</tbody>
 </table>
