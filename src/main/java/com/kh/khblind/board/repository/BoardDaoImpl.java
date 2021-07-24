@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,7 @@ import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.member.entity.MemberDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -192,6 +195,20 @@ public class BoardDaoImpl implements BoardDao {
 			return jobCategoryBoardList;
 		}
 
+		@Override
+		public String getCompanyName(int companyNo) {
+			 
+			String companyName = sqlSession.selectOne("board.getCompanyName", companyNo);
+			return companyName;
+		}
 
-   
+		@Override
+		public String getJobCategoryName(int jobCategoryNo) {
+			
+			String jobCategoryName = sqlSession.selectOne("board.getJobCategoryName", jobCategoryNo);
+			return jobCategoryName;
+		}
+
+
+ 
 	}
