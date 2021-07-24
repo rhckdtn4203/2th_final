@@ -27,6 +27,7 @@ import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteFullVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CheckBoardTypeDto;
 import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
@@ -311,22 +312,37 @@ public class BoardController {
 				//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
 				BoardDto boardDto = boardDao.getBoardDetail(boardNo);
 				
-		        MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-		        int memberNo = memberDto.getMemberNo();
-		        
-//				String jobCategoryName = boardDao.getJobCategoryName(memberNo);
-//				String companyName = boardDao.getCompanyName(memberNo);
+				CheckBoardTypeDto checkBoardTypeDto = boardDao.getBoardType(boardNo);
+
+				String boardType = ""; 
+				int typeNo=0;
+				String typeName ="";
 				
-				String jobCategoryName = "베이컨트!!";
-				String companyName = "샐텍토!";
+				if(checkBoardTypeDto.getBoardCategoryNo() !=null) {
+					boardType = "boardCategory";
+					typeNo = checkBoardTypeDto.getBoardCategoryNo();
+					typeName = boardDao.getBoardCategoryName(typeNo);
+				}
+				else if(checkBoardTypeDto.getJobCategoryNo() !=null) {
+					boardType = "jobCategory";
+					typeNo = checkBoardTypeDto.getJobCategoryNo();
+					typeName = boardDao.getJobCategoryName(typeNo);
+				}
+				else{//(checkBoardTypeDto.getCompanyNo() !-null)
+					boardType = "company";
+					typeNo = checkBoardTypeDto.getCompanyNo();
+					typeName = boardDao.getCompanyName(typeNo);
+				}
+				
+
 		        
 				BoardEditGetInfoVO boardEditGetInfoVO = BoardEditGetInfoVO.builder()
 															.boardNo(boardDto.getBoardNo())
 															.memberNo(boardDto.getMemberNo())
 															.boardTitle(boardDto.getBoardTitle())
 															.boardContent(boardDto.getBoardContent())
-															.jobCategoryName(jobCategoryName)
-															.companyName(companyName)
+															.boardTypeName(boardType)
+															.typeName(typeName)
 															.build();
 				model.addAttribute("boardEditGetInfoVO", boardEditGetInfoVO);
 				return "/board/boardEdit";
