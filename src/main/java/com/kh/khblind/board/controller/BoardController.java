@@ -21,6 +21,7 @@ import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
+import com.kh.khblind.board.entity.BoardEditGetInfoVO;
 import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteFullVO;
@@ -80,7 +81,6 @@ public class BoardController {
 			
 		HttpSession session,	
 		@ModelAttribute BoardWriteFullVO boardWriteFullVO
-
 		) throws IOException {
 		/*
 		 * 아래와 같은 순서로 진행된다.
@@ -215,22 +215,17 @@ public class BoardController {
 																					.build();
 			boardDao.jobCategoryInsert(jobCategoryGroupDto);
 		}
-		else{//(나머지는 이 밑에 등록메소드가 실행되게)
+		else{//(나머지는 기업 등록메소드가 실행되게)
 		CompanyGroupDto companyGroupDto = CompanyGroupDto.builder()
 																	.companyNo(boardWriteFullVO.getCompanyNo())
 																	.boardNo(boardNo)
 																	.build();
 		boardDao.companyInsert(companyGroupDto);
 		}
-		
-	  
-
-		
-		
 		return "redirect:boardDetail?boardNo="+boardNo;//상세페이지로 가면서 번호주기
 		
-		
 	}
+	
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
 	public String boardDetail(int boardNo, Model model,HttpSession session) {
@@ -310,13 +305,31 @@ public class BoardController {
 		      return "redirect:board/boardDetail?boardNo="+boardNo;	
 	}
 	
-	@GetMapping("/boardEdit")
-	public String boardEdit(int boardNo, Model model) {
-		//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
-		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
-		model.addAttribute("boardDto", boardDto);
-		return "/board/boardEdit";
-	}
+			@GetMapping("/boardEdit")
+			public String boardEdit(int boardNo, Model model, HttpSession session) {
+				//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
+				BoardDto boardDto = boardDao.getBoardDetail(boardNo);
+				
+		        MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		        int memberNo = memberDto.getMemberNo();
+		        
+//				String jobCategoryName = boardDao.getJobCategoryName(memberNo);
+//				String companyName = boardDao.getCompanyName(memberNo);
+				
+				String jobCategoryName = "베이컨트!!";
+				String companyName = "샐텍토!";
+		        
+				BoardEditGetInfoVO boardEditGetInfoVO = BoardEditGetInfoVO.builder()
+															.boardNo(boardDto.getBoardNo())
+															.memberNo(boardDto.getMemberNo())
+															.boardTitle(boardDto.getBoardTitle())
+															.boardContent(boardDto.getBoardContent())
+															.jobCategoryName(jobCategoryName)
+															.companyName(companyName)
+															.build();
+				model.addAttribute("boardEditGetInfoVO", boardEditGetInfoVO);
+				return "/board/boardEdit";
+			}
 	
 	@PostMapping("/boardEdit")
 	public String boardEdit(

@@ -47,9 +47,7 @@
 <script>
 	$(function() {
 		$("#select2").hide();
-
 		$("#select1").change(function() {
-
 			if ($(this).val() == "토픽") {
 				$("#select2").show();
 
@@ -70,6 +68,14 @@
 
 				$("#type-no").attr("name", "jobCategoryNo");
 				$("#type-no").attr("value", "${dtoss.jobCategoryNo}");
+				
+				var no = $("#type-no").attr("value");
+					if(no == 0){
+						alert("회사인증을 하지 않으셨습니다.");
+						$("#type-no").attr("name", "");
+						$("#type-no").attr("value", "");
+					}
+		
 			} else if ($(this).val() == "기업") {
 				$("#select2").hide();
 
@@ -78,9 +84,17 @@
 
 				$("#type-no").attr("name", "companyNo");
 				$("#type-no").attr("value", "${dtoss.companyNo}");
-			}
-		});
+				
+				var no = $("#type-no").attr("value");
+					if(no == 0){
+						alert("회사인증을 하지 않으셨습니다.");
+						$("#type-no").attr("name", "");
+						$("#type-no").attr("value", "");
+					}
+				}
+			})
 	});
+	
 </script>
 
 <!--옵션버튼 관련 js-->
@@ -95,17 +109,22 @@
 				$(this).css("color", "black");
 				$(this).removeClass("option-on")
 				$("#image-input-zone").hide();
+				$("#image-files").val();
 			}
 		})
 
 		$("#vote-btn").click(function() {
 			if ($(this).hasClass("option-on") === false) {
 				$(this).css("color", "tomato");
-				$(this).addClass("option-on")
+				$(this).addClass("option-on");
 				$("#vote-input-zone").show();
 			} else {
 				$(this).css("color", "black");
-				$(this).removeClass("option-on")
+				$(this).removeClass("option-on");
+				
+				$("#vote-topic").val("");
+				$(".option-name").val("")
+				
 				$("#vote-input-zone").hide();
 			}
 		})
@@ -153,8 +172,10 @@
 				var template = $("#vote-option-div-template").html();
 
 				template = template.replace("{{count}}", count + 1);
+				template = template.replace("{{count2}}", count + 1);
 				$("#vote-option-divS").append(template);
 				count = $('.vote-option-div').length;
+				count2 = $('.vote-option-div').length;
 				if (count > 7) {
 					$("#plus-option-btn").hide();
 				}
@@ -165,6 +186,42 @@
 	})
 </script>
 
+<!-- 전송 관련 js -->
+<script>
+	$(function(){
+		$("#submit-btn").click(function(e){
+			e.preventDefault;
+			
+			var typeNo = $("#type-no").attr("value");
+			if(typeNo==""){alert("주제를 선택해주세요"); return false;}
+			
+			var boardTitle = $("#board-title").val();
+			if(boardTitle==""){alert("제목을 입력해주세요"); return false;}
+			
+			var content = $("#board-content-textarea").val();
+			console.log("content " + content);
+// 			if(content==""){alert("내용을 입력해주세요"); return false;}
+			
+			var voteTitle = $("#vote-topic").val();
+			var voteOptionCount=0;
+			var optionNames = $(".vote-option-name");
+
+			for(var i =0; i<optionNames.length; i++){
+				var optionNamesVal = $(".vote-option-name").eq(i).val();
+				console.log("optionNamesVal = " + optionNamesVal)
+				
+				if(optionNamesVal!=""){
+					console.log("값 있는 항목 발견!");
+					voteOptionCount++;
+				}
+			}
+			console.log("최종 개수  = " + voteOptionCount)
+			
+			return false;
+		})
+		
+	})
+</script>
 
 <style>
 div {
@@ -202,9 +259,8 @@ textarea {
 <body>
 	<div id="board-write" class="row">
 		<div id="board-write-zone" class="col-6 offset-3">
-			<div id="board-write-title"
-				class="text-center primary-background-color">
-				<h5 class="mt-3 mb-3 font-color-khblind-gold font-size-15 bold">글쓰기</h5>
+			<div id="board-write-title" class="text-center primary-background-color">
+				<h5 class="mt-3 mb-3 font-color-khblind-gold font-size-15 bold">글 작성</h5>
 			</div>
 
 			<form action="boardWrite" method="post" enctype="multipart/form-data">
@@ -214,8 +270,9 @@ textarea {
 						<option id="topic">토픽</option>
 						<option id="job">업종</option>
 						<option id="company">기업</option>
-					</select> <select id="select2"
-						class="form-control mt-2 mb-2 form-control-lg">
+					</select>
+					
+					<select id="select2" class="form-control mt-2 mb-2 form-control-lg">
 						<option class="subOption" value="">(토픽을 선택해주세요)</option>
 						<c:forEach var="categoryDto" items="${categoryList}">
 							<option class="subOption" value="${categoryDto.boardCategoryNo}">${categoryDto.boardCategoryName}</option>
@@ -226,13 +283,10 @@ textarea {
 
 				<div id="board-input-zone" class="form-group col-10 offset-1 mt-3">
 					<div id="board-title-input" class="">
-						<input class="form-control p-4" type="text" name="boardTitle"
-							placeholder="제목을 입력하세요">
+						<input id="board-title" class="form-control p-4" type="text" name="boardTitle" placeholder="제목을 입력하세요" >
 					</div>
 					<div id="board-content-input">
-						<textarea id="board-content-textarea"
-							class="form-control mt-3 p-4" name="boardContent"
-							placeholder="욕쓰지마라"></textarea>
+						<textarea id="board-content-textarea" class="form-control mt-3 p-4" name="boardContent" placeholder="욕쓰지마라"></textarea>
 					</div>
 				</div>
 
@@ -293,7 +347,7 @@ textarea {
                                         <p>항목 1</p>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="voteTopicOption" class="form-control">
+                                        <input type="text" id="vote-option-name-input-1" name="voteTopicOption" class="vote-option-name form-control">
                                     </div>
                                 </div>
                                 
@@ -302,7 +356,7 @@ textarea {
                                         <p>항목 2</p>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="voteTopicOption" class="form-control">
+                                        <input type="text" id="vote-option-name-input-2" name="voteTopicOption" class="vote-option-name form-control">
                                     </div>
                                 </div>
                 
@@ -311,7 +365,7 @@ textarea {
                                         <p>항목 3</p>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="voteTopicOption" class="form-control">
+                                        <input type="text"  id="vote-option-name-input-3" name="voteTopicOption" class="vote-option-name form-control">
                                     </div>
                                 </div>
                             </div>
@@ -327,14 +381,13 @@ textarea {
 				<div id="submit-zone" class="row text-center">
 					<div class="col-8"></div>
 					<div class="col-2">
-						<button class="btn btn-primary">초기화</button>
+						<input id="reset-btn" class="btn btn-primary" type="reset" value="초기화">
 					</div>
 					<div class="col-2">
-						<button class="btn btn-warning">전송</button>
+					<button id="submit-btn" class="btn btn-warning" >전송!	</button>
 					</div>
 				</div>
 			</form>
-			
 		</div>
 	</div>
 
@@ -348,7 +401,7 @@ textarea {
                 <p>항목 {{count}}</p>
             </div>
             <div class="col-9">
-                <input type="text" name="voteTopicOption" class="form-control">
+                <input type="text" id="vote-option-name-input-{{count2}}" name="voteTopicOption" class="vote-option-name form-control">
             </div>
         </div>
     </script>
