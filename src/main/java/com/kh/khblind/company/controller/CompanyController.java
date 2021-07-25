@@ -26,8 +26,10 @@ public class CompanyController {
 	
 	@PostMapping("/admin/insertCompany")
 	public String insertCompany(
-			@ModelAttribute CompanyDto companyDto) {
+			@ModelAttribute CompanyDto companyDto, 
+			@RequestParam("companyRegistNo") int companyRegistNo) {
 		companyDao.insert(companyDto);
+		companyDao.companyRegistDelete(companyRegistNo);
 		return "redirect:insertCompany";
 	}
 	

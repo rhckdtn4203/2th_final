@@ -16,6 +16,7 @@
 
 	$(function() {
 		$(".companyRegist").click(function(){
+			var companyRegistNo = $(this).parents("tr").children().eq(0).text();
 			var companyRegistName = $(this).parents("tr").children().eq(1).text();
 			var companyRegistDomain = $(this).parents("tr").children().eq(2).text();
 
@@ -27,8 +28,9 @@
 				type:"post",
 				success:function(resp) { //"Y"는 없는 도메인, "N"은 이미 존재하는 도메인으로 처리
 					if(resp === "Y") {
-						location.href='insertCompany?companyName='+companyRegistName
-						+'&companyDomain='+companyRegistDomain;
+						location.href='insertCompany?companyRegistNo='+companyRegistNo+
+						'&companyName='+companyRegistName+
+						'&companyDomain='+companyRegistDomain;
 					}
 					else if(resp === "N"){
 						alert("이미 존재하는 회사입니다");

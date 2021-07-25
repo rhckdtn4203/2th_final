@@ -52,6 +52,7 @@
 	<h1>회사 추가 페이지</h1>
 	
 	<form action="insertCompany" method="post" onsubmit="return submitCheck();">
+		<input type="hidden" name="companyRegistNo" value="${param.companyRegistNo}">
 		<input type="text" name="companyName" value="${param.companyName}" placeholder="회사 이름" required>
 		<input type="text" name="companyUrl" placeholder="회사 홈페이지 URL" required>
 		<input type="text" name="companyDomain" id="companyDomain" value="${param.companyDomain}" placeholder="회사 메일 도메인 주소" required>
