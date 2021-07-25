@@ -1,8 +1,8 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+	pageEncoding="UTF-8"%>
+	
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style2.css">
 
 <section class="section-2">
   <div class="sign-title">
@@ -55,6 +55,11 @@
       </div>
     </form>
 </div>
+
+
+
 </section>
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

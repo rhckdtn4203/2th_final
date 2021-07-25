@@ -20,11 +20,11 @@
 			<input type="submit" value="변경하기" class="form-btn form-btn-positive">
 		</div>
 
-		<c:if test="${param.error != null}">
+		<%-- <c:if test="${param.error != null}">
 			<div class="row">
 				<h5 class="error">정보가 일치하지 않습니다</h5>
 			</div>
-		</c:if>
+		</c:if> --%>
 	</form>
 </div>
 

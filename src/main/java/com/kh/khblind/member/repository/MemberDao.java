@@ -11,5 +11,8 @@ public interface MemberDao {
 	void exit(int memberNo);
 	void gradeup(int memberNo);
 	boolean change_pw(String newPw, int memberNo, String curPw);
+	boolean find_id(String memberName, int memberNo, String memberPhone);
+
+
 	
 }

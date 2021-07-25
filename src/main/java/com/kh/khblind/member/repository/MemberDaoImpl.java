@@ -26,6 +26,8 @@ public class MemberDaoImpl implements MemberDao {
 		sqlss.insert("member.signup", dto);
 	}
 
+
+
 //마이페이지
 	@Override
 	public MemberDto mypage(int memberNo) {
@@ -57,10 +59,18 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return count>0;
 		
+	}	
+//아이디찾기
+	@Override
+	public boolean find_id(String memberName, int memberNo, String memberPhone) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberNo", memberNo);
+		param.put("memberPhone", memberPhone);
+		
+		return sqlss.selectOne("member.find_id",param);
 	}
 	
-	
-
 //회원 탈퇴
 	@Override
 	public void exit(int memberNo) {
@@ -72,9 +82,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void gradeup(int memberNo) {
 		sqlss.update("member.gradeup", memberNo);
 		
-	}
-
-	
-	
+}
 
 }

@@ -25,9 +25,10 @@
 		color:red;
 	}
 </style>
+
 <script>
-	 $(function(){
-		$("#confrirm-link").click(function(e){
+	$(function(){
+		$("#confirm-link").click(function(e){
 			
 			//var message=$(this).attr("data-message")||"이동하시겠습니까?";
 			var choice = window.confirm("정말 탈퇴하시겠습니까?");
@@ -36,11 +37,19 @@
 			}
 		});
 	}); 
-	
-	$("#confrirm-link").on("click",function(event){
-	    event.preventDefault();
-	});
 
+</script>
+
+<script>
+
+/* function deleteCheck(){
+	if(window.confirm("정말 탈퇴하시겠습니까?")==true){
+		return;
+	}
+	else{
+		return false;
+	}
+} */
 </script>
 
 <div class="container-600">
@@ -75,7 +84,8 @@
 	<div class="row">
 		
 		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
-		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" data-display-name="bye">회원 탈퇴</a>
+		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link" onclick="deleteCheck">회원 탈퇴</a>
+	
 	</div>
 	
 	<div class="row text-left">

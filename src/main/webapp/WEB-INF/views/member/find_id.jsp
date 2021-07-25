@@ -8,15 +8,21 @@
 	<div class="row">
 		<h2>아이디 찾기</h2>
 	</div>
-<form method="post" class="form-signin" action="${pageContext.request.contextPath}find_id" name="findform">
+	
+<script type="text/javascript">
+function findid(){
+document.form1.submit();
+}
+</script>
+<form method="post" class="form-signin" action="${pageContext.request.contextPath}/member/find_id" name="findform">
 		<div class="row-left">
-			<input type="text" id="name" name="name" class="form-input form-input-underline"/>
 			<label for="name">이름</label>
+			<input type="text" id="name" name="memberName" class="form-input form-input-underline"/>
 		</div>
 		
 		<div class="row-left">
-			<input type="text" id="phone" name="phone" class="form-input form-input-underline"/>
 			<label for="phone">전화번호</label>
+			<input type="text" id="phone" name="memberPhone" class="form-input form-input-underline"/>
 		</div>
 
 		<div class="row-left">

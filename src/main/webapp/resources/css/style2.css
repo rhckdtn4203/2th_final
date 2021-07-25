@@ -1,0 +1,240 @@
+
+
+.section-1{
+  margin: 0;
+  padding: 100px 0;
+  background:url("http://localhost:8080/khblind/img/login.jpg")center/cover;
+  height: 650px;
+  position: relative;
+  text-align: center;
+}
+
+#loading{
+position: absolute;
+top: 30px;
+padding-left: 170px;
+margin: 10px 0;
+font-size: 15px;
+color: var(--color-grey1);
+}
+.loading{
+  display: inline-block;
+  margin: 0 -.05em;
+  animation: loading .7s infinite;
+  color: var(--color-lightgreen);
+  font-weight: bold;
+}
+.loading:nth-child(2) {
+  animation-delay: .1s;
+}
+.loading:nth-child(3) {
+  animation-delay: .2s;
+}
+/* .loading span:nth-child(4) {
+  animation-delay: .3s;
+}
+.loading span:nth-child(5) {
+  animation-delay: .4s;
+}
+.loading span:nth-child(6) {
+  animation-delay: .5s;
+}
+.loading span:nth-child(7) {
+  animation-delay: .6s;
+} */
+@keyframes loading {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+
+.login-box{
+  box-sizing:border-box;
+  width:500px; 
+  height: 400px;
+  background-color: whitesmoke;
+  margin: 22px auto;
+  padding-top: 100px;
+  border: 1.5px solid var(--color-grey2);
+  border-radius: 0.2em;
+  text-align: center;
+  font-weight: var(--weight-4);
+  opacity: 95%;
+  position: relative;
+  z-index: 2;
+  bottom: 28em;s
+
+}
+.input{
+  position: relative;
+  margin: 0 auto;
+  z-index: 1;
+background-color: whitesmoke;
+border-radius: 0.8em;
+opacity: 40%;
+width:650px; 
+height: 450px;
+  top:0em;
+  left: 0em;
+}
+
+.login-group{
+  padding-right: 4.5em;
+  background-color: whitesmoke;
+}
+.group{
+text-align: end;
+}
+.form-control{
+  margin: 4px auto;
+  border: none;
+  width: 300px;
+  height: 45px;
+  background-color: rgb(248, 219, 184);
+  border-radius: 0.3em;
+  font-size: 15px;
+}
+.login-btn-box{
+  background-color: var(--color-green);
+  height: 40px;
+  margin-top: 20px;
+
+}
+
+.remember-id{
+  margin: 5px auto;
+  text-align:inherit;
+}
+.login-btn{
+position: relative;
+  margin: 5px;
+  border: none;
+  color: wheat;
+  background-color: var(--color-green);
+  font-size: 20px;
+  font-weight: var(--weight-6);
+  
+  cursor: pointer;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+.login-btn:hover{
+	background: #fbfdfa;
+  color: #050801;
+  box-shadow: 0 0 5px #fbfdfa,
+              0 0 25px #fbfdfa,
+              0 0 50px #fbfdfa,
+              0 0 200px #fbfdfa;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+
+.input-side{
+  display: flex;
+justify-content: center; 
+margin: 30px 0;
+  
+}
+.inputside-1{
+  background-color:transparent;
+  margin: 0 7px;
+  opacity: 90%;
+}
+#inputside-middle{
+  border-left: 1px solid var(--color-grey1);
+  border-right: 1px solid var(--color-grey1);
+  padding: 0 7px;
+  
+}
+
+.side-info{
+	 border-radius: 0.3em;
+  font-size: 16px;
+  padding: 5px 5px;
+  
+  background: transparent;
+	 box-shadow: 0 0 5px transparent,
+              0 0 25px transparent,
+              0 0 50px transparent,
+              0 0 200px transparent;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+	
+}
+.side-info:hover{
+	
+  border-radius: 0.3em;
+  font-size: 16px;
+  font-weight: var(--weight-5);
+  padding: 5px 5px;
+  
+  background: white;
+  color: #050801;
+  box-shadow: 0 0 5px white,
+              0 0 25px white,
+              0 0 50px white,
+              0 0 200px white;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+
+.section-2,
+.section-3{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+background-color: #f6f5ef;
+  height: 650px
+}
+
+.sign-title{
+margin: 0;
+padding-top: 20px;
+}
+.sign-title h2{
+  color: black;
+}
+.signup-box{
+  box-sizing:border-box;
+  width:650px; 
+  height: 520px;
+  background-color:#faf6dd;
+  margin: 30px auto;
+  padding: 10px 0;
+  border: 1.5px solid var(--color-grey2);
+  border-radius: 0.8em;
+  
+  font-weight: var(--weight-4);
+}
+
+.sign-group{
+  padding-right: 4em;
+}
+.sb{
+  margin: 10px 0;
+  padding: 0;
+  background-color: transparent;
+  width: 70%;
+  height: 40px;
+  font-size: 15px;
+  text-align: left;
+  background-color:#fcf9ed;
+  border: transparent;
+}
+.successTitle-box{
+  padding-top: 10%;
+}
+.success-box{
+  margin:0;
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+
+}
+.row{
+  margin: 0 25px;
+}
