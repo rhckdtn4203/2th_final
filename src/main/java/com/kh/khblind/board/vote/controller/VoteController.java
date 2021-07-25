@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,28 +15,64 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.khblind.board.vote.entity.VoteOptionInfoVo;
+import com.kh.khblind.board.vote.entity.VoteResultDto;
 import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.entity.VoteViewInfoVo;
 import com.kh.khblind.board.vote.entity.VoteInsertInfoVo;
 import com.kh.khblind.board.vote.entity.VoteOptionDto;
+import com.kh.khblind.board.vote.entity.VoteOptionInfoVo;
 import com.kh.khblind.board.vote.repository.VoteDao;
+import com.kh.khblind.member.entity.MemberDto;
 
 //나중에 BoardController와 병합예정
 
 @Controller
 @RequestMapping("/board")
-public class TempVoteController {
+public class VoteController {
 
 	@Autowired
-	private VoteDao voteDao; 
+	private VoteDao voteDao;
 	
 	@GetMapping("/getVoteTest")
-	public String voteTest1(Model model) {
+	public String voteTest1(Model model, HttpSession session) {
 		int boardNo = 2; //BoardController와 병합시 사라짐
-		System.out.println("시발!!!!!!");
+
 		//토픽 정보를 가져온다
 		VoteTopicDto voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
+		
+		//1. 이미 투표한건지 알아본다.
+		int voteTopicNo = voteTopicDto.getVoteTopicNo();
+
+		try {
+			
+			MemberDto memberDto = (MemberDto) session.getAttribute("dtoss");
+			int memberNo = memberDto.getMemberNo();
+			
+			VoteResultDto voteResultDto =  VoteResultDto.builder()
+					.voteTopicNo(voteTopicNo)
+					.memberNo(memberNo)
+					.build();
+			boolean didYouVote = voteDao.didYouVote(voteResultDto);
+				
+			if(didYouVote) {
+				
+				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
+				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
+				model.addAttribute("didYouVote", "voted");
+				
+			}else {
+				model.addAttribute("didYouVote", "didntVote");
+
+			}			
+			
+		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
+				model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
+		}
+		
+
+		
+		
+		
 		
 		model.addAttribute("VoteTopicInfo", voteTopicDto);
 		System.out.println("voteTopicDto = " + voteTopicDto);
@@ -44,7 +81,7 @@ public class TempVoteController {
 		
 		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
 		
-		System.out.println("voteTopicDto = " + voteOptionInfoVoList);		
+		System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
 		model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
 		
 		
@@ -68,7 +105,7 @@ public class TempVoteController {
 		//2.투표 선택지(들) 추가에 필요한 VO
 			
 			
-			//1. 투표 주제 추가에 필요한 Dto 생성 (단일 추가라 따로 둠)
+			//1. 투표 주제 추가에 필요한 Dto
 			VoteTopicDto voteTopicDto = VoteTopicDto.builder()
 												.boardNo(boardNo)
 												.voteTopicTitle(voteInsertInfoVo.getVoteTopicTitle())

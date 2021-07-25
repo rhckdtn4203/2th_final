@@ -15,6 +15,5 @@ public class BoardDto {
 	private String boardContent;
 	private String boardCount;
 	private Date boardDate;
-	private String boardHashtag; 
 
 }

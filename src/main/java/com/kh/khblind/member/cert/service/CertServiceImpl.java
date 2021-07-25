@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.khblind.member.cert.entity.CertDto;
 import com.kh.khblind.member.cert.repository.CertDao;
+import com.kh.khblind.member.entity.MemberDto;
 
 @Service
 public class CertServiceImpl implements CertService {
@@ -30,14 +32,27 @@ public class CertServiceImpl implements CertService {
 	@Autowired
 	private RandomService randomService;
 
+	// DB에 회사가 존재하는지 확인
+	@Override
+	public boolean checkCompany(String email) {
+		String companyDomain = email.substring(email.lastIndexOf("@"));
+		boolean result = certDao.checkCompany(companyDomain);
+		
+		return result;
+	}
+
 	// 인증번호 발송 기능
 	@Override
 	@Transactional
-	public void sendCertification(String email) throws MessagingException, IOException {
-		//번호 생성
+	public void sendCertification(String email, HttpSession session) 
+			throws MessagingException, IOException {
+		// 번호 생성
 		String no = randomService.generateCertification(6);
+		
+		// Session DTO 받아오기
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 
-		//이메일 발송
+		// 이메일 발송
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 		
@@ -53,7 +68,7 @@ public class CertServiceImpl implements CertService {
 		while(sc.hasNextLine()) {
 			String line = sc.nextLine();
 			
-			//line = line.replace("{{nickname}}", memberDto.getMemberNick());
+			line = line.replace("{{nickname}}", memberDto.getMemberNick());
 			line = line.replace("{{certNo}}", no);
 			
 			buffer.append(line);
@@ -87,6 +102,11 @@ public class CertServiceImpl implements CertService {
 	@Override
 	public void clearCertification() {
 		certDao.clear();
+	}
+
+	@Override
+	public void upgrade(int memberNo) {
+		certDao.upgrade(memberNo);
 	}
 
 }

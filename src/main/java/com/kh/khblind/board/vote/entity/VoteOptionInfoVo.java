@@ -10,5 +10,5 @@ public class VoteOptionInfoVo {
 	private int voteOptionNo; // 쓸 데가 있겠지... 있었다...!
 	private String voteOptionName; 
 	private int voteOptionCount;
-	private int voteOptionPercent; 
+	private int voteOptionPercent;
 }

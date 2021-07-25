@@ -10,9 +10,13 @@ public interface MemberDao {
 	boolean changeinfo(MemberDto dto);
 	void exit(int memberNo);
 	void gradeup(int memberNo);
+
 	boolean change_pw(String newPw, int memberNo, String curPw);
 	boolean find_id(String memberName, int memberNo, String memberPhone);
 
 
 	
+
+	void gradedown(int memberNo);
+
 }
