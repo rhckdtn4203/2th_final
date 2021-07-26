@@ -27,6 +27,7 @@ import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteFullVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.BookmarkDto;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
 import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
@@ -36,6 +37,7 @@ import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.board.repository.BoardLikeDao;
+import com.kh.khblind.board.repository.BookmarkDao;
 import com.kh.khblind.board.repository.CommentDao;
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
@@ -67,6 +69,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardLikeDao boardLikeDao;
+	
+	@Autowired
+	private BookmarkDao bookmarkDao;
 	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model) {
@@ -241,22 +246,32 @@ public class BoardController {
 	         .boardNo(boardNo)
 	         .memberNo(memberNo)
 	      .build();
-      
+	        
+	        BookmarkDto bookmarkDto = BookmarkDto.builder()
+	   	         .boardNo(boardNo)
+		         .memberNo(memberNo)
+		    .build();
       
 	      	boolean isLiked=boardLikeDao.boardLikeExist(boardLikeDto);
 	      	if(isLiked) {
-	      		System.out.println("킹");
 	          	model.addAttribute("isLiked", 1);
 	      	}
 	      	else {
-	      		System.out.println("퀸");
 	         	model.addAttribute("isLiked", 2);
+	      	}	
+
+	      	boolean isMarked=bookmarkDao.bookmarkExist(bookmarkDto);
+	      	if(isMarked) {
+	          	model.addAttribute("isMarked", 1);
 	      	}
+	      	else {
+	         	model.addAttribute("isMarked", 2);
+	      	}  	
 
       
 		List<CommentsVO> commentsList = sqlSession.selectList("comments.list",boardNo);
 	      
-	      model.addAttribute("commentsList", commentsList);
+	    model.addAttribute("commentsList", commentsList);
 		model.addAttribute("boardDto", boardDto);
 		model.addAttribute("boardMemberVO", boardMemberVO);
 
@@ -269,24 +284,23 @@ public class BoardController {
 		}
 		
 	}
-		return "????";
+		return "???????";
 	}
 
 		@PostMapping("commentInsert")
 		   public String commentInsert(
 		         HttpSession session,
-		         @RequestParam String commentContent, int boardNo) {
+		         @RequestParam String commentsContent, int boardNo) {
 		       //세션 1개(회원번호)
 		         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		         int memberNo = memberDto.getMemberNo();
-		         CommentsVO commentsVO = new CommentsVO();
-		         commentsVO.builder()
-		                  .boardNo(boardNo)
-		                  .memberNo(memberNo)
-		                  .commentsContent(commentContent)
+		         CommentsVO commentsVO = CommentsVO.builder()
+		        		                         .boardNo(boardNo)
+		        		                         .memberNo(memberNo)
+		        		                         .commentsContent(commentsContent)
 		         .build();
 		         commentDao.commentInsert(commentsVO);
-		      return "redirect:board/boardDetail?boardNo="+boardNo;
+		      return "redirect:boardDetail?boardNo="+boardNo;
 		   }
 		   @PostMapping("nestedCommentInsert")
 		   public String nestedCommentInsert(
@@ -304,7 +318,7 @@ public class BoardController {
 		                  .commentsContent(commentContent)
 		         .build();
 		         commentDao.nestedCommentInsert(commentsVO);
-		      return "redirect:board/boardDetail?boardNo="+boardNo;	
+		      return "redirect:boardDetail?boardNo="+boardNo;	
 	}
 	
 			@GetMapping("/boardEdit")
@@ -367,12 +381,24 @@ public class BoardController {
 	}
 	
 	@GetMapping("/boardList")
-	public String boardList(HttpSession session,  Model model, @RequestParam String type, @RequestParam(required = false) int boardCategoryNo) {
+	public String boardList(
+			HttpSession session,  Model model, 
+			@RequestParam String type, 
+			@RequestParam(required = false) Integer boardCategoryNo,
+			@RequestParam(required = false) String keyword
+			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		//기업별 게시판 목록
 		if(type.equals("companyBoard")){
-			int companyNo = memberDto.getCompanyNo();	
-			List<CompanyBoardDto> companyBoardList = boardDao.getCompanyBoardList(companyNo);
+			List<CompanyBoardDto> companyBoardList = new ArrayList<>();
+			int companyNo = memberDto.getCompanyNo();
+			
+			if(keyword == null) {
+				companyBoardList = boardDao.getCompanyBoardList(companyNo);
+			}
+			else {// if(keyword != null)
+				companyBoardList = boardDao.SearchCompanyBoardList(keyword);
+			}
 			model.addAttribute("companyBoardList", companyBoardList);
 			
 				if(companyBoardList != null) {
@@ -385,8 +411,15 @@ public class BoardController {
 		
 		//업종별 게시판 목록
 		else if(type.equals("jobCategoryBoard")) {
+			List<JobCategoryBoardDto> jobCategoryBoardList = new ArrayList<>();
 			int jobCategoryNo = memberDto.getJobCategoryNo();
-			List<JobCategoryBoardDto> jobCategoryBoardList = boardDao.getJobCategoryBoardList(jobCategoryNo);
+			
+			if(keyword == null) {
+				jobCategoryBoardList = boardDao.getJobCategoryBoardList(jobCategoryNo);
+			}
+			else {// if(keyword != null)
+				jobCategoryBoardList	= boardDao.SearchJobCategoryBoardList(keyword);
+			}
 			model.addAttribute("jobCategoryBoardList", jobCategoryBoardList);
 			
 				if(jobCategoryBoardList != null) {
@@ -398,16 +431,33 @@ public class BoardController {
 		}
 		
 		else if(type.equals("boardCategoryBoard")) {
-			List<BoardCategoryBoardDto> boardCategoryBoardList =  boardDao.getBoardCategoryBoardList(boardCategoryNo);
-			System.out.println("[콘] boardCategoryBoardList = " + boardCategoryBoardList);
-
-			model.addAttribute("boardCategoryBoardList", boardCategoryBoardList);
 			
-				if(boardCategoryBoardList != null) {
+			//일단 저장소를 만든다.(자바가 멍청한건지 if문안에 변수가 있으면 모름)
+			List<BoardCategoryBoardDto> boardCategoryBoardList = new ArrayList<>();
+				
+			//keyword가 없으면 일반 목록을 조회하고 
+			if(keyword == null) {
+				System.out.println("키워드가 없어!");
+				boardCategoryBoardList =  boardDao.getBoardCategoryBoardList(boardCategoryNo);
+				System.out.println("일반이네요 " +boardCategoryBoardList);
+			}				
+			//keyword가 있으면 검색을 하고 
+			else{// if(keyword != null) 
+				System.out.println("키워드가 있네요~");
+				boardCategoryBoardList = boardDao.BoardCategorySearch(keyword);
+				System.out.println("검색이네여~ " + boardCategoryBoardList);
+			}
+		
+			//두 방법 중 나온 "boardCategoryboardList"를 model에 넣는다.
+			System.out.println("모델입니당~" + boardCategoryBoardList);
+			model.addAttribute("boardCategoryBoardList", boardCategoryBoardList);
+				
+				//
+				if (boardCategoryBoardList != null) {
 					return "/board/boardList";
-				}
+				} 
 				else {
-					return "글없다페이지";
+					return "글없다페이지";//그 게시판에 글이 없다.
 				}
 		}
 		
@@ -419,7 +469,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("boardLikeInsert")
-	   public String boardLike(HttpSession session,int boardNo) {
+	   public String boardLike(HttpSession session,Integer boardNo) {
 		
 		
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
@@ -451,6 +501,35 @@ public class BoardController {
 	         return "redirect:boardDetail?boardNo="+boardNo;
 	         
 	   }
-	
-
+	   @GetMapping("bookmarkInsert")
+	      public String bookmarkInsert(int boardNo,HttpSession session) {
+		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+	         int memberNo = memberDto.getMemberNo(); 
+	        System.out.println("인서트 실행전");
+	         if(memberDto !=null) {
+	         
+	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
+	            .boardNo(boardNo)
+	            .memberNo(memberNo)
+	         .build();
+	        	 System.out.println("인서트 실행후");
+	         bookmarkDao.BookmarkInsert(bookmarkDto);}
+	         
+	         return "redirect:boardDetail?boardNo="+boardNo;
+	      }
+	   
+	   @GetMapping("bookmarkDelete")
+	      public String bookmarkDelete(int boardNo,HttpSession session) {
+		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+	         int memberNo = memberDto.getMemberNo(); 
+	         if(memberDto !=null) {
+	         
+	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
+	            .boardNo(boardNo)
+	            .memberNo(memberNo)
+	         .build();
+	         bookmarkDao.BookmarkDelete(bookmarkDto);}
+	         
+	         return "redirect:boardDetail?boardNo="+boardNo;
+	      }
 }

@@ -198,10 +198,30 @@ public class BoardDaoImpl implements BoardDao {
 		}
 		
 		@Override
-		public List<BoardCategoryBoardDto> getBoardCategoryBoardList(int boardCategoryNo) {
+		public List<BoardCategoryBoardDto> getBoardCategoryBoardList(Integer boardCategoryNo) {
 			List<BoardCategoryBoardDto> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", boardCategoryNo);
 			System.out.println("[임] boardCategoryBoardList = " + boardCategoryBoardList);
 			return boardCategoryBoardList;
+		}
+		
+		@Override
+		public List<BoardCategoryBoardDto> BoardCategorySearch(String keyword) {
+			List<BoardCategoryBoardDto> boardCategoryboardList = sqlSession.selectList("board.SearchBoardCategoryBoardList", keyword);
+			System.out.println("boardCategoryboardList" + boardCategoryboardList);
+			return boardCategoryboardList;
+		}
+		
+		@Override
+		public List<CompanyBoardDto> SearchCompanyBoardList(String keyword) {
+			List<CompanyBoardDto> companyBoardList = sqlSession.selectList("board.SearchCompanyBoardList", keyword);
+			
+			return companyBoardList;
+		}
+		
+		@Override
+		public List<JobCategoryBoardDto> SearchJobCategoryBoardList(String keyword) {
+			List<JobCategoryBoardDto> jobCategoryboardList = sqlSession.selectList("board.SearchJobCategoryBoardList", keyword);
+			return jobCategoryboardList;
 		}
 
 		
@@ -231,6 +251,12 @@ public class BoardDaoImpl implements BoardDao {
 			CheckBoardTypeDto boardTypeDto = sqlSession.selectOne("board.getBoardType", boardNo);
 			return boardTypeDto;
 		}
+
+		
+
+		
+
+		
 
 
  
