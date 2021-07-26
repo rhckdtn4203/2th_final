@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 검색어 입력-->
-	<insert id="insert" parameterType="SearchDto">
+	<insert id="insert" parameterType="String">
 		insert into search values(
 			#{searchNo},
 			#{searchKeyword},

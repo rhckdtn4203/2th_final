@@ -22,8 +22,8 @@ public class SearchDaoImpl implements SearchDao {
 	}
 
 	@Override
-	public void insert(SearchDto searchDto) {
-		sqlSession.insert("search.insert",searchDto);
+	public void insert(String searchKeyword) {
+		sqlSession.insert("search.insert",searchKeyword);
 		
 	}
 

@@ -67,7 +67,7 @@ li.write {
 		</nav>	
 		
 		<!-- 검색창  -->
-		<form action="search/insert" method="post">
+		<form action="${root}/search/insert" method="get">
 			<input type="text" name="searchKeyword" placeholder="키워드로 입력하세요.">
 			<input type="submit" value="검색" id="search">
 		</form>

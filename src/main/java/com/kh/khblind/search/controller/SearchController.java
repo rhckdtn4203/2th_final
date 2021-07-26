@@ -21,11 +21,10 @@ public class SearchController {
 	@Autowired
 	private SearchDao searchDao;
 	
-	@PostMapping("/insert")
+	@GetMapping("/insert")
 	public String insert(
-			@ModelAttribute SearchDto searchDto) {
-		
-		String searchKeyword = searchDto.getSearchKeyword();
+			@RequestParam String searchKeyword,
+			Model model) {
 		
 		if(searchDao.get(searchKeyword)!=null) {
 			searchDao.update(searchKeyword);
@@ -33,28 +32,36 @@ public class SearchController {
 		else {
 			// 시퀀스번호
 			int searchNo = searchDao.getSequence();
-			searchDto.setSearchNo(searchNo);
-			searchDto.setSearchKeyword(searchKeyword);
 			
-			searchDao.insert(searchDto);
+			SearchDto searchDto = SearchDto.builder()
+											.searchNo(searchNo)					
+											.searchKeyword(searchKeyword)
+									.build();
+			
+			searchDao.insert(searchKeyword);
 		}
-		return "redirect:search_result?searchKeyword="+searchKeyword;
+		
+		model.addAttribute("searchKeyeord",searchKeyword);
+		model.addAttribute("list",searchDao.list(searchKeyword));
+		
+		return "search/result";
 	}
+		//return "redirect:search_result?searchKeyword="+searchKeyword;
 	
+}	
 
 	
 	// 검색 결과 페이지
-	@GetMapping("/search_result")
-	public String history(
-				HttpSession session,
-				Model model,
-				@RequestParam String searchKeyword
-				) {
+	//@GetMapping("/search_result")
+	//public String history(
+	//			Model model,
+				//@RequestParam String searchKeyword
+				//) {
 		
-		model.addAttribute("list",searchDao.list(searchKeyword));
+		
 		
 			
-			return "search/result";
-		}
+			//return "search/result";
+		//}
 
-}
+//}
