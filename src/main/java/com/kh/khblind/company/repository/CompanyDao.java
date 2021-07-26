@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.khblind.company.entity.CompanyDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
+import com.kh.khblind.company.vo.CompanyVO;
 
 public interface CompanyDao {
 	int sequence();
@@ -12,4 +13,5 @@ public interface CompanyDao {
 	List<CompanyRegistDto> companyRegistList();
 	boolean companyRegistDelete(int companyRegistNo);
 	boolean companyExist(String companyName);
+	CompanyVO companyFind(int companyNo);
 }

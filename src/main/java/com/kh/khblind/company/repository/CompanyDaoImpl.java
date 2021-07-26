@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.company.entity.CompanyDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
+import com.kh.khblind.company.vo.CompanyVO;
 
 @Repository
 public class CompanyDaoImpl implements CompanyDao {
@@ -44,6 +45,12 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public boolean companyExist(String companyName) {
 		return sqlSession.selectOne("company.exist", companyName) != null;
+	}
+
+	@Override
+	public CompanyVO companyFind(int companyNo) {
+		CompanyVO companyVO = sqlSession.selectOne("company.find", companyNo);
+		return companyVO;
 	}
 
 }

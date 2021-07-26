@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 		<package name="com.kh.khblind.admin.category.entity"/>
 		<package name="com.kh.khblind.company.entity"/>
+		<package name="com.kh.khblind.company.vo"/>
 		
 		<package name="com.kh.khblind.pay.entity"/>
 	</typeAliases>

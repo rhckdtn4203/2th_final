@@ -39,4 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from company where company_name = #{companyName}
 	</select>
 	
+	<select id="find" parameterType="int" resultType="CompanyVO">
+		select * from company_view where company_no = #{companyNo}
+	</select>
+	
 </mapper>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <span>{{회사 이미지}}</span>
-<h1>{{회사이름}}</h1>
+<h1>${companyVO.companyName}</h1>
 
 <br><br>
 
@@ -12,8 +12,11 @@
 
 <hr>
 
-<span>{{홈페이지}}</span>
-<span>{{업계}}</span>
-<span>{{본사}}</span>
-<span>{{설립}}</span>
-<span>{{회사 소개}}</span>
+<span>홈페이지 : ${companyVO.companyUrl}</span>
+<span>업계 : ${companyVO.companyIndustry}</span>
+<br>
+<span>본사 : ${companyVO.companyAddr}</span>
+<!-- 년도로 바꿔야 함 -->
+<span>설립일 : ${companyVO.companyEstablishment}</span>
+<br>
+<span>회사 소개 : ${companyVO.companyIntroduce}</span>
