@@ -13,14 +13,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -243,7 +249,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			
 			BoardImageDto boardImageDto = BoardImageDto.builder()
 					.boardNo(convertImageVo.getBoardNo())
-					.boardImageUrl(finalFolderName +"/"+ randomFileName + ".jpg")
+					.boardImageUrl(finalFolderName +"\\"+ randomFileName + ".jpg")
 					.build();
 			sqlSession.insert("upload-image.insert", boardImageDto);
 		}
@@ -295,6 +301,37 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		ImageIO.write(newImage, "jpg", outputFile);
 		
 		return false;
+	}
+
+	@Override
+	public List<ResponseEntity<ByteArrayResource>> getImageToJsp(int boardNo) throws IOException {
+		List<ResponseEntity<ByteArrayResource>> imageFileList = new ArrayList<>();
+		
+//		String folderName = getImageFolderName(boardNo); //후.. 내가 왜 미래를 보지 못하고
+//		int SuperFolderNo = Integer.parseInt(folderName); // 굳이 이렇게 두번 일하는가...
+//		int subFolderNo = boardNo;
+		
+		List<BoardImageDto> boardImageList =sqlSession.selectList("upload-image.getmageInfoInBoard", boardNo);
+		for(int i =0; i<boardImageList.size(); i++) {
+			
+			File target = new File(boardImageList.get(i).getBoardImageUrl());
+			byte[] data = FileUtils.readFileToByteArray(target);
+			
+			ByteArrayResource resource = new ByteArrayResource(data);
+			
+			ResponseEntity<ByteArrayResource> responseEntity = ResponseEntity.ok()
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.contentLength(target.length())
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(target.getName(), "UTF-8")+"\"")
+			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+			.body(resource);
+			
+			imageFileList.add(responseEntity);
+		}
+		
+		
+		
+		return imageFileList;
 	}
 
 } 

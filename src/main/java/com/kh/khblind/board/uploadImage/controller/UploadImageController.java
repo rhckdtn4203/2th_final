@@ -34,16 +34,13 @@ public class UploadImageController {
 		int memberNo = 2;
 		List<String> fileNameList = uploadImageDao.uploadOriginalFile(images, memberNo);
 		if(fileNameList==null) {return "/board/파일업로드실패/이유는-서버에업로드가되지않음";}	
-		System.out.println("[콘]- fileNameList" + fileNameList);
 		
 		//2. 1에서 받은 리스트를 활용하여 각 이미지의 로테이션 번호로 회전해야할 각도 리스트를 가져온다.
 		List<Integer> rotationValueList = uploadImageDao.getRotationValue(fileNameList);
-		System.out.println("[콘]- rotationValueList" + rotationValueList);
 		
 		//3. 폴더 이름을 미리 정한다.
 		int tempBoardNo = 2034;
 		String superFolderName = uploadImageDao.getImageFolderName(tempBoardNo);
-		System.out.println("[콘]- FolderName" + superFolderName);
 		
 		//4. 1과 2를 활용하여 파일 리사이즈를 거친다
 		ConvertImageVo convertImageVo =ConvertImageVo.builder()
@@ -56,16 +53,14 @@ public class UploadImageController {
 		
 		List<String> readyFileNameList = uploadImageDao.convertImage(convertImageVo);
 		
-		System.out.println("지울까하는데...");
 		//5. 삭제하기
 		boolean deleteSuccess = uploadImageDao.deleteOrigin(convertImageVo, readyFileNameList);
-		System.out.println("삭제 성공 = " + deleteSuccess);
 		
 		//6. 썸네일 만들기
 		String firstFileFullName = readyFileNameList.get(0);
 		String firstFileFinalName = firstFileFullName.replace("-ready", "");
 		boolean makeThumbSuccess = uploadImageDao.makeThumb(convertImageVo, firstFileFinalName);
-		System.out.println("썸네일 성공 = " + makeThumbSuccess);
+
 
 		
 		return "/board/사진 업로드 성공!";
