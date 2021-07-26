@@ -1,17 +1,18 @@
 package com.kh.khblind.board.entity;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class BoardEditVO {
-	//준비 : 파라미터3개(번호, 제목, 내용) + 회원번호1개(세션 = 내 글만 고칠수 있게) -> boardEditVO
-	//삭제 예정
-	private int boardNo;
+public class BoardCategoryBoardDto {
+	private int boardCategoryNo;
 	private String boardTitle;
 	private String boardContent;
-	private int memberNo;
-
+	private int boardCount;
+	private String memberNick;
+	private Date boardDate;
 }
