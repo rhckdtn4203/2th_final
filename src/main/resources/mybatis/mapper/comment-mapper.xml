@@ -6,10 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="comments">
 	<insert id="insert">
-	insert into comments values (comments_no_seq.nextval,null,#{commentsContents},sysdate,#{memberNo},#{boardNo}); 
+	insert into comments values (comments_no_seq.nextval,null,#{commentsContent},sysdate,#{memberNo},#{boardNo})
 	</insert>
 	<insert id="nestedinsert">
-	insert into comments values(comments_no_seq.nextval,#{superNo},#{commentsContents},sysdate,#{memberNo},#{boardNo}); 
+	insert into comments values(comments_no_seq.nextval,#{superNo},#{commentsContent},sysdate,#{memberNo},#{boardNo}) 
 	</insert>
 	<select id="list" resultType="CommentsVO">
 	select * from comments_view where board_no =#{boardNo}
