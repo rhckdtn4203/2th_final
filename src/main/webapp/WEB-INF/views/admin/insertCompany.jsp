@@ -51,7 +51,7 @@
     
 	<h1>회사 추가 페이지</h1>
 	
-	<form action="insertCompany" method="post" onsubmit="return submitCheck();">
+	<form action="insertCompany" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
 		<input type="hidden" name="companyRegistNo" value="${param.companyRegistNo}">
 		<input type="text" name="companyName" value="${param.companyName}" placeholder="회사 이름" required>
 		<input type="text" name="companyUrl" placeholder="회사 홈페이지 URL" required>
@@ -60,7 +60,12 @@
 		<br><br>
 		<input type="button" id="execDaumPostcode" value="주소 찾기"><br>
 		<input type="text" name="companyAddr" id="address" placeholder="본사 도로명 주소" required><br>
-		<br>
+		<br><br>
+		<input type="text" name="companyIndustry" placeholder="산업분류" required><br>
+		<input type="date" name="companyEstablishment" placeholder="설립일" required><br>
+		<input type="text" name="companyIntroduce" placeholder="회사소개" required><br>
+		<br><br>
+		<input type="file" name="companyProfile">
 		<input type="submit" value="추가하기" class="insert-btn">
 	</form>
 

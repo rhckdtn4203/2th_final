@@ -16,6 +16,11 @@ public class CompanyDaoImpl implements CompanyDao {
 	private SqlSession sqlSession;
 
 	@Override
+	public int sequence() {
+		return sqlSession.selectOne("company.sequence");
+	}
+	
+	@Override
 	public void insert(CompanyDto companyDto) {
 		sqlSession.insert("company.insert", companyDto);
 	}
