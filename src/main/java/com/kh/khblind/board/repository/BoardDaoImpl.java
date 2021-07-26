@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
@@ -97,6 +98,7 @@ public class BoardDaoImpl implements BoardDao {
 	public int getHashSequence() {
 		
 		return sqlSession.selectOne("hashtag.get");}
+	
 	@Override
 	   public List<String> getHash(BoardWriteVO boardWriteVO){
 	      
@@ -115,6 +117,26 @@ public class BoardDaoImpl implements BoardDao {
 
 	         return HashtagInBoardContentList;
 	   }
+
+		@Override
+		public List<String> getHash(String boardContent) {
+			
+			String HashRegex = "([#][a-zA-Z가-힣0-9]{1,})"; //정규표현식
+	         
+	         List<String> HashtagInBoardContentList = new ArrayList<>();
+	         
+	         Pattern p = Pattern.compile(HashRegex);
+	         Matcher m = p.matcher(boardContent);
+	         
+	         while (m.find()) {
+	           String hashtag = m.group(1);
+	           HashtagInBoardContentList.add(hashtag);
+	         }
+
+	         return HashtagInBoardContentList;
+
+		}
+
 
 	   //해시태그 검색인지 일반검색인지를 구분하기위한 메소드
 	   @Override
@@ -250,6 +272,12 @@ public class BoardDaoImpl implements BoardDao {
 			
 			CheckBoardTypeDto boardTypeDto = sqlSession.selectOne("board.getBoardType", boardNo);
 			return boardTypeDto;
+		}
+
+		@Override
+		public BoardCountDto getBoardCountInfo(int boardNo) {
+			BoardCountDto boardCountDto = sqlSession.selectOne("board.getCountInfo", boardNo);
+			return boardCountDto;
 		}
 
 		
