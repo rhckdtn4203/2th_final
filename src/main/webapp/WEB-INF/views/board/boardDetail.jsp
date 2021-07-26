@@ -4,21 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<script>
- $(function(){ 
- $(".deleteLike").click(function(){ 
-	  $(".boardLikeInsertForm").submit(); 
-	   }); 
-	   });
- </script> 
- <script>
- $(function(){ 
- $(".board_unlike_btn").click(function(){ 
-	  $(".boardLikeDeleteForm").submit(); 
-	   }); 
-	   });
- </script> 
-
 
  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <script>
@@ -80,12 +65,12 @@ border: 1px red dotted;
 
 <!-- 좋아요를 클릭한상태 -->
 
-<c:if test="${isLiked == 2}">
-<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}"><i class="fas fa-thumbs-up fa-3x"></i></a>
-</c:if>
 <c:if test="${isLiked == 1}">
 <a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
 <i class="far fa-thumbs-up fa-3x"></i></a>
+</c:if>
+<c:if test="${isLiked == 2}">
+<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}"><i class="fas fa-thumbs-up fa-3x"></i></a>
 </c:if>
 <c:if test="${empty dtoss}">
 <div class="notLogin">
@@ -101,7 +86,20 @@ border: 1px red dotted;
 <!-- </form>  -->
 
 
+<!-- 비어있는 하트를 누르면  bookmarkInsert를 실행하게하기 -->
+<c:if test="${isMarked == 1}">
+<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><i class="far fa-heart"></i></a>
+</c:if>
 
+<c:if test="${isMarked == 2}">
+<!-- 차있는 하트를 누르면 bookmarkDelete를 실행하게 하기 -->
+<a href="${root}/board/bookmarkDelete?boardNo=${boardDto.boardNo}"><i class="fas fa-heart"></i></a>
+</c:if>
+<c:if test="${empty dtoss}">
+<div class="notLogin">
+<i class="far fa-heart"></i>
+</div>
+</c:if>
 
 
 <!-- 댓글영역 -->
@@ -111,7 +109,7 @@ border: 1px red dotted;
 <!-- 원댓글 작성부분 -->
 <form action="commentInsert" method="post">
 <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
-<textarea name="commentContent"></textarea>
+<textarea name="commentsContent"></textarea>
 <input type="submit">
 </form>
 
@@ -131,10 +129,8 @@ border: 1px red dotted;
    <textarea name="commentContent"></textarea>
    <input type="submit">
 </form>
-</c:forEach>
-
 </div>
-<div>
+</c:forEach>
 
 </div>
 <!-- 대댓글 출력부분 -->
@@ -146,5 +142,4 @@ border: 1px red dotted;
    
 </div>
 </c:forEach>
-</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
