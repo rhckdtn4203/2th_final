@@ -6,11 +6,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="company">
 
+	<select id="sequence" resultType="int">
+		select company_seq.nextval from dual
+	</select>
+
 	<insert id="insert" parameterType="CompanyDto">
 		insert into company values(
-			company_seq.nextval, 
+			#{companyNo}, 
 			#{companyName}, #{companyUrl}, 
-			#{companyDomain}, #{companyAddr}
+			#{companyDomain}, #{companyAddr},
+			#{companyIndustry}, #{companyEstablishment},
+			#{companyIntroduce}
 		)
 	</insert>
 	
