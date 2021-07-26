@@ -5,19 +5,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
+import com.kh.khblind.board.entity.CheckBoardTypeDto;
+import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
+import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.member.entity.MemberDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -178,9 +185,79 @@ public class BoardDaoImpl implements BoardDao {
 	      
 	   }
 
+		@Override
+		public List<CompanyBoardDto> getCompanyBoardList(int companyNo) {
+			List<CompanyBoardDto> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", companyNo);
+			return companyBoardList;
+		}
 
-	
+		@Override
+		public List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo) {
+			List<JobCategoryBoardDto> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", jobCategoryNo);
+			return jobCategoryBoardList;
+		}
+		
+		@Override
+		public List<BoardCategoryBoardDto> getBoardCategoryBoardList(Integer boardCategoryNo) {
+			List<BoardCategoryBoardDto> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", boardCategoryNo);
+			System.out.println("[임] boardCategoryBoardList = " + boardCategoryBoardList);
+			return boardCategoryBoardList;
+		}
+		
+		@Override
+		public List<BoardCategoryBoardDto> BoardCategorySearch(String keyword) {
+			List<BoardCategoryBoardDto> boardCategoryboardList = sqlSession.selectList("board.SearchBoardCategoryBoardList", keyword);
+			System.out.println("boardCategoryboardList" + boardCategoryboardList);
+			return boardCategoryboardList;
+		}
+		
+		@Override
+		public List<CompanyBoardDto> SearchCompanyBoardList(String keyword) {
+			List<CompanyBoardDto> companyBoardList = sqlSession.selectList("board.SearchCompanyBoardList", keyword);
+			
+			return companyBoardList;
+		}
+		
+		@Override
+		public List<JobCategoryBoardDto> SearchJobCategoryBoardList(String keyword) {
+			List<JobCategoryBoardDto> jobCategoryboardList = sqlSession.selectList("board.SearchJobCategoryBoardList", keyword);
+			return jobCategoryboardList;
+		}
 
-	
-	   
+		
+		@Override
+		public String getCompanyName(int companyNo) {
+			 
+			String companyName = sqlSession.selectOne("board.getCompanyName", companyNo);
+			return companyName;
+		}
+
+		@Override
+		public String getJobCategoryName(int jobCategoryNo) {
+			
+			String jobCategoryName = sqlSession.selectOne("board.getJobCategoryName", jobCategoryNo);
+			return jobCategoryName;
+		}
+
+		@Override
+		public String getBoardCategoryName(int boardCategoryNo) {
+			String boardCategoryName = sqlSession.selectOne("getBoardCategoryName", boardCategoryNo);
+			return boardCategoryName;
+		}
+		
+		@Override
+		public CheckBoardTypeDto getBoardType(int boardNo) {
+			
+			CheckBoardTypeDto boardTypeDto = sqlSession.selectOne("board.getBoardType", boardNo);
+			return boardTypeDto;
+		}
+
+		
+
+		
+
+		
+
+
+ 
 	}

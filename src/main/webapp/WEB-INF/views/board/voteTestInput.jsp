@@ -94,8 +94,8 @@
 
 
             </textarea>
-            <br><br><br><br></div>
-        <div><br><br><br>사진업로드부분<br><br><br><br></div>
+			<!-- 이미지 업로드 연습 공간 -->
+
         
         <div id="input-vote-sector"  class="mt-2">
             <form action="inputVote" method="post">

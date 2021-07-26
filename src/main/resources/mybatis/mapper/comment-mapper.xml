@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="comments">
+	<insert id="insert">
+	insert into comments values (comments_no_seq.nextval,null,#{commentsContent},sysdate,#{memberNo},#{boardNo})
+	</insert>
+	<insert id="nestedinsert">
+	insert into comments values(comments_no_seq.nextval,#{superNo},#{commentsContent},sysdate,#{memberNo},#{boardNo}) 
+	</insert>
+	<select id="list" resultType="CommentsVO">
+	select * from comments_view where board_no =#{boardNo}
+	</select>
+
+
+
+</mapper>

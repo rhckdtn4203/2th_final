@@ -40,6 +40,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <delete id="delete" parameterType="int">
 	 	delete board where board_no = #{boardNo}
 	 </delete>
+	 
+	 <select id="getCompanyBoardList" parameterType="int" resultType="CompanyBoardDto">
+	 	select * from company_board_view where company_no = #{companyNo}
+	 </select>
+	 
+	 <select id="getJobCategoryBoardList" parameterType="int" resultType="JobCategoryBoardDto">
+	 	select * from job_category_board_view where job_category_no = #{jobCategoryNo}
+	 </select>
+	 
+	 <select id="getBoardCategoryBoardList" parameterType="integer" resultType="BoardCategoryBoardDto">
+	 	select * from board_category_board_view where board_category_no = #{boardCategoryNo}
+	 </select>
+	 
+	 <select id="SearchBoardCategoryBoardList" parameterType="string" resultType="BoardCategoryBoardDto">
+	 	select * from board_category_board_view where instr(board_content, #{keyword}) || instr(board_title, #{keyword}) > 0 order by board_date desc
+	 </select>
+	 
+	 <select id="SearchCompanyBoardList" parameterType="string" resultType="CompanyBoardDto">
+	 	select * from company_board_view where instr(board_content, #{keyword}) || instr(board_title, #{keyword}) > 0 order by board_date desc
+	 </select>
+	 
+	 <select id="SearchJobCategoryBoardList" parameterType="string" resultType="JobCategoryBoardDto">
+	 	select * from job_category_board_view where instr(board_content, #{keyword}) || instr(board_title, #{keyword}) > 0 order by board_date desc
+	 </select>
+	 
+	 <select id="getCompanyName" parameterType="int" resultType="string">
+	 	select company_name from company where company_no = #{companyNo} 
+	 </select>
+	 
+	 <select id="getJobCategoryName" parameterType="int" resultType="string">
+	 	select job_category_name from job_category where job_category_no = #{jobCategoryNo}
+	 </select>
+	 
+	 <select id="getBoardCategoryName" parameterType="int" resultType="string">
+		select board_category_name from board_category where board_category_no =#{board_category_no}
+	</select>
+	
+	 <select id="getBoardType" parameterType="int" resultType="CheckBoardTypeDto">
+	 	select * from check_board_type_view where board_no = #{boardNo}
+	 </select>
 </mapper>
 
 

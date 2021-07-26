@@ -28,7 +28,7 @@ import com.kh.khblind.member.entity.MemberDto;
 
 @Controller
 @RequestMapping("/board")
-public class TempVoteController {
+public class VoteController {
 
 	@Autowired
 	private VoteDao voteDao;
@@ -55,18 +55,17 @@ public class TempVoteController {
 			boolean didYouVote = voteDao.didYouVote(voteResultDto);
 				
 			if(didYouVote) {
-				System.out.println("투표했으니 트루");
-				//어차피 model은 오브젝트니까... (덕지덕지)
+				
 				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
 				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
 				model.addAttribute("didYouVote", "voted");
 				
 			}else {
 				model.addAttribute("didYouVote", "didntVote");
-				System.out.println("투표했으니 폴스");
+
 			}			
 			
-		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안하고 들어올때 
+		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
 				model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
 		}
 		
@@ -106,7 +105,7 @@ public class TempVoteController {
 		//2.투표 선택지(들) 추가에 필요한 VO
 			
 			
-			//1. 투표 주제 추가에 필요한 Dto 생성 (단일 추가라 따로 둠)
+			//1. 투표 주제 추가에 필요한 Dto
 			VoteTopicDto voteTopicDto = VoteTopicDto.builder()
 												.boardNo(boardNo)
 												.voteTopicTitle(voteInsertInfoVo.getVoteTopicTitle())
