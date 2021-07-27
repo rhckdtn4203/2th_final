@@ -44,6 +44,35 @@ li.write {
 
 <script src="${root}/js/confirm-link.js"></script>
 
+<script>
+
+	$(function(){
+		$.ajax({
+			url:"${root}/search/keywordList",
+			type:"get",
+			dataType:"json",
+			success:function(resp){
+				$("#ranking").empty();
+				for(var i=0; i <10; i++){
+					var template = $("#template").html();
+					template = template.replace("{{rank}}",i+1);
+					template = template.replace("{{keyword}}", resp[i].keyword);
+					$("#ranking").append(template);	
+				}
+			}
+		});
+	});
+
+	
+</script>
+
+ <script id="template" type="text/template">
+			
+				<div class="row text-left">
+					<h5>{{rank}} {{keyword}}</h5>
+				</div>
+</script>
+
 </head>
 
 <body>
@@ -94,6 +123,11 @@ li.write {
         </div>
    </div>
 
-		
+	<div class="container-300 container-right">
+		<div class="row text-left"><h5> 실시간 검색 순위</h5></div>
+		<div id="ranking"></div>
+	</div>
+	
+	
 		
 		

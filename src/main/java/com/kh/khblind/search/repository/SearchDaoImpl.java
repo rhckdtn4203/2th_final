@@ -34,13 +34,13 @@ public class SearchDaoImpl implements SearchDao {
 	}
 
 	@Override
-	public List<BoardDto> list(String keyword) {
-		return sqlSession.selectList("search.list",keyword);
+	public SearchDto get(String keyword) {
+		return sqlSession.selectOne("search.get",keyword);
 	}
 
 	@Override
-	public SearchDto get(String keyword) {
-		return sqlSession.selectOne("search.get",keyword);
+	public List<SearchDto> list() {
+		return sqlSession.selectList("search.keywordList");
 	}
 
 	

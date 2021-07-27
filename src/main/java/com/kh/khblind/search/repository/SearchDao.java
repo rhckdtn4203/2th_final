@@ -11,7 +11,6 @@ public interface SearchDao {
 	int getSequence();
 	void insert(SearchDto searchDto);
 	void update(String keyword);
-	List<BoardDto> list(String keyword);
+	List<SearchDto> list();
 	SearchDto get(String keyword);
-
 }
