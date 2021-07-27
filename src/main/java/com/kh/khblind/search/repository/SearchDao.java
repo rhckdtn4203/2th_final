@@ -9,9 +9,9 @@ import com.kh.khblind.search.entity.SearchDto;
 public interface SearchDao {
 	
 	int getSequence();
-	void insert(String searchKeyword);
-	void update(String searchKeyword);
-	List<BoardDto> list(String searchKeyword);
-	SearchDto get(String searchKeyword);
+	void insert(SearchDto searchDto);
+	void update(String keyword);
+	List<BoardDto> list(String keyword);
+	SearchDto get(String keyword);
 
 }

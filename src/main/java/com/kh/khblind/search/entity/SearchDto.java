@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class SearchDto {
 	private int searchNo;
-	private String searchKeyword;
+	private String keyword;
 	private int searchCount;
 }

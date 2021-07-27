@@ -22,25 +22,25 @@ public class SearchDaoImpl implements SearchDao {
 	}
 
 	@Override
-	public void insert(String searchKeyword) {
-		sqlSession.insert("search.insert",searchKeyword);
+	public void insert(SearchDto searchDto) {
+		sqlSession.insert("search.insert",searchDto);
 		
 	}
 
 	@Override
-	public void update(String searchKeyword) {
-		sqlSession.insert("search.update",searchKeyword);
+	public void update(String keyword) {
+		sqlSession.insert("search.update",keyword);
 		
 	}
 
 	@Override
-	public List<BoardDto> list(String searchKeyword) {
-		return sqlSession.selectList("search.list",searchKeyword);
+	public List<BoardDto> list(String keyword) {
+		return sqlSession.selectList("search.list",keyword);
 	}
 
 	@Override
-	public SearchDto get(String searchKeyword) {
-		return sqlSession.selectOne("search.get",searchKeyword);
+	public SearchDto get(String keyword) {
+		return sqlSession.selectOne("search.get",keyword);
 	}
 
 	

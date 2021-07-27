@@ -12,10 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 검색어 입력-->
-	<insert id="insert" parameterType="String">
+	<insert id="insert" parameterType="SearchDto">
 		insert into search values(
 			#{searchNo},
-			#{searchKeyword},
+			#{keyword},
 			0
 		)
 	</insert>
@@ -24,21 +24,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update" parameterType="String">
 		update search
 		set search_count = search_count+1
-		where search_keyword = #{searchKeyword}
+		where keyword = #{keyword}
 	</update>
 	
 	<!-- 검색시 보여줄 게시판 리스트 -->
 	<!-- instr, like -->
 	<select id="list" resultType="BoardDto" parameterType="String">
 		select * from board
-		where instr(board_title,#{searchKeyword})>0 
-			or instr(board_content,#{searchKeyword})>0
+		where instr(board_title,#{keyword})>0 
+			or instr(board_content,#{keyword})>0
 		order by board_date desc
 	</select>
 	
 	<select id="get" resultType="SearchDto" parameterType="String">
 		select * from search
-		where search_keyword = #{searchKeyword}
+		where keyword = #{keyword}
 	</select>
 	
 </mapper>
