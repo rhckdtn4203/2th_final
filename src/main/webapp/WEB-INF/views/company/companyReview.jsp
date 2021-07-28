@@ -1,18 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<span>{{회사 이미지}}</span>
-<h1>{{회사이름}}</h1>
+<!-- 여기 되는지 확인해야 함 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+// 	$(function() {
+// 		var src = "D:/proj/khblind/resources/5.company-logo-image/";
+// 		var fileName = ${companyVO.companyProfileSaveName};
+// 		var type = ${companyVO.companyProfileContentType};
+// 		var resultSrc = src + fileName + type;
+		
+// 		$("#companyImg").attr("src", resultSrc);
+// 	});
+</script>
+
+<!-- <img id="companyImg" width=512 height=384></img> -->
+<h1>${companyVO.companyName}</h1>
 
 <br><br>
 
-<!-- 별 이미지 추가 -->
-<span>{{별점}}</span>
-<span>{{리뷰 개수}}개의 리뷰</span>
-
-<hr>
-
-<h4>{{회사이름}} 리뷰</h4>
+<h4>${companyVO.companyName} 리뷰</h4>
 
 <span>{{별점}}</span> 
 <!-- 별 이미지 추가 -->
@@ -20,13 +28,33 @@
 
 <hr>
 
-<!-- c:foreach 사용 예정 -->
-<span>{{별점}}</span>
-<span>{{리뷰 제목}}</span>
-<span>{{닉네임}}</span>
-<span>{{업종 분류}}</span>
-<span>{{날짜}}</span>
-<span>{{장점}}</span>
-<span>{{단점}}</span>
+<a href="${pageContext.request.contextPath}/company/reviewWrite?companyNo=${param.companyNo}">리뷰 작성하기</a>
 
 <hr>
+
+<table>
+	<thead>
+		<tr>
+			<th>별점</th>
+			<th>리뷰 제목</th>
+			<th>닉네임</th>
+			<th>업종 분류</th>
+			<th>날짜</th>
+			<th>장점</th>
+			<th>단점</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach var="companyReviewDto" items="${list}">
+			<tr>
+				<td>${companyReviewDto.reviewRate}</td>
+				<td>${companyReviewDto.reviewTitle}</td>
+				<td>닉네임</td>
+				<td>업종 분류</td>
+				<td>${companyReviewDto.reviewDate}</td>
+				<td>${companyReviewDto.reviewMerit}</td>
+				<td>${companyReviewDto.reviewDemerit}</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>

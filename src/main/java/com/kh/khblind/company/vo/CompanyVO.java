@@ -18,5 +18,11 @@ public class CompanyVO {
 	private String companyIndustry;
 	private Date companyEstablishment;
 	private String companyIntroduce;
+	
 	private MultipartFile companyProfile;
+	
+	private String companyProfileUploadName;
+	private String companyProfileSaveName;
+	private String companyProfileContentType;
+	private long companyProfileSize; 
 }

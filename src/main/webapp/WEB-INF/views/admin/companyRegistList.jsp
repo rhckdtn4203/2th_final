@@ -53,11 +53,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="companyRegistDto" items="${list }">
+		<c:forEach var="companyRegistDto" items="${list}">
 			<tr>
-				<td>${companyRegistDto.companyRegistNo }</td>
-				<td>${companyRegistDto.companyRegistName }</td>
-				<td>${companyRegistDto.companyRegistDomain }</td>
+				<td>${companyRegistDto.companyRegistNo}</td>
+				<td>${companyRegistDto.companyRegistName}</td>
+				<td>${companyRegistDto.companyRegistDomain}</td>
 				<td>
 					<input type="button" class="companyRegist" name="companyRegist" value="등록">
 					<input type="button" class="companyRegistDelete" name="companyRegistDelete" value="삭제">
