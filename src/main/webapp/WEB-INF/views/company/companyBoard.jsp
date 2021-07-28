@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<!-- 해야 함 -->
+    
 <span>{{회사 이미지}}</span>
 <h1>{{회사이름}}</h1>
 

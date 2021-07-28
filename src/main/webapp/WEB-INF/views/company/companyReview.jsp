@@ -45,15 +45,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="companyReviewDto" items="${list}">
+		<c:forEach var="reviewMemberCategoryVO" items="${list}">
 			<tr>
-				<td>${companyReviewDto.reviewRate}</td>
-				<td>${companyReviewDto.reviewTitle}</td>
-				<td>닉네임</td>
-				<td>업종 분류</td>
-				<td>${companyReviewDto.reviewDate}</td>
-				<td>${companyReviewDto.reviewMerit}</td>
-				<td>${companyReviewDto.reviewDemerit}</td>
+				<td>${reviewMemberCategoryVO.reviewRate}</td>
+				<td>${reviewMemberCategoryVO.reviewTitle}</td>
+				<td>${reviewMemberCategoryVO.memberNick}</td>
+				<td>${reviewMemberCategoryVO.jobCategoryName}</td>
+				<td>${reviewMemberCategoryVO.reviewDate}</td>
+				<td>${reviewMemberCategoryVO.reviewMerit}</td>
+				<td>${reviewMemberCategoryVO.reviewDemerit}</td>
 			</tr>
 		</c:forEach>
 	</tbody>

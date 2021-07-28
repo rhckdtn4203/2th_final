@@ -85,6 +85,7 @@ public class CompanyController {
 
 		if(memberNo != 0 && companyNo != 0) {
 			model.addAttribute("map", map);
+			model.addAttribute("category", companyDao.categories());
 		}
 		
 		return "company/reviewWrite";

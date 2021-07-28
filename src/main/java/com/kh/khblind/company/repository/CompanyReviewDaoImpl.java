@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.company.entity.CompanyReviewDto;
+import com.kh.khblind.company.vo.ReviewMemberCategoryVO;
 
 @Repository
 public class CompanyReviewDaoImpl implements CompanyReviewDao {
@@ -26,7 +27,7 @@ public class CompanyReviewDaoImpl implements CompanyReviewDao {
 	}
 
 	@Override
-	public List<CompanyReviewDto> companyReviewList(int companyNo) {
+	public List<ReviewMemberCategoryVO> companyReviewList(int companyNo) {
 		return sqlSession.selectList("companyReview.reviewList", companyNo);
 	}
 

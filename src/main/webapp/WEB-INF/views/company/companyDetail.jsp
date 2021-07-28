@@ -14,7 +14,7 @@
 // 	});
 </script>
     
-<!-- <img id="companyImg" width=512 height=384></img> -->
+<!-- <img id="companyImg" width=200 height=200></img> -->
 <h1>${companyVO.companyName}</h1>
 
 <br><br>

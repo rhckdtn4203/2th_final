@@ -10,15 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(company_review_seq.nextval,
 		#{companyNo}, #{memberNo},  
 		#{reviewMerit}, #{reviewDemerit},  
-		sysdate, #{reviewRate}, #{reviewTitle})
+		sysdate, #{reviewRate}, #{reviewTitle},
+		#{jobCategoryNo})
 	</insert>
 	
 	<select id="companyFind" parameterType="int" resultType="CompanyReviewDto">
 		select * from company_review where company_no = #{companyNo}
 	</select>
 	
-	<select id="reviewList" parameterType="int" resultType="CompanyReviewDto">
-		select * from company_review where company_no = #{companyNo}
+	<select id="reviewList" parameterType="int" resultType="ReviewMemberCategoryVO">
+		select * from review_member_category_view where company_no = #{companyNo}
 	</select>
 	
 </mapper>
