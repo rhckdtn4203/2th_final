@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
@@ -34,6 +35,7 @@ public interface BoardDao {
 	
 	//해시태그 기능
 	List<String> getHash(BoardWriteVO boardWriteVO);
+	List<String> getHash(String boardContent);//오버로딩 
 	int insertHash(String hashtagName);
 	List<Integer> getHashNum(List<String> hashtag);
 	int searchHashNum(String hashTag);
@@ -47,7 +49,7 @@ public interface BoardDao {
 	//업종별 목록조회 기능
 	List<JobCategoryBoardDto> getJobCategoryBoardList(int jobCategoryNo);
 	//토픽별 목록조회 기능
-	List<BoardCategoryBoardDto> getBoardCategoryBoardList(int boardCategoryNo);
+	List<BoardCategoryBoardDto> getBoardCategoryBoardList(Integer boardCategoryNo);
 	
 	//기업 이름 조회 기능
 	String getCompanyName(int companyNo);
@@ -58,5 +60,15 @@ public interface BoardDao {
 	
 	//주제 종료 조회 기능
 	CheckBoardTypeDto getBoardType(int boardNo);
+	
+	//메인 검색 기능(토픽 검색 기능)
+	List<BoardCategoryBoardDto> BoardCategorySearch(String keyword);
+	//기업목록 검색기능
+	List<CompanyBoardDto> SearchCompanyBoardList(String keyword);
+	//업종목록 검색기능
+	List<JobCategoryBoardDto> SearchJobCategoryBoardList(String keyword);
+	
+	//게시판 집계함수만 가져오는 기능
+	BoardCountDto getBoardCountInfo(int boardNo);
 
 }

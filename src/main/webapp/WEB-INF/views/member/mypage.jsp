@@ -25,9 +25,10 @@
 		color:red;
 	}
 </style>
+
 <script>
 	$(function(){
-		$("#confrirm-link").click(function(e){
+		$("#confirm-link").click(function(e){
 			
 			//var message=$(this).attr("data-message")||"이동하시겠습니까?";
 			var choice = window.confirm("정말 탈퇴하시겠습니까?");
@@ -35,7 +36,20 @@
 			e.preventDefault();				
 			}
 		});
-	});
+	}); 
+
+</script>
+
+<script>
+
+/* function deleteCheck(){
+	if(window.confirm("정말 탈퇴하시겠습니까?")==true){
+		return;
+	}
+	else{
+		return false;
+	}
+} */
 </script>
 
 <div class="container-600">
@@ -68,12 +82,15 @@
 	
 	<!-- 이용 가능한 메뉴 구성 -->
 	<div class="row">
+
 		<c:if test="${dtoss.gradeNo == 1 || dtoss.gradeNo == 2}">
 			<a href="${pageContext.request.contextPath}/cert/emailInsert" class="link-btn">이메일 인증</a>
 		</c:if>
 		<a href="${pageContext.request.contextPath}/member/change_pw" class="link-btn">비밀번호 변경</a>
+
 		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
-		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link">회원 탈퇴</a>
+		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link" onclick="deleteCheck">회원 탈퇴</a>
+	
 	</div>
 	
 	<div class="row text-left">
@@ -104,6 +121,13 @@
 	</div>
 </div>
 
+
+<script>
+
+function preventClick(e){
+	e.preventDefalut()
+}
+</script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 

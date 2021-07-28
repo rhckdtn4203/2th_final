@@ -13,7 +13,7 @@
 </div>
 
 	<div>
-		<button onclick ="location.href='/'">홈으로</button>
+		<button onclick ="${root}">홈으로</button>
 	</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

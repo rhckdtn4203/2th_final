@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CompanyBoardDto {
 	private int companyNo;
+	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
 	private int boardCount;
