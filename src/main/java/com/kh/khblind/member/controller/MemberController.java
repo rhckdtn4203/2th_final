@@ -3,17 +3,16 @@ package com.kh.khblind.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
-import com.kh.khblind.member.repository.MemberDaoImpl;
 
 @Controller
 @RequestMapping("/member")
@@ -61,7 +60,8 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	// 마이페이지
+// 마이페이지
+
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 
@@ -74,6 +74,7 @@ public class MemberController {
 	}
 
 	// 마이페이지 수정
+
 	@GetMapping("/changeinfo")
 	public String changeinfo(HttpSession session, Model model) {
 		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
@@ -95,23 +96,79 @@ public class MemberController {
 
 	}
 
-	// 회원 탈퇴
+	@GetMapping("/changeinfo_success")
+	public String changeinfo() {
+
+		return "member/changeinfo_success";
+	}
+
+	// 아이디찾기
+
+	@GetMapping("/find_id")
+	public String find_id() {
+
+		return "member/find_id";
+	}
+
+	@PostMapping("/find_id")
+	public String find_id(HttpSession session, @RequestParam String memberName, @RequestParam String memberPhone) {
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		boolean result = dao.find_id(memberName, dto.getMemberNo(), memberPhone);
+		if (result) {
+			return "redirect:show_id";
+		} else {
+			return "redirect:show_id?error";
+		}
+	}
+
+	@GetMapping("/show_id")
+	public String show_id() {
+
+		return "member/show_id";
+	}
+
+	// 비밀번호 변경
+
+	@GetMapping("/change_pw")
+	public String change_pw() {
+
+		return "member/change_pw";
+	}
+
+	@PostMapping("/change_pw")
+	public String changePw(HttpSession session, @RequestParam String newPw, @RequestParam String curPw) {
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		boolean result = dao.change_pw(newPw, dto.getMemberNo(), curPw);
+		if (result) {
+			return "redirect:change_pw_success";
+		} else {
+			return "redirect:change_pw?error";
+		}
+	}
+
+	@GetMapping("/change_pw_success")
+	public String changePw() {
+
+		return "member/change_pw_success";
+	}
+
+// 회원 탈퇴
+
 	@RequestMapping("/exit")
 	public String exit(HttpSession session) {
-		
+
 		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
 		int memberNo = dto.getMemberNo();
 		dao.exit(memberNo);
 		session.removeAttribute("dtoss");
-		
-		
+
 		return "redirect:deletecount";
 	}
-
 
 	@GetMapping("/deletecount")
 	public String deletecount() {
 		return "member/goodbye";
-		
+
 	}
+
 }

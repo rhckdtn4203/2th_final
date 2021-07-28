@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>layout for responsive page</title>
+  <style>
+    #wrap{
+      width: 1200px; height: 1100px; 
+    margin: 0 auto;
+    text-align: center;      
+    }
+    #header{ 
+      width: 100%; height: 150px;
+      background-color: antiquewhite;
+    }
+    #searchBar{
+      width: 100%; height: 50px;
+      background-color: aqua;
+    }
+    #section1{
+      width: 100%; height: 300px;
+      background-color: blue;
+      float: left;
+    }
+    #section2{
+      width: 100%; height: 450px;
+      background-color: coral;
+      float: left;
+    }
+    #footer{
+      width: 100%; height: 150px;
+      background-color: darkgoldenrod;
+      clear: both;
+    }
+
+
+    @media (max-width: 1200px){
+      body{}
+    }
+
+    @media (max-width: 1024px){
+      body{}
+    }
+
+    @media (max-width: 768px){
+      body{}
+    }
+
+    @media (max-width: 480px){
+      body{}
+    }
+
+  </style>
+</head>
+<body>
+    <div id="wrap">
+      <div id="header"></div>
+      <div id="searchBar"></div>
+      <div id="section1"></div>
+      <div id="section2"></div>
+      <div id="footer"></div>
+    </div>
+</body>
+</html>
