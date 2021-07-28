@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/* UNIVERSAL TAGS */
+
+body{
+  margin: 10px 80px;
+}
+*{
+  box-sizing: border-box;
+  /* border-top: 2px solid black; */
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+button{
+  cursor: pointer;
+  }
+
+li{
+  list-style: none;
+}  
+
+
+/* TYPPGRAPHY */
+H1{
+  font-size: var(--font-title);
+  font-weight: var(--weight-5);
+  color: var(--color-black);
+  margin: 12px 0;
+}
+h2{
+  font-size: var(--font-subtitle);
+  font-weight: var(--weight-5);
+  color: var(--color-grey1);
+  margin: 12px 0;
+}
+
+h3{
+  font-size: var(--font-regular);
+  font-weight: var(--weight-3);
+  color: var(--color-black);
+  margin: 8px 0;
+}
