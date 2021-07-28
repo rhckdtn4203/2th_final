@@ -6,6 +6,30 @@
 
 <h2>게시판 목록</h2>
 <!-- boardNo?, boardTitle, boardContent, memberNick, 좋아요 수,  댓글 수?-->
+	<c:if test="${companyBoardList != null}">
+	<form action="${root}/board/boardList" method="get">
+		<input type="hidden" name="type" value="companyBoard">
+		<input type="text" name="keyword" required>
+		<input type="submit" value="검색">
+	</form>
+	</c:if>
+	
+	<c:if test="${jobCategoryBoardList != null}">
+	<form action="${root}/board/boardList" method="get">
+		<input type="hidden" name="type" value="jobCategoryBoard">
+		<input type="text" name="keyword" required>
+		<input type="submit" value="검색">
+	</form>
+	</c:if>
+	
+	<c:if test="${boardCategoryBoardList != null}">
+	<form action="${root}/board/boardList" method="get">
+		<input type="hidden" name="type" value="boardCategoryBoard">
+		<input type="text" name="keyword" required>
+		<input type="submit" value="검색">
+	</form>
+	</c:if>
+	
 <table border="1" width="700" align="center">
 	<thead>
 		<tr>
@@ -24,7 +48,7 @@
 		<c:forEach var="companyBoardDto" items="${companyBoardList}">
 		<tr>
 			<td>"${companyBoardDto.companyNo}"</td>
-			<td>"${companyBoardDto.boardTitle}"</td>
+			<td><a href="${root}/board/boardDetail?boardNo=${companyBoardDto.boardNo}">"${companyBoardDto.boardTitle}"</a></td>
 			<td>"${companyBoardDto.boardContent}"</td>
 			<td>"${companyBoardDto.memberNick}"</td>
 			<td>"${companyBoardDto.boardCount}"</td>

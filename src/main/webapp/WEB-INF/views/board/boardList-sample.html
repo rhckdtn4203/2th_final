@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+            <!-- 부트스트랩을 가져온다 -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+            <!-- 제이쿼리를 가져온다 -->
+            <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+            <!-- UI제이쿼리를  가져온다 -->
+            <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+            <!-- Popper를 가져온다 -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <!-- 폰트어썸 아이콘을 가져온다-->
+            <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
+            <!-- 부트와치를 가져온다.-->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+   
+            
+    <style>
+        /* div{
+        border: 1px red dotted;    
+        } */
+
+        .board-cell{
+        border-bottom: #f2f2f3 solid;
+        }
+
+        .board-title{
+        font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>임시 게시판 디자인</h3>
+    <hr>
+    <div id="board-list" class="row">
+        
+        <div id="search-zone" class="offset-2 col-8 text-center">
+            <!--(병철) - 검색창 코드 시작-->
+            <!--단, inpit태그에 class="form-control"를 붙여주세요 -->
+            <input type="text" class="form-control" placeholder="(병철씨 여기에 검색 코드를 추가해주세요)">
+            <!--(병철) - 검색창 코드 끝-->
+        </div>
+
+        <div id="board-list-zone" class="offset-3 col-6 row mt-5">
+
+            <!--"?????"에는 만드신 Dto에 따라 다르게 들어갑니다. c:if를 활용하세요-->
+
+            <!-- 셀시작-->
+            <div id="board-|${?????BoardDto.boardNo}|" class="board-cell col-6">
+
+                <div class="board-area row">
+                    <div class="board-type col-12"><small>연예</small></div>
+                    <div class="board-title col-12 mt-2"><b>글제목입니다</b></div>
+                    <div class="baord-content col-12 p-2 px-4"><small>글내용입니다.</small></div>
+                </div>
+
+                <div class="writer-area row">
+                    <div class="writer-info">
+                        <small><span>회사이름 | 아이***</span></small>
+                    </div>
+                </div>
+
+                <div class="info-area row">
+                    <div class="view-count col-2">
+                        <small><i class="fas fa-mouse fa-1x">444</i></small>
+                    </div>
+
+                    <div class="like-count col-2">
+                        <small><i class="far fa-thumbs-up fa-1x">444</i></small>
+                    </div>
+
+                    <div class="empty col-5"></div>
+
+                    <div class="write-time-col-3">
+                        <small><i class="far fa-clock">&nbsp;1시간</i></small>
+                    </div>
+                </div>
+            </div>
+            <!-- 셀 끝-->
+
+            <!-- 셀 시작-->
+            <div id="board-|&{?????BoardDto.boardNo}|" class="board-cell col-6">
+
+                <div class="board-area row">
+                    <div class="board-type col-12"><small>&{?????BoardDto.?????BoardDto.categoryName}</small></div>
+                    <div class="board-title col-12 mt-2"><b>&{?????BoardDto.boardTitle}</b></div>
+                    <div class="baord-content col-12 p-2 px-4"><small>&{?????BoardDto.boardContent}</small></div>
+                </div>
+
+                <div class="writer-area row">
+                    <div class="writer-info">
+                        <small><span>&{dtoss.companyName} | &{dtoss.memberNick}</span></small>
+                    </div>
+                </div>
+
+                <div class="info-area row">
+                    <div class="view-count col-2">
+                        <small><i class="fas fa-mouse fa-1x">&{?????BoardDto.?????BoardDto.boardCount}</i></small>
+                    </div>
+
+                    <div class="like-count col-2">
+                        <small><i class="far fa-thumbs-up fa-1x">&{?????BoardDto.?????BoardDto.likeCount}</i></small>
+                    </div>
+
+                    <div class="empty col-5"></div>
+
+                    <div class="write-time-col-3">
+                        <small><i class="far fa-clock">&nbsp;&{?????BoardDto.?????BoardDto.boardDate}</i></small>
+                    </div>
+                </div>
+            </div>
+            <!-- 셀 끝-->
+            
+        </div>
+
+        
+
+      
+</div>
+    
+</body>
+</html>

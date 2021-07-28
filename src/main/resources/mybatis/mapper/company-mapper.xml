@@ -6,10 +6,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="company">
 
+	<select id="sequence" resultType="int">
+		select company_seq.nextval from dual
+	</select>
+
 	<insert id="insert" parameterType="CompanyDto">
-		insert into company values(company_seq.nextval, 
-		#{companyName}, #{companyUrl}, 
-		#{companyDomain}, #{companyAddr})
+		insert into company values(
+			#{companyNo}, 
+			#{companyName}, #{companyUrl}, 
+			#{companyDomain}, #{companyAddr},
+			#{companyIndustry}, #{companyEstablishment},
+			#{companyIntroduce}
+		)
 	</insert>
+	
+	<insert id="regist" parameterType="CompanyRegistDto">
+		insert into company_regist values(
+			company_regist_seq.nextval,
+			#{companyRegistName}, #{companyRegistDomain}
+		)
+	</insert>
+	
+	<select id="registList" resultType="CompanyRegistDto">
+		select * from company_regist
+	</select>
+	
+	<delete id="companyRegistDelete" parameterType="int">
+		delete company_regist where company_regist_no = #{companyRegistNo}
+	</delete>
+	
+	<select id="exist" parameterType="String" resultType="CompanyDto">
+		select * from company where company_name = #{companyName}
+	</select>
+	
+	<select id="find" parameterType="int" resultType="CompanyVO">
+		select * from company_view where company_no = #{companyNo}
+	</select>
 	
 </mapper>
