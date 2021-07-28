@@ -55,7 +55,7 @@ li.write {
 				$("#ranking").empty();
 				for(var i=0; i <10; i++){
 					var template = $("#template").html();
-					template = template.replace("{{rank}}",i+1);
+					template = template.replace("{{rank}}",i+1+".");
 					template = template.replace("{{keyword}}", resp[i].keyword);
 					$("#ranking").append(template);	
 				}
@@ -123,11 +123,5 @@ li.write {
         </div>
    </div>
 
-	<div class="container-300 container-right">
-		<div class="row text-left"><h5> 실시간 검색 순위</h5></div>
-		<div id="ranking"></div>
-	</div>
-	
-	
 		
 		
