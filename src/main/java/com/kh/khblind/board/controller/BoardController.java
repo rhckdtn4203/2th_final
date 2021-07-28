@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardEditGetInfoVO;
 import com.kh.khblind.board.entity.BoardLikeDto;
@@ -42,11 +45,15 @@ import com.kh.khblind.board.repository.CommentDao;
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
 import com.kh.khblind.board.vote.entity.VoteInsertInfoVo;
+import com.kh.khblind.board.vote.entity.VoteOptionInfoVo;
+import com.kh.khblind.board.vote.entity.VoteResultDto;
 import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.search.entity.SearchDto;
 import com.kh.khblind.search.repository.SearchDao;
+import com.kh.khblind.member.repository.MemberDao;
+
 @RequestMapping("/board")
 @Controller
 public class BoardController {
@@ -65,6 +72,9 @@ public class BoardController {
 	
 	@Autowired
 	private CommentDao commentDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -240,11 +250,115 @@ public class BoardController {
 	
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
-	public String boardDetail(int boardNo, Model model,HttpSession session) {
-		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
-		BoardMemberVO boardMemberVO = boardDao.find(boardNo);
+	public String boardDetail(int boardNo, Model model,HttpSession session) throws IOException {
+		
+		//0. 세션에 있는 dto를 일단 가져온다.
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-        int memberNo = memberDto.getMemberNo();
+		int memberNo = memberDto.getMemberNo();
+		//1. 글정보를 가져와서 변환한 후 model에 싣는다.
+
+		//1-1. 일단 기본 반찬을 가져온다.
+		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
+		
+		//1-2. 필요한 것을 가져온다.
+		BoardMemberVO boardMemberVO = boardDao.find(boardNo);
+		
+		//1-3-1. 내 글이 아니면 *****처리를 해준다. 
+		int writerMemberNo = boardDto.getMemberNo();
+		
+		if(memberNo != writerMemberNo) {
+			String memberNick = boardMemberVO.getMemberNick();
+			char firstChar = memberNick.charAt(0);
+			int nickLength = memberNick.length();
+			
+			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
+			stringBuilderForBlindedNick.append(firstChar);
+			for(int i = 0; i <nickLength-1; i++) {
+				stringBuilderForBlindedNick.append("*");
+				}
+			String blindedNick = stringBuilderForBlindedNick.toString();
+			boardMemberVO.setMemberNick(blindedNick);
+		}
+		
+		
+		
+		
+		//2. 분류이름을 가져와서 model에 넣는 과정
+		//2-1. 글의 분류 정보 가져온다.
+		CheckBoardTypeDto checkBoardTypeDto  = boardDao.getBoardType(boardNo);
+		
+		//2-2. 껍데기를 만든다.
+		String boardType = "";
+		int typeNo = 0;
+		String typeName = "";
+		
+		//2-3. 글의 분류 정보에서 null이 아닌 걸에서 타입번호를 가져오고 그걸로 문자열을 가져온다(석현에게 문의하세요)
+		if(checkBoardTypeDto.getBoardCategoryNo() !=null) {
+			boardType = "토픽";
+			typeNo = checkBoardTypeDto.getBoardCategoryNo();
+			typeName = boardDao.getBoardCategoryName(typeNo);
+			
+			
+			//특별하게 토픽인 경우 세부 분류 이름도 보내야한다.
+			String boardCaregoryName = boardDao.getBoardCategoryName(checkBoardTypeDto.getBoardCategoryNo());
+			model.addAttribute("boardCaregoryName", boardCaregoryName);
+		}
+		else if(checkBoardTypeDto.getJobCategoryNo() !=null) {
+			boardType = "내 업종";
+			typeNo = checkBoardTypeDto.getJobCategoryNo();
+			typeName = boardDao.getJobCategoryName(typeNo);
+		}
+		else{//(checkBoardTypeDto.getCompanyNo() !-null)
+			boardType = "내 회사";
+			typeNo = checkBoardTypeDto.getCompanyNo();
+			typeName = boardDao.getCompanyName(typeNo);
+		}
+		
+		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
+			return "글 분류 에러 페이지!";
+		}
+		model.addAttribute("boardType", boardType);
+		model.addAttribute("typeName", typeName);
+		
+		//3. 글쓴이의 회사이름과 업종이름을 가져오고 model에 담는다.
+		MemberDto writerInfoDto = memberDao.mypage(writerMemberNo);
+		
+		String companyName = boardDao.getCompanyName(writerInfoDto.getCompanyNo());
+		String jobCategoryName = boardDao.getJobCategoryName(writerInfoDto.getJobCategoryNo());
+		model.addAttribute("companyName", companyName);
+		model.addAttribute("jobCategoryName", jobCategoryName);
+		
+		//4. count정보를 가져와서 model에 담는다.
+		BoardCountDto boardCountDto = boardDao.getBoardCountInfo(boardNo);
+		model.addAttribute("boardCountDto", boardCountDto);
+
+		//5. 몇몇 문자를 바꾼다.
+		//5-1. 꺽쇠 처리하기 lt gt
+		String boardContent = boardDto.getBoardContent();
+		boardContent= boardContent.replaceAll("<", "&lt");
+		boardContent= boardContent.replaceAll(">", "&gt");
+		
+		//5-2. 해시태그에 앵커태그 붙이기
+		System.out.println("수슬대에 오른 " + boardContent);
+		
+		List<String> hashTag  = boardDao.getHash(boardDto.getBoardContent());
+		System.out.println("검색된 해시태그" + hashTag);
+		
+		for(int i = 0; i<hashTag.size(); i++) {
+			
+			String before = hashTag.get(i);
+			System.out.println("이거를 찾아서할거다" + hashTag.get(i));
+			String after = "<a href="+"검색매핑주소/"+hashTag.get(i)+">"+hashTag.get(i)+"</a>";
+			
+			System.out.println("만들어진건 =" + after);
+			boardContent = boardContent.replaceFirst(before, after);
+			
+			System.out.println("해시태그 변환중" + boardContent);
+		}
+		boardDto.setBoardContent(boardContent);
+		
+	
+		//6. 좋아요, 북마크 정보를 가져온다.
 	      if(memberDto != null) {
 	        
 	        BoardLikeDto boardLikeDto = BoardLikeDto.builder()
@@ -272,14 +386,62 @@ public class BoardController {
 	      	else {
 	         	model.addAttribute("isMarked", 2);
 	      	}  	
-
-      
 		List<CommentsVO> commentsList = sqlSession.selectList("comments.list",boardNo);
 	      
-	    model.addAttribute("commentsList", commentsList);
-		model.addAttribute("boardDto", boardDto);
-		model.addAttribute("boardMemberVO", boardMemberVO);
+		
+		//7.이미지
+		List<ResponseEntity<ByteArrayResource>> imageFileList = uploadImageDao.getImageToJsp(boardNo);
+		model.addAttribute("imageFileList", imageFileList);
+		
+		//8. 투표
+		//토픽 정보를 가져온다
+		VoteTopicDto voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
+		
+		//1. 이미 투표한건지 알아본다.
+		int voteTopicNo = voteTopicDto.getVoteTopicNo();
 
+		try {
+						
+			VoteResultDto voteResultDto =  VoteResultDto.builder()
+					.voteTopicNo(voteTopicNo)
+					.memberNo(memberNo)
+					.build();
+			boolean didYouVote = voteDao.didYouVote(voteResultDto);
+				
+			if(didYouVote) {
+				
+				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
+				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
+				model.addAttribute("didYouVote", "voted");
+				
+			}else {
+				model.addAttribute("didYouVote", "didntVote");
+
+			}			
+			
+		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
+				model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
+		}
+		
+		model.addAttribute("VoteTopicInfo", voteTopicDto);
+		System.out.println("voteTopicDto = " + voteTopicDto);
+
+		//선택지 정보를 가져온다
+		
+		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
+		
+		System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
+		model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
+		
+		
+		//9. 댓글
+		
+		
+		
+		model.addAttribute("boardDto", boardDto);
+		model.addAttribute("commentsList", commentsList);
+		model.addAttribute("boardMemberVO", boardMemberVO);
+		
 		if(boardDto != null) { //Dto가 null이 아니면
 
 			return "/board/boardDetail";
@@ -394,6 +556,7 @@ public class BoardController {
 			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		
+
 		if(keyword !=null) {
 			// 키워드 카운트 
 			if(searchDao.get(keyword)!=null) {
@@ -530,14 +693,12 @@ public class BoardController {
 	      public String bookmarkInsert(int boardNo,HttpSession session) {
 		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 	         int memberNo = memberDto.getMemberNo(); 
-	        System.out.println("인서트 실행전");
 	         if(memberDto !=null) {
 	         
 	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
 	            .boardNo(boardNo)
 	            .memberNo(memberNo)
 	         .build();
-	        	 System.out.println("인서트 실행후");
 	         bookmarkDao.BookmarkInsert(bookmarkDto);}
 	         
 	         return "redirect:boardDetail?boardNo="+boardNo;

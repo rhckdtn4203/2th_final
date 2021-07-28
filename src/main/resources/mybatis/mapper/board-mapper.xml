@@ -80,6 +80,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="getBoardType" parameterType="int" resultType="CheckBoardTypeDto">
 	 	select * from check_board_type_view where board_no = #{boardNo}
 	 </select>
+	 
+	 <select id="getCountInfo" parameterType="int" resultType="BoardCountDto">
+	 	select * from board_count_view where board_no = #{boardNo}
+	 </select>
 </mapper>
 
 

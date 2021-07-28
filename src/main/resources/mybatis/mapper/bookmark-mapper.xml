@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="bookmark">
 	<insert id="insert">
-	insert into bookmark values(#{boardNo},#{memberNo})
+	insert into bookmark values(#{memberNo}, #{boardNo})
 	</insert>
 	<delete id="delete">
 	delete from bookmark where board_no = #{boardNo} and member_no=#{memberNo}
