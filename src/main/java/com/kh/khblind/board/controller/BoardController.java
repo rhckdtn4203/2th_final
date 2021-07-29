@@ -257,11 +257,13 @@ public class BoardController {
 		
 		if(memberDto !=null){
 			memberNo = memberDto.getMemberNo();
+			model.addAttribute("isLogin", "true");
 		}
 		
 		else { //memberDto ==null
 			memberDto = new MemberDto();
 			memberNo = -1;
+			model.addAttribute("isLogin", "false");
 		}
 
 		//1. 글정보를 가져와서 변환한 후 model에 싣는다.
@@ -576,7 +578,20 @@ public class BoardController {
 			@GetMapping("/boardEdit")
 			public String boardEdit(int boardNo, Model model, HttpSession session) {
 				//세션으로 본인의 memberNo로만 수정할 수 있게 처리해야함 (나중에)
+				
 				BoardDto boardDto = boardDao.getBoardDetail(boardNo);
+				int writerMemberNo = boardDto.getMemberNo();
+				
+				MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+				int memberNo;
+				if(memberDto!=null) {
+					memberNo=memberDto.getMemberNo();
+				}else {
+					return "로그인페이지";
+				}
+				if(writerMemberNo!=memberNo) {
+					return "비정상접근";
+				}
 				
 				CheckBoardTypeDto checkBoardTypeDto = boardDao.getBoardType(boardNo);
 
@@ -600,8 +615,6 @@ public class BoardController {
 					typeName = boardDao.getCompanyName(typeNo);
 				}
 				
-
-		        
 				BoardEditGetInfoVO boardEditGetInfoVO = BoardEditGetInfoVO.builder()
 															.boardNo(boardDto.getBoardNo())
 															.memberNo(boardDto.getMemberNo())
@@ -616,11 +629,42 @@ public class BoardController {
 	
 	@PostMapping("/boardEdit")
 	public String boardEdit(
-			//준비 : 파라미터3개(번호, 제목, 내용) + 회원번호1개(세션 = 내 글만 고칠수 있게) -> boardEditVO
-			@ModelAttribute BoardDto boardDto
+			@ModelAttribute BoardWriteFullVO boardWriteFullVO
 			) {
-		int boardNo = boardDto.getBoardNo();
+		int boardNo = boardWriteFullVO.getBoardNo();
+		
+		//1. 고친다.
+		BoardDto boardDto = BoardDto.builder()
+									.boardNo(boardWriteFullVO.getBoardNo())
+									.boardTitle(boardWriteFullVO.getBoardTitle())
+									.boardContent(boardWriteFullVO.getBoardContent())
+									.build();
 		boardDao.edit(boardDto);
+		
+		//2. 해시태그
+		//2-1. 기존 해시태그 삭제
+		boardDao.deleteHash(boardWriteFullVO.getBoardNo());
+		//2-2. 해시태그 등록
+		//등록2-1-2.해시태그 등록
+		//해시태그 insert
+			List<String> hashtagList = new ArrayList<>();
+			BoardWriteVO boardWriteVO =  BoardWriteVO.builder()
+														.hashtagNo(boardWriteFullVO.getHashtagNo())
+														.hashtagName(boardWriteFullVO.getHashtagName())
+														.boardContent(boardWriteFullVO.getBoardContent())
+														.boardNo(boardNo)
+														.build();
+			hashtagList = boardDao.getHash(boardWriteVO);
+			
+			List<Integer> hashtagNumList = boardDao.getHashNum(hashtagList);
+			List<HashtagLinkDto> hashtagLinklist = new ArrayList<HashtagLinkDto>();
+			for (int hashtagNo : hashtagNumList) {
+				HashtagLinkDto hashtagLinkDto = HashtagLinkDto.builder().boardNo(boardNo).hashtagNo(hashtagNo).build();
+
+				hashtagLinklist.add(hashtagLinkDto);
+			}
+			boardDao.insertHashlink(hashtagLinklist);
+			
 		return "redirect:boardDetail?boardNo=" + boardNo; //수정이 완료되면 번호가 첨부된채로 상세보기로 이동
 	}
 	
