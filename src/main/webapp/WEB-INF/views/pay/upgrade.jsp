@@ -10,14 +10,20 @@
             text-align:center;
             border:1px solid black;
         }
+        table,td{
+            border:1px solid black;
+        }
         table{
-            border:1px solid black;
-            text-align : center;
-        }
-        td{
-            border:1px solid black;
-        }
-      
+        	width: 70%;
+        	height: 100px;
+        	margin: auto;
+        	text-align: center;
+        } 
+        .set{
+			width:100%;
+			margin-top: 10px;
+			margin-bottom: 10px;    
+        }   
     </style>
     
   <script>
@@ -34,12 +40,12 @@
   </script>  
 <body>
 
-<div class="container-900">
-	<div class="row">
+<div class="container-600">
+	<div class="set" style="margin-right:48%;">
 		<h1 style="font-weight:bolder">회원 플러스 소개</h1>
 	</div>
 
-	<div class="row">
+	<div class="set">
 	<table class="table table-border">
             <tr>
                 <th>등급 번호</th>
@@ -70,34 +76,30 @@
 	</div>
 </div>
    
-       
-<div class="container-900 container-center">
-	<div class="row">
+	<div class="set" style="margin-right:48%;">
 		<h1 style="font-weight:bolder">회원 플러스 결제</h1>	
 	</div>   
-	<div class="row text-left">	
+	<div class="set text-left" style="margin-right:25%;">	
 		<span style="font-size:20px;margin-top:1%;"> (현재 ${dtoss.memberNick}님은 ${dtoss.gradeNo} 등급 입니다.)</span>
 		<a href="history" class="link-btn" style="margin-left:1%;font-weight:bold;">지난 결제내역 보기</a>
 	</div>
 
-	<div class ="row">
+	<div class ="set">
 		<form action="upgrade" method="post">
-			<div class="row" style="width: 600px;">
-				<label style="font-size:20px;font-weight:bold;"> 회원 플러스 </label> <!-- 상품의 이름 -->
+			<div class="set">
+				<label> 회원 플러스 </label> <!-- 상품의 이름 -->
 			</div>
 				<input type="hidden" name="item_name" value="회원 플러스">
-			<div class="row" style="width: 600px;">	
-				<label style="font-size:20px;font-weight:bold;">주문 수량</label>
-			</div>
-			<div class="row" style="width: 600px;">
+			<div class="set">	
+				<label>주문 수량</label>
 				<input type="number" name="quantity" value="0" max="1" min="0" required>
 			</div>
 				<input type="hidden" name="total_amount" value="5000">
-			<div class="row" style="width: 600px;font-weight:bold;">
+			<div class="set">
 				<input type="submit" value="결제" class="form-btn form-btn-positive" id="send">
 			</div>
 		</form>
 	</div>
-</div>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
