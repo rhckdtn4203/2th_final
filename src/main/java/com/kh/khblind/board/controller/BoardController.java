@@ -1,6 +1,7 @@
 package com.kh.khblind.board.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,21 +75,25 @@ public class BoardController {
 	private MemberDao memberDao;
 	
 	@Autowired
-	private SqlSession sqlSession;
-	
-	@Autowired
 	private BoardLikeDao boardLikeDao;
 	
 	@Autowired
 	private BookmarkDao bookmarkDao;
 	
 	@GetMapping("/boardWrite")
-	public String boardWrite(Model model) {
+	public String boardWrite(Model model, HttpSession session) {
 		
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		if(memberDto !=null) {
 		List<CategoryDto> categoryDtoList = categoryDao.list();
 		model.addAttribute("categoryList", categoryDtoList);
 		
 		return "board/boardWrite";
+		}
+		
+		else {
+		return "redirect:pleaseLogin";
+		}
 	}
 	
 	@PostMapping("/boardWrite")
@@ -247,20 +252,44 @@ public class BoardController {
 	public String boardDetail(int boardNo, Model model,HttpSession session) throws IOException {
 		
 		//0. 세션에 있는 dto를 일단 가져온다.
-		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-		int memberNo = memberDto.getMemberNo();
-		//1. 글정보를 가져와서 변환한 후 model에 싣는다.
+		MemberDto memberDto =(MemberDto)session.getAttribute("dtoss");
+		int memberNo;
+		
+		if(memberDto !=null){
+			memberNo = memberDto.getMemberNo();
+		}
+		
+		else { //memberDto ==null
+			memberDto = new MemberDto();
+			memberNo = -1;
+		}
 
+		//1. 글정보를 가져와서 변환한 후 model에 싣는다.
 		//1-1. 일단 기본 반찬을 가져온다.
-		BoardDto boardDto = boardDao.getBoardDetail(boardNo);
+		BoardDto boardDto;
+		if(boardDao.getBoardDetail(boardNo)!=null) {
+		boardDto = boardDao.getBoardDetail(boardNo);
+		}
+		else {
+			return "글없다 페이지";
+		}
+	
+		
 		
 		//1-2. 필요한 것을 가져온다.
-		BoardMemberVO boardMemberVO = boardDao.find(boardNo);
+		BoardMemberVO boardMemberVO = new BoardMemberVO();
+		
+		if(boardDao.find(boardNo)!=null) {
+			boardMemberVO = boardDao.find(boardNo);
+		}
+		else {
+			boardMemberVO.setMemberNick("탈퇴한 회원");
+		}
 		
 		//1-3-1. 내 글이 아니면 *****처리를 해준다. 
 		int writerMemberNo = boardDto.getMemberNo();
 		
-		if(memberNo != writerMemberNo) {
+		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
 			String memberNick = boardMemberVO.getMemberNick();
 			char firstChar = memberNick.charAt(0);
 			int nickLength = memberNick.length();
@@ -274,12 +303,18 @@ public class BoardController {
 			boardMemberVO.setMemberNick(blindedNick);
 		}
 		
-		
-		
-		
-		//2. 분류이름을 가져와서 model에 넣는 과정
+		model.addAttribute("boardMemberVO", boardMemberVO);
+		//2. 분류이름을 가져오는 과정
 		//2-1. 글의 분류 정보 가져온다.
-		CheckBoardTypeDto checkBoardTypeDto  = boardDao.getBoardType(boardNo);
+		CheckBoardTypeDto checkBoardTypeDto;
+		
+		if(boardDao.getBoardType(boardNo)!=null) {
+		checkBoardTypeDto = boardDao.getBoardType(boardNo);
+		}
+		else {
+			checkBoardTypeDto = new CheckBoardTypeDto();
+		}
+		
 		
 		//2-2. 껍데기를 만든다.
 		String boardType = "";
@@ -302,25 +337,55 @@ public class BoardController {
 			typeNo = checkBoardTypeDto.getJobCategoryNo();
 			typeName = boardDao.getJobCategoryName(typeNo);
 		}
-		else{//(checkBoardTypeDto.getCompanyNo() !-null)
+		else if(checkBoardTypeDto.getCompanyNo() !=null) {
 			boardType = "내 회사";
 			typeNo = checkBoardTypeDto.getCompanyNo();
 			typeName = boardDao.getCompanyName(typeNo);
 		}
-		
-		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
+		else {//이유는 모르겠지만 어디에도 등록되어 있지 않은 페이지
 			return "글 분류 에러 페이지!";
 		}
+		
+//		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
+//			return "글 분류 에러 페이지!";
+//		}
+		
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("typeName", typeName);
 		
 		//3. 글쓴이의 회사이름과 업종이름을 가져오고 model에 담는다.
-		MemberDto writerInfoDto = memberDao.mypage(writerMemberNo);
+		MemberDto writerInfoDto;
 		
-		String companyName = boardDao.getCompanyName(writerInfoDto.getCompanyNo());
-		String jobCategoryName = boardDao.getJobCategoryName(writerInfoDto.getJobCategoryNo());
+		String companyName;
+		String jobCategoryName;
+		
+		if(memberDao.mypage(writerMemberNo)!=null){
+			writerInfoDto = memberDao.mypage(writerMemberNo);
+					
+			companyName = boardDao.getCompanyName(writerInfoDto.getCompanyNo());
+			jobCategoryName = boardDao.getJobCategoryName(writerInfoDto.getJobCategoryNo());
+			
+			if(memberDto.getGradeNo() ==2 || memberDto.getGradeNo() ==4 || memberDto.getGradeNo() ==5) {//준회원+ 정회원+ 관리자
+				//통과
+			}
+			else{
+				if(checkBoardTypeDto.getJobCategoryNo() !=null) {//업종 한정
+					if(memberDto.getJobCategoryNo() != writerInfoDto.getJobCategoryNo()) {
+						return "결제페이짘ㅋ";
+					}
+				}
+			}
+		}
+
+		else {
+			companyName = "-";
+			jobCategoryName = "-";
+		}
+			
 		model.addAttribute("companyName", companyName);
 		model.addAttribute("jobCategoryName", jobCategoryName);
+		
+		
 		
 		//4. count정보를 가져와서 model에 담는다.
 		BoardCountDto boardCountDto = boardDao.getBoardCountInfo(boardNo);
@@ -329,8 +394,11 @@ public class BoardController {
 		//5. 몇몇 문자를 바꾼다.
 		//5-1. 꺽쇠 처리하기 lt gt
 		String boardContent = boardDto.getBoardContent();
+		
 		boardContent= boardContent.replaceAll("<", "&lt");
 		boardContent= boardContent.replaceAll(">", "&gt");
+		boardContent= boardContent.replaceAll("\"", "\\u0022");
+		boardContent= boardContent.replaceAll("\'", "\\u0022");
 		
 		//5-2. 해시태그에 앵커태그 붙이기
 		System.out.println("수슬대에 오른 " + boardContent);
@@ -341,13 +409,13 @@ public class BoardController {
 		for(int i = 0; i<hashTag.size(); i++) {
 			
 			String before = hashTag.get(i);
-			System.out.println("이거를 찾아서할거다" + hashTag.get(i));
+//			System.out.println("이거를 찾아서할거다" + hashTag.get(i));
 			String after = "<a href="+"검색매핑주소/"+hashTag.get(i)+">"+hashTag.get(i)+"</a>";
 			
-			System.out.println("만들어진건 =" + after);
+//			System.out.println("만들어진건 =" + after);
 			boardContent = boardContent.replaceFirst(before, after);
 			
-			System.out.println("해시태그 변환중" + boardContent);
+//			System.out.println("해시태그 변환중" + boardContent);
 		}
 		boardDto.setBoardContent(boardContent);
 		
@@ -365,6 +433,7 @@ public class BoardController {
 		         .memberNo(memberNo)
 		    .build();
       
+	        
 	      	boolean isLiked=boardLikeDao.boardLikeExist(boardLikeDto);
 	      	if(isLiked) {
 	          	model.addAttribute("isLiked", 1);
@@ -380,18 +449,17 @@ public class BoardController {
 	      	else {
 	         	model.addAttribute("isMarked", 2);
 	      	}  	
-		List<CommentsVO> commentsList = sqlSession.selectList("comments.list",boardNo);
-	      
+	      }  
 		
 		//7.이미지
-		List<ResponseEntity<ByteArrayResource>> imageFileList = uploadImageDao.getImageToJsp(boardNo);
-		model.addAttribute("imageFileList", imageFileList);
+//		List<ResponseEntity<ByteArrayResource>> imageFileList = uploadImageDao.getImageToJsp(boardNo);
+//		model.addAttribute("imageFileList", imageFileList);
 		
-		//8. 투표
+		//8. 투표1
 		//토픽 정보를 가져온다
 		VoteTopicDto voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
 		
-		//1. 이미 투표한건지 알아본다.
+		//8-1. 이미 투표한건지 알아본다.
 		int voteTopicNo = voteTopicDto.getVoteTopicNo();
 
 		try {
@@ -401,13 +469,15 @@ public class BoardController {
 					.memberNo(memberNo)
 					.build();
 			boolean didYouVote = voteDao.didYouVote(voteResultDto);
-				
+			
+			System.out.println("투표 여부" + didYouVote);
+			
 			if(didYouVote) {
 				
 				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
 				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
 				model.addAttribute("didYouVote", "voted");
-				
+
 			}else {
 				model.addAttribute("didYouVote", "didntVote");
 
@@ -420,7 +490,7 @@ public class BoardController {
 		model.addAttribute("VoteTopicInfo", voteTopicDto);
 		System.out.println("voteTopicDto = " + voteTopicDto);
 
-		//선택지 정보를 가져온다
+		//8-2선택지 정보를 가져온다
 		
 		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
 		
@@ -429,36 +499,57 @@ public class BoardController {
 		
 		
 		//9. 댓글
-		
+		List<CommentsVO> commentsList = boardDao.getCommentsList(boardNo);
+	    
+		for(int i = 0; i<commentsList.size(); i++) {
+				
+			if(commentsList.get(i).getMemberNo() != memberDto.getMemberNo() || memberNo==-1) {
+				String memberNick = commentsList.get(i).getMemberNick();
+				char firstChar = memberNick.charAt(0);
+				int nickLength = memberNick.length();
+				
+				StringBuilder stringBuilderForBlindedNick = new StringBuilder();
+				stringBuilderForBlindedNick.append(firstChar);
+				for(int j =0; j<nickLength-1; j++) {
+					stringBuilderForBlindedNick.append("*");
+				}
+				String blindedNick = stringBuilderForBlindedNick.toString();
+				commentsList.get(i).setMemberNick(blindedNick);
+				
+				commentsList.get(i).setOwnComments(0);
+			}
+			else {
+				commentsList.get(i).setOwnComments(1);
+			}
+			System.out.println("이번 댓글 " + commentsList.get(i));
+	    }
 		
 		
 		model.addAttribute("boardDto", boardDto);
-		model.addAttribute("commentsList", commentsList);
 		model.addAttribute("boardMemberVO", boardMemberVO);
 		
-		if(boardDto != null) { //Dto가 null이 아니면
-
-			return "/board/boardDetail";
-		}
-		else {
-			return "글없다페이지";
-		}
+		model.addAttribute("commentsList", commentsList);
 		
+		
+		//마무리 - 모든 것이 완료되면 forward하기전에 조회를 1 올려준다.
+		boardDao.addViewCount(boardNo);
+		
+		return "/board/boardDetail";
 	}
-		return "???????";
-	}
-
 		@PostMapping("commentInsert")
 		   public String commentInsert(
 		         HttpSession session,
-		         @RequestParam String commentsContent, int boardNo) {
+		         @RequestParam int boardNo, String commentsContent) {
 		       //세션 1개(회원번호)
 		         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		         int memberNo = memberDto.getMemberNo();
+		         int nextSeqNo = commentDao.getCommentsSequence();
 		         CommentsVO commentsVO = CommentsVO.builder()
+		        		 						.commentsNo(nextSeqNo)
+		        		                         .commentsContent(commentsContent)
+		        		                         .commentsGroupNo(nextSeqNo)
 		        		                         .boardNo(boardNo)
 		        		                         .memberNo(memberNo)
-		        		                         .commentsContent(commentsContent)
 		         .build();
 		         commentDao.commentInsert(commentsVO);
 		      return "redirect:boardDetail?boardNo="+boardNo;
@@ -466,17 +557,17 @@ public class BoardController {
 		   @PostMapping("nestedCommentInsert")
 		   public String nestedCommentInsert(
 		         HttpSession session,
-		         @RequestParam String commentContent, int boardNo,int superNo
+		         @RequestParam String commentsContent, int boardNo,int superNo, int commentsGroupNo
 		         ) {
 		       //세션 1개(회원번호)
 		         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		         int memberNo = memberDto.getMemberNo();
-		         CommentsVO commentsVO = new CommentsVO();
-		         commentsVO.builder()
+		         CommentsVO commentsVO = CommentsVO.builder()
 		                  .boardNo(boardNo)
+		                  .commentsGroupNo(commentsGroupNo)
 		                  .commentsSuperNo(superNo)
 		                  .memberNo(memberNo)
-		                  .commentsContent(commentContent)
+		                  .commentsContent(commentsContent)
 		         .build();
 		         commentDao.nestedCommentInsert(commentsVO);
 		      return "redirect:boardDetail?boardNo="+boardNo;	
@@ -546,6 +637,7 @@ public class BoardController {
 			HttpSession session,  Model model, 
 			@RequestParam String type, 
 			@RequestParam(required = false) Integer boardCategoryNo,
+			@RequestParam(required = false) Integer otherJobCategoryNo,
 			@RequestParam(required = false) String keyword
 			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
@@ -574,6 +666,18 @@ public class BoardController {
 		//업종별 게시판 목록
 		else if(type.equals("jobCategoryBoard")) {
 			List<JobCategoryBoardDto> jobCategoryBoardList = new ArrayList<>();
+		
+			//+회원인경우
+			if(memberDto.getGradeNo() ==2 || memberDto.getGradeNo() ==4) {
+				System.out.println(otherJobCategoryNo);
+				
+				jobCategoryBoardList = boardDao.getJobCategoryBoardList(otherJobCategoryNo);
+				
+				model.addAttribute("jobCategoryBoardList", jobCategoryBoardList);
+			}
+			
+			
+//			else if(회원등급이 2,4가 아닌경우)
 			int jobCategoryNo = memberDto.getJobCategoryNo();
 			
 			if(keyword == null) {
@@ -666,7 +770,8 @@ public class BoardController {
 	   @GetMapping("bookmarkInsert")
 	      public String bookmarkInsert(int boardNo,HttpSession session) {
 		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-	         int memberNo = memberDto.getMemberNo(); 
+		   	
+	         int memberNo = memberDto.getMemberNo();
 	         if(memberDto !=null) {
 	         
 	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
@@ -692,4 +797,17 @@ public class BoardController {
 	         
 	         return "redirect:boardDetail?boardNo="+boardNo;
 	      }
+	   
+	   @GetMapping("imageDownloadTest")
+	   public String imageDownloadTest() {
+		   return "board/imageDownloadTest";
+	   }
+	   
+      @GetMapping("commentsDelete")
+      public String commentsDelete(int commentsNo, int boardNo) {
+    	  System.out.println(commentsNo + "들어옴" + boardNo);
+         commentDao.delete(commentsNo);
+         System.out.println("댓글삭제");
+         return "redirect:boardDetail?boardNo="+boardNo;
+      }
 }
