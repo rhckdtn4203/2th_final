@@ -16,6 +16,6 @@ public class CompanyReviewDto {
 	private String reviewMerit;
 	private String reviewDemerit;
 	private Date reviewDate;
-	private double reviewRate;
+	private int reviewRate;
 	private int jobCategoryNo;
 }

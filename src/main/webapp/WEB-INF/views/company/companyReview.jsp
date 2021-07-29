@@ -22,9 +22,20 @@
 
 <h4>${companyVO.companyName} 리뷰</h4>
 
-<span>{{별점}}</span> 
-<!-- 별 이미지 추가 -->
-<span>{{리뷰 개수}}개의 리뷰</span>
+<span>${reviewRate}</span>
+<!-- 별 개수에 따른 이미지 추가 -->
+<span>${reviewCount}개의 리뷰</span><br>
+<!-- 개수에 따른 그래프..? 퍼센티지로.. -->
+<c:forEach var="reviewCountList" items="${reviewCountList}" varStatus="status">
+	<span> 
+		${5-status.index}개의 별점 :
+		<c:forEach var="count" items="${reviewCountList}">
+			<c:if test="${count.key != 'RATE'}">
+				${count.value}개 (${(count.value * 100) / reviewCount} %)
+			</c:if>
+		</c:forEach>
+	</span><br>	
+</c:forEach>
 
 <hr>
 

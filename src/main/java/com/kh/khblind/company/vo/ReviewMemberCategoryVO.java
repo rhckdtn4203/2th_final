@@ -15,7 +15,7 @@ public class ReviewMemberCategoryVO {
 	private String reviewMerit;
 	private String reviewDemerit;
 	private Date reviewDate;
-	private double reviewRate;
+	private int reviewRate;
 	private String reviewTitle;
 	private int jobCategoryNo;
 	

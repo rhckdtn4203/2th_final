@@ -17,7 +17,7 @@
 		</c:forEach>
 	</select>
 	
-	<input type="number" name="reviewRate" value="1" step="0.5" min="1.0" max="5.0">
+	<input type="number" name="reviewRate" value="1" step="1" min="1" max="5">
 	<input type="text" name="reviewTitle">
 	<input type="text" name="reviewMerit">
 	<input type="text" name="reviewDemerit">

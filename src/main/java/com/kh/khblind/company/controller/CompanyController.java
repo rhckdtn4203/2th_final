@@ -1,7 +1,9 @@
 package com.kh.khblind.company.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khblind.company.entity.CompanyRegistDto;
 import com.kh.khblind.company.entity.CompanyReviewDto;
@@ -45,9 +46,13 @@ public class CompanyController {
 	@GetMapping("/companyDetail")
 	public String companyDetail(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
+		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
 		if(companyVO != null) {;
 			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", reviewRate);
+			model.addAttribute("reviewCount", reviewCount);
 			return "company/companyDetail";
 		}
 		else {
@@ -59,11 +64,19 @@ public class CompanyController {
 	@GetMapping("/companyReview")
 	public String companyReview(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
+		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
 		model.addAttribute("list", companyReviewDao.companyReviewList(companyNo));
+		model.addAttribute("reviewRate", reviewRate);
+		model.addAttribute("reviewCount", reviewCount);
+
+		List<HashMap<String, Integer>> reviewCountList = companyReviewDao.companyScoreCount(companyNo);
+		System.out.println(reviewCountList);
 		
 		if(companyVO != null) {;
 			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewCountList", reviewCountList);
 			return "company/companyReview";
 		}
 		else {

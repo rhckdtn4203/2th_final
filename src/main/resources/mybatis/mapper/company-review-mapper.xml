@@ -22,4 +22,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from review_member_category_view where company_no = #{companyNo}
 	</select>
 	
+	<select id="reviewRate" parameterType="int" resultType="double">
+		select avg(review_rate) from company_review where company_no = #{companyNo}
+	</select>
+	
+	<select id="reviewCount" parameterType="int" resultType="int">
+		select count(*) from company_review where company_no = #{companyNo}
+	</select>
+	
+	<select id="scoreCount" resultType="java.util.HashMap">
+		select rate, count(company_no)
+		from one_to_five OTF 
+		left outer join company_review CR 
+		on OTF.rate = CR.review_rate
+		group by rate
+		order by rate desc
+	</select>
+	
 </mapper>

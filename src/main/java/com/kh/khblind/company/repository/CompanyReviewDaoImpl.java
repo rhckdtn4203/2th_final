@@ -1,5 +1,6 @@
 package com.kh.khblind.company.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +30,21 @@ public class CompanyReviewDaoImpl implements CompanyReviewDao {
 	@Override
 	public List<ReviewMemberCategoryVO> companyReviewList(int companyNo) {
 		return sqlSession.selectList("companyReview.reviewList", companyNo);
+	}
+
+	@Override
+	public double companyReviewRate(int companyNo) {
+		return sqlSession.selectOne("companyReview.reviewRate", companyNo);
+	}
+
+	@Override
+	public int companyReviewCount(int companyNo) {
+		return sqlSession.selectOne("companyReview.reviewCount", companyNo);
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> companyScoreCount(int companyNo) {
+		return sqlSession.selectList("companyReview.scoreCount", companyNo);
 	}
 
 }

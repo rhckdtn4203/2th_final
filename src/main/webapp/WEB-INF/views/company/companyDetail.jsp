@@ -26,8 +26,8 @@
 <br><br>
 
 <!-- 별 이미지 추가 -->
-<span>{{별점}}</span>
-<span>{{리뷰 개수}}개의 리뷰</span>
+<span>${reviewRate}</span>
+<span>${reviewCount}개의 리뷰</span>
 
 <hr>
 
