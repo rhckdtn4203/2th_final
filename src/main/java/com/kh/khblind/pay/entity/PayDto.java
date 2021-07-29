@@ -14,4 +14,5 @@ public class PayDto {
 	private int payBuyer;
 	private String payStatus;
 	private Date payTime;
+	private Date payExpire;
 }

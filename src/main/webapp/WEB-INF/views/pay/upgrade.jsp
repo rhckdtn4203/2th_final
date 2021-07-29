@@ -17,6 +17,7 @@
         td{
             border:1px solid black;
         }
+      
     </style>
     
   <script>
@@ -34,11 +35,11 @@
 <body>
 
 <div class="container-900">
-	<div class="row text-center">
+	<div class="row">
 		<h1 style="font-weight:bolder">회원 플러스 소개</h1>
 	</div>
 
-	<div class="row text-center">
+	<div class="row">
 	<table class="table table-border">
             <tr>
                 <th>등급 번호</th>
@@ -70,7 +71,7 @@
 </div>
    
        
-<div class="container-900">
+<div class="container-900 container-center">
 	<div class="row">
 		<h1 style="font-weight:bolder">회원 플러스 결제</h1>	
 	</div>   
@@ -79,7 +80,7 @@
 		<a href="history" class="link-btn" style="margin-left:1%;font-weight:bold;">지난 결제내역 보기</a>
 	</div>
 
-	<div class ="text-center">
+	<div class ="row">
 		<form action="upgrade" method="post">
 			<div class="row" style="width: 600px;">
 				<label style="font-size:20px;font-weight:bold;"> 회원 플러스 </label> <!-- 상품의 이름 -->
