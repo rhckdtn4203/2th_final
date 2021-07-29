@@ -19,6 +19,7 @@ import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
+import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagDto;
@@ -93,7 +94,7 @@ public class BoardDaoImpl implements BoardDao {
 		int count = sqlSession.delete("board.delete", boardNo);
 		return count > 0;
 	}
-
+//1
 	@Override
 	public int getHashSequence() {
 		
@@ -280,12 +281,17 @@ public class BoardDaoImpl implements BoardDao {
 			return boardCountDto;
 		}
 
-		
+		@Override
+		public List<CommentsVO> getCommentsList(int boardNo) {
+			List<CommentsVO> commentsList = sqlSession.selectList("comments.list", boardNo);
+			return commentsList;
+		}
 
-		
+		@Override
+		public void addViewCount(int boardNo) {
+			sqlSession.update("board.addCount",boardNo);
+			System.out.println("조회수 증가");
+		}
 
-		
 
-
- 
 	}
