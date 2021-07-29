@@ -157,6 +157,15 @@
 
         <div><br><br>해시태그부분<br><br><br></div>
     </div>
-
+    <script id="vote-option-div-template" type="text/template">
+        <div class="vote-option-div row mt-1 mb-1">
+            <div class="col-3 align-middle">
+                <p>항목 {{count}}</p>
+            </div>
+            <div class="col-9">
+                <input type="text" name="voteTopicOption" class="form-control">
+            </div>
+        </div>
+    </script>
 </body>
 </html>
