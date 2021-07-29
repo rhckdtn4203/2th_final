@@ -1,13 +1,19 @@
 package com.kh.khblind.company.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.khblind.company.entity.CompanyProfileDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
 import com.kh.khblind.company.entity.CompanyReviewDto;
 import com.kh.khblind.company.repository.CompanyDao;
+import com.kh.khblind.company.repository.CompanyProfileDao;
 import com.kh.khblind.company.repository.CompanyReviewDao;
 import com.kh.khblind.company.vo.CompanyVO;
 import com.kh.khblind.member.entity.MemberDto;
@@ -26,11 +34,16 @@ import com.kh.khblind.member.entity.MemberDto;
 @RequestMapping("/company")
 public class CompanyController {
 	
+	private final File ResDir = new File("D:/proj/khblind/resources/5.company-logo-image/");
+	
 	@Autowired
 	private CompanyDao companyDao;
 	
 	@Autowired
 	private CompanyReviewDao companyReviewDao;
+	
+	@Autowired
+	private CompanyProfileDao profileDao;
 
 	@GetMapping("/registCompany")
 	public String registCompany() {
@@ -41,6 +54,25 @@ public class CompanyController {
 	public String registCompany(@ModelAttribute CompanyRegistDto companyRegistDto) {
 		companyDao.registCompany(companyRegistDto);
 		return "company/registCompany";
+	}
+	
+	@RequestMapping("/companyProfile")
+	public ResponseEntity<ByteArrayResource> companyProfile(int companyNo) throws IOException {
+		CompanyProfileDto profileDto = profileDao.getCompanyNo(companyNo);
+		
+		if(profileDto == null)
+			return ResponseEntity.notFound().build();
+
+		File target = new File(ResDir, String.valueOf(profileDto.getCompanyNo()));
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		return ResponseEntity.ok()
+				.contentLength(profileDto.getCompanyProfileSize())
+				.header(HttpHeaders.CONTENT_TYPE, profileDto.getCompanyProfileContentType())
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(profileDto.getCompanyProfileUploadName(), "UTF-8")+"\"")
+				.body(resource);
 	}
 	
 	@GetMapping("/companyDetail")

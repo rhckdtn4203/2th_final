@@ -15,7 +15,7 @@
 // 	});
 </script>
 
-<!-- <img id="companyImg" width=512 height=384></img> -->
+<img src="${pageContext.request.contextPath}/company/companyProfile?companyNo=${companyVO.companyNo}" width=200 height=200></img>
 <h1>${companyVO.companyName}</h1>
 
 <br><br>
@@ -25,7 +25,7 @@
 <span>${reviewRate}</span>
 <!-- 별 개수에 따른 이미지 추가 -->
 <span>${reviewCount}개의 리뷰</span><br>
-<!-- 개수에 따른 그래프..? 퍼센티지로.. -->
+
 <c:forEach var="reviewCountList" items="${reviewCountList}" varStatus="status">
 	<span> 
 		${5-status.index}개의 별점 :

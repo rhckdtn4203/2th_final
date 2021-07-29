@@ -25,4 +25,6 @@ public class CompanyVO {
 	private String companyProfileSaveName;
 	private String companyProfileContentType;
 	private long companyProfileSize;
+	
+	private int companyNo;
 }
