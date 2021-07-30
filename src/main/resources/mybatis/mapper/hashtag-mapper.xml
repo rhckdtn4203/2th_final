@@ -26,5 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	inner join Hashtag_search_viewB HS on HS.board_no = BG.board_no where hs.hashtag_name=#{searchWord}
 	</select>
 	
+	<delete id="deleteHash">
+	delete hashtag_link where board_no = #{boardNo}
+	</delete>
 	
 </mapper>

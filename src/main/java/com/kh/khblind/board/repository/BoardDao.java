@@ -10,6 +10,7 @@ import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
+import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
@@ -58,7 +59,7 @@ public interface BoardDao {
 	//토픽 이름 조회 기능
 	String getBoardCategoryName(int boardCategoryNo);
 	
-	//주제 종료 조회 기능
+	//주제 종료 조회 기능1
 	CheckBoardTypeDto getBoardType(int boardNo);
 	
 	//메인 검색 기능(토픽 검색 기능)
@@ -70,5 +71,13 @@ public interface BoardDao {
 	
 	//게시판 집계함수만 가져오는 기능
 	BoardCountDto getBoardCountInfo(int boardNo);
-
+	
+	//특정 게시판에 달린 댓글 들을 불러오는 기능
+	List<CommentsVO> getCommentsList(int boardNo);
+	
+	//조회수 증가 기능
+	void addViewCount(int boardNo);
+	void deleteHash(int boardNo);
+	
+	//
 }

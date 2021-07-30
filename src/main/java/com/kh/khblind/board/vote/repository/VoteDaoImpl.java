@@ -148,7 +148,7 @@ public class VoteDaoImpl implements VoteDao {
 
 	@Override
 	public boolean voting(VoteResultDto voteResultDto) {
-
+		
 		try {
 			sqlSession.insert("vote.voting", voteResultDto);
 			
@@ -216,6 +216,19 @@ public class VoteDaoImpl implements VoteDao {
 			e.printStackTrace();
 			return 0;
 		}	
+	}
+
+	@Override
+	public int getboardNo(int voteTopicNo) {
+		try {
+			int boardNo = sqlSession.selectOne("vote.getBoardNo", voteTopicNo);
+			return boardNo;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
 
 
