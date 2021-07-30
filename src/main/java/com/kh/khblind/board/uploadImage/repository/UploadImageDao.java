@@ -28,4 +28,8 @@ public interface UploadImageDao {
 	//이미지 가져오기
 	List<ResponseEntity<ByteArrayResource>> getImageToJsp(int boardNo) throws IOException; //ByteArrayResource은 거들뿐 어렵게 생각하지 말자
 	List<BoardImageDto> getBoardImageInfo(int boardNo);
+	
+	
+	//글 삭제시 같이 지워짐
+	boolean deleteImageChainToBoard (int boardNo);
 }

@@ -349,4 +349,23 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		return imageFileList;
 	}
 
+	@Override
+	public boolean deleteImageChainToBoard(int boardNo) {
+		String folderName = getImageFolderName(boardNo);
+		System.out.println(folderName + "를 삭제 합니다.");
+		
+		String fullPath = SavedDir +"\\" + folderName + "\\" + boardNo;
+		
+		File targetFolder = new File(fullPath);
+		File[] allFiles = targetFolder.listFiles();
+		if (allFiles != null) {
+            for (File targetFile : allFiles) {
+            	targetFile.delete();
+            }
+        }
+		targetFolder.delete();
+	
+		return false;
+	}
+
 } 
