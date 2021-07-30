@@ -39,5 +39,8 @@ public interface VoteDao {
 		
 		//11. 실시간 투표 때 쓸 카운트만 구하는 거
 		int getSingleVoteOptionCount(int voteOptionNo);
+		
+		//12. 투표주제번호로 게시판번호 가져오기
+		int getboardNo(int voteTopicNo);
 	
 }

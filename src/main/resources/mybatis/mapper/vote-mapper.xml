@@ -71,5 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSingleVoteOptionCount" parameterType="int" resultType="int">
 		select count(vote_option_no) from vote_result where vote_option_no = #{voteOptionNo}
 	</select>
+	
+	<!-- select9. 투표주제번호로 게시판 번호 가져오기 -->
+	<select id="getBoardNo" parameterType="int" resultType="int">
+		select board_no from vote_topic where vote_topic_no =  #{voteTopicNo}
+	</select>
 		 
 </mapper>

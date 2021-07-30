@@ -6,19 +6,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="comments">
 	<insert id="insert">
-	insert into comments values (comments_no_seq.nextval,#{commentsContent},sysdate,null,#{commentsGroupNo},#{memberNo},#{boardNo})
+	insert into comments values (#{commentsNo},#{commentsContent},sysdate,null,#{commentsGroupNo},#{memberNo},#{boardNo})
 	</insert>
 	<insert id="nestedinsert">
-	insert into comments values(comments_no_seq.nextval,#{commentsContent},sysdate,#{commentsSuperNo},#{commentsGroupNo},#{memberNo},#{boardNo}) 
+	insert into comments values(#{commentsNo},#{commentsContent},sysdate,#{commentsSuperNo},#{commentsGroupNo},#{memberNo},#{boardNo}) 
 	</insert>
-	<select id="list" resultType="CommentsVO">
-	select * from comments_view 
+	<select id="list" parameterType="int" resultType="CommentsVO">
+	select * from comments_view where board_no = #{boardNo}
 	connect by prior comments_no = comments_super_no
 	start with comments_super_no is null
-	order siblings BY comments_group_no desc, comments_no asc
+	order siblings BY comments_group_no asc, comments_no asc
 	
 	</select>
+	<select id="getCommentsSequence" resultType="int">
+   		select comments_no_seq.nextval from dual
+   	</select>
 
-
+	<update id="Edit">
+		update comments set comments_content=#{commentsContent} where comments_no=#{commentsNo}   
+	</update>
+	
+   <delete id="delete">
+       delete comments where comments_no = #{commentsNo}
+    </delete>
 
 </mapper>
