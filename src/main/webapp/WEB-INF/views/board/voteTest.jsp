@@ -134,7 +134,7 @@
 						</c:if>
 					</div>
 				</div>
-
+			</div>
 <!-- 이미 투표한 항목 표시하기 -->
 	<script>
 		$(function(){
@@ -312,11 +312,13 @@
 				if(window.socket) {
 					console.log("실시간 중");
 					return;} //소켓 연결동안 실행되지 않을...
+					
 				$(".active-btn").attr("disabled", "disabled");
+					
 				var topicNo = $("#topic-id").data("topic-no");
 				var optionNo = $(this).data("option-no");
 				//memberNo는 세션에서
-				
+// 				console.log("topicNo = " + topicNo  + "||" + "optionNo = " + optionNo) ;
 				$.ajax({
 					url: "${pagecontext.request.contextpath}/khblind/board/voting",
 					data:{

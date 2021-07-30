@@ -31,7 +31,7 @@
 	});
 </script>
 <h2>결제 상세 내역</h2>
-<p>${payDto.payStatus} , ${payDto.payTime} </p>
+<!-- <p>${payDto.payStatus} , ${payDto.payTime} </p> -->
 <ul>
 	<li>거래번호 : ${searchVO.tid}</li>
 	<li>
@@ -111,7 +111,7 @@
 </ul>
 
 <c:if test="${searchVO.status == 'SUCCESS_PAYMENT'}">
-	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancel">결제 취소 </a>
+	<a href="payCancel?payNo=${payDto.payNo}&cancel_amount=${searchVO.amount.total}" id="cancel" class="link-btn">결제 취소 </a>
 </c:if>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

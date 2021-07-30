@@ -1,5 +1,6 @@
 package com.kh.khblind.pay.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -49,5 +50,24 @@ public class PayDaoImpl implements PayDao {
 		
 	}
 	
+	@Override
+	public List<PayDto> selectexpire() {
+		return sqlSession.selectList("pay.selectexpire");
+	}
+
+
+	@Override
+	public void expire() {
+		
+		List<PayDto> list = new ArrayList<>();
+		list = selectexpire();
+		for(int i =0;i<list.size();i++) {
+			PayDto payDto = list.get(i);
+			int payBuyer = payDto.getPayBuyer();
+			sqlSession.update("pay.expire",payBuyer);
+		}		
+			
+	}
+
 	
 }

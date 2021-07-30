@@ -251,6 +251,13 @@ public class UploadImageDaoImpl implements UploadImageDao {
 					.boardNo(convertImageVo.getBoardNo())
 					.boardImageUrl(finalFolderName +"\\"+ randomFileName + ".jpg")
 					.build();
+			
+			//경로 오입력을 방지하는 코드
+			String target = boardImageDto.getBoardImageUrl();
+			target= target.replace("\\\\", "\\");
+			boardImageDto.setBoardImageUrl(target);
+			
+			//DB에 등록
 			sqlSession.insert("upload-image.insert", boardImageDto);
 		}
 		return readyFileNameList;
@@ -302,7 +309,15 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		return false;
 	}
-
+	
+	@Override
+	public List<BoardImageDto> getBoardImageInfo (int boardNo){
+		List<BoardImageDto> boardImageInfoList = sqlSession.selectList("upload-image.getmageInfoInBoard", boardNo);
+		System.out.println("이미지 리스트를 가져오는중" + boardImageInfoList);
+		return boardImageInfoList;
+	}
+	
+	
 	@Override
 	public List<ResponseEntity<ByteArrayResource>> getImageToJsp(int boardNo) throws IOException {
 		List<ResponseEntity<ByteArrayResource>> imageFileList = new ArrayList<>();
@@ -325,13 +340,32 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(target.getName(), "UTF-8")+"\"")
 			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
 			.body(resource);
-			
+			System.out.println("생성된 엔티티" + responseEntity);
 			imageFileList.add(responseEntity);
 		}
 		
 		
-		
+		System.out.println("이미지 엔티티 담는 DAO종료");
 		return imageFileList;
+	}
+
+	@Override
+	public boolean deleteImageChainToBoard(int boardNo) {
+		String folderName = getImageFolderName(boardNo);
+		System.out.println(folderName + "를 삭제 합니다.");
+		
+		String fullPath = SavedDir +"\\" + folderName + "\\" + boardNo;
+		
+		File targetFolder = new File(fullPath);
+		File[] allFiles = targetFolder.listFiles();
+		if (allFiles != null) {
+            for (File targetFile : allFiles) {
+            	targetFile.delete();
+            }
+        }
+		targetFolder.delete();
+	
+		return false;
 	}
 
 } 

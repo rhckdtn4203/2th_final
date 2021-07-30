@@ -1,4 +1,3 @@
-
 <%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,18 +9,21 @@
     
     <section id="searchBar">
         <div id="inputBar">
-          <form id="bar" action="#" method="post">
-            <span id="input-icon"><i class="fas fa-search"></i></span>   
-            <input id="search-input" type="text"
-            autocomplete="on" placeholder="'관심있는 내용을 검색해보세요!">
+          <form id="bar" action="${rt}/board/boardList" method="get" class="search">
+            <span id="input-icon"><i class="fas fa-search"></i></span> 
+            <input type="hidden" name="type" value="boardCategoryBoard">  
+            <input id="search-input" type="text" name="keyword" required
+         	autocomplete="on" placeholder="관심있는 내용을 검색해보세요!">
+         	<!-- <input type="submit" value="검색"> -->
           </form>
+          
         </div>    
         <div class="welcome-box">	
 			<c:if test="${dtoss != null }">
 				<p id="p-search"><span id="p-span">${dtoss.memberNick}</span>님  환영합니다!</p>
 			</c:if>
 		</div>
-      </section>
+     </section>
 
 
       <section id="section1">
@@ -123,43 +125,12 @@
         </div>
 
         <div class="s1Box" id="sb2">
-          <div id="aside">
-          <h3 id="kk">실시간 인기회사</h3>
-        <div class="a-inner">
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="rank">
-            <em>1</em>
-            <a href="#">LG화학</a>
-          </p>
-          <p class="dics"><i class="fas fa-exclamation-circle"></i>밤부에서 실시간으로 많이 검색된 회사 순위</p>
-
-        </div>
+           	<div id="aside">
+					<div class="row text-left"><h3 style="font-weight:bold;"> 실시간 검색 순위</h3></div>
+					<div id="ranking" class="row"></div>
+			</div>
         </div>
 
-        </div>
       </section>
 
       <section id="section2">
@@ -573,29 +544,5 @@
   
         </section>
       </section>
-
-  
-  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
-<%-- <c:set var="root" value="${pageContext.request.contextPath}"></c:set> --%>
-
-
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> --%>
-<!-- 	<!-- 임시 검색 화면(토픽) --> -->
-<%-- 	<form action="${root}/board/boardList" method="get"> --%>
-<!-- 		<input type="hidden" name="type" value="boardCategoryBoard"> -->
-<!-- 		<input type="text" name="keyword" required> -->
-<!-- 		<input type="submit" value="검색"> -->
-<!-- 	</form> -->
-<!-- 	<section> -->
-		
-<%-- 	<c:if test="${dtoss != null }"> --%>
-<%-- 		<p>${dtoss.memberNick}님환영합니다. --%>
-<%-- 	</c:if> --%>
-
-<!-- </section> -->
-
+      
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
