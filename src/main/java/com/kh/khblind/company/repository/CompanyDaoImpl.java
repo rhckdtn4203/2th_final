@@ -1,5 +1,6 @@
 package com.kh.khblind.company.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.company.entity.CompanyDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
+import com.kh.khblind.company.entity.JobCategoryDto;
 import com.kh.khblind.company.vo.CompanyVO;
 
 @Repository
@@ -51,6 +53,21 @@ public class CompanyDaoImpl implements CompanyDao {
 	public CompanyVO companyFind(int companyNo) {
 		CompanyVO companyVO = sqlSession.selectOne("company.find", companyNo);
 		return companyVO;
+	}
+
+	@Override
+	public List<JobCategoryDto> categories() {
+		return sqlSession.selectList("company.categories");
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> searchKeyword(String keyword) {
+		return sqlSession.selectList("company.searchKeyword", keyword);
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> rateTopSix() {
+		return sqlSession.selectList("company.rateTopSix");
 	}
 
 }
