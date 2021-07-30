@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khblind.company.entity.CompanyProfileDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
@@ -44,6 +45,27 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileDao profileDao;
+	
+	@GetMapping("/")
+	public String company(Model model) {
+		List<HashMap<String, Integer>> rateTopSix = companyDao.rateTopSix();
+		
+		model.addAttribute("topSixList", rateTopSix);
+		
+		return "company";
+	}
+	
+	@PostMapping("/")
+	public String company(@RequestParam String keyword, Model model) {
+		List<HashMap<String, Integer>> search = companyDao.searchKeyword(keyword);
+		List<HashMap<String, Integer>> rateTopSix = companyDao.rateTopSix();
+		
+		model.addAttribute("searchList", search);
+		model.addAttribute("size", search.size());
+		model.addAttribute("topSixList", rateTopSix);
+		
+		return "company";
+	}
 
 	@GetMapping("/registCompany")
 	public String registCompany() {
@@ -143,5 +165,5 @@ public class CompanyController {
 		companyReviewDao.reviewWrite(companyReviewDto);
 		return "redirect:companyReview?companyNo="+companyReviewDto.getCompanyNo();
 	}
-	
+
 }

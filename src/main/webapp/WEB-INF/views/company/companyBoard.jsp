@@ -3,7 +3,7 @@
     
 <!-- 해야 함 -->
     
-<span>{{회사 이미지}}</span>
+<img src="${pageContext.request.contextPath}/company/companyProfile?companyNo=${companyVO.companyNo}" width=200 height=200></img>
 <h1>${companyVO.companyName}</h1>
 
 <br><br>

@@ -47,4 +47,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from job_category
 	</select>
 	
+	<select id="searchKeyword" resultType="java.util.HashMap" parameterType="String">
+		select company_name, avg(review_rate) as rate_avg 
+		from company_review_view where company_name 
+		like '%'||#{keyword}||'%'  group by company_name
+	</select>
+	
+	<select id="rateTopSix" resultType="java.util.HashMap" parameterType="String">
+		select * from (
+		    select rownum rn, TMP.* from (
+		        select company_name, avg(review_rate) as rate_avg from company_review_view group by company_name order by rate_avg
+		    ) TMP
+		) where rn between 1 and 6
+	</select>
+	
 </mapper>

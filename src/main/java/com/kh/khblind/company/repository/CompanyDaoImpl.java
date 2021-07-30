@@ -1,5 +1,6 @@
 package com.kh.khblind.company.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -57,6 +58,16 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<JobCategoryDto> categories() {
 		return sqlSession.selectList("company.categories");
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> searchKeyword(String keyword) {
+		return sqlSession.selectList("company.searchKeyword", keyword);
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> rateTopSix() {
+		return sqlSession.selectList("company.rateTopSix");
 	}
 
 }

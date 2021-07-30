@@ -1,5 +1,6 @@
 package com.kh.khblind.company.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.khblind.company.entity.CompanyDto;
@@ -16,4 +17,6 @@ public interface CompanyDao {
 	boolean companyExist(String companyName);
 	CompanyVO companyFind(int companyNo);
 	List<JobCategoryDto> categories();
+	List<HashMap<String, Integer>> searchKeyword(String keyword);
+	List<HashMap<String, Integer>> rateTopSix();
 }

@@ -1,19 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-<!-- 여기 되는지 확인해야 함 -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-// 	$(function() {
-// 		var src = "D:/proj/khblind/resources/5.company-logo-image/";
-// 		var fileName = ${companyVO.companyProfileSaveName};
-// 		var type = ${companyVO.companyProfileContentType};
-// 		var resultSrc = src + fileName + type;
-		
-// 		$("#companyImg").attr("src", resultSrc);
-// 	});
-</script>
 
 <img src="${pageContext.request.contextPath}/company/companyProfile?companyNo=${companyVO.companyNo}" width=200 height=200></img>
 <h1>${companyVO.companyName}</h1>
