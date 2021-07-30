@@ -6,18 +6,18 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-        <!-- 부트스트랩을 가져온다 -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <!-- 제이쿼리를 가져온다 -->
+<!--         부트스트랩을 가져온다 -->
+<!--         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
+<!--         제이쿼리를 가져온다 -->
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <!-- UI제이쿼리를  가져온다 -->
+<!--         UI제이쿼리를  가져온다 -->
         <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-        <!-- Popper를 가져온다 -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- 폰트어썸 아이콘을 가져온다-->
+<!--         Popper를 가져온다 -->
+<!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!--         폰트어썸 아이콘을 가져온다 -->
          <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-        <!-- 부트와치를 가져온다.-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<!--         부트와치를 가져온다. -->
+<!--         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous"> -->
 <script>
  $(function(){ 
  $(".deleteLike").click(function(){ 
@@ -90,8 +90,8 @@
 								type: "GET",
 								success:function(resp){
 
-										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
-										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
+// 										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
+// 										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
 										var target = $("#option-"+ resp.voteOptionNo +"-gauge");
 										console.log(target);
 										target.removeClass("vote-progress-bg-2");
@@ -331,9 +331,7 @@ $(function(){
 </script>
 
         <style>
-            div{
-             border: 1px white none;
-            }
+
         
             #board-content-viewer{
             word-wrap: break-word;
@@ -421,9 +419,14 @@ $(function(){
 			}
 			
 			.image-frame{ /*반응형 필수*/
-			margin-left : auto;
+			margin-left : auto; 
 			margin-right : auto;
 			width : 400px;
+			}
+			
+			.msg-3{
+			font-size: 0.8em;
+			color: blue;
 			}
             
             /*투표 꺼*/
@@ -603,8 +606,8 @@ $(function(){
 						</div>
 	                 <!-- 이미지 반복 끝 -->
 	                </div>
-					${VoteTopicInfo.voteTopicNo} ////여기다
-					<c:if test="${VoteTopicInfo.voteTopicNo != null}">
+	                
+					<c:if test="${VoteTopicInfo.voteTopicNo != 0}">
 				       <div id="view-vote-sector" class="mt-2">
 				            <div id="vote-top">
 				                    <div class="vote-topic-div mt-1 mb-1 row">
@@ -648,30 +651,47 @@ $(function(){
 													</div>
 												</div>
 												<div class="col-2">
-													<c:if test="${didYouVote eq 'voted'}">
-														<button class="vote-btn dummy-btn btn btn-secondary btn-light" disabled><small><i class="fas fa-vote-yea" style="color:gray"></i></small></button>
-													</c:if>
-													<c:if test="${didYouVote eq 'didntVote'}">
-														<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-disable"><small><i class="fas fa-vote-yea"></i></small></button>
-													</c:if>
+<%-- 														<c:if test =${isLogin eq 'true'}> --%>
+															<c:if test="${didYouVote eq 'voted'}">
+																<button class="vote-btn dummy-btn btn btn-secondary btn-light" disabled><small><i class="fas fa-vote-yea" style="color:gray"></i></small></button>
+															</c:if>
+															<c:if test="${didYouVote eq 'didntVote'}">
+																<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-disable"><small><i class="fas fa-vote-yea"></i></small></button>
+															</c:if>
+<%-- 														</c:if> --%>
+														<c:if test="${isLogin eq 'false'}">
+															<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-disable"><small><i class="fas fa-vote-yea"></i></small></button>
+														</c:if>
 												</div>
 											</div>
 										</c:forEach>
-										<c:if test="${didYouVote eq 'notLogin'}">
-												<p>투표하시려면 로그인해주세요</p>				
+										<c:if test="${isLogin eq 'false'}">
+												<div class="m-5 text-center"><span class="msg-3">투표하시려면 로그인해주세요.</span></div>
 										</c:if>
 									</div>
 								</div>
 							</div>
 						</c:if>
-						 
+
 						<div id="option-area" class="row mt-2"> 
 							<div id="like" class="col-2">
-								<a href="좋아요"><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></a>
+								<c:if test="${not empty dtoss}">
+	                            	<!-- 좋아요를 안 한 상태 -->
+									<c:if test="${isLiked == 1}">
+										<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
+									
+									<!-- 좋아요를 한 상태 -->
+									<c:if test="${isLiked == 2}">
+										<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="fas fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
+								</c:if>
 							</div>
 						
 	    					<div id="comment" class="col-2">
-	      						<a href="댓글"><i class="far fa-comment-dots fa-1x">&nbsp;${boardCountDto.commentsCount}</i></a>
+	      						<i class="far fa-comment-dots fa-1x">&nbsp;${boardCountDto.commentsCount}</i>
 	   						</div>
 	   						<div class="col-4"></div>
 	   						<div class="col-2">

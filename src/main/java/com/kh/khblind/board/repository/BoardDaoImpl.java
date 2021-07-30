@@ -293,5 +293,10 @@ public class BoardDaoImpl implements BoardDao {
 			System.out.println("조회수 증가");
 		}
 
+		@Override
+		public void deleteHash(int boardNo) {
+			sqlSession.delete("hashtag.deleteHash", boardNo);			
+		}
+
 
 	}

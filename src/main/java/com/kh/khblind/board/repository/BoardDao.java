@@ -77,6 +77,7 @@ public interface BoardDao {
 	
 	//조회수 증가 기능
 	void addViewCount(int boardNo);
+	void deleteHash(int boardNo);
 	
 	//
 }

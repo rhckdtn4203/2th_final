@@ -672,6 +672,7 @@ public class BoardController {
 	public String boardDelete(@RequestParam int boardNo
 			//준비 : 게시글 번호.
 			) {
+		uploadImageDao.deleteImageChainToBoard(boardNo);
 		boardDao.delete(boardNo);
 		return "redirect:/board/boardList"; //목록으로 리다이렉트
 	}
