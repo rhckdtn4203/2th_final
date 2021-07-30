@@ -9,5 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into board_image values(board_image_seq.nextVal, #{boardNo}, #{boardImageUrl})
 	</insert>
 
+	<!-- 해당 게시글에 사진이 몇개 있는지 -->
+	<select id="getmageInfoInBoard" parameterType="int" resultType="BoardImageDto">
+		select * from board_image where board_no = #{boardNo}
+	</select>
+		 
+<!-- 	<select id ="getInfo" parameterType="int" resultType="" -->
 		 
 </mapper>

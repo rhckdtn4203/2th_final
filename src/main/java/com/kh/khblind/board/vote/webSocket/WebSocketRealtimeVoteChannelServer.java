@@ -54,9 +54,13 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 		ObjectMapper mapper = new ObjectMapper();
 		RealtimeVoteSingleInfoVo realtimeVoteSingleInfoVo = mapper.readValue(payload, RealtimeVoteSingleInfoVo.class);
 		
+		
+		
 		MemberDto memberDto = (MemberDto) session.getAttributes().get("dtoss");
-		Integer memberNo = memberDto.getMemberNo();
-		if(memberNo == null) return;
+		Integer memberNo = -1;
+		if(memberDto != null) {
+			memberNo = memberDto.getMemberNo();
+		}
 		
 		//JOIN(1) 이면 대기실에 있는 사용자를 채널로 이동
 		//MESSAGE(2) 이면 해당 채널에 메세지를 전송
@@ -67,7 +71,9 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 			server.send(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), realtimeVoteSingleInfoVo.getVoteOptionNo());
 		}
 		else if(realtimeVoteSingleInfoVo.getReceivePayloadType() == LEAVE) {
-			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
+//			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
+			System.out.println(realtimeVoteSingleInfoVo + "나가는중");
+			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo());
 		}
 	}
 	

@@ -1,0 +1,44 @@
+@charset "UTF-8";
+:root{
+  /* color */
+--color-lightgreen:#008248;
+--color-black: #000000;
+--color-green: #1e3932;
+--color-lightgrey: #f7f7f7;
+--color-brightgrey: #f2f2f3;
+--color-grey1:#707070;
+--color-grey2:#dbd9d7;
+--color-brown: #c8a379;
+--color-redbrown: #7c4c41;
+
+/* FONT-SIZE */
+--font-regular:20px;
+--font-title:35px;
+--font-small:15px;
+--font-subtitle:25px;
+
+/* FONT-WEIGHT */
+--weight-1: 100;
+--weight-2: 300;
+--weight-3: 400;
+--weight-4: 500;
+--weight-5: 700;
+--weight-6: 900;
+
+/* ANNIMATION DURATION */
+--anni-duration : 300ms;
+
+/* FONT-SIZE */
+--font-regular:20px;
+--font-title:35px;
+--font-small:15px;
+--font-subtitle:25px;
+
+/* FONT-WEIGHT */
+--weight-1: 100;
+--weight-2: 300;
+--weight-3: 400;
+--weight-4: 500;
+--weight-5: 700;
+--weight-6: 900;
+}

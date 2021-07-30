@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{payTid},
 			#{payBuyer},
 			'준비',
+			sysdate,
 			sysdate
 		)
 	</insert>
@@ -25,14 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 승인 데이터 등록 -->
 	<update id="approve" parameterType="int">
 		update pay
-		set pay_status='승인'
+		set pay_status='승인', pay_expire = sysdate+30
 		where pay_no = #{payNo}
 	</update>
 	
 	<!-- 취소 데이터 등록 -->
 	<update id="cancel" parameterType="int">
 		update pay
-		set pay_status='취소'
+		set pay_status='취소', pay_expire= sysdate
 		where pay_no = #{payNo}
 	</update>
 	
@@ -51,5 +52,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from pay
 		where pay_no = #{payNo}
 	</select>
+	
+	<select id="selectexpire" resultType="PayDto">
+		select * from pay where pay_expire = sysdate and pay_status='승인'
+	</select>
+
+	<update id="expire" parameterType="int">	
+		update member set grade_no = grade_no-1 where member_no = #{payBuyer}		
+	</update>
 	
 </mapper>

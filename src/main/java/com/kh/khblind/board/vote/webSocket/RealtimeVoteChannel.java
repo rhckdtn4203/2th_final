@@ -52,12 +52,13 @@ public class RealtimeVoteChannel {
 	
 	
 	//2.실시간투표채널 퇴장(memberNo로만 해야할 필요가 있을까?)
-	public void leave(int memberNo, WebSocketSession session) {
+//	public void leave(int memberNo, WebSocketSession session) {
+	public void leave(int memberNo) {
 //		RealtimeVoterVo realtimeVoterVo = new RealtimeVoterVo();
 		
 		RealtimeVoterVo realtimeVoterVoToLeave = RealtimeVoterVo.builder()
 																	.memberNo(memberNo)
-																	.session(session)
+//																	.session(session)
 																	.build();
 		
 		System.out.println("이전 = " + realtimeVoters);
