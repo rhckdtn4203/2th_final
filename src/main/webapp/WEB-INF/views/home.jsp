@@ -48,77 +48,111 @@
             </div>
     
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-1}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">유머</a>
-                </span>
-                <a href="#" class="tit"><span>아이스크림 주세여</span></a>
+                  <a href="/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryDto[0].boardCategoryNo}" class="tit-title">
+                  	${mainBoardCategoryList-1[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-1[0].boardCategoryName}
+                  </a>
+                </span>  
+                <a href="${rt}" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
     
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-2}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">반려동물</a>
+                  <a href="#" class="tit-title">
+                  	${mainBoardCategoryList-2[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-2[0].boardCategoryName}
+                  </a>
                 </span>
-                <a href="#" class="tit"><span> 블 라블라</span></a>
+                <a href="#" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
+            
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-3}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">직장인 취미생활</a>
+                  <a href="#" class="tit-title">
+                  	${mainBoardCategoryList-3[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-3[0].boardCategoryName}
+                  </a>
                 </span>
-                <a href="#" class="tit"><span> 탁구짱</span></a>
+                <a href="#" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
+            
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-4}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">스포츠</a>
+                  <a href="#" class="tit-title">
+                  	${mainBoardCategoryList-4[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-4[0].boardCategoryName}
+                  </a>
                 </span>
-                <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a>
+                <a href="#" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
+            
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-5}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">코로나 바이러스</a>
+                  <a href="#" class="tit-title">
+                  	${mainBoardCategoryList-5[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-5[0].boardCategoryName}
+                  </a>
                 </span>
-                <a href="#" class="tit"><span> 이것도 그닥..</span></a>
+                <a href="#" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
+            
             <div class="article-best">
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList-6}">
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">직접홍보</a>
+                  <a href="#" class="tit-title">
+                  	${mainBoardCategoryList-6[0].boardCategoryIcon}
+                  	${mainBoardCategoryList-6[0].boardCategoryName}
+                  </a>
                 </span>
-                <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a>
+                <a href="#" class="tit"><span>${mainBoardCategoryDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
+                <i class="far fa-thumbs-up"></i><span>${mainBoardCategoryDto.boardCount}</span>     
                 <i class="far fa-comment-alt"><span>1</span></i>
               </div>
+             </c:forEach> 
             </div>
     
           </div> 
