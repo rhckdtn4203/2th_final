@@ -688,121 +688,47 @@ public class BoardController {
 			HttpSession session,  Model model, 
 			@RequestParam String type, 
 			@RequestParam(required = false) Integer boardCategoryNo,
-			@RequestParam(required = false) Integer otherJobCategoryNo,
 			@RequestParam(required = false) String keyword
 			) {
-		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		
+			
+//		if(타입=잡) {모델.더하기("보드타입", "job")};
+//		if(타입=회사) {모델.더하기("보드타입", "com")};
+//		if(타입=토픽) {모델.더하기("보드타입", "topic")};
+		
+		//type=jobCategoryBoard 라는 파라미터가 들어오면 data에 "job"을 넣겠다
+		if(type.equals("jobCategoryBoard")) {
+			model.addAttribute("boardType", "job");
+			
+			if(keyword != null) {
+				//keyword 값을 넘겨주겠다
+				model.addAttribute("boardKeyword", keyword); 
+			}
 
-		if(keyword !=null) {
-			// 키워드 카운트 
-			if(searchDao.get(keyword)!=null) {
-				searchDao.update(keyword);
-			}
-			else {
-				// 시퀀스번호
-				int searchNo = searchDao.getSequence();
-				
-				SearchDto searchDto = SearchDto.builder()
-						.searchNo(searchNo)					
-						.keyword(keyword)
-				.build();
-				
-				searchDao.insert(searchDto);	
-			}
-		}
-		
-		//기업별 게시판 목록
-		if(type.equals("companyBoard")){
-			List<CompanyBoardDto> companyBoardList = new ArrayList<>();
-			int companyNo = memberDto.getCompanyNo();
-			
-			if(keyword == null) {
-				companyBoardList = boardDao.getCompanyBoardList(companyNo);
-			}
-			else {// if(keyword != null)
-				companyBoardList = boardDao.SearchCompanyBoardList(keyword);
-			}
-			model.addAttribute("companyBoardList", companyBoardList);
-			
-				if(companyBoardList != null) {
-					return "/board/boardList";
-				}
-				else {
-					return "글없다페이지";
-				}
-		}
-		
-		//업종별 게시판 목록
-		else if(type.equals("jobCategoryBoard")) {
-			List<JobCategoryBoardDto> jobCategoryBoardList = new ArrayList<>();
-		
-			//+회원인경우
-			if(memberDto.getGradeNo() ==2 || memberDto.getGradeNo() ==4) {
-				System.out.println(otherJobCategoryNo);
-				
-				jobCategoryBoardList = boardDao.getJobCategoryBoardList(otherJobCategoryNo);
-				
-				model.addAttribute("jobCategoryBoardList", jobCategoryBoardList);
-			}
-			
-			
-//			else if(회원등급이 2,4가 아닌경우)
-			int jobCategoryNo = memberDto.getJobCategoryNo();
-			
-			if(keyword == null) {
-				jobCategoryBoardList = boardDao.getJobCategoryBoardList(jobCategoryNo);
-			}
-			else {// if(keyword != null)
-				jobCategoryBoardList	= boardDao.SearchJobCategoryBoardList(keyword);
-			}
-			model.addAttribute("jobCategoryBoardList", jobCategoryBoardList);
-			
-				if(jobCategoryBoardList != null) {
-					return "/board/boardList";
-				}
-				else {
-					return "글없다페이지";
-				}
+			return "/board/boardList";
 		}
 		
 		else if(type.equals("boardCategoryBoard")) {
+			model.addAttribute("boardType", "boardCategory");
+			model.addAttribute("boardCategoryNo", boardCategoryNo);
 			
-			//일단 저장소를 만든다.(자바가 멍청한건지 if문안에 변수가 있으면 모름)
-			List<BoardCategoryBoardDto> boardCategoryBoardList = new ArrayList<>();
-				
-			//keyword가 없으면 일반 목록을 조회하고 
-			if(keyword == null) {
-				System.out.println("키워드가 없어!");
-				boardCategoryBoardList =  boardDao.getBoardCategoryBoardList(boardCategoryNo);
-				System.out.println("일반이네요 " +boardCategoryBoardList);
-			}				
-			//keyword가 있으면 검색을 하고 
-			else{// if(keyword != null) 
-	
-				System.out.println("키워드가 있네요~");
-				boardCategoryBoardList = boardDao.BoardCategorySearch(keyword);
-				System.out.println("검색이네여~ " + boardCategoryBoardList);
+			if(keyword != null) {
+				model.addAttribute("boardKeyword", keyword);
 			}
-		
-			//두 방법 중 나온 "boardCategoryboardList"를 model에 넣는다.
-			System.out.println("모델입니당~" + boardCategoryBoardList);
-			model.addAttribute("boardCategoryBoardList", boardCategoryBoardList);
-				
-				//
-				if (boardCategoryBoardList != null) {
-					return "/board/boardList";
-				} 
-				else {
-					return "글없다페이지";//그 게시판에 글이 없다.
-				}
+			return "/board/boardList";
 		}
-		
+		else if(type.equals("companyBoard")) {
+			model.addAttribute("boardType", "company");
+			
+			if(keyword != null) {
+				model.addAttribute("boardKeyword", keyword);
+			}
+			return "/board/boardList";
+		}
 		//type = 이도저도 아닌거 들어올때의 경우의 수
 		else {
 			return "에러페이지 404";
 		}
-			
 	}
 	
 	@GetMapping("boardLikeInsert")
