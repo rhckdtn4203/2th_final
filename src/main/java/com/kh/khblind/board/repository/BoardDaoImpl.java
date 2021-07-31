@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardCountDto;
@@ -26,6 +27,9 @@ import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.board.entity.MainCategoryDataVO;
+import com.kh.khblind.board.entity.MetamonBoardListVO;
+import com.kh.khblind.board.entity.StartEndVoForAjax;
 import com.kh.khblind.member.entity.MemberDto;
 
 @Repository
@@ -296,6 +300,56 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public void deleteHash(int boardNo) {
 			sqlSession.delete("hashtag.deleteHash", boardNo);			
+		}
+
+		@Override
+		public List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax) {
+			List<MetamonBoardListVO> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", startEndVoForAjax);
+			return companyBoardList;
+		}
+
+
+		@Override
+		public List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
+			System.out.println("페이지대신" + startEndVoForAjax);
+			List<MetamonBoardListVO> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", startEndVoForAjax);
+			return jobCategoryBoardList;
+		}
+
+		@Override
+		public List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
+			List<MetamonBoardListVO> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", startEndVoForAjax);
+			return boardCategoryBoardList;
+		}
+
+		@Override
+		public List<MetamonBoardListVO> ajaxSearchCompanyBoardList(String keyword) {
+			List<MetamonBoardListVO> companyBoardList = sqlSession.selectList("board.SearchCompanyBoardList", keyword);
+			return companyBoardList;
+		}
+
+		@Override
+		public List<MetamonBoardListVO> ajaxSearchJobCategoryBoardList(String keyword) {
+			List<MetamonBoardListVO> jobCategoryboardList = sqlSession.selectList("board.SearchJobCategoryBoardList", keyword);
+			return jobCategoryboardList;
+		}
+
+		@Override
+		public List<MetamonBoardListVO> ajaxSearchBoardCategoryBoardList(String keyword) {
+			List<MetamonBoardListVO> boardCategoryboardList = sqlSession.selectList("board.SearchBoardCategoryBoardList", keyword);
+			return boardCategoryboardList;
+		}
+
+		@Override
+		public BoardCategoryAllCountDto getBoardCategoryByAllCount(int rn) {
+			BoardCategoryAllCountDto boardCategoryAllCountDto = sqlSession.selectOne("board.boardCategoryAllCount", rn);
+			return boardCategoryAllCountDto;
+		}
+
+		@Override
+		public List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo) {
+			List<MainCategoryDataVO> mainBoardCategoryList = sqlSession.selectList("board.mainCategoryData", boardCategoryNo);
+			return mainBoardCategoryList;
 		}
 
 
