@@ -42,4 +42,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from company where company_domain = #{companyDomain}
 	</select>
   
+  
+  	<!-- 석현 -->
+  	<insert id="insertImageCert" parameterType="ImageCertDto">
+		insert into image_cert values(image_cert_seq.nextVal, #{memberNo}, #{jobCategoryNo}, #{imageCertUrl}, #{imageCertProgress}, null)
+	</insert>
+  	
+  	<select id="checkImageCertProgress" parameterType="int" resultType="ImageCertDto">
+  		select * from image_cert where member_no = #{memberNo}
+  	</select>
+  	
+  	 <select id="getApproveImageCertList" resultType="ApproveImageCertDto">
+  		select * from approve_image_cert_view
+  	</select>
+  	
+  	<select id="getImageCertInfo"  parameterType="int" resultType="String">
+  		select image_cert_url from image_cert where member_no = #{memberNo}
+  	</select>
+  	
+  	<select id="getImageCertMessage" parameterType="int" resultType="String">
+  		select image_cert_message from image_cert where member_no = #{memberNo}
+  	</select>
+  	
+	<insert id="deleteImageCert" parameterType="int">
+		delete image_cert where member_ no= #{memberNo}
+	</insert>
+	
+	<update id="approveImageCert" parameterType="int">
+		update image_cert set image_cert_progress = 'end' where member_no = #{memberNo}
+	</update>
+	
+	<update id="rejectImageCert" parameterType="int">
+		update image_cert set image_cert_progress = 'reject' where member_no = #{memberNo}
+	</update>
+	
+	<update id="sendRejectMessageImageCert" parameterType="int">
+		update image_cert set image_cert_message = #{imageCertMessage} where member_no = #{memberNo}
+	</update>
+	
+	<update id="insertImageCertAgain" parameterType="int">
+		update image_cert set image_cert_progress = 'ing' where member_no = #{memberNo}
+	</update>
+	
+	
 </mapper>

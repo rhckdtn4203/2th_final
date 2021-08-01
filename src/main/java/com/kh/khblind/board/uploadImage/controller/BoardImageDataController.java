@@ -23,7 +23,7 @@ import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 
 @RestController
 @RequestMapping("/board")
-public class BoardImageRestController {
+public class BoardImageDataController {
 	
 	@Autowired
 	private BoardDao boardDao;
@@ -48,7 +48,7 @@ public class BoardImageRestController {
 		System.out.println("finalFolderName = " + finalFolderName);
 		
 		File target = new File(finalFolderName, fileName);
-		System.out.println(target + "파일이 존재하는가? 시발" + target.exists());
+		System.out.println(target + "파일이 존재하는가?" + target.exists());
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource resource = new ByteArrayResource(data);
 
