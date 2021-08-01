@@ -117,7 +117,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                         select * from main_category_data_view where board_category_no = #{boardCategoryNo}
                     )	TMP
               ) where rn between 1 and 5
-	 </select>           
+	 </select>
+	 
+	 <update id="addCount" parameterType="int">
+      	update board set  board_count = board_count+1 where board_no = #{boardNo}
+     </update>
+     
+     <select id="getCountInfo" parameterType="int" resultType="BoardCountDto">
+       select * from board_count_view where board_no = #{boardNo}
+     </select>
+                
 </mapper>
 
 
