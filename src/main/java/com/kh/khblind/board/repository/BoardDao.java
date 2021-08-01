@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -101,4 +102,9 @@ public interface BoardDao {
 	BoardCategoryAllCountDto getBoardCategoryByAllCount(int rn);
 	//토픽 조회수 베스트 6개 목록 기능
 	List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo);
+	
+	//토픽 좋아요 순 베스트 목록 기능
+	List<BoardCategoryListByLikeCountVO> getBoardCategoryListByLikeCount();
+	
+	
 }

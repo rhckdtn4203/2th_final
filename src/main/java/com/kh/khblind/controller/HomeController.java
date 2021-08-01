@@ -15,6 +15,7 @@ import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
+import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.MainCategoryDataVO;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.member.entity.MemberDto;
@@ -61,7 +62,7 @@ public class HomeController {
 //		model.addAttribute("boardCategoryboardList", boardCategoryboardList);
 //		}
 
-		
+		//메인에 토픽 6개 조회수순으로 목록 코드
 		
 		for(int i =1 ; i<=6; i++) {
 			int rn = i;
@@ -74,22 +75,24 @@ public class HomeController {
 			String modelName = "mainBoardCategoryList";
 			int modelOrderNo = i;
 			String finalModelName = modelName + modelOrderNo;
-//			System.out.println("이번 모델 이름 = " + finalModelName);
-//			System.out.println("이번 데이터 리스트"  + mainBoardCategoryList);
 
 			model.addAttribute(finalModelName, mainBoardCategoryList);
-//			if(i == 1) {
-//			model.addAttribute(finalModelName, mainBoardCategoryList);}
+			
+//			${mainBoardCategoryList-1}
+//			${mainBoardCategoryList-2}
+//			${mainBoardCategoryList-3}
+//			${mainBoardCategoryList-4}
+//			${mainBoardCategoryList-5}
+//			${mainBoardCategoryList-6}			
+			
+			//토픽베스트 List 관련 코드
+			List<BoardCategoryListByLikeCountVO> BoardCategoryListByLikeCount = boardDao.getBoardCategoryListByLikeCount();
+			
+			//모델에 넣기
+			model.addAttribute("BoardCategoryListByLikeCount", BoardCategoryListByLikeCount);
 		}
 	
 	
-//		${mainBoardCategoryList-1}
-//		${mainBoardCategoryList-2}
-//		${mainBoardCategoryList-3}
-//		${mainBoardCategoryList-4}
-//		${mainBoardCategoryList-5}
-//		${mainBoardCategoryList-6}
-		
 		
 //		BoardCategoryAllCountDto boardCategoryAllCountDto = boardDao.boardCategoryAllCount(rn);
 //				int boardCategoryNo = boardCategoryAllCountDto.getBoardCategoryNo();
