@@ -112,6 +112,9 @@ function setImageFromFile(input, expression) {
 					<c:if test="${imageCertProgress == 'reject'}">
 						<img src="${root}/img/image-cert-reject.png" id="preview-image">
 					</c:if>
+					<c:if test="${imageCertProgress == 'end'}">
+						<img src="${root}/img/image-cert-end.png" id="preview-image">					
+					</c:if>
 				</div>
 
 					<div class=""><br><br></div>
