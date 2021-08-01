@@ -8,18 +8,19 @@
 <html>
 <head>
 
-<!-- 부트스트랩을 가져온다 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"  integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"  crossorigin="anonymous">
+
 <!-- 제이쿼리를 가져온다 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!-- UI제이쿼리를  가져온다 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" 	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
-<!-- Popper를 가져온다 -->
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- 폰트어썸 아이콘을 가져온다-->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" 	crossorigin="anonymous" />
-<!-- 부트와치를 가져온다.-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" 	integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK"  crossorigin="anonymous">
+
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
+
 
 <!--로드 후 관련 js-->
 <script>
@@ -36,22 +37,16 @@
 		$("#select1").change(function() {
 			if ($(this).val() == "토픽") {
 				$("#select2").show();
-
 				$("#type-no").attr("name", "");
 				$("#type-no").attr("value", "");
-
 				$("#type-no").attr("name", "boardCategoryNo");
-
 				$("#select2").change(function() {
 					$("#type-no").attr("value", $("#select2").val());
 				});
-
 			} else if ($(this).val() == "업종") {
 				$("#select2").hide();
-
 				$("#type-no").attr("name", "");
 				$("#type-no").attr("value", "");
-
 				$("#type-no").attr("name", "jobCategoryNo");
 				$("#type-no").attr("value", "${dtoss.jobCategoryNo}");
 				
@@ -64,10 +59,8 @@
 		
 			} else if ($(this).val() == "기업") {
 				$("#select2").hide();
-
 				$("#type-no").attr("name", "");
 				$("#type-no").attr("value", "");
-
 				$("#type-no").attr("name", "companyNo");
 				$("#type-no").attr("value", "${dtoss.companyNo}");
 				
@@ -98,7 +91,6 @@
 				$("#image-files").val();
 			}
 		})
-
 		$("#vote-btn").click(function() {
 			if ($(this).hasClass("option-on") === false) {
 				$(this).css("color", "tomato");
@@ -116,7 +108,6 @@
 		})
 		$("#hashtag-btn").click(function() {
 			$(this).fadeOut(150).fadeIn(150);
-
 			var content = $("#board-content-textarea").val();
 			var addSharpContent = content + " # ";
 			$("#board-content-textarea").val(addSharpContent);
@@ -130,7 +121,6 @@
 		$("#image-files").change(function() {
 			var filelist = this.files;
 			console.log(filelist);
-
 			if (filelist.length > 4) {
 				alert("파일은 4개가 최대입니다!")
 				$("#image-files").val('');
@@ -152,11 +142,9 @@
 			e.preventDefault();
 			console.log("현재는" + $('.vote-option-div').length);
 			console.log("항목추가");
-
 			var count = $('.vote-option-div').length;
 			if (count <= 7) {
 				var template = $("#vote-option-div-template").html();
-
 				template = template.replace("{{count}}", count + 1);
 				template = template.replace("{{count2}}", count + 1);
 				$("#vote-option-divS").append(template);
@@ -166,9 +154,7 @@
 					$("#plus-option-btn").hide();
 				}
 			}
-
 		})
-
 	})
 </script>
 
@@ -192,7 +178,6 @@
 			var voteTitle = $("#vote-topic").val();
 			var voteOptionCount=0;
 			var optionNames = $(".vote-option-name");
-
 			for(var i =0; i<optionNames.length; i++){
 				var optionNamesVal = $(".vote-option-name").eq(i).val();
 				console.log("optionNamesVal = " + optionNamesVal)
@@ -221,38 +206,34 @@
 		
 		
 	})
-
 </script>
 
 <style>
-div {
-	border: brown 1px dotted;
-}
-
+/* div { */
+/* 	border: brown 1px dotted; */
+/* } */
 textarea {
 	min-height: 20rem;
 	overflow-y: visible;
 	resize: none;
 }
-
 .font-color-white {
 	color: white;
 }
-
 .font-color-khblind-gold {
 	color: #eee8aa;
 }
-
 .bold {
 	font-weight: bold;
 }
-
 .font-size-15 {
 	font-size: 1.5rem;
 }
-
 .primary-background-color {
 	background-color: #1e3932;
+}
+.bbxb{
+	box-sizing: border-box;
 }
 </style>
 </head>
@@ -284,10 +265,10 @@ textarea {
 
 				<div id="board-input-zone" class="form-group col-10 offset-1 mt-3">
 					<div id="board-title-input" class="">
-						<input id="board-title" class="form-control p-4" type="text" name="boardTitle" placeholder="제목을 입력하세요" >
+						<input id="board-title" class="form-control p-4 bbxb" type="text" name="boardTitle" placeholder="제목을 입력하세요" >
 					</div>
 					<div id="board-content-input">
-						<textarea id="board-content-textarea" class="form-control mt-3 p-4" name="boardContent" placeholder="욕쓰지마라"></textarea>
+						<textarea id="board-content-textarea" class="form-control mt-3 p-4 bbxb" name="boardContent" placeholder="욕쓰지마라"></textarea>
 					</div>
 				</div>
 
@@ -308,35 +289,21 @@ textarea {
 					<div class="row">
 						<div class="input-group">
 							<div class="custom-file">
-								<input id="image-files" type="file" name="images"	class="custom-file-input form-control-lg" accept=".jpg, .png" multiple>
-								<label class="custom-file-label display-">파일을 선택해주세요</label>
+								<input id="image-files" type="file" name="images"	class="custom-file-input form-control-lg bbxb" accept=".jpg, .png" multiple>
+								<label class="custom-file-label bbxb">파일을 선택해주세요</label>
 							</div>
 							<input id="upload-reset-btn" class="btn btn-warning" type="reset"
 								value="Reset">
 						</div>
 					</div>
 
-					<div id="preview-zone" class="row text-center">
-						<div class="col-3">
-							<img id="preview-1" src="#">
-						</div>
-						<div class="col-3">
-							<img id="preview-1" src="#">
-						</div>
-						<div class="col-3">
-							<img id="preview-1" src="#">
-						</div>
-						<div class="col-3">
-							<img id="preview-1" src="#">
-						</div>
-					</div>
 				</div>
 
             <div id="vote-input-zone"  class="mt-2">
                     <div id="vote-top">
                         <div class="vote-topic-div mt-1 mb-1">
                             <label for="vote-topic" class="display-6">투표제목</label>
-                                <span><input id="vote-topic" class="form-control" type="text" name="voteTopicTitle"></span>
+                                <span><input id="vote-topic" class="form-control bbxb" type="text" name="voteTopicTitle"></span>
                         </div>
                    </div>
                     <div class="empty-div mb-3"></div>
@@ -344,29 +311,29 @@ textarea {
                     <div id="vote-middle">
                             <div id="vote-option-divS" class="offset-1 col-10">
                                 <div class="vote-option-div row mt-1 mb-1">
-                                    <div class="col-3 align-middle">
-                                        <p>항목 1</p>
+                                    <div class="col-3 align-middle mt-2 mb-2">
+                                        <span class="bbxb">항목 1</span>
                                     </div>
-                                    <div class="col-9">
-                                        <input type="text" id="vote-option-name-input-1" name="voteTopicOption" class="vote-option-name form-control">
+                                    <div class="col-6">
+                                        <input type="text" id="vote-option-name-input-1" name="voteTopicOption" class="vote-option-name form-control bbxb">
                                     </div>
                                 </div>
                                 
                                 <div class="vote-option-div row mt-1 mb-1">
-                                    <div class="col-3 align-middle">
-                                        <p>항목 2</p>
+                                    <div class="col-3 align-middle mt-2 mb-2">
+                                        <span class="bbxb">항목 2</span>
                                     </div>
-                                    <div class="col-9">
-                                        <input type="text" id="vote-option-name-input-2" name="voteTopicOption" class="vote-option-name form-control">
+                                    <div class="col-6">
+                                        <input type="text" id="vote-option-name-input-2" name="voteTopicOption" class="vote-option-name form-control bbxb">
                                     </div>
                                 </div>
                 
                                 <div class="vote-option-div row mt-1 mb-1">
-                                    <div class="col-3 align-middle">
-                                        <p>항목 3</p>
+                                    <div class="col-3 align-middle mt-2 mb-2">
+                                        <span class="bbxb">항목 3</span>
                                     </div>
-                                    <div class="col-9">
-                                        <input type="text"  id="vote-option-name-input-3" name="voteTopicOption" class="vote-option-name form-control">
+                                    <div class="col-6">
+                                        <input type="text"  id="vote-option-name-input-3" name="voteTopicOption" class="vote-option-name form-control bbxb">
                                     </div>
                                 </div>
                             </div>
@@ -398,11 +365,12 @@ textarea {
 
 	<script id="vote-option-div-template" type="text/template">
         <div class="vote-option-div row mt-1 mb-1">
-            <div class="col-3 align-middle">
-                <p>항목 {{count}}</p>
+		
+            <div class="col-3 align-middle mt-2 mb-2">
+                <span class="bbxb">항목 {{count}}</span>
             </div>
-            <div class="col-9">
-                <input type="text" id="vote-option-name-input-{{count2}}" name="voteTopicOption" class="vote-option-name form-control">
+			<div class="col-6">
+                <input type="text"  id="vote-option-name-input-{{count2}}" name="voteTopicOption" class="vote-option-name form-control bbxb">
             </div>
         </div>
     </script>
