@@ -51,7 +51,10 @@ import com.kh.khblind.board.vote.entity.VoteResultDto;
 import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
+import com.kh.khblind.search.entity.SearchDto;
+import com.kh.khblind.search.repository.SearchDao;
 import com.kh.khblind.member.repository.MemberDao;
+
 @RequestMapping("/board")
 @Controller
 public class BoardController {
@@ -79,6 +82,9 @@ public class BoardController {
 	
 	@Autowired
 	private BookmarkDao bookmarkDao;
+	
+	@Autowired
+	private SearchDao searchDao;
 	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model, HttpSession session) {
@@ -687,6 +693,25 @@ public class BoardController {
 			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		
+
+		if(keyword !=null) {
+			// 키워드 카운트 
+			if(searchDao.get(keyword)!=null) {
+				searchDao.update(keyword);
+			}
+			else {
+				// 시퀀스번호
+				int searchNo = searchDao.getSequence();
+				
+				SearchDto searchDto = SearchDto.builder()
+						.searchNo(searchNo)					
+						.keyword(keyword)
+				.build();
+				
+				searchDao.insert(searchDto);	
+			}
+		}
+		
 		//기업별 게시판 목록
 		if(type.equals("companyBoard")){
 			List<CompanyBoardDto> companyBoardList = new ArrayList<>();
@@ -754,6 +779,7 @@ public class BoardController {
 			}				
 			//keyword가 있으면 검색을 하고 
 			else{// if(keyword != null) 
+	
 				System.out.println("키워드가 있네요~");
 				boardCategoryBoardList = boardDao.BoardCategorySearch(keyword);
 				System.out.println("검색이네여~ " + boardCategoryBoardList);
