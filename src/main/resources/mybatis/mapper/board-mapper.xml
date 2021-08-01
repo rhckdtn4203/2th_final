@@ -63,7 +63,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	) where rn between #{startNo} and #{endNo}
 	 </select>
 	 
-
 <!-- 	 <select id="getBoardCategoryBoardList" parameterType="integer" resultType="BoardCategoryBoardDto"> -->
 <!-- 	 	select * from board_category_board_view where board_category_no = #{boardCategoryNo} -->
 <!-- 	 </select> -->
@@ -86,8 +85,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <select id="SearchJobCategoryBoardList" parameterType="string" resultType="JobCategoryBoardDto">
 	 	select * from job_category_board_view where instr(board_content, #{keyword}) || instr(board_title, #{keyword}) > 0 order by board_date desc
-  </select>	 
-
+	 </select>
+	 
 	 <select id="getCompanyName" parameterType="int" resultType="string">
 	 	select company_name from company where company_no = #{companyNo} 
 	 </select>
@@ -104,13 +103,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from check_board_type_view where board_no = #{boardNo}
 	 </select>
 	 
-	 <select id="getCountInfo" parameterType="int" resultType="BoardCountDto">
-	 	select * from board_count_view where board_no = #{boardNo}
+	 <select id="boardCategoryAllCount" parameterType="int" resultType="BoardCategoryAllCountDto">
+	 	select * from (
+	 				select rownum rn, TMP.* from(
+	 					select * from board_category_all_count_view
+	 				)	TMP
+	 	) where rn = #{rn}
 	 </select>
 	 
- 	 <update id="addCount" parameterType="int">
-		update board set  board_count = board_count+1 where board_no = #{boardNo}
-	 </update>
+	 <select id="mainCategoryData" parameterType="int" resultType="MainCategoryDataVO">
+	 	select * from (
+	 				select rownum rn, TMP.* from(
+                        select * from main_category_data_view where board_category_no = #{boardCategoryNo}
+                    )	TMP
+              ) where rn between 1 and 5
+	 </select>
+	 
+	 <update id="addCount" parameterType="int">
+      	update board set  board_count = board_count+1 where board_no = #{boardNo}
+     </update>
+     
+     <select id="getCountInfo" parameterType="int" resultType="BoardCountDto">
+       select * from board_count_view where board_no = #{boardNo}
+     </select>
+                
 </mapper>
 
 

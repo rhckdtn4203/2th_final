@@ -2,6 +2,7 @@ package com.kh.khblind.board.repository;
 
 import java.util.List;
 
+import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardCountDto;
@@ -16,6 +17,9 @@ import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.board.entity.MainCategoryDataVO;
+import com.kh.khblind.board.entity.MetamonBoardListVO;
+import com.kh.khblind.board.entity.StartEndVoForAjax;
 
 public interface BoardDao {
 	//시퀀스 번호를 생성하는 기능
@@ -79,5 +83,22 @@ public interface BoardDao {
 	void addViewCount(int boardNo);
 	void deleteHash(int boardNo);
 	
-	//
+	//ajax 목록 기능
+	List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	//ajax 검색 기능
+	List<MetamonBoardListVO> ajaxSearchCompanyBoardList(String keyword);
+	
+	List<MetamonBoardListVO> ajaxSearchJobCategoryBoardList(String keyword);
+	
+	List<MetamonBoardListVO> ajaxSearchBoardCategoryBoardList(String keyword);
+	
+	//조회수 많은 토픽 DTO 가져오기 기능
+	BoardCategoryAllCountDto getBoardCategoryByAllCount(int rn);
+	//토픽 조회수 베스트 6개 목록 기능
+	List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo);
 }
