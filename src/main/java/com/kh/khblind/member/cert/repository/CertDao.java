@@ -9,4 +9,10 @@ public interface CertDao {
 	void clear();
 	void upgrade(int memberNo);
 	boolean checkCompany(String companyDomain);
+	
+	//아래는 석현
+	String checkImageCertProgress (int memberNo);
+	void approveImageCert(int memberNo);
+	void rejectImageCert(int memberNo, String imageCertMessage);
+	String getImageCertMessage(int memberNo);
 }

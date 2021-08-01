@@ -151,10 +151,10 @@ public class BoardDaoImpl implements BoardDao {
 	         String hashtag = null;
 	         if(m.find()) {
 	           hashtag = m.group(1);
-	           System.out.println("59 hashtag = " + hashtag);
+	           System.out.println("hashtag = " + hashtag);
 	          
 	         }
-	         System.out.println("62 hashtag = " + hashtag);
+	         System.out.println("hashtag = " + hashtag);
 	         return hashtag;
 	   }
 	//검색어에 해시태그가 있다면 해시태그로 검색하는 검색메소드

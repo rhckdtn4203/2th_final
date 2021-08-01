@@ -84,10 +84,8 @@
 						
 						$.ajax({//2-1. onmessage 중 다른 사람 투표 반영 당하기!
 							url: "${pagecontext.request.contextpath}/khblind/board/getOthersVotingInfo",
-							data:{
-								voteOptionNo: messageObject.voteOptionNo
-								},
-								type: "GET",
+							data:{voteOptionNo: messageObject.voteOptionNo},
+							type: "GET",
 								success:function(resp){
 
 // 										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
@@ -264,37 +262,37 @@
 			console.log("이미지 로딩중! 버튼 삭제")
 			var boardNo = ${boardDto.boardNo};
 			$.ajax({
-				url: "${pagecontext.request.contextpath}/khblind/board/getImageInfo",
-				data:{
-					boardNo: boardNo
-				},
-				type: "GET",
-				success:function(resp){
-					console.log("성공");
-					console.log(resp);
-					
-					for(var i=0; i < resp.length; i++){
-						var fileUrlInLocal = resp[i].boardImageUrl;
+					url: "${pagecontext.request.contextpath}/khblind/board/getImageInfo",
+					data:{
+						boardNo: boardNo
+					},
+					type: "GET",
+					success:function(resp){
+						console.log("성공");
+						console.log(resp);
 						
-						console.log(typeof(fileUrlInLocal));
-						console.log("full경로는 " + fileUrlInLocal);
-						console.log("길이는 "+fileUrlInLocal.length)
-						
-						var lengthFull = fileUrlInLocal.length;
-						var lengthExceptFileName=lengthFull-14;
-						//파일이름 길이는 총 14개
-						//fileUrlInLocal.length() 
-						var fileName =fileUrlInLocal.substr(lengthExceptFileName, 14);
-						var url = "${pagecontext.request.contextpath}/khblind/board/getImageFlie?boardNo="+ boardNo +"&" + "fileName="+fileName;
-						
-						console.log(url);
-						
-						var template = $("#image-template").html();
-						template = template.replace("{{url}}", url);
-						
-						$("#image-list").append(template);
+						for(var i=0; i < resp.length; i++){
+							var fileUrlInLocal = resp[i].boardImageUrl;
+							
+							console.log(typeof(fileUrlInLocal));
+							console.log("full경로는 " + fileUrlInLocal);
+							console.log("길이는 "+fileUrlInLocal.length)
+							
+							var lengthFull = fileUrlInLocal.length;
+							var lengthExceptFileName=lengthFull-14;
+							//파일이름 길이는 총 14개
+							//fileUrlInLocal.length() 
+							var fileName =fileUrlInLocal.substr(lengthExceptFileName, 14);
+							var url = "${pagecontext.request.contextpath}/khblind/board/getImageFlie?boardNo="+ boardNo +"&" + "fileName="+fileName;
+							
+							console.log(url);
+							
+							var template = $("#image-template").html();
+							template = template.replace("{{url}}", url);
+							
+							$("#image-list").append(template);
+						}
 					}
-				}
 				
 			})
 			

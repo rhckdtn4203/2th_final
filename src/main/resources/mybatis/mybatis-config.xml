@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 				
 		<package name="com.kh.khblind.member.cert.entity"/>
 		<package name="com.kh.khblind.member.entity"/>
+		<package name="com.kh.khblind.admin.approveImageCert.entity"/><!-- 이미지 인증 엔티티 by 석현 -->
 
 		<package name="com.kh.khblind.admin.category.entity"/>
 		<package name="com.kh.khblind.company.entity"/>
