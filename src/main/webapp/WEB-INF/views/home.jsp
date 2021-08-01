@@ -34,92 +34,100 @@
               <a href="#">>더보기</a>
             </div>
             
+           <c:forEach var="BestTopicDto" items="${BoardCategoryListByLikeCount}"> 
             <div class="article-best">
+             
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">반려동물</a>
+                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
                 </span>
-                <a href="#" class="tit"><span> 우리집 강아지는 복슬강아지</span></a>
+                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
+                <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
+                <i class="far fa-comment-alt"><span>${BestTopicDto.commentsCount}</span></i>
               </div>
+              
             </div>
+            </c:forEach>
             
-			<div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">유머</a>
-                </span>
-                <a href="#" class="tit"><span>아이스크림 주세여</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
+<!-- 			<div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">유머</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span>아이스크림 주세여</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
 
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">반려동물</a>
-                </span>
-                <a href="#" class="tit"><span> 블 라블라</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">직장인 취미생활</a>
-                </span>
-                <a href="#" class="tit"><span> 탁구짱</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">스포츠</a>
-                </span>
-                <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">코로나 바이러스</a>
-                </span>
-                <a href="#" class="tit"><span> 이것도 그닥..</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">직접홍보</a>
-                </span>
-                <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">반려동물</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">직장인 취미생활</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 탁구짱</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">스포츠</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">코로나 바이러스</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 이것도 그닥..</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">직접홍보</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
 
           </div> 
         </div>

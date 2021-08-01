@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -350,6 +351,12 @@ public class BoardDaoImpl implements BoardDao {
 		public List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo) {
 			List<MainCategoryDataVO> mainBoardCategoryList = sqlSession.selectList("board.mainCategoryData", boardCategoryNo);
 			return mainBoardCategoryList;
+		}
+
+		@Override
+		public List<BoardCategoryListByLikeCountVO> getBoardCategoryListByLikeCount() {
+			List<BoardCategoryListByLikeCountVO> boardCategoryListByLikeCount = sqlSession.selectList("board.BoardCategoryListByLikeCount");
+			return boardCategoryListByLikeCount;
 		}
 
 
