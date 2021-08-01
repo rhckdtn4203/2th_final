@@ -30,8 +30,12 @@
 	        color: #eee8aa;
         }
 
-        .font-size-15 {
-	        font-size: 1.5rem;
+        .font-size-1p2 {
+	        font-size: 1.2rem;
+        }
+        
+       .font-size-1p0 {
+	        font-size: 1.0rem;
         }
 
 /*         .w-auto{ */
@@ -52,7 +56,7 @@
                 console.log(memberNo);
                 console.log(jobCategoryNo);
 
-                $("#inputMemberNo").val(memberNo);
+                $(".memberNo").val(memberNo);
                 $("#inputJobCategoryNo").val(jobCategoryNo);
                 
                 
@@ -137,7 +141,7 @@
                 <div id="success-sector" class="col-12 text-center">
                     <form action="approveImageCert" class="form-group row" method="post">
                         <div id="hidden-sector" class="col-12 row">
-                            <input id="inputMemberNo" class="col-6" type="text" name="memberNo" value=""  hidden>
+                            <input id="inputMemberNo" class="col-6 memberNo" type="text" name="memberNo" value="" >
 <!--                             <input id="inputJobCategoryNo"  class="col-6" type="text" name="jobCategoryNo" value="" > -->
                         </div>
                         
@@ -159,9 +163,10 @@
 				<hr>
 			
                 <div id="fail-sector" class="col-12 text-center">
-                    <form action="rejectImageCert" class="form-group row">
+                    <form action="rejectImageCert" class="form-group row" method="post" >
                         <div class="col-12 mt-2">
-                            <input type="text" name="imageCertMessage" class="form-control" placeholder="거절 사유!">
+							<input id="inputMemberNo" class="memberNo col-6" type="text" name="memberNo" value="" >
+                            <input type="text" name="imageCertMessage" class="form-control" placeholder="거절 사유를 입력해주세요">
                         </div>
                         <div class="col-12 mt-3">
                             <button class="btn btn-block btn-warning ">거절</button>
