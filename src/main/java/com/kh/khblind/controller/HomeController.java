@@ -71,11 +71,15 @@ public class HomeController {
 			
 			List<MainCategoryDataVO> mainBoardCategoryList = boardDao.mainBoardCegoryList(boardCategoryNo);
 			
-			String modelName = "mainBoardCategoryList-";
+			String modelName = "mainBoardCategoryList";
 			int modelOrderNo = i;
 			String finalModelName = modelName + modelOrderNo;
-			
+//			System.out.println("이번 모델 이름 = " + finalModelName);
+//			System.out.println("이번 데이터 리스트"  + mainBoardCategoryList);
+
 			model.addAttribute(finalModelName, mainBoardCategoryList);
+//			if(i == 1) {
+//			model.addAttribute(finalModelName, mainBoardCategoryList);}
 		}
 	
 	
