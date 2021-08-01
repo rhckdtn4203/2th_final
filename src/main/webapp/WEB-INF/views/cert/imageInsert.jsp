@@ -44,10 +44,6 @@
         }
     }
 
-    div{
-    border: 1px red dotted;
-    }
-
     #image-title{
     font-size: 2.5em;
     }
@@ -57,19 +53,32 @@
     }
 
     .cert-progress-msg-ing{
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: rgb(255, 166, 0);
     }
 
     .cert-progress-msg-positive{
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: rgb(16, 45, 141);
     }
     
     .cert-progress-msg-error{
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: rgb(180, 45, 50);
     }
+    
+    .cert-progress-msg-error-message{
+    font-size: 1.0em;
+    color: rgb(180, 45, 50);
+    }
+    
+	.font-color-khblind-gold {
+	color: #eee8aa;
+	}
+	
+	.primary-background-color {
+	background-color: #1e3932;
+	}   
 
 </style>
 
@@ -100,8 +109,8 @@ function setImageFromFile(input, expression) {
 
 	<div id="image-cert-zone" class="row">
  		<div class="offset-3 col-6 row">
-			<div class="col-12 image-title-area text-center">
-				<div><p id="image-title" class="test">사원증 인증 페이지</p></div>
+			<div class="col-12 image-title-area text-center primary-background-color">
+				<div><p id="image-title" class="font-color-khblind-gold">사원증 인증 페이지</p></div>
 			</div>
 
   			<div class="offset-2 col-8">
@@ -202,11 +211,15 @@ function setImageFromFile(input, expression) {
 											</div>
 										</div>
 									</form>
-									<span class="cert-progress-msg-error col-12">인증이 거절 되었습니다.</span><br>
-									<span class="cert-progress-msg-error col-12">관리자에게 문의하시거나</span><br>
-									<span class="cert-progress-msg-error col-12">정확한 사진을 보내주세요!</span><br>
+									<div class="mt-3">
+										<span class="cert-progress-msg-error col-12">인증이 거절 되었습니다.</span><br>
+										<span class="cert-progress-msg-error col-12">관리자에게 문의하시거나</span><br>
+										<span class="cert-progress-msg-error col-12">정확한 사진을 보내주세요!</span><br>
+									</div>
 									<c:if test="${imageCertMessage != ''}">
-										사유: ${imageCertMessage}
+										<div class="mt-3">
+											<span class="cert-progress-msg-error-message">사유: ${imageCertMessage}</span>
+										</div>
 									</c:if>
 								</c:if>
 							</div>

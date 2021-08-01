@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.khblind.admin.approveImageCert.entity.SendRejectMessageImageCertVo;
 import com.kh.khblind.company.entity.CompanyDto;
 import com.kh.khblind.member.cert.entity.CertDto;
 import com.kh.khblind.member.cert.entity.ImageCertDto;
@@ -66,7 +67,12 @@ public class CertDaoImpl implements CertDao {
 	@Override
 	public void rejectImageCert(int memberNo, String imageCertMessage) {
 		sqlSession.update("cert.rejectImageCert", memberNo);
-		sqlSession.update("cert.sendRejectMessageImageCert", imageCertMessage);
+		SendRejectMessageImageCertVo sendRejectMessageImageCertVo = 
+				SendRejectMessageImageCertVo.builder()
+				.imageCertMessage(imageCertMessage)
+				.memberNo(memberNo)
+				.build();
+		sqlSession.update("cert.sendRejectMessageImageCert", sendRejectMessageImageCertVo);
 	}
 
 	@Override

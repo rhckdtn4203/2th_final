@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update image_cert set image_cert_progress = 'reject' where member_no = #{memberNo}
 	</update>
 	
-	<update id="sendRejectMessageImageCert" parameterType="int">
+	<update id="sendRejectMessageImageCert" parameterType="SendRejectMessageImageCertVo">
 		update image_cert set image_cert_message = #{imageCertMessage} where member_no = #{memberNo}
 	</update>
 	

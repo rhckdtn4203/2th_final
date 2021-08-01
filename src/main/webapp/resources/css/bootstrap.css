@@ -41,10 +41,6 @@
   box-sizing: border-box;
 }
 
-div{
-	border : 1px red solid; !important;
-}
-
 html {
   font-family: sans-serif;
   line-height: 1.15;

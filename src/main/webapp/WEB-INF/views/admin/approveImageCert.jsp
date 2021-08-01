@@ -13,10 +13,11 @@
     <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
     <!-- 부트와치를 가져온다.-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
-
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
     <style>
 		#image-frame{
-		width : 500px
+		width : 500px;
+		height : 500px;
 		}
 
         .primary-background-color {
@@ -30,8 +31,12 @@
 	        color: #eee8aa;
         }
 
-        .font-size-15 {
-	        font-size: 1.5rem;
+        .font-size-1p2 {
+	        font-size: 1.2rem;
+        }
+        
+       .font-size-1p0 {
+	        font-size: 1.0rem;
         }
 
 /*         .w-auto{ */
@@ -52,7 +57,7 @@
                 console.log(memberNo);
                 console.log(jobCategoryNo);
 
-                $("#inputMemberNo").val(memberNo);
+                $(".memberNo").val(memberNo);
                 $("#inputJobCategoryNo").val(jobCategoryNo);
                 
                 
@@ -103,6 +108,7 @@
     				    }
                 })
                 console.log("끝?!")
+
             });
         });
 
@@ -120,7 +126,7 @@
                 <div id="select-sector" class="col-3 frame form-group">
 <%--                     ${approveImageCertReadyList} --%>
                     <select id="member-list" class="form-control"size="20">
-                        <option value="1">(대기! 회원을 선택)</option>
+                        <option value="0">(대기 회원을 선택)</option>
                         <c:forEach var="imageCertDto" items="${approveImageCertReadyList}">
          
                         	<option value="${imageCertDto.memberNo}" data-jobcategoryno="${imageCertDto.jobCategoryNo}">${imageCertDto.memberNick}(${imageCertDto.memberName})</option>
@@ -128,8 +134,8 @@
                     </select>
                 </div>
 
-                <div id="image-sector" class="col-9">
-                    <img id="image-frame" src="">
+                <div id="image-sector" class="col-9 row">
+                    <img id="image-frame" class="col-12 img-fluid" src="${root}/img/default-id-card.png">
                 </div>
             </div>
 
@@ -137,7 +143,7 @@
                 <div id="success-sector" class="col-12 text-center">
                     <form action="approveImageCert" class="form-group row" method="post">
                         <div id="hidden-sector" class="col-12 row">
-                            <input id="inputMemberNo" class="col-6" type="text" name="memberNo" value=""  hidden>
+                            <input id="inputMemberNo" class="col-6 memberNo" type="text" name="memberNo" value=""  hidden>
 <!--                             <input id="inputJobCategoryNo"  class="col-6" type="text" name="jobCategoryNo" value="" > -->
                         </div>
                         
@@ -159,9 +165,10 @@
 				<hr>
 			
                 <div id="fail-sector" class="col-12 text-center">
-                    <form action="rejectImageCert" class="form-group row">
+                    <form action="rejectImageCert" class="form-group row" method="post" >
                         <div class="col-12 mt-2">
-                            <input type="text" name="imageCertMessage" class="form-control" placeholder="거절 사유!">
+							<input id="inputMemberNo" class="memberNo col-6" type="text" name="memberNo" value=""  hidden>
+                            <input type="text" name="imageCertMessage" class="form-control" placeholder="거절 사유를 입력해주세요">
                         </div>
                         <div class="col-12 mt-3">
                             <button class="btn btn-block btn-warning ">거절</button>
