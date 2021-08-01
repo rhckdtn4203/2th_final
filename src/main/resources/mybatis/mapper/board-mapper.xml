@@ -126,6 +126,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      <select id="getCountInfo" parameterType="int" resultType="BoardCountDto">
        select * from board_count_view where board_no = #{boardNo}
      </select>
+     
+     <select id="BoardCategoryListByLikeCount" parameterType="int" resultType="BoardCategoryListByLikeCountVO">
+		select * from (
+			select rownum rn, TMP.* from(
+				select * from board_category_board_view where not like_count is null order by like_count desc	
+	 				) 	TMP
+	 		 ) where rn between 1 and 7	
+     </select>
+     
                 
 </mapper>
 
