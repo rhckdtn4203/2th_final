@@ -296,7 +296,7 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public void addViewCount(int boardNo) {
 			sqlSession.update("board.addCount",boardNo);
-			System.out.println("조회수 증가");
+			System.out.println("조회수 증가.");
 		}
 
 		@Override
