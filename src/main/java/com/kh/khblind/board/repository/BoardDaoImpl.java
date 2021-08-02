@@ -315,6 +315,7 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", startEndVoForAjax);
+			System.out.println("/&&&&&&7"  + companyBoardList);			
 			return companyBoardList;
 		}
 
