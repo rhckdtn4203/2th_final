@@ -257,11 +257,13 @@ public class BoardController {
 	
 	//데이터가 있으면 boardDto를 반납하고, 데이터가 없으면 null을 반납
 	@GetMapping("/boardDetail")
-	public String boardDetail(int boardNo, Model model,HttpSession session) throws IOException {
-		
+	public String boardDetail(int boardNo, Model model, HttpSession session) throws IOException {
+		System.out.println("시작");
 		//0. 세션에 있는 dto를 일단 가져온다.
 		MemberDto memberDto =(MemberDto)session.getAttribute("dtoss");
 		int memberNo;
+		System.out.println("[딭] memberDto" + memberDto);
+		
 		
 		if(memberDto !=null){
 			memberNo = memberDto.getMemberNo();
@@ -286,11 +288,12 @@ public class BoardController {
 	
 		
 		
-		//1-2. 필요한 것을 가져온다.
+		//1-2. 기본적으로 필요한 것을 가져온다.
 		BoardMemberVO boardMemberVO = new BoardMemberVO();
 		
 		if(boardDao.find(boardNo)!=null) {
 			boardMemberVO = boardDao.find(boardNo);
+			System.out.println("[딭] boardMemberVO = "  + boardMemberVO);
 		}
 		else {
 			boardMemberVO.setMemberNick("탈퇴한 회원");
@@ -299,19 +302,19 @@ public class BoardController {
 		//1-3-1. 내 글이 아니면 *****처리를 해준다. 
 		int writerMemberNo = boardDto.getMemberNo();
 		
-		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
-			String memberNick = boardMemberVO.getMemberNick();
-			char firstChar = memberNick.charAt(0);
-			int nickLength = memberNick.length();
-			
-			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
-			stringBuilderForBlindedNick.append(firstChar);
-			for(int i = 0; i <nickLength-1; i++) {
-				stringBuilderForBlindedNick.append("*");
-				}
-			String blindedNick = stringBuilderForBlindedNick.toString();
-			boardMemberVO.setMemberNick(blindedNick);
-		}
+//		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
+//			String memberNick = boardMemberVO.getMemberNick();
+//			char firstChar = memberNick.charAt(0);
+//			int nickLength = memberNick.length();
+//			
+//			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
+//			stringBuilderForBlindedNick.append(firstChar);
+//			for(int i = 0; i <nickLength-1; i++) {
+//				stringBuilderForBlindedNick.append("*");
+//				}
+//			String blindedNick = stringBuilderForBlindedNick.toString();
+//			boardMemberVO.setMemberNick(blindedNick);
+//		}
 		
 		model.addAttribute("boardMemberVO", boardMemberVO);
 		//2. 분류이름을 가져오는 과정
@@ -324,7 +327,7 @@ public class BoardController {
 		else {
 			checkBoardTypeDto = new CheckBoardTypeDto();
 		}
-		
+		System.out.println("[딭] checkBoardTypeDto" + checkBoardTypeDto);
 		
 		//2-2. 껍데기를 만든다.
 		String boardType = "";
@@ -340,6 +343,7 @@ public class BoardController {
 			
 			//특별하게 토픽인 경우 세부 분류 이름도 보내야한다.
 			String boardCaregoryName = boardDao.getBoardCategoryName(checkBoardTypeDto.getBoardCategoryNo());
+			System.out.println("[딭] boardCaregoryName = " + boardCaregoryName);
 			model.addAttribute("boardCaregoryName", boardCaregoryName);
 		}
 		else if(checkBoardTypeDto.getJobCategoryNo() !=null) {
@@ -359,7 +363,8 @@ public class BoardController {
 //		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
 //			return "글 분류 에러 페이지!";
 //		}
-		
+		System.out.println("[딭] boardType = " + boardType);
+		System.out.println("[딭] typeName = " + typeName);
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("typeName", typeName);
 		
@@ -391,14 +396,19 @@ public class BoardController {
 			companyName = "-";
 			jobCategoryName = "-";
 		}
-			
+		
+		System.out.println("[딭] companyName = " + companyName);
 		model.addAttribute("companyName", companyName);
+		
+		System.out.println("[딭] jobCategoryName = " + jobCategoryName);
 		model.addAttribute("jobCategoryName", jobCategoryName);
 		
 		
 		
 		//4. count정보를 가져와서 model에 담는다.
 		BoardCountDto boardCountDto = boardDao.getBoardCountInfo(boardNo);
+		
+		System.out.println("[딭] boardCountDto = " + boardCountDto);
 		model.addAttribute("boardCountDto", boardCountDto);
 
 		//5. 몇몇 문자를 바꾼다.
@@ -467,45 +477,57 @@ public class BoardController {
 		
 		//8. 투표1
 		//토픽 정보를 가져온다
-		VoteTopicDto voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
+		VoteTopicDto voteTopicDto = new VoteTopicDto(); 
+		if(voteDao.getVoteTopicInfo(boardNo) != null) {
+			voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
+		}
+				
 		
 		//8-1. 이미 투표한건지 알아본다.
-		int voteTopicNo = voteTopicDto.getVoteTopicNo();
+		if(voteDao.getVoteTopicInfo(boardNo) != null) {
+			int voteTopicNo = voteTopicDto.getVoteTopicNo();
 
-		try {
-						
-			VoteResultDto voteResultDto =  VoteResultDto.builder()
-					.voteTopicNo(voteTopicNo)
-					.memberNo(memberNo)
-					.build();
-			boolean didYouVote = voteDao.didYouVote(voteResultDto);
-			
-			System.out.println("투표 여부" + didYouVote);
-			
-			if(didYouVote) {
+			try {
+							
+				VoteResultDto voteResultDto =  VoteResultDto.builder()
+						.voteTopicNo(voteTopicNo)
+						.memberNo(memberNo)
+						.build();
+				boolean didYouVote = voteDao.didYouVote(voteResultDto);
 				
-				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
-				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
-				model.addAttribute("didYouVote", "voted");
+				System.out.println("투표 여부" + didYouVote);
+				
+				if(didYouVote) {
+					
+					int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
+					System.out.println("[딭] selectedVoteOptionNo = " +selectedVoteOptionNo);
+					model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
+					System.out.println("[딭] didYouVote = " +didYouVote);
+					model.addAttribute("didYouVote", "voted");
 
-			}else {
-				model.addAttribute("didYouVote", "didntVote");
+				}else {
+					System.out.println("[딭] didYouVote = " +didYouVote);
+					model.addAttribute("didYouVote", "didntVote");
 
-			}			
+				}			
+				
+			} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
+				
+					model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
+			}
 			
-		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
-				model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
+			model.addAttribute("VoteTopicInfo", voteTopicDto);
+			System.out.println("[딭] voteTopicDto = " + voteTopicDto);
+
+			//8-2선택지 정보를 가져온다
+			
+			List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
+			
+			System.out.println("[딭] voteOptionInfoVoList = " + voteOptionInfoVoList);		
+			model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
+			
 		}
 		
-		model.addAttribute("VoteTopicInfo", voteTopicDto);
-		System.out.println("voteTopicDto = " + voteTopicDto);
-
-		//8-2선택지 정보를 가져온다
-		
-		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
-		
-		System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
-		model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
 		
 		
 		//9. 댓글
@@ -534,16 +556,18 @@ public class BoardController {
 			System.out.println("이번 댓글 " + commentsList.get(i));
 	    }
 		
-		
+		System.out.println("[딭]boardDto" + boardDto);
 		model.addAttribute("boardDto", boardDto);
+		System.out.println("[딭]boardMemberVO" + boardMemberVO);
 		model.addAttribute("boardMemberVO", boardMemberVO);
 		
+		System.out.println("[딭]commentsList" + commentsList);
 		model.addAttribute("commentsList", commentsList);
 		
 		
 		//마무리 - 모든 것이 완료되면 forward하기전에 조회를 1 올려준다.
 		boardDao.addViewCount(boardNo);
-		
+		System.out.println("끝");
 		return "/board/boardDetail";
 	}
 		@PostMapping("commentInsert")

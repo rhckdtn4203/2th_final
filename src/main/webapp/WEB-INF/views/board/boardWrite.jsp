@@ -347,7 +347,7 @@ textarea {
                     </div>   
 				
 				<div id="submit-zone" class="row text-center">
-					<div class="col-8"></div>
+					<div class="col-6"></div>
 					<div class="col-2">
 						<input id="reset-btn" class="btn btn-primary" type="reset" value="초기화">
 					</div>

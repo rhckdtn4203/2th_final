@@ -37,7 +37,6 @@
 		$(function(){
 			var selectedVoteName = $("#option-" + ${selectedVoteOptionNo} + "-name");
 			selectedVoteName.css("color", "red");
-// 			selectedVoteName.css("font-size", "1.5em");
 		});
 	</script>
 
@@ -518,7 +517,8 @@ $(function(){
 
 <div class="container-fluid bbxb">
 	<div id="board-detail-zone" class="offset-1 col-10 row mt-4 bbxb">
-		<div id="left-area" class="col-8 bbxb">
+<!-- 		<div id="left-area" class="col-8 bbxb"> -->
+		<div id="left-area" class="offset-2 col-8 bbxb">
 			<div id="board-sector" class="row bbxb">
 				
 				<!--top 시작-->
@@ -618,8 +618,7 @@ $(function(){
 						</div>
 	                 <!-- 이미지 반복 끝 -->
 	                </div>
-	                
-					<c:if test="${VoteTopicInfo.voteTopicNo != 0}">
+					<c:if test="${VoteTopicInfo.voteTopicNo= ''}">
 				       <div id="view-vote-sector" class="mt-2 bbxb">
 				            <div id="vote-top">
 				                    <div class="vote-topic-div mt-1 mb-1 row bbxb">
@@ -630,8 +629,8 @@ $(function(){
 				                    	<div class=col-2>
 				                    	<div class="empty-div col-1 bbxb"></div>
 				                    		<div class="text-right bbxb">
-				                    			<button id=realTimeVoteOn class="btn btn-primary bbxb"><i class="fas fa-sync bbxb"></i></button>
-				                    			<button id=realTimeVoteOff class="btn btn-secondary bbxb"><i class="fas fa-ban bbxb" style="color:Tomato"></i></button>
+				                    			<button id="realTimeVoteOn" class="btn btn-primary bbxb"><i class="fas fa-sync bbxb"></i></button>
+				                    			<button id="realTimeVoteOff" class="btn btn-secondary bbxb"><i class="fas fa-ban bbxb" style="color:Tomato"></i></button>
 				                    		</div>
 				                        </div>
 				                    </div>
@@ -761,9 +760,7 @@ $(function(){
 			                            </div>
 <!-- 			                            <div class="col-2"></div> -->
 			                            <div class="col-2 text-right bbxb">
-											<a>
-		                            			<small><i id="edit-${commentsVO.commentsNo}" class="far fa-edit bbxb"></i></small>
-											</a>
+	                            			<small><i id="edit-${commentsVO.commentsNo}" class="far fa-edit bbxb"></i></small>
 			                            </div>
 			                            <div class="col-2 text-right bbxb">
 				                            <form action="commentsDelete" method="get">
@@ -824,9 +821,9 @@ $(function(){
    				</div>
    			</div>
    		</div>
-		<div id="ad-area" class="col-4 aaaa bbxb">
-		         	광고가 나온다
-		</div>
+<!-- 		<div id="ad-area" class="col-4 aaaa bbxb"> -->
+<!-- 		         	광고가 나온다 -->
+<!-- 		</div> -->
    	</div>
 </div>
 
