@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="bookmark">
 	<insert id="insert">
-	insert into bookmark values(#{memberNo}, #{boardNo})
+	insert into bookmark values(#{boardNo},#{memberNo})
 	</insert>
 	<delete id="delete">
 	delete from bookmark where board_no = #{boardNo} and member_no=#{memberNo}
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" resultType="BookmarkDto">
 	select * from bookmark where board_no=#{boardNo} and member_no=#{memberNo}
 	</select>
-	<select id="mybookmark" resultType="BookmarkDto">
-	select * from bookmark_view where member_no = #{memberNo}
+	<select id="mybookmark" resultType="BookmarkVO">
+	select * from bookmark_view where member_no = #{memberNo} order by board_date
 	</select>
 </mapper>
