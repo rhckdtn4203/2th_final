@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	</select>
   	
   	 <select id="getApproveImageCertList" resultType="ApproveImageCertDto">
-  		select * from approve_image_cert_view
+  		select * from approve_image_cert_view where image_cert_progress = 'ing'
   	</select>
   	
   	<select id="getImageCertInfo"  parameterType="int" resultType="String">
