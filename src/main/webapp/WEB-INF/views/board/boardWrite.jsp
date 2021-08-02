@@ -9,31 +9,17 @@
 <head>
 
 <!-- 부트스트랩을 가져온다 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"  integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"  crossorigin="anonymous">
 <!-- 제이쿼리를 가져온다 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!-- UI제이쿼리를  가져온다 -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" 	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 <!-- Popper를 가져온다 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-	integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- 폰트어썸 아이콘을 가져온다-->
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-	crossorigin="anonymous" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" 	crossorigin="anonymous" />
 <!-- 부트와치를 가져온다.-->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css"
-	integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" 	integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK"  crossorigin="anonymous">
 
 <!--로드 후 관련 js-->
 <script>
@@ -190,17 +176,18 @@
 <script>
 	$(function(){
 		$("#submit-btn").click(function(e){
-			e.preventDefault;
+// 			e.preventDefault;
 			
 			var typeNo = $("#type-no").attr("value");
 			if(typeNo==""){alert("주제를 선택해주세요"); return false;}
 			
 			var boardTitle = $("#board-title").val();
 			if(boardTitle==""){alert("제목을 입력해주세요"); return false;}
+			if(boardTitle.length > 30){alert("제목은 30글자 입력 가능합니다.")};
 			
 			var content = $("#board-content-textarea").val();
-			console.log("content " + content);
-// 			if(content==""){alert("내용을 입력해주세요"); return false;}
+			if(content==""){alert("내용을 입력해주세요"); return false;}
+			if(content.length > 1000){alert("글 내용은 최대 1000글자 입력 가능합니다."); return false;}
 			
 			var voteTitle = $("#vote-topic").val();
 			var voteOptionCount=0;
@@ -217,10 +204,24 @@
 			}
 			console.log("최종 개수  = " + voteOptionCount)
 			
-			return false;
+			if(voteTitle.length >0 &&voteOptionCount<2){alert("투표 선택지는 2개 이상 적어주세요"); return false;}
+			
+			alert("글업로드 성공.");
+		})
+	})
+</script>
+
+<!-- 글자수 관련 -->
+<script>
+	$(function(){
+		$("#board-content-textarea").on("keyup", function(){
+			//카운터 예정...
+			
 		})
 		
+		
 	})
+
 </script>
 
 <style>

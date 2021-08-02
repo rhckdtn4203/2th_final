@@ -6,19 +6,18 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-
-        <!-- 부트스트랩을 가져온다 -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <!-- 제이쿼리를 가져온다 -->
+<!--         부트스트랩을 가져온다 -->
+<!--         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
+<!--         제이쿼리를 가져온다 -->
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <!-- UI제이쿼리를  가져온다 -->
+<!--         UI제이쿼리를  가져온다 -->
         <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-        <!-- Popper를 가져온다 -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- 폰트어썸 아이콘을 가져온다-->
+<!--         Popper를 가져온다 -->
+<!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!--         폰트어썸 아이콘을 가져온다 -->
          <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-        <!-- 부트와치를 가져온다.-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<!--         부트와치를 가져온다. -->
+<!--         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous"> -->
 <script>
  $(function(){ 
  $(".deleteLike").click(function(){ 
@@ -80,21 +79,19 @@
 						//console.log(arguments);
 					};
 					window.socket.onmessage = function(message){
-						
+						console.log("누군가 투표함");
 						var messageObject = JSON.parse(message.data);//String --> JSON Object
 						
 						$.ajax({//2-1. onmessage 중 다른 사람 투표 반영 당하기!
 							url: "${pagecontext.request.contextpath}/khblind/board/getOthersVotingInfo",
-							data:{
-								voteOptionNo: messageObject.voteOptionNo
-								},
-								type: "GET",
+							data:{voteOptionNo: messageObject.voteOptionNo},
+							type: "GET",
 								success:function(resp){
-								
+
 // 										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
 // 										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
 										var target = $("#option-"+ resp.voteOptionNo +"-gauge");
-										
+										console.log(target);
 										target.removeClass("vote-progress-bg-2");
 										target.addClass("vote-progress-bg-4", {duration:500}).removeClass("vote-progress-bg-4", {duration:500});
 										
@@ -141,7 +138,8 @@
 						$(".realtime-vote-btn").attr("disabled", "disabled");
 						if(!window.socket) return;
 
-						var topicNo = $("#topic-id").data("topic-no");
+						var topicNo = ${VoteTopicInfo.voteTopicNo};
+// 						var topicNo = $("#topic-id").data("topic-no");
 						var optionNo = $(this).data("option-no");
 						//var memberNo는 세션에서
 						
@@ -195,8 +193,10 @@
 					
 					//소켓 끊기
 					if(!window.socket) return;
-					var topicNo = $("#topic-id").data("topic-no");
+					console.log("소켓 닫기");
+					var topicNo = ${VoteTopicInfo.voteTopicNo};
 					var message = {receivePayloadType:3, voteTopicNo: topicNo};
+					console.log(message + "메시지")
 					var json = JSON.stringify(message);
 					window.socket.send(json);
 				})
@@ -212,7 +212,8 @@
 					console.log("실시간 중");
 					return;} //소켓 연결동안 실행되지 않을...
 				$(".active-btn").attr("disabled", "disabled");
-				var topicNo = $("#topic-id").data("topic-no");
+				var topicNo = ${VoteTopicInfo.voteTopicNo};
+// 				var topicNo = $("#topic-id").data("topic-no");
 				var optionNo = $(this).data("option-no");
 				//memberNo는 세션에서
 				
@@ -251,8 +252,70 @@
 		});
 	
 	</script>
-
-
+	
+	<!-- 이미지 불러오기 -->
+	<script>
+	$(function(){
+		//이미지 불러오기 테스트
+		$("#image-load").click(function(){
+			$(this).hide();
+			console.log("이미지 로딩중! 버튼 삭제")
+			var boardNo = ${boardDto.boardNo};
+			$.ajax({
+					url: "${pagecontext.request.contextpath}/khblind/board/getImageInfo",
+					data:{
+						boardNo: boardNo
+					},
+					type: "GET",
+					success:function(resp){
+						console.log("성공");
+						console.log(resp);
+						
+						for(var i=0; i < resp.length; i++){
+							var fileUrlInLocal = resp[i].boardImageUrl;
+							
+							console.log(typeof(fileUrlInLocal));
+							console.log("full경로는 " + fileUrlInLocal);
+							console.log("길이는 "+fileUrlInLocal.length)
+							
+							var lengthFull = fileUrlInLocal.length;
+							var lengthExceptFileName=lengthFull-14;
+							//파일이름 길이는 총 14개
+							//fileUrlInLocal.length() 
+							var fileName =fileUrlInLocal.substr(lengthExceptFileName, 14);
+							var url = "${pagecontext.request.contextpath}/khblind/board/getImageFlie?boardNo="+ boardNo +"&" + "fileName="+fileName;
+							
+							console.log(url);
+							
+							var template = $("#image-template").html();
+							template = template.replace("{{url}}", url);
+							
+							$("#image-list").append(template);
+						}
+					}
+				
+			})
+			
+		})
+	})
+	</script>
+	
+	<script>
+	//대댓글 입력창 클릭시 대댓글 입력창 추가 스크립트
+	$(function(){
+		$(".nestedComment-btn").click(function(){
+	   var originCmtNo= $(this).attr("id");
+	   console.log(originCmtNo);
+		
+	   	$(".nestedComment-area").hide();
+		$("#comment-id-"+originCmtNo).show();
+	   
+	// 				$("#comment-id-"+originCmtNo).submit(function(){
+	// 				   $("#comment-id-"+originCmtNo).hide();
+	// 				});
+	   });
+	});
+	</script>
  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <script>
 $(function(){
@@ -266,9 +329,7 @@ $(function(){
 </script>
 
         <style>
-            div{
-             border: 1px white none;
-            }
+
         
             #board-content-viewer{
             word-wrap: break-word;
@@ -278,8 +339,18 @@ $(function(){
             margin-block-end: 0.2em;
             }
 
-            #insert-comments-textarea {
-            min-height: 6rem;
+            #insert-comments1-textarea {
+            min-height: 4.5rem;
+            overflow-y: visible;
+            resize: none;
+            border-radius: 1em;
+            border-bottom-right-radius: 0;
+            padding-top: 0.75em;
+            padding-left: 1.5em;
+            }
+            
+          	#insert-comments2-textarea {
+            min-height: 4.5rem;
             overflow-y: visible;
             resize: none;
             border-radius: 1em;
@@ -289,7 +360,7 @@ $(function(){
             }
 
             .comments-content{
-            min-height: 6em;
+            min-height: 4.5em;
             }
         
             .preview-frame{
@@ -304,6 +375,7 @@ $(function(){
 
             .comments-2-div{
             background-color: #b6d8cf;
+			border-bottom: 1px #1e3932 solid;
             padding-left: 0.5em;
             }
 
@@ -331,10 +403,6 @@ $(function(){
             .primary-background-color{
             background-color: #1e3932;
             }    
-
-            .image-frame{
-            background-color: sandybrown;
-            }
             
             .primary-hr{
             border-color:#1e3932;;
@@ -343,6 +411,21 @@ $(function(){
             .semi-hr{
             border-style: dotted;
             }
+            
+            .comments2{
+			background-color: silver;
+			}
+			
+			.image-frame{ /*반응형 필수*/
+			margin-left : auto; 
+			margin-right : auto;
+			width : 400px;
+			}
+			
+			.msg-3{
+			font-size: 0.8em;
+			color: blue;
+			}
             
             /*투표 꺼*/
 		    .vote-progress-bg-1{background-color: Tomato; }
@@ -359,6 +442,8 @@ $(function(){
 
         <!--반응형 웹 테스트-->
         <style>
+        
+        
             @media screen and (min-width:1200px){
                 .test{
                     color: royalblue;
@@ -417,14 +502,12 @@ $(function(){
 });
    </script>
 
-
 <div class="container-fluid">
 	<div id="board-detail-zone" class="offset-2 col-8 row mt-4">
 		<div id="left-area" class="col-xl-8 col-lg-9 col-md-12">
 			<div id="board-sector" class="row">
 				
 				<!--top 시작-->
-				
 				<div class="top col-12">
                         <div id = "board-type" class="col-12 mt-2">
                         <!-- 토픽인 경우 -->
@@ -449,40 +532,50 @@ $(function(){
                                 <small><i class="fas fa-mouse">&nbsp; ${boardDto.boardCount}</i></small>
                             </div>
                             <div class="col-xl-2 col-sm-3 col-3">
-                            	<!-- 좋아요를 안 한 상태 -->
-								<c:if test="${isLiked == 1}">
-									<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
-									<small><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
-								</c:if>
-								
-								<!-- 좋아요를 한 상태 -->
-								<c:if test="${isLiked == 2}">
-									<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}">
-									<small><i class="fas fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
-								</c:if>
+                            
+                            	<!-- 로그인을 안 한 상태 -->
 								<c:if test="${empty dtoss}">
 									<div class="notLogin">
-										<i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i>
+										<small><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small>
 									</div>
+								</c:if>
+								
+								<!-- 로그인은 한 상태 -->
+								<c:if test="${not empty dtoss}">
+	                            	<!-- 좋아요를 안 한 상태 -->
+									<c:if test="${isLiked == 1}">
+										<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
+									
+									<!-- 좋아요를 한 상태 -->
+									<c:if test="${isLiked == 2}">
+										<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="fas fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
 								</c:if>
                                 
                             </div>
                             <div class="col-xl-4 col-sm-0 col-xs-0"></div>
                             <div class="col-xl-2 col-sm-3 col-3">
                             
-                            	<!-- 비어있는 책갈피를 누르면  bookmarkInsert를 실행하게하기 -->
-								<c:if test="${isMarked == 1}">
-									<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x"></i></small></a>
-								</c:if>
-								
-								<!-- 차있는 책갈피를 누르면 bookmarkDelete를 실행하게 하기 -->
-								<c:if test="${isMarked == 2}">
-									<a href="${root}/board/bookmarkDelete?boardNo=${boardDto.boardNo}"><small><i class="fas fa-bookmark fa-1x"></i></small></a>
-								</c:if>
+                            <!-- 로그인을 안 한 상태 -->
 								<c:if test="${empty dtoss}">
 									<div class="notLogin">
-										<i class="fas fa-bookmark fa-1x"></i>
+										<i class="far fa-bookmark fa-1x"></i>
 									</div>
+								</c:if>
+								
+								<c:if test="${not empty dtoss}">
+	                            	<!-- 비어있는 책갈피를 누르면  bookmarkInsert를 실행하게하기 -->
+									<c:if test="${isMarked == 1}">
+										<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x"></i></small></a>
+									</c:if>
+								
+									<!-- 차있는 책갈피를 누르면 bookmarkDelete를 실행하게 하기 -->
+									<c:if test="${isMarked == 2}">
+										<a href="${root}/board/bookmarkDelete?boardNo=${boardDto.boardNo}"><small><i class="fas fa-bookmark fa-1x"></i></small></a>
+									</c:if>
 								</c:if>
                             </div>
                         </div>
@@ -490,7 +583,6 @@ $(function(){
 						<div class="col-12 mt-5">
                         <div id = "board-content" class="col-12 mt-5">
                             <p id = "board-content-viewer" class="col-12">
-    							해시에 a태그, 꺽쇠 정리
     							${boardDto.boardContent}
                             </p>
                         </div>
@@ -502,15 +594,18 @@ $(function(){
 				
 				<!-- middle 시작 -->
 				<div id="middle" class="col-12">
-	                 <div id= "image-area" class="row mt-2">
+	                 <div id= "image-area" class="row text-center mt-2">
 	                 <!-- 이미지 반복시작 -->
-	                    <div class="image-frame offset-1 col-10 mt-3">123
-	                        <img class="image-file col-12" src=""/>
-	                    </div>
+	                 <button id="image-load" class="btn btn-primary">이미지 불러오기</button>
+						<div>
+		                    <div id="image-list" class="image-frame col-12 mt-3 row text-center">
+		                         
+		                    </div>
+						</div>
 	                 <!-- 이미지 반복 끝 -->
 	                </div>
-					
-					<c:if test="${VoteTopicInfo ne null}">
+	                
+					<c:if test="${VoteTopicInfo.voteTopicNo != 0}">
 				       <div id="view-vote-sector" class="mt-2">
 				            <div id="vote-top">
 				                    <div class="vote-topic-div mt-1 mb-1 row">
@@ -519,8 +614,8 @@ $(function(){
 					                        <div id="topic-name" class="col-12" data-topic-no="${VoteTopicInfo.voteTopicNo}"><i class="fas fa-poll-h fa-2x"></i>&nbsp;&nbsp;${VoteTopicInfo.voteTopicTitle}</div>
 				                    	</div>
 				                    	<div class=col-2>
-				                    	<div class="empty-div col-1"></div>
-				                    		<div>
+				                    	<div class="empty-div col-1 "></div>
+				                    		<div class="text-right">
 				                    			<button id=realTimeVoteOn class="btn btn-primary"><i class="fas fa-sync"></i></button>
 				                    			<button id=realTimeVoteOff class="btn btn-secondary"><i class="fas fa-ban" style="color:Tomato"></i></button>
 				                    		</div>
@@ -554,39 +649,62 @@ $(function(){
 													</div>
 												</div>
 												<div class="col-2">
-													<c:if test="${didYouVote eq 'voted'}">
-														<button class="vote-btn dummy-btn btn btn-secondary" disabled><small><i class="fas fa-vote-yea"></i></small></button>
-													</c:if>
-													<c:if test="${didYouVote eq 'didntVote'}">
-														<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-success">투표</button>
-													</c:if>
+<%-- 														<c:if test =${isLogin eq 'true'}> --%>
+															<c:if test="${didYouVote eq 'voted'}">
+																<button class="vote-btn dummy-btn btn btn-secondary btn-light" disabled><small><i class="fas fa-vote-yea" style="color:gray"></i></small></button>
+															</c:if>
+															<c:if test="${didYouVote eq 'didntVote'}">
+																<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-disable"><small><i class="fas fa-vote-yea"></i></small></button>
+															</c:if>
+<%-- 														</c:if> --%>
+														<c:if test="${isLogin eq 'false'}">
+															<button data-option-no="${VoteOptionInfo.voteOptionNo}" class="vote-btn active-btn btn btn-disable"><small><i class="fas fa-vote-yea"></i></small></button>
+														</c:if>
 												</div>
 											</div>
 										</c:forEach>
-										<c:if test="${didYouVote eq 'notLogin'}">
-												<p>투표하시려면 로그인해주세요</p>				
+										<c:if test="${isLogin eq 'false'}">
+												<div class="m-5 text-center"><span class="msg-3">투표하시려면 로그인해주세요.</span></div>
 										</c:if>
 									</div>
 								</div>
 							</div>
 						</c:if>
-						 
+
 						<div id="option-area" class="row mt-2"> 
 							<div id="like" class="col-2">
-								<a href="좋아요"><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></a>
+								<c:if test="${not empty dtoss}">
+	                            	<!-- 좋아요를 안 한 상태 -->
+									<c:if test="${isLiked == 1}">
+										<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="far fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
+									
+									<!-- 좋아요를 한 상태 -->
+									<c:if test="${isLiked == 2}">
+										<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}">
+										<small><i class="fas fa-thumbs-up fa-1x">&nbsp;${boardCountDto.likeCount}</i></small></a>
+									</c:if>
+								</c:if>
 							</div>
 						
 	    					<div id="comment" class="col-2">
-	      						<a href="댓글"><i class="far fa-comment-dots fa-1x">&nbsp;${boardCountDto.commentsCount}</i></a>
+	      						<i class="far fa-comment-dots fa-1x">&nbsp;${boardCountDto.commentsCount}</i>
 	   						</div>
-	   						<div class="empty" class="col-8"></div>
-						</div>              
+	   						<div class="col-4"></div>
+	   						<div class="col-2">
+	   							<a href="${root}/board/boardEdit?boardNo=${boardDto.boardNo}">수정</a>
+	   						</div>	
+	   						<div class="col-2">
+	   							<a href="${root}/board/boardDelete?boardNo=${boardDto.boardNo}">삭제</a> 
+	   						</div>
+						</div>
 				</div>
 				<!-- middle 끝 -->
 				
 				<!-- bottom 시작 -->
-      			<div id="botton">
-					<div id="comments-area" class="row">
+      			<div id="botton" class="row">
+					<div id="comments-area" class="row col-12">
                 
 	                <div id="comments-sign" class="col-12 row">
 	                    <span class="font-weight-bold col-2">댓글</span><span class="font-weight-bold col-">44</span>
@@ -597,203 +715,114 @@ $(function(){
 	                <div id="insert-comments" class="col-12">
 	                    <form action="commentInsert" method="post">
 							<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
-	                        <textarea class="col-12" id="insert-comments-textarea" class="form-control form-control-md" name="commentsContent" placeholder="댓글을 입력해주세요"></textarea>
+	                        <textarea class="col-12" id="insert-comments1-textarea" class="form-control form-control-md" name="commentsContent" placeholder="댓글을 입력해주세요"></textarea>
 	                        <div class="text-right">
-	                        	<input class="btn btn-secondary" type=submit" value="댓글달기">
+	                        	<button class="btn btn-secondary btn-sm" type="submit">댓글달기</button>
 	                        </div>
 	                    </form>
 	                </div>
-
+					
 	                <div id="comments-list" class="col-12 mt-4">
-							<c:forEach var="commentsVO" items="${commentsList}">
-								<c:if test="${empty commentsVO.commentsSuperNo}">
-			                    <div id="comments+numbering" class="comments-1-div col-12 pb-1">
+  						 <c:forEach var="commentsVO" items="${commentsList}">
+							<c:if test="${commentsVO.commentsSuperNo == 0}">
+			                    <div id="comments-${commentsVO.commentsNo}" class="comments-1-div col-12 pb-1">
 			                        <div class="top col-12 pt-2">
-			                            <small><b>회사이름은 엄청~~~길수도 있다</b></small>
+			                            <small><b>${commentsVO.companyName}</b></small>
 			                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
-			                            <small>아이디는숨***s**</small>
+			                            <small>${commentsVO.memberNick}</small>
 			                        </div>
 			                        <div class="middle col-12">
 			                            <p class="comments-content p-2">
-			                                {{내용}}
+			                                ${commentsVO.commentsContent}
+    				                            <c:if test="${commentsVO.ownComments == 1}">
+    				                            <!-- 여기 -->
+    				                            <b>내 댓글입니다??!?!??</b>
+				                                </c:if>
+              				                    <c:if test="${commentsVO.ownComments == 0}">
+              				                    <b>남의 댓글입니다!!</b>
+				                                </c:if>
 			                            </p>
 			                        </div>
 			                        <div class="bottom col-12 row mb-3">
-			                            <div class="col-2">
-			                                <small><i class="far fa-clock">&nbsp;1시간</i></small>
+			                            <div class="col-3">
+			                                <small><i class="far fa-clock">&nbsp;망할</i></small>
 			                            </div>
-			                            <div class="col-2">
-			                                <small><a href="좋아요"><i class="far fa-thumbs-up fa-1x">&nbsp;4444</i></a></small>
+<!-- 			                            <div class="col-2"></div> -->
+			                            <div class="col-2 text-right">
+											<a>
+		                            			<small><i id="edit-${commentsVO.commentsNo}" class="far fa-edit"></i></small>
+											</a>
 			                            </div>
-			                            <div class="col-5"></div>
-			                            <div class="col-3 text-right">
-			                                <small><a href="대댓글"><i class="far fa-comment-dots fa-1x">&nbsp;대댓글달기</i></a></small>
+			                            <div class="col-2 text-right">
+				                            <form action="commentsDelete" method="get">
+											   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
+											   <input type="hidden" name="commentsNo" value="${commentsVO.commentsNo}">
+											   <input type="submit" value="삭제">
+											</form>
+			                            </div>
+			                            <div class="col-5 text-right">
+										<button id="write-comments2-to-${commentsVO.commentsNo}">대댓글</button>
+<%-- 			                                <small><i id="write-comments2-to-${commentsVO.commentsNo}" class="far fa-comment-dots fa-1x nestedComment-btn">&nbsp;</i></small> --%>
 			                            </div>
 			                        </div> 
 			                    </div>
+			                    
+			            	<!-- 대댓글 입력 -->
+			                    <div class="nestedComment-area mt-2 mb-4" id="comment-id-${commentsVO.commentsNo}">
+			                            <form action="nestedCommentInsert" method="post">
+			                            	   <input type="hidden" name="superNo" value="${commentsVO.commentsNo}">
+											   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
+											   <input type="hidden" name="commentsGroupNo" value="${commentsVO.commentsNo}">
+											   <textarea id="insert-comments2-textarea" name="commentsContent" class="form-control form-control-md"></textarea>
+				   								<div class="text-right">
+	                        						<button class="btn btn-secondary btn-sm" type="submit">댓글달기</button>
+	                        					</div>
+			                            </form>
+			                    </div>
 								</c:if>
-	                       </c:forEach>
-	                    <div id="comments+numbering" class="comments-1-div col-12 pb-1">
-	                        <div class="top col-12 pt-2">
-	                            <small><b>회사이름은 엄청~~~길수도 있다</b></small>
-	                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
-	                            <small>아이디는숨***s**</small>
-	                        </div>
-	                        <div class="middle col-12">
-	                            <p class="comments-content p-2">
-	                                {{내용}}
-	                            </p>
-	                        </div>
-	                        <div class="bottom col-12 row mb-3">
-	                            <div class="col-2">
-	                                <small><i class="far fa-clock">&nbsp;1시간</i></small>
-	                            </div>
-	                            <div class="col-2">
-	                                <small><a href="좋아요"><i class="far fa-thumbs-up fa-1x">&nbsp;4444</i></a></small>
-	                            </div>
-	                            <div class="col-5"></div>
-	                            <div class="col-3 text-right">
-	                                <small><a href="대댓글"><i class="far fa-comment-dots fa-1x">&nbsp;대댓글달기</i></a></small>
-	                            </div>
-	                        </div> 
-	                    </div>
-	
-	                    <div id="comments+numbering" class="comments-1-div col-12 pb-1">
-	                        <div class="top col-12 pt-2">
-	                            <small><b>회사이름은 엄청~~~길수도 있다</b></small>
-	                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
-	                            <small>아이디는숨***s**</small>
-	                        </div>
-	                        <div class="middle col-12">
-	                            <p class="comments-content p-2">
-	                                {{내용}}
-	                            </p>
-	                        </div>
-	                        <div class="bottom col-12 row mb-3">
-	                            <div class="col-2">
-	                                <small><i class="far fa-clock">&nbsp;1시간</i></small>
-	                            </div>
-	                            <div class="col-2">
-	                                <small><a href="좋아요"><i class="far fa-thumbs-up fa-1x">&nbsp;4444</i></a></small>
-	                            </div>
-	                            <div class="col-5"></div>
-	                            <div class="col-3 text-right">
-	                                <small><a href="대댓글"><i class="far fa-comment-dots fa-1x">&nbsp;대댓글달기</i></a></small>
-	                            </div>
-	                        </div> 
-	                    </div>
+								
+								
+								<c:if test="${commentsVO.commentsSuperNo != 0}">
+				                    <div id="comments-${commentsVO.commentsNo}" class="comments-2-div col-12 pb-1">
+				                        <div class="top col-12 pt-2">
+				                            <small><b>${commentsVO.companyName}</b></small>
+				                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+				                            <small>${commentsVO.memberNick}</small>
+				                        </div>
+				                        <div class="middle col-12">
+				                            <p class="comments-content p-2">
+				                                ${commentsVO.commentsContent}
+				                            </p>
+				                        </div>
+				                        <div class="bottom col-12 row mb-3">
+				                            <div class="col-4">
+				                                <small><i class="far fa-clock">&nbsp;망할</i></small>
+				                            </div>
+				                            <div class="col-5"></div>
+				                            <div class="col-3 text-right">
+				                             
+				                            </div>
+				                        </div> 
+				                    </div>
+								</c:if>
+	                       </c:forEach><!-- 댓글 끝 -->
+						</div>
+						
 					</div>
-      			</div>
-			</div>
-
-
-<style>
-div{
-border: 1px red dotted;
-}
-</style>
-
-<div>
-	<div>
-		<p>글번호 : ${boardDto.boardNo}</p>
-	</div>
-	<div>
-		<p>${boardDto.memberNo}</p>
-		<!-- memberNo가 아니라 닉네임 or 아이디를 띄어 줘야 함 --> 
-		<p>${boardMemberVO.memberNick}</p>
-	</div>
-	<div>
-		<p>${boardDto.boardTitle}</p>
-	</div>
-	<div>	
-		<p>${boardDto.boardContent}</p>
-	</div>
-		<p>${boardDto.boardCount}</p>
-		<p>${boardDto.boardDate}</p>
+   				</div>
+   			</div>
+   		</div>
+		<div id="ad-area" class="col-4 aaaa">
+		         	광고가 나온다
+		</div>
+   	</div>
 </div>
-<!-- 글쓰기 탭은 header에 있음 -->          <!-- 현재 글번호 전달하여, 현재글의 수정페이지 이동 -->
-<a href="${root}/board/boardEdit?boardNo=${boardDto.boardNo}">수정</a>
-<a href="${root}/board/boardDelete?boardNo=${boardDto.boardNo}">삭제</a> 
-<a href="#">목록</a>   
 
-<!-- 좋아요를 클릭한상태 -->
-
-<c:if test="${isLiked == 1}">
-<a class="board_unlike_btn" href="${root}/board/boardLikeInsert?boardNo=${boardDto.boardNo}">
-<i class="far fa-thumbs-up fa-3x"></i></a>
-</c:if>
-<c:if test="${isLiked == 2}">
-<a class="deleteLike" href="${root}/board/boardUnLikeInsert?boardNo=${boardDto.boardNo}"><i class="fas fa-thumbs-up fa-3x"></i></a>
-</c:if>
-<c:if test="${empty dtoss}">
-<div class="notLogin">
-<i class="far fa-thumbs-up fa-3x"></i>
-</div>
-</c:if>
-
-<!-- <form class="boardLikeDeleteForm" action="boardLike" -->
-
-
-<!-- <form class="boardLikeInsertForm" action="boardLikeInsert"> -->
-<!-- <input type="hidden" name ="board_no"> -->
-<!-- </form>  -->
-
-
-<!-- 비어있는 하트를 누르면  bookmarkInsert를 실행하게하기 -->
-<c:if test="${isMarked == 1}">
-<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><i class="far fa-heart"></i></a>
-</c:if>
-
-<c:if test="${isMarked == 2}">
-<!-- 차있는 하트를 누르면 bookmarkDelete를 실행하게 하기 -->
-<a href="${root}/board/bookmarkDelete?boardNo=${boardDto.boardNo}"><i class="fas fa-heart"></i></a>
-</c:if>
-<c:if test="${empty dtoss}">
-<div class="notLogin">
-<i class="far fa-heart"></i>
-</div>
-</c:if>
-
-
-<!-- 댓글영역 -->
-
-<!-- 댓글 전체영역을 감싸는  div-->
-<div>
-<!-- 원댓글 작성부분 -->
-<form action="commentInsert" method="post">
-<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
-<textarea name="commentsContent"></textarea>
-<input type="submit">
-</form>
-
-<!-- 원댓글 출력부분 -->
-   <c:forEach var="commentsVO" items="${commentsList}">
-<div>
-   <p>${commentsVO.commentsContent}</p>
-   <p>${commentsVO.commentsMemberName}</p>
-   <p>${commentsVO.commentsDate}</p>
-   <button id="${commentsVO.commentsNo}" class= "nestedComment-btn">댓글달기</button>
-</div>
-<!-- 대댓글 입력부분 -->
-<div class="nestedComment-area" id="comment-id-${commentsVO.commentsNo}">
-<form action="nestedCommentInsert">
-   <input type="hidden" name="superNo" value="${commentsVO.commentsNo}">
-   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
-   <textarea name="commentContent"></textarea>
-   <input type="submit">
-</form>
-</div>
-</c:forEach>
-
-</div>
-<!-- 대댓글 출력부분 -->
-   <c:forEach var="commentsVO" items="${commentsList}">
-<div>
-   <p>${commentsVO.commentsContent}</p>
-   <p>${commentsVO.commentsMemberName}</p>`
-   <p>${commentsVO.commentsDate}</p>
-   
-</div>
-</c:forEach>
+<script id="image-template" type="text/template">
+        <div class="offset-1 row">
+            <img class="mx-auto image-frame" src="{{url}}">
+        </div>
+		<hr>
+</script>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

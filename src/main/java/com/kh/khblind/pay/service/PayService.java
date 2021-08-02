@@ -23,4 +23,7 @@ public interface PayService {
 	
 	// 결제 취소 기능
 	PayCancelVO cancel(PayCancelPrepareVO prepareVO) throws URISyntaxException;
+	
+	// 스케줄러 추가
+	void gradeExipre();
 }

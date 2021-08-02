@@ -75,11 +75,13 @@ public class RealtimeVoteChannelServer {
 	
 	//사용자 퇴장(+ 투표채널 삭제)
 	//= 채널 탐색 + 사용자 제거 + (채널 삭제)
-	public void leave(int memberNo, int voteChannelNo, WebSocketSession session) {
+//	public void leave(int memberNo, int voteChannelNo, WebSocketSession session) {
+	public void leave(int memberNo, int voteChannelNo) {
 		RealtimeVoteChannel realtimeVoteChannel = findChannel(voteChannelNo);
 	
 		
-		realtimeVoteChannel.leave(memberNo, session);
+//		realtimeVoteChannel.leave(memberNo, session);
+		realtimeVoteChannel.leave(memberNo);		
 		
 		if(realtimeVoteChannel.getRealtimeVoters().size() ==0) {
 			channels.remove(realtimeVoteChannel);

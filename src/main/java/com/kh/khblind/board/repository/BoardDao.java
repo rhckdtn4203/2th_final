@@ -2,19 +2,25 @@ package com.kh.khblind.board.repository;
 
 import java.util.List;
 
+import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardSearchListVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
+import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.board.entity.MainCategoryDataVO;
+import com.kh.khblind.board.entity.MetamonBoardListVO;
+import com.kh.khblind.board.entity.StartEndVoForAjax;
 
 public interface BoardDao {
 	//시퀀스 번호를 생성하는 기능
@@ -58,7 +64,7 @@ public interface BoardDao {
 	//토픽 이름 조회 기능
 	String getBoardCategoryName(int boardCategoryNo);
 	
-	//주제 종료 조회 기능
+	//주제 종료 조회 기능1
 	CheckBoardTypeDto getBoardType(int boardNo);
 	
 	//메인 검색 기능(토픽 검색 기능)
@@ -70,5 +76,35 @@ public interface BoardDao {
 	
 	//게시판 집계함수만 가져오는 기능
 	BoardCountDto getBoardCountInfo(int boardNo);
-
+	
+	//특정 게시판에 달린 댓글 들을 불러오는 기능
+	List<CommentsVO> getCommentsList(int boardNo);
+	
+	//조회수 증가 기능
+	void addViewCount(int boardNo);
+	void deleteHash(int boardNo);
+	
+	//ajax 목록 기능
+	List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax);
+	
+	//ajax 검색 기능
+	List<MetamonBoardListVO> ajaxSearchCompanyBoardList(String keyword);
+	
+	List<MetamonBoardListVO> ajaxSearchJobCategoryBoardList(String keyword);
+	
+	List<MetamonBoardListVO> ajaxSearchBoardCategoryBoardList(String keyword);
+	
+	//조회수 많은 토픽 DTO 가져오기 기능
+	BoardCategoryAllCountDto getBoardCategoryByAllCount(int rn);
+	//토픽 조회수 베스트 6개 목록 기능
+	List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo);
+	
+	//토픽 좋아요 순 베스트 목록 기능
+	List<BoardCategoryListByLikeCountVO> getBoardCategoryListByLikeCount();
+	
+	
 }

@@ -38,6 +38,7 @@ import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.kh.khblind.board.uploadImage.entity.BoardImageDto;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
+import com.kh.khblind.member.cert.entity.ImageCertDto;
 
 //import com.drew.imaging.ImageMetadataReader;
 //import com.drew.metadata.Metadata;
@@ -51,6 +52,8 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	private final File ResDir = new File("D:/proj/khblind/resources/");
 	private final File RawDir = new File(ResDir + "/1.raw-image/");
 	private final File SavedDir = new File(ResDir + "/4.saved-image/");
+	
+	private final File ImageCertDir = new File(ResDir + "/ImageCertDir/");
 
 	@Override
 	public List<String> uploadOriginalFile(List<MultipartFile> images, int memberNo) {
@@ -113,15 +116,15 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	}
 
 	@Override
-	public String getImageFolderName(int boardNo) {
+	public String getImageFolderName(int no) {
 
 		int k = 1000;
 		int folderNo = 0;
 		boolean reCalc = true;
 
 		while (reCalc) {
-			System.out.println(boardNo + "하고" + k * folderNo + "를 비교");
-			if (boardNo <= k * folderNo) {
+			System.out.println(no + "하고" + k * folderNo + "를 비교");
+			if (no <= k * folderNo) {
 				reCalc = false;
 			} else {
 				folderNo++;
@@ -251,6 +254,13 @@ public class UploadImageDaoImpl implements UploadImageDao {
 					.boardNo(convertImageVo.getBoardNo())
 					.boardImageUrl(finalFolderName +"\\"+ randomFileName + ".jpg")
 					.build();
+			
+			//경로 오입력을 방지하는 코드
+			String target = boardImageDto.getBoardImageUrl();
+			target= target.replace("\\\\", "\\");
+			boardImageDto.setBoardImageUrl(target);
+			
+			//DB에 등록
 			sqlSession.insert("upload-image.insert", boardImageDto);
 		}
 		return readyFileNameList;
@@ -302,7 +312,15 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		return false;
 	}
-
+	
+	@Override
+	public List<BoardImageDto> getBoardImageInfo (int boardNo){
+		List<BoardImageDto> boardImageInfoList = sqlSession.selectList("upload-image.getmageInfoInBoard", boardNo);
+		System.out.println("이미지 리스트를 가져오는중" + boardImageInfoList);
+		return boardImageInfoList;
+	}
+	
+	
 	@Override
 	public List<ResponseEntity<ByteArrayResource>> getImageToJsp(int boardNo) throws IOException {
 		List<ResponseEntity<ByteArrayResource>> imageFileList = new ArrayList<>();
@@ -325,13 +343,114 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(target.getName(), "UTF-8")+"\"")
 			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
 			.body(resource);
-			
+			System.out.println("생성된 엔티티" + responseEntity);
 			imageFileList.add(responseEntity);
 		}
 		
 		
-		
+		System.out.println("이미지 엔티티 담는 DAO종료");
 		return imageFileList;
 	}
 
+	@Override
+	public boolean deleteImageChainToBoard(int boardNo) {
+		String folderName = getImageFolderName(boardNo);
+		System.out.println(folderName + "를 삭제 합니다.");
+		
+		String fullPath = SavedDir +"\\" + folderName + "\\" + boardNo;
+		
+		File targetFolder = new File(fullPath);
+		File[] allFiles = targetFolder.listFiles();
+		if (allFiles != null) {
+            for (File targetFile : allFiles) {
+            	targetFile.delete();
+            }
+        }
+		targetFolder.delete();
+	
+		return false;
+	}
+
+	@Override
+	public String uploadImageCert(int memberNo, MultipartFile image) {
+		String superFolderName = getImageFolderName(memberNo);
+		String memberNoFolder = String.valueOf(memberNo);
+		String finalFolderName= ImageCertDir+"\\"+superFolderName+"\\"+memberNoFolder;
+		
+		File targetFolder = new File(finalFolderName);
+		targetFolder.mkdirs();
+		
+		File targetFile = new File (finalFolderName, "certImage");
+		
+		try {
+			image.transferTo(targetFile);// 파일을 업로드 한다
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			System.out.println("업로드 실패 : 'IllegalStateException' or 'IOException'");
+			return null;
+		}
+		
+		//업로드를 성공하면 후에 DB에 저장할 정보를 모은다.
+
+		String imageUrl = finalFolderName+"\\"+"certImage";
+		
+		return imageUrl;
+	}
+
+	@Override
+	public boolean insertToDBAfterUpload(ImageCertDto imageCertDto) {
+		int count = sqlSession.insert("cert.insertImageCert", imageCertDto);
+		return count >0;
+	}
+	
+	@Override
+	public ResponseEntity<ByteArrayResource> getImageToImageCertJsp(int memberNo) throws IOException {
+		String superFolderName = getImageFolderName(memberNo);
+		String memberNoFolder = String.valueOf(memberNo);
+		String finalFolderName= ImageCertDir+"\\"+superFolderName+"\\"+memberNoFolder;
+		
+//		File targetFolder = new File(finalFolderName);
+//		targetFolder.mkdirs();
+		
+		File targetFile = new File (finalFolderName, "certImage");
+		System.out.println("@@@ 파일은 존재 합니까?" + targetFile.exists());
+		
+		byte[] data = FileUtils.readFileToByteArray(targetFile);
+		
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(targetFile.length())
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(targetFile.getName(), "UTF-8")+"\"")
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.body(resource);
+		
+	}
+
+	@Override
+	public String getImageCertInfo(int memberNo) {
+		String imageUrl = sqlSession.selectOne("cert.getImageCertInfo", memberNo);
+		return imageUrl;
+	}
+
+	@Override
+	public void deleteImageChainToImageCert(int memberNo) {
+		String superFolderName = getImageFolderName(memberNo);
+		String memberNoFolder = String.valueOf(memberNo);
+		String finalFolderName= ImageCertDir+"\\"+superFolderName+"\\"+memberNoFolder;
+		
+		File targetFolder = new File(finalFolderName);
+		targetFolder.delete();
+		
+	}
+
+	@Override
+	public boolean insertToDBAfterUploadAgain(int memberNo) {
+		int count = sqlSession.insert("cert.insertImageCertAgain", memberNo);
+		return count >0;
+	}
+	
+	
+	
 } 

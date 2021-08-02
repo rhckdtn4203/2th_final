@@ -90,4 +90,6 @@ public class CertController {
 	public String certSuccess() {
 		return "cert/certSuccess";
 	}
+	
+
 }

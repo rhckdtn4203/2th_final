@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	$(function() {
@@ -53,11 +55,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="companyRegistDto" items="${list }">
+		<c:forEach var="companyRegistDto" items="${list}">
 			<tr>
-				<td>${companyRegistDto.companyRegistNo }</td>
-				<td>${companyRegistDto.companyRegistName }</td>
-				<td>${companyRegistDto.companyRegistDomain }</td>
+				<td>${companyRegistDto.companyRegistNo}</td>
+				<td>${companyRegistDto.companyRegistName}</td>
+				<td>${companyRegistDto.companyRegistDomain}</td>
 				<td>
 					<input type="button" class="companyRegist" name="companyRegist" value="등록">
 					<input type="button" class="companyRegistDelete" name="companyRegistDelete" value="삭제">
@@ -66,3 +68,5 @@
 		</c:forEach>
 	</tbody>
 </table>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
