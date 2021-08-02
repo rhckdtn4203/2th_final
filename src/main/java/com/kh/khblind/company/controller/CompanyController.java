@@ -165,5 +165,24 @@ public class CompanyController {
 		companyReviewDao.reviewWrite(companyReviewDto);
 		return "redirect:companyReview?companyNo="+companyReviewDto.getCompanyNo();
 	}
+	
+	@GetMapping("/companyBoard")
+	public String companyBoard(int companyNo, Model model) {
+		CompanyVO companyVO = companyDao.companyFind(companyNo);
+		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		
+		if(companyVO != null) {;
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", reviewRate);
+			model.addAttribute("reviewCount", reviewCount);
+			
+			return "company/companyBoard";
+		}
+		else {
+			// 임시.. 404가 정상 나중에 Filter로 500 떴을 때 error 페이지 보여줌
+			return "company/companyBoard/error";
+		}
+	}
 
 }
