@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-o테스트
+테스트
 </body>
 </html>
