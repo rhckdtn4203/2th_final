@@ -47,14 +47,15 @@
 	  			for(var i=0; i < resp.length; i++){
 	  				var template = $("#list-board-template").html();
 	  				template = template.replace("{{boardNo}}", resp[i].boardNo);
-	  				template = template.replace("{{boardCategoryBoardName}}", resp[i].boardCategoryBoardName);
+	  				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
 	       		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
 	       		template = template.replace("{{boardContent}}", resp[i].boardContent);
-	       		template = template.replace("{{companyName}}", resp[i].companyName);
+// 	       		template = template.replace("{{companyName}}", resp[i].companyName);
+                template = template.replace("{{likeCount}}", resp[i].likeCount);
 	       		template = template.replace("{{memberNick}}", resp[i].memberNick);
 	       		template = template.replace("{{boardCount}}", resp[i].boardCount);
-	       		template = template.replace("{{commentCount}}", resp[i].commentCount);
-	       		template = template.replace("{{uploadTime}}", resp[i].uploadTime);
+	       		template = template.replace("{{commentsCount}}", resp[i].commentsCount);
+	       		template = template.replace("{{boardDate}}", resp[i].boardDate);
 	       		$("#here").append(template);
 	  			}
 			}
@@ -96,14 +97,15 @@
  			       			for(var i=0; i < resp.length; i++){
  			       				var template = $("#list-board-template").html();
  			       				template = template.replace("{{boardNo}}", resp[i].boardNo);
- 			       				template = template.replace("{{boardCategoryBoardName}}", resp[i].boardCategoryBoardName);
+ 			       				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
  			            		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
  			            		template = template.replace("{{boardContent}}", resp[i].boardContent);
- 			            		template = template.replace("{{companyName}}", resp[i].companyName);
+//  			            		template = template.replace("{{companyName}}", resp[i].companyName);
+                                template = template.replace("{{likeCount}}", resp[i].likeCount);
  			            		template = template.replace("{{memberNick}}", resp[i].memberNick);
  			            		template = template.replace("{{boardCount}}", resp[i].boardCount);
- 			            		template = template.replace("{{commentCount}}", resp[i].commentCount);
- 			            		template = template.replace("{{uploadTime}}", resp[i].uploadTime);
+ 			            		template = template.replace("{{commentsCount}}", resp[i].commentsCount);
+ 			            		template = template.replace("{{boardDate}}", resp[i].boardDate);
  			            		$("#here").append(template);
  			       			}
  			  			}
@@ -166,14 +168,14 @@
    	<div id="board-{{boardNo}}|" class="board-cell col-6">
 
                 <div class="board-area row">
-                    <!-- <div class="board-type col-12"><small>{{boardCategoryBoardName}}</small></div> -->
+                    <!-- <div class="board-type col-12"><small>{{boardCategoryName}}</small></div> -->
                     <div class="board-title col-12 mt-2"><b>{{boardTitle}}</b></div>
                     <div class="baord-content col-12 p-2 px-4"><small>{{boardContent}}</small></div>
                 </div>
 
                 <div class="writer-area row">
                     <div class="writer-info">
-                        <small><span>{{companyName}} | {{memberNick}}</span></small>
+                        <small><span>{{memberNick}}</span></small>
                     </div>
                 </div>
 
@@ -183,17 +185,17 @@
                     </div>
 
                     <div class="like-count col-2">
-                        <small><i class="far fa-thumbs-up fa-1x">{{좋아요수}}</i></small>
+                        <small><i class="far fa-thumbs-up fa-1x">{{likeCount}}</i></small>
                     </div>
 
                     <div class="like-count col-2">
-                        <small><i class="far fa-comment-dots fa-1x">{{commentCount}}</i></small>
+                        <small><i class="far fa-comment-dots fa-1x">{{commentsCount}}</i></small>
                     </div>
 
                     <div class="empty col-5"></div>
 
                     <div class="write-time-col-3">
-                        <small><i class="far fa-clock">&nbsp;{{uploadTime}}</i></small>
+                        <small><i class="far fa-clock">&nbsp;{{boardDate}}</i></small>
                     </div>
                 </div>
             </div>
@@ -211,6 +213,10 @@
         .board-title{
         font-weight: 700;
         }
+        
+       #wrap{
+      text-align: left;
+      }
     </style>
 </head>
 <!-- <button id="test-btn">TEST</button> -->
@@ -251,134 +257,12 @@
 
 	
 
-<%-- 	<c:if test="${companyBoardList != null}"> --%>
-<!-- 	<ul id="posts"> -->
-<!-- 	 <li> -->
-<!-- 	 <article> -->
-<!-- 	<p> -->
-<%-- 		<c:forEach var="companyBoardDto" items="${companyBoardList}"> --%>
-		
-<!-- 		<!-- 셀시작--> -->
-<%-- 		<div id="board-${companyBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<%-- 			<div class="board-title col-12 mt-2"><b>"${companyBoardDto.boardTitle}"</b></div> --%>
-<%-- 			<div class="board-content col-12 p-2 px-4"><small>"${companyBoardDto.companyNo}"</small></div> --%>
-<%-- 			<div class="board-content col-12 p-2 px-4"><small>"${companyBoardDto.boardContent}"</small></div> --%>
-<!-- 		</div> -->
-		
-<!-- 		<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--         </div> -->
-        
-<!--         <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
 
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<!--     </p> -->
-<!--     </article> -->
-<!--     </li> -->
-<!--     </ul> -->
-    
-<%-- 	</c:if> --%>
-	
-  
-		
-<%-- 	<c:if test="${jobCategoryBoardList != null}"> --%>
 	<div id="here" class="offset-3 col-6 row mt-5">
 	</div>
 	
 	
-<%-- 		<c:forEach var="jobCategoryBoardDto" items="${jobCategoryBoardList}"> --%>
-		
-<!--         셀시작 -->
-<%-- 		<div id="board-${jobCategoryBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<%-- 				<div class="board-title col-12 mt-2"><b>"${jobCategoryBoardDto.boardTitle}"</b></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${jobCategoryBoardDto.jobCategoryNo}"</small></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${jobCategoryBoardDto.boardContent}"</small></div> --%>
-<!-- 			</div> -->
 
-
-<!-- 			<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<%-- 	</c:if> --%>
-	
-	
-<%-- 	<c:if test="${boardCategoryBoardList != null}"> --%>
-<%-- 		<c:forEach var="boardCategoryBoardDto" items="${boardCategoryBoardList}"> --%>
-		
-<!-- 		<!-- 셀시작--> -->
-<%-- 		<div id="board-${boardCategoryBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<!-- 			<div class="board-type col-12"><small>토픽이름</small></div> -->
-<%-- 			<div class="board-title col-12 mt-2"><b>"${boardCategoryBoardDto.boardTitle}"</b></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${boardCategoryBoardDto.boardCategoryNo}"</small></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${boardCategoryBoardDto.boardContent}"</small></div> --%>
-<!-- 			</div> -->
-			
-<!-- 			<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<%-- 	</c:if> --%>
 	
 
 
