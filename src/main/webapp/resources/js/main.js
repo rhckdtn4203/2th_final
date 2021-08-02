@@ -31,7 +31,7 @@
 
 //회원탈퇴
 		$(function(){
-			$("#confirmLink").click(function(e){
+			$("#delete-a").click(function(e){
 				
 				//var message=$(this).attr("data-message")||"이동하시겠습니까?";
 				var choice = window.confirm("정말 탈퇴하시겠습니까?");

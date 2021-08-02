@@ -325,7 +325,7 @@ padding: 10px 30px;
 }
 #section2s:hover{
   opacity: 95%;
-  transition: var(--anni-duration) ease;
+  transition: 600ms ease-in-out;;
 }
 #mb1,
 #mb2{
