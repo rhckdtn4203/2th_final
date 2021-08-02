@@ -13,17 +13,19 @@ import org.junit.Test;
 
 public class Test01_ImageResize {
 
+	private final String root = "D:\\bamboo";
+	
 	@Test
 	public void test() {
-        String inputImagePath = "D:\\sample\\0001.jpg";
-        String outputImagePath = "D:\\sample\\0001-resized.jpg";
+        String inputImagePath = root+"\\image-resized\\01.before.jpg";
+        String outputImagePath = root+"\\image-resized\\02.after.jpg";
     
     try {
         // resize to a fixed width (not proportional)
         int setWidth = 1024;
         Test00_ImageResizer.resize(inputImagePath, outputImagePath, setWidth);
     } catch (IOException ex) {
-        System.out.println("Error resizing the image.");
+        System.out.println("에러에러!");
         ex.printStackTrace();
     }
 

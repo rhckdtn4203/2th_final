@@ -8,6 +8,18 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 	<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+
+    <!-- 제이쿼리를 가져온다 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- UI제이쿼리를  가져온다 -->
+    <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+    <!-- 폰트어썸 아이콘을 가져온다-->
+    <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
+  	
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
 <style>
     @media screen and (min-width:1200px){
         .test{
@@ -48,7 +60,7 @@
     }
 
     #image-title{
-    font-size: 2.5em;
+    font-size: 1.8em;
     }
 
     #preview-image{
@@ -67,6 +79,7 @@
     
     .cert-progress-msg-error{
     font-size: 1.2em;
+
     color: rgb(180, 45, 50);
     }
     
@@ -81,6 +94,13 @@
 	
 	.primary-background-color {
 	background-color: #1e3932;
+
+	}
+	
+	
+	.bbxb{
+	box-sizing: border-box;
+
 	}   
 
 </style>
@@ -110,8 +130,10 @@ function setImageFromFile(input, expression) {
 
 <body>
 
-	<div id="image-cert-zone" class="row">
- 		<div class="offset-3 col-6 row">
+
+	<div id="image-cert-zone" class="row mt-3">
+ 		<div class="offset-3 col-6 row mt-3">
+
 			<div class="col-12 image-title-area text-center primary-background-color">
 				<div><p id="image-title" class="font-color-khblind-gold">사원증 인증 페이지</p></div>
 			</div>
@@ -137,7 +159,7 @@ function setImageFromFile(input, expression) {
 										<div class="input-group">
 											<div class="custom-file">
 												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input" required accept=".jpg, .png">
-												<label class="custom-file-label" for="inputGroupFile04">파일선택</label>
+												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
 											</div>
 <!-- 											<div class="job-category-no-select-div"> -->
 <!-- 												<select name="jobCategoryNo" class="form-control" required> -->
@@ -183,8 +205,8 @@ function setImageFromFile(input, expression) {
 									<form action="imageInsertAgain"  id="file-upload" method="post" enctype="multipart/form-data">
 										<div class="input-group">
 											<div class="custom-file">
-												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input" required accept=".jpg, .png">
-												<label class="custom-file-label" for="inputGroupFile04">파일선택</label>
+												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input bbxb" required accept=".jpg, .png">
+												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
 											</div>
 <!-- 											<div class="job-category-no-select-div"> -->
 <!-- 												<select name="jobCategoryNo" class="form-control" required> -->
@@ -226,14 +248,12 @@ function setImageFromFile(input, expression) {
 									</c:if>
 								</c:if>
 							</div>
-						
-
-							
-                    
-
-
+						</div>
+					</div>
+				<div>
 			</div>
 		</div>
+
         
 		<div>
 
@@ -241,4 +261,5 @@ function setImageFromFile(input, expression) {
 		</div>
 		</div>
 </html>
->>>>>>> refs/remotes/origin/kangmijin
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+</html>

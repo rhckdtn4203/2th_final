@@ -1,26 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+ <!-- bootstrap 이용을 위한 CSS 의존성 등록 -->
+    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <style>
+
+    </style>
+
+    <!-- bootstrap 이용을 위한 JS 의존성 등록 (jQuery/popper/BS) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+
+
+<!-- <script id="iTag-start" type="text/template"> -->
+<%-- <i class=" --%>
+<!-- </script> -->
+<!-- <script id="iTag-end" type="text/template"> -->
+<!-- "></i> -->
+<!-- </script> -->
+<script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 <script>
 $(function() {
 	
 	$(".selectCategory").change(function(){
+		console.log($(this).val());
 		
-		var CategoryNo = $(this).val();		
+		
+		var CategoryNo = $(this).val();	
 		var CategoryName = $(".selectCategory option:checked").text();
-		
-		if($(this).val()==null || $(this).val()==""){
+ 		var CategoryIcon = $(".selectCategory option:checked").attr("data-icon");
+ 		var before = $(".selectCategory option:checked").attr("data-icon");
+ 		
+ 		if($(this).val()=="게시판 선택해주세요"){
 			$(".categoryNo").val("");
 			$(".categoryName").val("");
+			$(".categoryIcon").val("");
 			return;
 		}
 		$(".categoryNo").val(CategoryNo);
 		$(".categoryName").val(CategoryName);
-			
+ 		
+		CategoryIcon = CategoryIcon.replace("&quot", '\"');
+		var after = before.replace("&quot", '\"');
+ 		
+		$(".categoryIcon").val(after);
+//  		$(".categoryIcon").val(CategoryIcon);
 	});
 });
-
 function checkNameSuper(){
 	var inputName = document.querySelector("#categoryInput");
 	var inputNameValue = inputName.value;
@@ -48,64 +77,122 @@ function checkName(){
 		}
 	}
 		
-	
+
+
 </script>
+<script>
+$(function(){
+    $("#submit-btn").click(function(){
+    	
 
-<div class="board-manage">
+       
+       var categoryName = $("#categoryInputName").val();
+       if(categoryName==""){alert("카테고리 이름을 입력해주세요."); return false;}
+       if(categoryName.length > 10){alert("카테고리 이름은은 10글자 입력 가능합니다.")};
+       
+       var categoryIcon = $("#categoryInputIcon").val();
+       if(categoryIcon==""){alert("내용을 입력해주세요."); return false;}
+       if(categoryIcon.length > 50){alert("카테고리 아이콘은 50글자 입력 가능합니다."); return false;}
+            
+       
+    });
+       
+       
+    });
 
-<h2>카테고리 관리</h2>
 
-<div class="category-insert">
+</script>
+<style>
+.font-green{
+color:#008248;
+}
+.container-border{
+border: 1px solid black !important;
+color:#008248 !important;
+margin-top : 100px;
+ 
+
+}
+.container-header{
+height:100px;
+padding:35px ;
+}
+
+.category-insert,  .categoryEdit{
+height:300px;
+padding-top:130px;
+padding-left:30px;
+border:none;
+}
+.categoryDelete{
+height:130%;
+padding-top:30px;
+padding-bottom:30px;
+border:none;
+}
+.underline{
+BORDER-BOTTOM: teal 1px solid;
+BORDER-LEFT: medium none;
+BORDER-RIGHT: medium none;
+BORDER-TOP: medium none;
+}
+  .my-border{  
+               border: none;
+               border-bottom: 1px solid #008248;
+           }
+   .scrollno{
+   overflow : auto;
+width      : 100%;
+height      : 100%;
+   } 
+  .selectCategory{
+  border-left:30px;
+  }     
+  .text-right{
+  text-align:right;
+  }  
+</style>
+
+<div class="container-800 col container-border">
+<div class="container-header">
+<h2 class="text-center font-green">카테고리 관리</h2>
+</div>
+
+<div class="text-center category-insert">
 <form action="categoryInsert" method="post">
-<input type="text" name="boardCategoryName" id="categoryInput"required="required">
-
-<input type="submit" value="등록">
+<label class="font-green">카테고리이름:<input class="underline" type="text" name="boardCategoryName" id="categoryInputName"></label>
+<label class="font-green">카테고리아이콘:<input class="underline" type="text" name="boardCategoryIcon" id="categoryInputIcon"></label>
+<!-- <input id="submit-btn" class="btn btn-outline-success my-border" type="submit" value="등록"> -->
+<button id="submit-btn" class="btn btn-outline-success my-border">등록</button>
 </form>
 </div>
 
-<div class="category-delete-edit">
-<p>게시판 수정/삭제<p>
-<!--전체 카테고리 출력 및 삭제부분 -->
-
-
-<!--카테고리 목록 보여주기 -->
-<select name="boardCategoryNo">
-<c:forEach var="categoryDto" items="${categoryList}">
-<option value="${categoryDto.boardCategoryNo}"><c:out value="${categoryDto.boardCategoryName}"/></option>
-</c:forEach>
-</select>
-</div>
-
-
-
-
-</div>
-
-
+<div class="categoryDelete text-right">
 	<form action="categoryDelete" method="get"onsubmit="checkDelete()">
-<!-- 		<input type="hidden" name ="boardCategoryNo"> -->
-			<select class="selectCategory" name="boardCategoryNo">
-				<option value="" selected>게시판 선택해주세요</option>
+			<select size="${categoryCount}"  class="selectCategory scrollno form-control" name="boardCategoryNo">
+				<option id="choice" selected>게시판 선택해주세요</option>
 				<c:forEach var="categoryDto" items="${categoryList}">
-				<option value="${categoryDto.boardCategoryNo}" label="${categoryDto.boardCategoryName}">${categoryDto.boardCategoryName}</option>
+					<option value="${categoryDto.boardCategoryNo}" data-icon="${categoryDto.boardCategoryIcon}" label="${categoryDto.boardCategoryName}">${categoryDto.boardCategoryName}</option>
 				</c:forEach>
 			</select>
-		<input type="submit" value="삭제" >
+		<input class="btn btn-outline-success my-border text-right" type="submit" value="삭제" >
 	</form>
-	
+</div>	
 	<!-- 
 	수정: 위에서 선택된 값을 아래 value로 넣기
 	 -->
+	 <div class="row categoryEdit">
 	<form action="categoryEdit" method="get"  onsubmit="checkName();">
-	<input type="hidden" class="categoryNo" name = "boardCategoryNo">
-	<input type="text" class="categoryName" name = "boardCategoryName" required >
-	<input type="submit" value="수정">
+	<input type="hidden" class="categoryNo " name = "boardCategoryNo">
+	<label class="font-green">카테고리이름:<input type="text" class="categoryName underline" name = "boardCategoryName" id="categoryInputName"></label>
+	<label class="font-green">카테고리아이콘:<input type="text" class="categoryIcon underline" name="boardCategoryIcon" id="categoryInputIcon"></label>
+	<input id="submit-btn" class="btn btn-outline-success my-border" type="submit" value="수정">
 </form>
-    
-    
-    
-    
-    
-    
-    
-    
+
+</div>
+</div>
+
+		
+
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
