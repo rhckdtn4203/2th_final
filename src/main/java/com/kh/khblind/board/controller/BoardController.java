@@ -483,7 +483,7 @@ public class BoardController {
 		}
 				
 		
-		//8-1. 이미 투표한건지 알아본다.
+		//8-1. 이미 투표한건지 알아본다..
 		if(voteDao.getVoteTopicInfo(boardNo) != null) {
 			int voteTopicNo = voteTopicDto.getVoteTopicNo();
 
