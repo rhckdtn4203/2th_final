@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.board.entity.BoardCategoryBoardDto;
+import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.company.entity.CompanyProfileDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
 import com.kh.khblind.company.entity.CompanyReviewDto;
@@ -45,6 +47,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileDao profileDao;
+	
+	@Autowired
+	private BoardDao boardDao;
 	
 	@GetMapping("/")
 	public String company(Model model) {
@@ -164,6 +169,35 @@ public class CompanyController {
 	public String reviewWrite(@ModelAttribute CompanyReviewDto companyReviewDto) {
 		companyReviewDao.reviewWrite(companyReviewDto);
 		return "redirect:companyReview?companyNo="+companyReviewDto.getCompanyNo();
+	}
+	
+	@GetMapping("/companyBoard")
+	public String companyBoard(
+			int companyNo, Model model
+			) {
+		CompanyVO companyVO = companyDao.companyFind(companyNo);
+		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		
+		if(companyVO != null) {;
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", reviewRate);
+			model.addAttribute("reviewCount", reviewCount);
+			
+			//기업키워드 리스트 추가
+			String keyword = companyVO.getCompanyName();
+			System.out.println("keyword@@@@@" + keyword);
+			
+			List<BoardCategoryBoardDto> companyKeywordList = boardDao.getCompanyKeywordList(keyword);
+			System.out.println("companyKeywordList@@@@@@@@@@@@@" + companyKeywordList);
+			model.addAttribute("companyKeywordList", companyKeywordList);
+			
+			return "company/companyBoard";
+		}
+		else {
+			// 임시.. 404가 정상 나중에 Filter로 500 떴을 때 error 페이지 보여줌
+			return "company/companyBoard/error";
+		}
 	}
 
 }

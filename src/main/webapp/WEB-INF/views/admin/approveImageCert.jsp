@@ -8,12 +8,14 @@
     <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
     <!-- 폰트어썸 아이콘을 가져온다-->
     <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
+
   
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
+
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
     <style>
 		#image-frame{
@@ -135,7 +137,9 @@
                     </select>
                 </div>
 
-                <div id="image-sector" class="col-8">
+
+                <div id="image-sector" class="col-9 row">
+
                     <img id="image-frame" class="col-12 img-fluid" src="${root}/img/default-id-card.png">
                 </div>
             </div>

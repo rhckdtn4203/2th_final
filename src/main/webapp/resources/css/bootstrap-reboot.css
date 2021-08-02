@@ -5,6 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md)
  */
+
 /* *, */
 /* *::before, */
 /* *::after { */
@@ -20,6 +21,7 @@
 /*   -webkit-tap-highlight-color: transparent; */
 /* } */
 
+
 @-ms-viewport {
   width: device-width;
 }
@@ -27,6 +29,7 @@
 article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
+
 
 /* body { */
 /*   margin: 0; */
@@ -39,6 +42,8 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 /*   background-color: #fff; */
 /* } */
 
+
+
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
@@ -49,10 +54,12 @@ hr {
   overflow: visible;
 }
 
+
 /* h1, h2, h3, h4, h5, h6 { */
 /*   margin-top: 0; */
 /*   margin-bottom: 0.5rem; */
 /* } */
+
 
 p {
   margin-top: 0;

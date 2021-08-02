@@ -1,0 +1,257 @@
+
+.group{
+  text-align: end;
+padding-right: 30px;
+}
+.sb{
+  margin: 10px 0;
+  padding: 0;
+  background-color: transparent;
+  width: 75%;
+  height: 50px;
+  font-size: 15px;
+  text-align: left;
+  background-color:#fcf9ed;
+  border: transparent;
+  border-radius: 0.5em;
+}
+.sign-btn-box,.login-btn-box{
+  background-color: var(--color-green);
+  height: 40px;
+}
+.login-btn{
+  position: relative;
+    margin: 5px;
+    border: none;
+    color: wheat;
+    background-color: var(--color-green);
+    font-size: 20px;
+    font-weight: var(--weight-6);
+    
+    cursor: pointer;
+    overflow: hidden;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+.login-btn:hover{
+	background: #fbfdfa;
+  color: #050801;
+  box-shadow: 0 0 5px #fbfdfa,
+              0 0 25px #fbfdfa,
+              0 0 50px #fbfdfa,
+              0 0 200px #fbfdfa;
+  -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+body{
+	height:100%;
+  background: linear-gradient(180deg, rgb(252, 251, 243) 0%, rgb(237, 245, 128) 53%, #29bb55 100%) center/cover no-repeat;
+  margin: 10px auto;
+}
+
+#modiBox{
+  width: 1200px; 
+text-align: center;     
+background-color: transparent;
+}
+.modiBack{
+  margin: 30px auto;
+  padding: 30px 0;
+  background-color: white;
+  width: 40%;
+  height: 600px;
+  border-radius: 0.5em;
+}
+.signBack{
+  margin: 30px auto;
+  padding: 30px 0;
+  background-color: white;
+  width: 40%;
+  height: 90%;
+  border-radius: 0.5em;
+}
+
+#modititle{
+  margin: 5px 0 15px 0;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
+figure.snip1200 {
+  position: relative;
+} 
+#a{
+  font-family: 'Raleway', Arial, sans-serif;
+  position: absolute;
+  top:10px;
+  left:-65px;
+  overflow: hidden;
+  margin: 0px;
+
+  width: 132%;
+  height: 180px;
+  background: bisque;
+  color: #1e3932;
+  /* text-align: center; */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+border-radius: 1em;
+
+}
+figure.snip1200 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.45s ease-in-out;
+  transition: all 0.45s ease-in-out;
+}
+figure.snip1200 img {
+  width: 100%;
+  max-height:100%;
+  padding-left: 70px;
+  position: relative;
+  opacity: 0.9;
+}
+
+figure.snip1200 figcaption {
+  position: absolute;
+  top: 45%;
+  left: 7%;
+  right: 7%;
+  bottom: 45%;
+  border: 1px solid #1e3932;
+  border-width: 1px 1px 0;
+}
+figure.snip1200 .heading {
+  overflow: hidden;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+figure.snip1200 h3 {
+  display: table;
+  margin: 0 auto;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  width: auto;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+figure.snip1200 h3:before,
+figure.snip1200 h3:after {
+  position: absolute;
+  display: block;
+  width: 1000%;
+  height: 1px;
+  content: '';
+  background: bisque;
+  top: 50%;
+}
+figure.snip1200 h3:before {
+  left: -1000%;
+}
+figure.snip1200 h3:after {
+  right: -1000%;
+}
+figure.snip1200 p {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+  width: 100%;
+  padding: 0 20px;
+  margin: 0;
+  opacity: 0;
+  line-height: 1.6em;
+  font-size: 0.9em;
+  color: #1e3932;
+}
+
+figure.snip1200 p span button{
+  border:none;
+  color: #1e3932;
+  font-weight: bolder;
+  font-size: 15px;
+  background: transparent;
+}
+figure.snip1200 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+figure.snip1200:hover img,
+figure.snip1200.hover img {
+  opacity: 0.2;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  background-color: white;
+}
+figure.snip1200:hover figcaption,
+figure.snip1200.hover figcaption {
+  top: 7%;
+  bottom: 7%;
+}
+figure.snip1200:hover p,
+figure.snip1200.hover p {
+  opacity: 1;
+  -webkit-transition-delay: 0.35s;
+  transition-delay: 0.35s;
+}
+
+.input-signBox{
+  padding-top: 80px;
+  height: 500px;
+background-color: white;
+}
+
+.input-modiBox{
+  padding-top: 160px;
+}
+#groups{
+  height: 100%;
+  padding-top: 160px;
+  padding-bottom: 50px;
+  background-color: rgb(253, 234, 210);
+}
+#group-back{
+
+  height: 100%;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  background-color: rgb(253, 234, 210);
+}
+#repw{
+  margin-top: 0px;
+}
+@media (max-width: 1200px){
+  #modiBox {
+    max-width: 100%;
+  }
+
+}
+
+@media (max-width: 1024px){
+  .btn-box{
+    display: none;
+  }
+  
+  .modiBack{
+  width: 100%;
+  }
+  .snip1200{
+    width: 85%
+  }
+}
+
+@media (max-width: 768px){
+  
+
+    }
+
+@media (max-width: 480px){
+}

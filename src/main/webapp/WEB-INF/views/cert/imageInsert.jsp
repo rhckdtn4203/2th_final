@@ -76,6 +76,7 @@
     
     .cert-progress-msg-error{
     font-size: 1.2em;
+
     color: rgb(180, 45, 50);
     }
     
@@ -90,11 +91,13 @@
 	
 	.primary-background-color {
 	background-color: #1e3932;
+
 	}
 	
 	
 	.bbxb{
 	box-sizing: border-box;
+
 	}   
 
 </style>
@@ -124,8 +127,10 @@ function setImageFromFile(input, expression) {
 
 <body>
 
+
 	<div id="image-cert-zone" class="row mt-3">
  		<div class="offset-3 col-6 row mt-3">
+
 			<div class="col-12 image-title-area text-center primary-background-color">
 				<div><p id="image-title" class="font-color-khblind-gold">사원증 인증 페이지</p></div>
 			</div>

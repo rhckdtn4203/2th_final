@@ -4,57 +4,118 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-600">
-	<div class="row">
-		<h2>아이디 찾기</h2>
-	</div>
-	
-<script type="text/javascript">
-function findid(){
-document.form1.submit();
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style5.css">
+
+<div class="findwrap">
+  
+    <div class="sections">
+      <div class="section active" data-bgcolor="#C0D85D">
+        <div class="inputFind">
+          <div class="findTitle">
+            <h2>SEARCH FOR ID
+            </h2>
+          </div>
+          
+          <form method="post" class="form-find" action="${pageContext.request.contextPath}/member/find_id" name="findform">
+            <div class="row-left">
+              <label for="name">이름</label>
+              <input type="text" id="name" name="memberName" class="form-input"/>
+            </div>
+            
+            <div class="row-left">
+              <label for="phone">전화번호</label>
+              <input type="text" id="phone" name="memberPhone" class="form-input"/>
+            </div>
+        
+            <div class="row-left">
+              <input class="login-btn"
+                type="submit" value="click!">
+            </div>
+          </form>
+
+        </div>
+      <div id="findicon">
+      <i class="fas fa-chevron-circle-down">password</i>
+      </div>
+      </div>
+      
+      
+      <div class="section" data-bgcolor="#7ED4A8">
+        <div class="inputFind">
+          <div class="findTitle">
+            <h2>SEARCH FOR PW</h2>
+          </div>
+        
+          <form method="post" class="form-find" action="${pageContext.request.contextPath}/member/find_pw">
+            <div class="row-left">
+              <label for="memberId">ID</label>
+              <input type="text" id="memberId" name="memberId" class="form-input"/>
+            </div>
+            
+            <div class="row-left">
+              <label for="memberEmail">E-mail</label>
+              <input type="text" id="memberEmail" name="memberEmail" class="form-input"/>
+            </div>
+        
+            <div class="row-left">
+              <input class="login-btn"
+                type="submit" value="인증번호 받기">
+            </div>
+          </form>
+        
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+// Get all of the images that are marked up to fade in
+const images = document.querySelectorAll('.js-lazyload-image');
+
+const sections = document.querySelectorAll('.section');
+
+let config = {
+  rootMargin: '0px',
+  threshold: 0
+};
+
+let observer = new IntersectionObserver((entries) => {
+    console.log(entries);
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      intersectionHandler(entry);
+    } 
+
+  });
+}, config);
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+
+function intersectionHandler(entry) {
+  const current = document.querySelector('.section.active');
+  const next = entry.target;
+  const header = next.querySelector(".section--header");
+
+  if (current) {
+    current.classList.remove('active');
+  }
+  if (next) {
+    next.classList.add('active');
+    document.body.style.setProperty("--color-bg", next.dataset.bgcolor);
+  }
 }
-</script>
-<form method="post" class="form-signin" action="${pageContext.request.contextPath}/member/find_id" name="findform">
-		<div class="row-left">
-			<label for="name">이름</label>
-			<input type="text" id="name" name="memberName" class="form-input form-input-underline"/>
-		</div>
-		
-		<div class="row-left">
-			<label for="phone">전화번호</label>
-			<input type="text" id="phone" name="memberPhone" class="form-input form-input-underline"/>
-		</div>
 
-		<div class="row-left">
-			<input class="form-btn form-btn-positive"
-				type="submit" value="check">
-		</div>
+images.forEach(image => {
+  observer.observe(image);
+});
 
-		<%-- <!-- 이름과 전화번호가 일치하지 않을 때-->
-		<c:if test="${check == 1}">
-			<script>
-				opener.document.findform.name.value = "";
-				opener.document.findform.phone.value = "";
-			</script>
-			<label>일치하는 정보가 존재하지 않습니다.</label>
-		</c:if>
-
-		<!-- 이름과 비밀번호가 일치하지 않을 때 -->
-		<c:if test="${check == 0 }">
-		<label>찾으시는 아이디는' ${memberId}' 입니다.</label>
-		<div class="form-label-group">
-				<input class="btn btn-lg btn-secondary btn-block text-uppercase"
-					type="button" value="OK" onclick="closethewindow()">
-			</div>
-		</c:if> --%>
-
-	</form>
+function preloadImage(img) {
+  const src = img.getAttribute('data-src');
+  if (!src) { return; }
+  img.src = src;
+}
+</script>	
 	
-<!-- 	<script type="text/javascript">
-		function closethewindow(){
-			self.close();
-		}
-	</script> -->
-	
-	</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

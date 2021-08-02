@@ -3,7 +3,13 @@
     pageEncoding="UTF-8"%>
 
   <hr>
+<style>
+.footer-menu{
+background-color: transparent;
+}
 
+
+</style>
       <section id="footer">
         <div class="footer-content">
           <ul class="footer-menu">
@@ -26,7 +32,11 @@
           </div>
         </div>
       </section>
-    </div>
+</div>
+
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
+    
+
 
 </body>
 </html>

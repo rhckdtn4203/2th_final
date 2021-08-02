@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
+
 .wrap-bookmark{
     
     width: 1200px;
@@ -31,6 +32,7 @@ color: black;
 text-align: right;
 border-bottom: 2px solid lightgray;
 }
+
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 

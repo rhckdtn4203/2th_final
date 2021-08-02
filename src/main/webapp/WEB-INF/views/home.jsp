@@ -34,95 +34,105 @@
               <a href="#">>더보기</a>
             </div>
             
+           <c:forEach var="BestTopicDto" items="${BoardCategoryListByLikeCount}"> 
             <div class="article-best">
+             
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">반려동물</a>
+                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
                 </span>
-                <a href="#" class="tit"><span> 우리집 강아지는 복슬강아지</span></a>
+                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
               </div>
               <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
+                <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
+                <i class="far fa-comment-alt"><span>${BestTopicDto.commentsCount}</span></i>
               </div>
+              
             </div>
-    
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">유머</a>
-                </span>
-                <a href="#" class="tit"><span>아이스크림 주세여</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-    
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">반려동물</a>
-                </span>
-                <a href="#" class="tit"><span> 블 라블라</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">직장인 취미생활</a>
-                </span>
-                <a href="#" class="tit"><span> 탁구짱</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">스포츠</a>
-                </span>
-                <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">코로나 바이러스</a>
-                </span>
-                <a href="#" class="tit"><span> 이것도 그닥..</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-            <div class="article-best">
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">직접홍보</a>
-                </span>
-                <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>1</span>     
-                <i class="far fa-comment-alt"><span>1</span></i>
-              </div>
-            </div>
-    
+            </c:forEach>
+            
+<!-- 			<div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">유머</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span>아이스크림 주세여</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">반려동물</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">직장인 취미생활</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 탁구짱</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">스포츠</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">코로나 바이러스</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 이것도 그닥..</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+            
+<!--             <div class="article-best"> -->
+<!--               <div class="b1"> -->
+<!--                 <span class="topic"> -->
+<!--                   <a href="#" class="tit-title">직접홍보</a> -->
+<!--                 </span> -->
+<!--                 <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a> -->
+<!--               </div> -->
+<!--               <div class="b2"> -->
+<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
+<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
+<!--               </div> -->
+<!--             </div> -->
+
           </div> 
         </div>
+
+            
 
         <div class="s1Box" id="sb2">
            	<div id="aside">
@@ -136,342 +146,143 @@
       <section id="section2">
         <section id="section2s">
         <div class="m1Box" id="mb1">
+        
           <div class="article" id="a1">
             <!-- title -->
             <div class="articleTitle"> 
               <h3 id="qq">
-                <a href="#">
-              <i class="far fa-comments"></i>블라블라1</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList1[0].boardCategoryNo}">
+              ${mainBoardCategoryList1[0].boardCategoryIcon}
+              ${mainBoardCategoryList1[0].boardCategoryName}</a>
               </h3>  
               <hr>
             </div>
             <!-- content -->
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList1}">
             <div class="arti1">  
               <div class="m1">
                 <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
+                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
                 </span>
               </div>  
               <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
+                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
               </div> 
             </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
-          </div> 
+         	</c:forEach>
           </div>
+          
   
   
-  
+  		
           <div class="article" id="a2">
             <!-- title -->
             <div class="articleTitle">
               <h3 id="qq">
-                <a href="#">
-               <i class="fas fa-chart-line"></i>주식</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList2[0].boardCategoryNo}">
+               ${mainBoardCategoryList2[0].boardCategoryIcon}
+               ${mainBoardCategoryList2[0].boardCategoryName}</a>
               </h3> 
               
               <hr>
             </div>
             <!-- content -->
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList2}">
             <div class="arti1">  
               <div class="m1">
                 <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
+                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
                 </span>
               </div>  
               <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
+                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
               </div> 
             </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
+  			</c:forEach>
           </div>
-          </div>
-  
+          
   
           <div class="article" id="a3">
             <!-- title -->
             <div class="articleTitle">
               <h3 id="qq">
-                <a href="#">
-              <i class="fab fa-bitcoin"></i>암호화폐</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList3[0].boardCategoryNo}">
+              ${mainBoardCategoryList3[0].boardCategoryIcon}
+              ${mainBoardCategoryList3[0].boardCategoryName}</a>
               </h3>  
               <hr>
             </div>
             <!-- content -->
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
-          </div>
-          </div>
+				<c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList3}">
+					<div class="arti1">
+						<div class="m1">
+							<span class="article-description"> 
+							<a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
+							</span>
+						</div>
+						<div class="m2">
+							<i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
       </div>
   
   
           <div class="m1Box" id="mb2">
+         
           <div class="article" id="bb1">
             <!-- title -->
             <div class="articleTitle">
               <h3 id="qq">
-                <a href="#">
-              <i class="fab fa-gratipay"></i>썸·연애</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList4[0].boardCategoryNo}">
+              ${mainBoardCategoryList4[0].boardCategoryIcon}
+              ${mainBoardCategoryList4[0].boardCategoryName}</a>
               </h3>  
               <hr>
             </div>
             <!-- content -->
+             <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList4}">
             <div class="arti1">  
               <div class="m1">
                 <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
+                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
                 </span>
               </div>  
               <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
+                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
               </div> 
             </div>  
   
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
+          </c:forEach>
           </div>
-          </div>
+          
   
   
           <div class="article" id="bb2">
             <!-- title -->
             <div class="articleTitle">
               <h3 id="qq">
-                <a href="#">
-               <i class="fas fa-briefcase"></i>이직·커리어</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList5[0].boardCategoryNo}">
+                ${mainBoardCategoryList5[0].boardCategoryIcon}
+              	${mainBoardCategoryList5[0].boardCategoryName}</a>
               </h3>  
               <hr>
             </div>
             <!-- content -->
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList5}">
             <div class="arti1">  
               <div class="m1">
                 <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
+                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
                 </span>
               </div>  
               <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
+                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
               </div> 
             </div>  
   
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
-          </div>
+          </c:forEach>
           </div>       
   
   
@@ -479,66 +290,26 @@
             <!-- title -->
             <div class="articleTitle"> 
               <h3 id="qq">
-                <a href="#">
-             <i class="fas fa-route"></i>여행·먹방</a>
+                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList6[0].boardCategoryNo}">
+             	${mainBoardCategoryList6[0].boardCategoryIcon}
+              	${mainBoardCategoryList6[0].boardCategoryName}</a>
               </h3>  
               <hr>
             </div>
             <!-- content -->
+            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList6}">
             <div class="arti1">  
               <div class="m1">
                 <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
+                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
                 </span>
               </div>  
               <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
+                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
               </div> 
             </div>  
   
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="#">우와 블라블라 조아요</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>1</span>     
-              </div> 
-            </div>  
-  
-          <div class="arti1">  
-            <div class="m1">
-              <span class="article-description">
-              <a href="#">우와 블라블라 조아요</a>
-              </span>
-            </div>  
-            <div class="m2">
-                <i class="fas fa-mouse"></i><span>1</span>     
-            </div> 
-          </div> 
+          </c:forEach> 
           </div>
         </div>
   
