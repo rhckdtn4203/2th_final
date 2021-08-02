@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -27,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 
 // 많은 결제 시스템 중 kakaoPay를 구현
 @Service
-public class KakaoPayService implements PayService{
+@Slf4j
+public class PayServiceImpl implements PayService{
 	
 	@Autowired
 	private PayDao payDao;
@@ -131,7 +133,7 @@ public class KakaoPayService implements PayService{
 		// 결제 후 member의 grade 올리기
 		int memberNo = Integer.valueOf(approveVO.getPartner_user_id());
 		memberDao.gradeup(memberNo);
-		
+			
 		return approveVO;
 	}
 	
@@ -141,12 +143,12 @@ public class KakaoPayService implements PayService{
 		//[1] 요청 도구 생성
 		RestTemplate template = new RestTemplate();
 		
-		//[2] Http Header 생성(ex : 편지봉투)
+		//[2] Http Header 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", kakaoAk);
 		headers.add("Content-type", contentType);
 		
-		//[3] Http Body 생성(ex : 편지내용)
+		//[3] Http Body 생성
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("cid", cid);
 		body.add("tid", tid);
@@ -171,12 +173,12 @@ public class KakaoPayService implements PayService{
 		//[1] 요청 도구 생성
 		RestTemplate template = new RestTemplate();
 			
-		//[2] Http Header 생성(ex : 편지봉투)
+		//[2] Http Header 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", kakaoAk);
 		headers.add("Content-type", contentType);
 				
-		//[3] Http Body 생성(ex : 편지내용)
+		//[3] Http Body 생성
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("cid", cid);
 		body.add("tid", payDto.getPayTid());
@@ -202,5 +204,14 @@ public class KakaoPayService implements PayService{
 		
 		return cancelVO;	
 	}
-
+	
+	// 결제 후 한달이 지난 멤버 등급 번호 내리기 
+	// 회원마다 결제일이 다르므로 결제테이블의 결제만료날짜(결제일+30일)과 오늘날짜와 같으면 회원 등급 내리기 
+	@Scheduled(cron = "0 0 * * * *")
+	@Override
+	public void gradeExipre() {
+		payDao.expire();
+		log.debug("제발");
+	}
+	
 }

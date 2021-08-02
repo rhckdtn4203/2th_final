@@ -11,4 +11,6 @@ public interface PayDao {
 	List<PayDto> list(int payBuyer);
 	PayDto get(int payNo);
 	void cancel(int payNo);
+	void expire();
+	List<PayDto> selectexpire();
 }

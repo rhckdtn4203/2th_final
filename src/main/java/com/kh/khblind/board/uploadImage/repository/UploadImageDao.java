@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.khblind.board.uploadImage.entity.BoardImageDto;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
+import com.kh.khblind.member.cert.entity.ImageCertDto;
 
 
 public interface UploadImageDao {
@@ -32,4 +33,18 @@ public interface UploadImageDao {
 	
 	//글 삭제시 같이 지워짐
 	boolean deleteImageChainToBoard (int boardNo);
+	
+	
+	//사원증 인증 업로드(파일url을 반환)
+	String uploadImageCert(int memberNo, MultipartFile image);
+	//사원증 업로드 후 DB추가
+	boolean insertToDBAfterUpload(ImageCertDto imageCertDto);
+	//사원증 사진파일  URL 가져오는 메소드
+	String getImageCertInfo(int memberNo);
+	//사원증 사진파일 가져오는 메소드
+	ResponseEntity<ByteArrayResource> getImageToImageCertJsp(int boardNo) throws IOException;
+	//사원증 사진파일을 삭제하는 메소드(승인시)
+	void deleteImageChainToImageCert(int memberNo);
+	//거절 당하고 다시 업로드 할 때 진행과정 업데이트
+	boolean insertToDBAfterUploadAgain(int memberNo);
 }
