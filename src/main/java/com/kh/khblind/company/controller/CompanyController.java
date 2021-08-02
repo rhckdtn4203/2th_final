@@ -189,7 +189,18 @@ public class CompanyController {
 			System.out.println("keyword@@@@@" + keyword);
 			
 			List<BoardCategoryBoardDto> companyKeywordList = boardDao.getCompanyKeywordList(keyword);
-			System.out.println("companyKeywordList@@@@@@@@@@@@@" + companyKeywordList);
+			
+			for(int i =0; i<companyKeywordList.size(); i++) {
+				String target = companyKeywordList.get(i).getBoardContent();
+				if(target.length()>25) {
+					target = target.substring(0, 25) + "...";
+				}
+				
+				companyKeywordList.get(i).setBoardContent(target);
+			}
+			
+			
+			
 			model.addAttribute("companyKeywordList", companyKeywordList);
 			
 			return "company/companyBoard";

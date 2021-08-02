@@ -59,10 +59,26 @@ public class BoardRestController {
 			if(boardKeyword.equals("")) { //키워드가 없으면 일반목록 조회
 				jobCategoryBoardList = boardDao.ajaxJobCategoryBoardList(startEndVoForAjax);
 			
-				
+				for(int i =0; i<jobCategoryBoardList.size(); i++) {
+					String target = jobCategoryBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					jobCategoryBoardList.get(i).setBoardContent(target);
+				}
 			}	
 			else if(!boardKeyword.equals("")) {
 				jobCategoryBoardList	= boardDao.ajaxSearchJobCategoryBoardList(boardKeyword);
+				
+				for(int i =0; i<jobCategoryBoardList.size(); i++) {
+					String target = jobCategoryBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					jobCategoryBoardList.get(i).setBoardContent(target);
+				}
 			}
 			return jobCategoryBoardList;
 		}
@@ -80,9 +96,30 @@ public class BoardRestController {
 			List<MetamonBoardListVO> boardCategoryBoardList = new ArrayList<>();
 			if(boardKeyword.equals("")) {
 				boardCategoryBoardList = boardDao.ajaxBoardCategoryBoardList(startEndVoForAjax);
+				
+				for(int i =0; i<boardCategoryBoardList.size(); i++) {
+					String target = boardCategoryBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					boardCategoryBoardList.get(i).setBoardContent(target);
+				}
+				
+				
 			}
 			else if(!boardKeyword.equals("")) {
 				boardCategoryBoardList	= boardDao.ajaxSearchBoardCategoryBoardList(boardKeyword);
+				
+				for(int i =0; i<boardCategoryBoardList.size(); i++) {
+					String target = boardCategoryBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					boardCategoryBoardList.get(i).setBoardContent(target);
+				}
+				
 			}
 			return boardCategoryBoardList;
 		}
@@ -100,9 +137,29 @@ public class BoardRestController {
 			List<MetamonBoardListVO> companyBoardList = new ArrayList<>();
 			if(boardKeyword.equals("")) {
 				companyBoardList = boardDao.ajaxCompanyBoardList(startEndVoForAjax);
+				
+				for(int i =0; i<companyBoardList.size(); i++) {
+					String target = companyBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					companyBoardList.get(i).setBoardContent(target);
+				}
+				
 			}	
 			else if(!boardKeyword.equals("")) {
 				companyBoardList	= boardDao.ajaxSearchCompanyBoardList(boardKeyword);
+				
+				for(int i =0; i<companyBoardList.size(); i++) {
+					String target = companyBoardList.get(i).getBoardContent();
+					if(target.length()>25) {
+						target = target.substring(0, 25) + "...";
+					}
+					
+					companyBoardList.get(i).setBoardContent(target);
+				}
+				
 			}		
 			
 			return companyBoardList;
