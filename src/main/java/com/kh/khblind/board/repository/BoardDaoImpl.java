@@ -303,6 +303,14 @@ public class BoardDaoImpl implements BoardDao {
 			sqlSession.delete("hashtag.deleteHash", boardNo);			
 		}
 
+
+		@Override
+	      public List<BoardCategoryVO> myWrite(int memberNo) {
+	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);
+	         return boardList;
+	      }
+
+
 		@Override
 		public List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", startEndVoForAjax);

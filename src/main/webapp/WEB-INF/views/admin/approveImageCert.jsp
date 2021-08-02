@@ -138,7 +138,7 @@
                 </div>
 
 
-                <div id="image-sector" class="col-9 row">
+                <div id="image-sector" class="col-7 row">
 
                     <img id="image-frame" class="col-12 img-fluid" src="${root}/img/default-id-card.png">
                 </div>

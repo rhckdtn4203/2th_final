@@ -290,19 +290,19 @@ public class BoardController {
 		//1-3-1. 내 글이 아니면 *****처리를 해준다. 
 		int writerMemberNo = boardDto.getMemberNo();
 		
-		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
-			String memberNick = boardMemberVO.getMemberNick();
-			char firstChar = memberNick.charAt(0);
-			int nickLength = memberNick.length();
-			
-			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
-			stringBuilderForBlindedNick.append(firstChar);
-			for(int i = 0; i <nickLength-1; i++) {
-				stringBuilderForBlindedNick.append("*");
-				}
-			String blindedNick = stringBuilderForBlindedNick.toString();
-			boardMemberVO.setMemberNick(blindedNick);
-		}
+//		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
+//			String memberNick = boardMemberVO.getMemberNick();
+//			char firstChar = memberNick.charAt(0);
+//			int nickLength = memberNick.length();
+//			
+//			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
+//			stringBuilderForBlindedNick.append(firstChar);
+//			for(int i = 0; i <nickLength-1; i++) {
+//				stringBuilderForBlindedNick.append("*");
+//				}
+//			String blindedNick = stringBuilderForBlindedNick.toString();
+//			boardMemberVO.setMemberNick(blindedNick);
+//		}
 		
 		model.addAttribute("boardMemberVO", boardMemberVO);
 		//2. 분류이름을 가져오는 과정
@@ -455,48 +455,55 @@ public class BoardController {
 		//7.이미지
 //		List<ResponseEntity<ByteArrayResource>> imageFileList = uploadImageDao.getImageToJsp(boardNo);
 //		model.addAttribute("imageFileList", imageFileList);
-		
+
 		//8. 투표1
 		//토픽 정보를 가져온다
-		VoteTopicDto voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
-		
-		//8-1. 이미 투표한건지 알아본다.
-		int voteTopicNo = voteTopicDto.getVoteTopicNo();
+		VoteTopicDto voteTopicDto = new VoteTopicDto();
+			if(voteDao.getVoteTopicInfo(boardNo) != null) {
+				voteTopicDto = voteDao.getVoteTopicInfo(boardNo);
+				//8-1. 이미 투표한건지 알아본다.
+				int voteTopicNo = voteTopicDto.getVoteTopicNo();
 
-		try {
+				try {
+								
+					VoteResultDto voteResultDto =  VoteResultDto.builder()
+							.voteTopicNo(voteTopicNo)
+							.memberNo(memberNo)
+							.build();
+					boolean didYouVote = voteDao.didYouVote(voteResultDto);
+					
+					System.out.println("투표 여부" + didYouVote);
+					
+					if(didYouVote) {
 						
-			VoteResultDto voteResultDto =  VoteResultDto.builder()
-					.voteTopicNo(voteTopicNo)
-					.memberNo(memberNo)
-					.build();
-			boolean didYouVote = voteDao.didYouVote(voteResultDto);
-			
-			System.out.println("투표 여부" + didYouVote);
-			
-			if(didYouVote) {
+						int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
+						model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
+						model.addAttribute("didYouVote", "voted");
+
+					}else {
+						model.addAttribute("didYouVote", "didntVote");
+
+					}			
+					
+				} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
+						model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
+				}
 				
-				int selectedVoteOptionNo = voteDao.getSelectedOptionNoThatTopic(voteResultDto);
-				model.addAttribute("selectedVoteOptionNo", selectedVoteOptionNo);
-				model.addAttribute("didYouVote", "voted");
+				model.addAttribute("VoteTopicInfo", voteTopicDto);
+				System.out.println("voteTopicDto = " + voteTopicDto);
 
-			}else {
-				model.addAttribute("didYouVote", "didntVote");
-
-			}			
-			
-		} catch (NullPointerException nullPointerException) {//memberDto가 비어있을 때 - 로그인 안 하고 들어올때 
-				model.addAttribute("didYouVote", "notLogin"); //이름... ㅠㅠㅠ
-		}
-		
-		model.addAttribute("VoteTopicInfo", voteTopicDto);
-		System.out.println("voteTopicDto = " + voteTopicDto);
-
-		//8-2선택지 정보를 가져온다
-		
-		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
-		
-		System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
-		model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
+				//8-2선택지 정보를 가져온다
+				
+				List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
+				
+				System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
+				model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
+			}
+			else {
+				voteTopicDto.setVoteTopicNo(0); //없을 때 
+				model.addAttribute("VoteTopicInfo", voteTopicDto);
+			}
+	
 		
 		
 		//9. 댓글
