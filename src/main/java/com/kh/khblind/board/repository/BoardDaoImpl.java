@@ -314,12 +314,14 @@ public class BoardDaoImpl implements BoardDao {
 		public List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			System.out.println("페이지대신" + startEndVoForAjax);
 			List<MetamonBoardListVO> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", startEndVoForAjax);
+			
 			return jobCategoryBoardList;
 		}
 
 		@Override
 		public List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", startEndVoForAjax);
+			
 			return boardCategoryBoardList;
 		}
 
