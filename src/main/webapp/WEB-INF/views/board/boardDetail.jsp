@@ -440,6 +440,10 @@ $(function(){
 		box-sizing: border-box;
 		}
 		
+        .xfxf{
+		display: inline;
+		}
+		
 		.vote-btn{
 		margin-bottom: auto;
 		}
@@ -514,7 +518,7 @@ $(function(){
 
 <div class="container-fluid bbxb">
 	<div id="board-detail-zone" class="offset-1 col-10 row mt-4 bbxb">
-		<div id="left-area" class="col-9 bbxb">
+		<div id="left-area" class="col-8 bbxb">
 			<div id="board-sector" class="row bbxb">
 				
 				<!--top 시작-->
@@ -713,19 +717,19 @@ $(function(){
 				<!-- middle 끝 -->
 				
 				<!-- bottom 시작 -->
-      			<div id="botton" class="row bbxb">
+      			<div id="botton" class="row col-12 bbxb ">
 					<div id="comments-area" class="row col-12 bbxb">
                 
 <!-- 	                <div id="comments-sign" class="col-12 row bbxb"> -->
 <!-- 	                    <span class="font-weight-bold col-2">댓글</span><span class="font-weight-bold  bbxb">44</span> -->
 <!-- 	                </div> -->
-	                <div class="col-12"><hr class="semi-hr"></div>
+	                <div class="row col-12 bbxb"><hr class="semi-hr"></div>
 					
 					<!-- 원댓글 작성부분 -->
 	                <div id="insert-comments" class="col-12 bbxb">
 	                    <form action="commentInsert" method="post">
 							<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
-	                        <textarea class="col-12" id="insert-comments1-textarea" class="form-control form-control-md bbxb" name="commentsContent" placeholder="댓글을 입력해주세요"></textarea>
+	                        <textarea class="col-12" id="insert-comments1-textarea" class="form-control form-control-md xfxf" name="commentsContent" placeholder="댓글을 입력해주세요"></textarea>
 	                        <div class="text-right bbxb">
 	                        	<button class="btn btn-secondary btn-sm" type="submit">댓글달기</button>
 	                        </div>
@@ -746,16 +750,14 @@ $(function(){
 			                                ${commentsVO.commentsContent}
     				                            <c:if test="${commentsVO.ownComments == 1}">
     				                            <!-- 여기 -->
-    				                            <b>내 댓글입니다??!?!??</b>
 				                                </c:if>
               				                    <c:if test="${commentsVO.ownComments == 0}">
-              				                    <b>남의 댓글입니다!!</b>
 				                                </c:if>
 			                            </p>
 			                        </div>
 			                        <div class="bottom col-12 row mb-3 bbxb">
 			                            <div class="col-3">
-			                                <small><i class="far fa-clock">&nbsp;망할</i></small>
+			                                <small><i class="far fa-clock">&nbsp;</i></small>
 			                            </div>
 <!-- 			                            <div class="col-2"></div> -->
 			                            <div class="col-2 text-right bbxb">
@@ -767,11 +769,11 @@ $(function(){
 				                            <form action="commentsDelete" method="get">
 											   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
 											   <input type="hidden" name="commentsNo" value="${commentsVO.commentsNo}">
-											   <input type="submit" value="삭제">
+											   <input class="btn btn-secondary btn-sm"  type="submit" value="삭제">
 											</form>
 			                            </div>
-			                            <div class="col-5 text-right bbxb">
-										<button id="write-comments2-to-${commentsVO.commentsNo}">대댓글</button>
+			                            <div class="col-4 text-right bbxb">
+										<button class="btn btn-secondary btn-sm" id="write-comments2-to-${commentsVO.commentsNo}">대댓글</button>
 <%-- 			                                <small><i id="write-comments2-to-${commentsVO.commentsNo}" class="far fa-comment-dots fa-1x nestedComment-btn">&nbsp;</i></small> --%>
 			                            </div>
 			                        </div> 
@@ -806,7 +808,7 @@ $(function(){
 				                        </div>
 				                        <div class="bottom col-12 row mb-3 bbxb">
 				                            <div class="col-4 bbxb">
-				                                <small><i class="far fa-clock">&nbsp;망할</i></small>
+				                                <small><i class="far fa-clock">&nbsp;</i></small>
 				                            </div>
 				                            <div class="col-5 bbxb"></div>
 				                            <div class="col-3 text-right bbxb">
@@ -822,7 +824,7 @@ $(function(){
    				</div>
    			</div>
    		</div>
-		<div id="ad-area" class="col-3 aaaa bbxb">
+		<div id="ad-area" class="col-4 aaaa bbxb">
 		         	광고가 나온다
 		</div>
    	</div>
