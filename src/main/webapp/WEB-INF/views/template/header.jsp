@@ -44,9 +44,7 @@
 	});	
 </script>
 <script id="template" type="text/template">
-	<div class="row text-left">
-		<span>{{rank}} {{keyword}}</span>
-	</div>		
+		<h5 class="rank-list">{{rank}} {{keyword}}</h5>
 </script>
 
   <script>
@@ -56,8 +54,12 @@
 	    }
 	});
   </script>
-
-
+  <style>
+  	.rank-list{
+  		font-size: 11px;
+  		margin-top: 0.5px;
+  	}
+  </style>
 </head>
 
 <body>

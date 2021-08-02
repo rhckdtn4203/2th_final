@@ -136,8 +136,8 @@
 
         <div class="s1Box" id="sb2">
            	<div id="aside">
-					<div class="row text-left"><h3 style="font-weight:bold;"> 실시간 검색 순위</h3></div>
-					<div id="ranking" class="row"></div>
+					<h3 style="font-weight:bolder;"> 실시간 검색 순위</h3>
+					<div id="ranking"></div>
 			</div>
         </div>
 
