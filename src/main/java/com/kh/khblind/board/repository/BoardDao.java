@@ -5,11 +5,7 @@ import java.util.List;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
-<<<<<<< HEAD
 import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
-=======
-import com.kh.khblind.board.entity.BoardCategoryVO;
->>>>>>> refs/remotes/origin/seokHyun
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -87,7 +83,6 @@ public interface BoardDao {
 	//조회수 증가 기능
 	void addViewCount(int boardNo);
 	void deleteHash(int boardNo);
-	List<BoardCategoryVO> myWrite(int memberNo);
 	
 	//ajax 목록 기능
 	List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax);
