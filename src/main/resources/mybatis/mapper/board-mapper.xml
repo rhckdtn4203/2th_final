@@ -135,6 +135,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 		 ) where rn between 1 and 7	
      </select>
      
+     <select id="getCompanyKeywordList" parameterType="string" resultType="BoardCategoryBoardDto">
+	 	select * from (
+	 				select rownum rn, TMP.* from(
+	 				 	select * from board_category_board_view where instr(board_content, #{keyword}) || instr(board_title, #{keyword}) > 0
+	 				)	TMP
+	 	) where rn between 1 and 5 order by board_count desc, board_date desc
+	 </select>
+     
                 
 </mapper>
 
