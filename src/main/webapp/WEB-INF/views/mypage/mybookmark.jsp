@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
-
 .wrap-bookmark{
     
     width: 1200px;
@@ -32,9 +31,6 @@ color: black;
 text-align: right;
 border-bottom: 2px solid lightgray;
 }
-
-
-
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -42,9 +38,6 @@ border-bottom: 2px solid lightgray;
     
     <div class="mainArea">
         <div>
-        
-        
-<%--         ${bookmarkList} --%>
         <c:forEach var="BookmarkVO" items="${bookmarkList}">
 	<p> [${BookmarkVO.boardCategoryName}]</p>	
 	<a class="boardTitle" href="${pageContext.request.contextPath}/board/boardDetail?boardNo=${BookmarkVO.boardNo}">${BookmarkVO.boardTitle}</a>
