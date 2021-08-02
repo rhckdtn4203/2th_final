@@ -8,18 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-            <!-- 부트스트랩을 가져온다 -->
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+            
             <!-- 제이쿼리를 가져온다 -->
             <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <!-- UI제이쿼리를  가져온다 -->
             <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-            <!-- Popper를 가져온다 -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
             <!-- 폰트어썸 아이콘을 가져온다-->
             <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-            <!-- 부트와치를 가져온다.-->
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+            
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
+            
+            
    <script>
    //로드되면 한 번 실행
    $(document).ready(function(){
@@ -165,36 +167,36 @@
    	= script 영역에 id를 부여하여 불러와서 사용한다.
      -->
    <script id="list-board-template" type="text/template">
-   	<div id="board-{{boardNo}}|" class="board-cell col-6">
+   	<div id="board-{{boardNo}}|" class="board-cell col-6 bbxb">
 
-                <div class="board-area row">
-                    <!-- <div class="board-type col-12"><small>{{boardCategoryName}}</small></div> -->
-                    <div class="board-title col-12 mt-2"><b>{{boardTitle}}</b></div>
-                    <div class="baord-content col-12 p-2 px-4"><small>{{boardContent}}</small></div>
+                <div class="board-area row bbxb">
+                    <!-- <div class="board-type col-12 bbxb"><small>{{boardCategoryName}}</small></div> -->
+                    <div class="board-title col-12 mt-2 bbxb"><b>{{boardTitle}}</b></div>
+                    <div class="baord-content col-12 p-2 px-4 bbxb"><small>{{boardContent}}</small></div>
                 </div>
 
-                <div class="writer-area row">
-                    <div class="writer-info">
+                <div class="writer-area row bbxb">
+                    <div class="writer-info bbxb">
                         <small><span>{{memberNick}}</span></small>
                     </div>
                 </div>
 
-                <div class="info-area row">
-                    <div class="view-count col-2">
+                <div class="info-area row bbxb">
+                    <div class="view-count col-2 bbxb">
                         <small><i class="fas fa-mouse fa-1x">{{boardCount}}</i></small>
                     </div>
 
-                    <div class="like-count col-2">
+                    <div class="like-count col-2 bbxb">
                         <small><i class="far fa-thumbs-up fa-1x">{{likeCount}}</i></small>
                     </div>
 
-                    <div class="like-count col-2">
+                    <div class="like-count col-2 bbxb">
                         <small><i class="far fa-comment-dots fa-1x">{{commentsCount}}</i></small>
                     </div>
 
-                    <div class="empty col-5"></div>
+                    <div class="empty col-5 bbxb"></div>
 
-                    <div class="write-time-col-3">
+                    <div class="write-time-col-3 bbxb">
                         <small><i class="far fa-clock">&nbsp;{{boardDate}}</i></small>
                     </div>
                 </div>
@@ -217,6 +219,11 @@
        #wrap{
       text-align: left;
       }
+      
+	       .bbxb{
+	   box-sizing: border-box;
+	
+	   }   
     </style>
 </head>
 <!-- <button id="test-btn">TEST</button> -->
