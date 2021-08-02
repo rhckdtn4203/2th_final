@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding');
+:root {
+  --color-text: #fff;
+  --color-bg: #ddd;
+  --font-text: 'Nanum Gothic Coding', monospace;
+  --fontsize-text: 20px;
+}
+.findwrap {
+  min-height: 100vh;
+
+  color: var(--color-text);
+  background-color: #fff;
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 1s;
+}
+.sections {
+  position: relative;
+  display: block;
+  padding: 0 5vmax;
+}
+.section {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* .inputFind {
+  display: block;
+  position: relative;
+  max-width: 100%;
+  margin: 10vh 0 30vh auto;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.active .inputFind {
+  opacity: 1;
+} */
+/* .section--image img {
+  display: block;
+  position: relative;
+  max-width: 90%;
+  max-height: 100vh;
+  margin: 0 0 0 auto;
+} */
+.inputFind {
+  width: 40%;
+  border: 6px double white;
+  border-radius: 0.5em;
+  text-align: center;
+  padding: 80px 60px 50px 1px;
+
+  font-size: calc(var(--fontsize-text));
+  font-family: var(--font-text);
+  position: absolute;
+  bottom: 16vmax;
+  left: 25%;
+  padding-left: 3vmax;
+  z-index: 1000;
+  line-height: 1;
+  font-weight: 300;
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+.active .inputFind {
+  animation-name: fadeInUp;
+}
+.findTitle h2{
+  position: absolute;
+  top:-60px;
+  left: 190px;
+  color: var(--color-green);
+  background-color: white;
+  padding: 20px 20px;
+  border-radius: 0.5em;
+}
+
+.form-input{
+  width: 100%;
+  margin: 20px auto;
+  height: 40px;
+  border: none;
+  padding: 0 5px;
+  background-color: wheat;
+}
+
+.login-btn{
+position: relative;
+  margin: 5px;
+  border: none;
+  color: wheat;
+  background-color: var(--color-green);
+  font-size: 20px;
+  font-weight: var(--weight-6);
+  
+  cursor: pointer;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.login-btn:hover{
+	background: #fbfdfa;
+  color: #050801;
+  box-shadow: 0 0 5px #fbfdfa,
+              0 0 25px #fbfdfa,
+              0 0 50px #fbfdfa,
+              0 0 200px #fbfdfa;
+  -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+#findicon{
+position: absolute;
+font-size: 20px;
+top: 30em;
+left:25em;
+}
+@keyframes fadeInUp {
+  0% {
+    transform: translate3d(0, 55%, 0);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
