@@ -1,16 +1,12 @@
 package com.kh.khblind.board.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
-import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
@@ -32,12 +27,11 @@ import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteFullVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.BookmarkDto;
+import com.kh.khblind.board.entity.BookmarkVO;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
 import com.kh.khblind.board.entity.CommentsVO;
-import com.kh.khblind.board.entity.CompanyBoardDto;
 import com.kh.khblind.board.entity.CompanyGroupDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
-import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.board.repository.BoardLikeDao;
@@ -51,9 +45,8 @@ import com.kh.khblind.board.vote.entity.VoteResultDto;
 import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
-import com.kh.khblind.search.entity.SearchDto;
-import com.kh.khblind.search.repository.SearchDao;
 import com.kh.khblind.member.repository.MemberDao;
+import com.kh.khblind.search.repository.SearchDao;
 
 @RequestMapping("/board")
 @Controller
@@ -794,6 +787,17 @@ public class BoardController {
 	         
 	         return "redirect:boardDetail?boardNo="+boardNo;
 	      }
+	   @GetMapping("mybookmark")
+	   public String mybookmark(HttpSession session,Model model) {
+		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		      int memberNo = memberDto.getMemberNo();
+		      List<BookmarkVO> bookmarkList = new ArrayList<>();
+
+		      bookmarkList = bookmarkDao.MyBookmark(memberNo);
+				model.addAttribute("bookmarkList",bookmarkList);
+			return "mypage/mybookmark";}
+			
+			
 	   
 	   @GetMapping("imageDownloadTest")
 	   public String imageDownloadTest() {

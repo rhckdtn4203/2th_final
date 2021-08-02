@@ -24,42 +24,63 @@ public class CategoryController {
 	private SqlSession sqlSession;
 	
 	
-	@RequestMapping("/category")
-	public String home(Model model) {
-		List<CategoryDto>categoryList = sqlSession.selectList("category.list");
-		System.out.println("@@@@@@@@@@" +categoryList);
-		model.addAttribute("categoryList", categoryList);
-		return "admin/category";
-	}
+//	@RequestMapping("/category")
+//	public String home(Model model) {
+//		List<CategoryDto>categoryList = sqlSession.selectList("category.list");
+//		model.addAttribute("categoryList", categoryList);
+//		return "admin/category";
+//	}
 	
 	@GetMapping("/categoryInsert")
 	public String insert() {
-		return "admin/category";
+		return "admin/categoryList";
 	}
 	
 	@PostMapping("/categoryInsert")
-	public String insert(@ModelAttribute CategoryDto categoryDto) {
+	public String insert(Model model
+			,@ModelAttribute CategoryDto categoryDto) {
 		categoryDao.insert(categoryDto);
 		
-		return "redirect:category";
+		
+		return "redirect:categoryList";
 	}
 	
 	@GetMapping("/categoryDelete")
 	public String delete(int boardCategoryNo) {
 		categoryDao.delete(boardCategoryNo);
-		return "redirect:category";
+		return "redirect:categoryList";
 		
 	}
 	@GetMapping("/categoryList")
-	public List<CategoryDto> list(Model model){
-		List<CategoryDto>categoryList = sqlSession.selectList("category.list");
+	public String list(Model model,CategoryDto categoryDto){
+		
+		List<CategoryDto> categoryList = sqlSession.selectList("category.list");
+		int categoryCount = categoryList.size();
+		
+		model.addAttribute("icon", categoryList.get(categoryList.size()-1).getBoardCategoryIcon());
+		System.out.println(categoryList.get(categoryList.size()-1).getBoardCategoryIcon() + "@@@@@");
+		
+		for(int i=0; i<categoryList.size(); i++) {
+		String categoryIcon=categoryList.get(i).getBoardCategoryIcon().replaceAll("\"", "&quot");	
+		categoryList.get(i).setBoardCategoryIcon(categoryIcon);
+		}
+		if(categoryCount>10) {
+			categoryCount=10;
+		}
+		model.addAttribute("categoryCount", categoryCount+1);
 		model.addAttribute("categoryList", categoryList);
-		return categoryDao.list();
+		return "admin/category";
 	}
 	@GetMapping("/categoryEdit")
 	public String edit(@ModelAttribute CategoryDto categoryDto) {
+		System.out.println(categoryDto);
+//		for(int i=0; i<categoryList.size(); i++) {
+//			categoryIcon=categoryList.get(i).getBoardCategoryIcon().replaceAll("&quot", "\"");	
+//			categoryList.get(i).setBoardCategoryIcon(categoryIcon);
+//			}
+		
 		categoryDao.edit(categoryDto);
-		return "redirect:category";
+		return "redirect:categoryList";
 	}
 	
 }
