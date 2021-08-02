@@ -2,12 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style2.css">
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style2.css">
 
+<style>
+.login-btn{
+position: relative;
+  margin: 5px;
+  border: none;
+  color: wheat;
+  background-color: var(--color-green);
+  font-size: 20px;
+  font-weight: var(--weight-6);
+  
+  cursor: pointer;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
 
+.login-btn:hover{
+	background: #fbfdfa;
+  color: #050801;
+  box-shadow: 0 0 5px #fbfdfa,
+              0 0 25px #fbfdfa,
+              0 0 50px #fbfdfa,
+              0 0 200px #fbfdfa;
+  -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+</style>
 
 <section class="section-1">
 	
@@ -27,18 +53,18 @@
     		<div class="group">
       
 	        <label>아이디</label>
-		    <input type="text" class="form-control" id="inputId" name="memberId" placeholder="ID">
+		    <input type="text" class="form-control" onblur="checkId();" id="inputId" name="memberId" placeholder="ID">
 		    </div>
 		    
 		    <div class="group">
 		        <label>비밀번호</label>
-		        <input type="password" class="form-control" id="inputPw" name="memberPw" placeholder="Password">
+		        <input type="password" class="form-control" onblur="checkId();" id="inputPw" name="memberPw" placeholder="Password">
 		    </div>
     	</div>
     	
 		 <div class="login-btn-box">
-			<input type="submit" value="로그인" class="login-btn">
-	</div>
+			<input type="submit" value="로그인" class="login-btn" onsubmit="return formCheck();">
+		</div>
 	</form>
 
 	
@@ -51,13 +77,13 @@
 	
 	<div class="input-side">
     <div class="inputside-1">
-    <a href="${pageContext.request.contextPath}/pr/signup" class="side-info">회원가입</a>
+    <a href="${pageContext.request.contextPath}/member/signup" class="side-info">회원가입</a>
     </div>
     <div class="inputside-1" id="inputside-middle">
-    <a href="${pageContext.request.contextPath}/pr/find_id" class="side-info">아이디찾기</a>
+    <a href="${pageContext.request.contextPath}/member/find_id" class="side-info">아이디찾기</a>
     </div>
     <div class="inputside-1">
-    <a href="${pageContext.request.contextPath}/pr/fidn_pw" class="side-info">비밀번호찾기</a>
+    <a href="${pageContext.request.contextPath}/member/fidn_pw" class="side-info">비밀번호찾기</a>
     </div>
     
       </div>
@@ -65,14 +91,15 @@
 
 </section>
 
+
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
-<script>
-function formCheck(){
-	
-}
-</script>
+
+<!-- 
+
+
 <script type="text/javascript"> 
 
 function loginchk(){
@@ -105,4 +132,4 @@ function loginchk(){
 	 }
  document.form.submit();
 }
-</script>
+</script> -->

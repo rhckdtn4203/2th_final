@@ -1,12 +1,30 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>성공</h1>
-</body>
-</html>
+	pageEncoding="UTF-8"%>
+	
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+
+<section class="section-3">
+  
+  <div class="successTitle-box">
+    <h2>내 정보가 수정되었습니다!</h2>
+  </div>
+
+  <div class="success-box">
+    
+    <div class="row">
+      <h3><a href="${pageContext.request.contextPath}"><i class="fas fa-laptop-house"></i>홈</a></h3>
+    </div>
+  
+	
+    <div class="row">
+      <h3><a href="${pageContext.request.contextPath}/member/mypage">네 정보 페이지로 돌아가기</a></h3>
+    </div>
+  </div>
+
+</section>
+
+
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -1,13 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style5.css">
+
 <body>
-<h1>성공</h1>
-<h2>${dtoss.memberId}입니다 </h2>
-</body>
-</html>
+
+<div class="findwrap">
+  
+    <div class="sections">
+      <div class="section active" data-bgcolor="#C0D85D">
+        <div class="inputFind">
+          <div class="findTitle">
+            <h2>YOU GET SUCCESS!
+            </h2>
+          </div>
+          
+            <div class="row-left">
+           
+				<p id="p-search">회원님의 아이디는 <span id="p-span">${dtoss.memberId}</span>입니다</p>
+	
+            </div>
+            
+            <div class="row-left">
+            <a href="">로그인</a>
+            <a href="">비밀번호 찾기</a>
+         	</div>
+
+        </div>
+        </div>
+        </div>
+        </div>
+        
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

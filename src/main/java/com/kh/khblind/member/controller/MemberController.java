@@ -131,7 +131,7 @@ public class MemberController {
 
 	@GetMapping("/change_pw")
 	public String change_pw() {
-
+		
 		return "member/change_pw";
 	}
 
@@ -167,7 +167,7 @@ public class MemberController {
 
 	@GetMapping("/deletecount")
 	public String deletecount() {
-		return "member/goodbye";
+		return "member/deletecount";
 
 	}
 

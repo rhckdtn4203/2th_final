@@ -19,7 +19,7 @@
   
 	
     <div class="row">
-      <h3><a href="${pageContext.request.contextPath}/members/login">로그인 하시겠습니까?</a></h3>
+<h3><a href="${pageContext.request.contextPath}/member/login">로그인</a></h3>
     </div>
   </div>
 
