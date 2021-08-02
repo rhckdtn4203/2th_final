@@ -1,11 +1,14 @@
 package com.kh.khblind.board.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.board.entity.BoardLikeDto;
 import com.kh.khblind.board.entity.BookmarkDto;
+import com.kh.khblind.board.entity.BookmarkVO;
 
 @Repository
 public class BookmarkDaoImpl implements BookmarkDao {
@@ -30,5 +33,13 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		else return false;
 		 
 	}
+	
+	//내가 북마크한 게시글 찾는 메소드
+	   @Override
+	   public List<BookmarkVO> MyBookmark(int memberNo) {
+	      List<BookmarkVO> BookmarkList = sqlSession.selectList("bookmark.mybookmark",memberNo);  
+	      
+	      return BookmarkList;
+	   }
 }
 

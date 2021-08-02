@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -78,6 +79,7 @@ public interface BoardDao {
 	//조회수 증가 기능
 	void addViewCount(int boardNo);
 	void deleteHash(int boardNo);
+	List<BoardCategoryVO> myWrite(int memberNo);
 	
 	//
 }

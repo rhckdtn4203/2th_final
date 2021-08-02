@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -297,6 +298,13 @@ public class BoardDaoImpl implements BoardDao {
 		public void deleteHash(int boardNo) {
 			sqlSession.delete("hashtag.deleteHash", boardNo);			
 		}
+		
+		@Override
+	      public List<BoardCategoryVO> myWrite(int memberNo) {
+	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);  
+	         
+	         return boardList;
+	      }
 
 
 	}

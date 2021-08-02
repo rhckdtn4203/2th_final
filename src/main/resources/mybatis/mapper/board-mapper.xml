@@ -111,6 +111,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	 <update id="addCount" parameterType="int">
 		update board set  board_count = board_count+1 where board_no = #{boardNo}
 	 </update>
+	 
+	<select id="myWrite" resultType="BoardCategoryVO">
+       select * from board_category_view where member_no = #{memberNo}
+    </select>	 
+    
+<!--     <select id="mybookmark" resultType="BookmarkVO"> -->
+<!--    select * from bookmark_view where member_no = #{memberNo} order by board_date -->
+<!--    </select> -->
+   
+   
+	 
+	 
 </mapper>
 
 

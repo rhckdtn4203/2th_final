@@ -24,6 +24,7 @@ import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
+import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardEditGetInfoVO;
@@ -32,6 +33,7 @@ import com.kh.khblind.board.entity.BoardMemberVO;
 import com.kh.khblind.board.entity.BoardWriteFullVO;
 import com.kh.khblind.board.entity.BoardWriteVO;
 import com.kh.khblind.board.entity.BookmarkDto;
+import com.kh.khblind.board.entity.BookmarkVO;
 import com.kh.khblind.board.entity.CheckBoardTypeDto;
 import com.kh.khblind.board.entity.CommentsVO;
 import com.kh.khblind.board.entity.CompanyBoardDto;
@@ -839,35 +841,36 @@ public class BoardController {
 	         
 	   }
 	   @GetMapping("bookmarkInsert")
-	      public String bookmarkInsert(int boardNo,HttpSession session) {
-		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-		   	
-	         int memberNo = memberDto.getMemberNo();
-	         if(memberDto !=null) {
-	         
-	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
-	            .boardNo(boardNo)
-	            .memberNo(memberNo)
-	         .build();
-	         bookmarkDao.BookmarkInsert(bookmarkDto);}
-	         
-	         return "redirect:boardDetail?boardNo="+boardNo;
-	      }
+       public String bookmarkInsert(int boardNo,HttpSession session) {
+       MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+          
+          int memberNo = memberDto.getMemberNo();
+          if(memberDto !=null) {
+          
+             BookmarkDto bookmarkDto=BookmarkDto.builder()
+             .boardNo(boardNo)
+             .memberNo(memberNo)
+          .build();
+          bookmarkDao.BookmarkInsert(bookmarkDto);}
+          
+          return "redirect:boardDetail?boardNo="+boardNo;
+       }
+
 	   
-	   @GetMapping("bookmarkDelete")
-	      public String bookmarkDelete(int boardNo,HttpSession session) {
-		   MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
-	         int memberNo = memberDto.getMemberNo(); 
-	         if(memberDto !=null) {
-	         
-	        	 BookmarkDto bookmarkDto=BookmarkDto.builder()
-	            .boardNo(boardNo)
-	            .memberNo(memberNo)
-	         .build();
-	         bookmarkDao.BookmarkDelete(bookmarkDto);}
-	         
-	         return "redirect:boardDetail?boardNo="+boardNo;
-	      }
+	      @GetMapping("bookmarkDelete")
+	         public String bookmarkDelete(int boardNo,HttpSession session) {
+	         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+	            int memberNo = memberDto.getMemberNo(); 
+	            if(memberDto !=null) {
+	            
+	               BookmarkDto bookmarkDto=BookmarkDto.builder()
+	               .boardNo(boardNo)
+	               .memberNo(memberNo)
+	            .build();
+	            bookmarkDao.BookmarkDelete(bookmarkDto);}
+	            
+	            return "redirect:boardDetail?boardNo="+boardNo;
+	         }
 	   
 	   @GetMapping("imageDownloadTest")
 	   public String imageDownloadTest() {
@@ -881,4 +884,29 @@ public class BoardController {
          System.out.println("댓글삭제");
          return "redirect:boardDetail?boardNo="+boardNo;
       }
+      
+      @GetMapping("mywrite")
+      public String mywrite(HttpSession session,Model model) {
+         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+            int memberNo = memberDto.getMemberNo();
+            List<BoardCategoryVO> mywriteList = new ArrayList<>();
+
+            mywriteList = boardDao.myWrite(memberNo);
+            model.addAttribute("mywriteList",mywriteList);
+         return "mypage/mywrite";
+            
+      }
+
+ @GetMapping("mybookmark")
+      public String mybookmark(HttpSession session,Model model) {
+         MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+            int memberNo = memberDto.getMemberNo();
+            List<BookmarkVO> bookmarkList = new ArrayList<>();
+
+            bookmarkList = bookmarkDao.MyBookmark(memberNo);
+            model.addAttribute("bookmarkList",bookmarkList);
+         return "mypage/mybookmark";
+            
+      }
+ 
 }
