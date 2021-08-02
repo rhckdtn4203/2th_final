@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <img src="${pageContext.request.contextPath}/company/companyProfile?companyNo=${companyVO.companyNo}" width=200 height=200></img>
 <h1>${companyVO.companyName}</h1>
 
@@ -26,3 +28,5 @@
 <span>설립일 : ${companyVO.companyEstablishment}</span>
 <br>
 <span>회사 소개 : ${companyVO.companyIntroduce}</span>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
