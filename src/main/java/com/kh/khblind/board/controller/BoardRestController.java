@@ -55,10 +55,11 @@ public class BoardRestController {
 			System.out.println("[레컨] " +startEndVoForAjax);
 			//일단 저장소를 만든다.(자바가 멍청한건지 if문안에 변수가 있으면 모름)
 			List<MetamonBoardListVO> jobCategoryBoardList = new ArrayList<>();
-		
 //			if(keyword == null) { 이거 안됌
 			if(boardKeyword.equals("")) { //키워드가 없으면 일반목록 조회
 				jobCategoryBoardList = boardDao.ajaxJobCategoryBoardList(startEndVoForAjax);
+			
+				
 			}	
 			else if(!boardKeyword.equals("")) {
 				jobCategoryBoardList	= boardDao.ajaxSearchJobCategoryBoardList(boardKeyword);
