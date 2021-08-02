@@ -6,6 +6,7 @@ import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
+import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -108,5 +109,6 @@ public interface BoardDao {
 	
 	//기업리뷰페이지 기업키워드 목록기능
 	List<BoardCategoryBoardDto> getCompanyKeywordList(String keyword);
+	List<BoardCategoryVO> myWrite(int memberNo);
 	
 }
