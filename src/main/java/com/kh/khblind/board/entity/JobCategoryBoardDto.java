@@ -16,4 +16,7 @@ public class JobCategoryBoardDto {
 	private int boardCount;
 	private String memberNick;
 	private Date boardDate;
+	
+	private int likeCount;
+	private int commentsCount;
 }

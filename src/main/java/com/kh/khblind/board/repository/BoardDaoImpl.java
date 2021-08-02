@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
-import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
@@ -296,20 +295,13 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public void addViewCount(int boardNo) {
 			sqlSession.update("board.addCount",boardNo);
-			System.out.println("조회수 증가.");
+			System.out.println("조회수 증가");
 		}
 
 		@Override
 		public void deleteHash(int boardNo) {
 			sqlSession.delete("hashtag.deleteHash", boardNo);			
 		}
-		
-		@Override
-	      public List<BoardCategoryVO> myWrite(int memberNo) {
-	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);  
-	         
-	         return boardList;
-	      }
 
 		@Override
 		public List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax) {
@@ -322,12 +314,14 @@ public class BoardDaoImpl implements BoardDao {
 		public List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			System.out.println("페이지대신" + startEndVoForAjax);
 			List<MetamonBoardListVO> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", startEndVoForAjax);
+			
 			return jobCategoryBoardList;
 		}
 
 		@Override
 		public List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", startEndVoForAjax);
+			
 			return boardCategoryBoardList;
 		}
 
