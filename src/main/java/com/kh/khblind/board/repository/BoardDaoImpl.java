@@ -359,5 +359,11 @@ public class BoardDaoImpl implements BoardDao {
 			return boardCategoryListByLikeCount;
 		}
 
+		@Override
+		public List<BoardCategoryBoardDto> getCompanyKeywordList(String keyword) {
+			List<BoardCategoryBoardDto> getCompanyKeywordList = sqlSession.selectList("board.getCompanyKeywordList", keyword);
+			return getCompanyKeywordList;
+		}
+
 
 	}
