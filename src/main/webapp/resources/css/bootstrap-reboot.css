@@ -48,11 +48,11 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
   outline: 0 !important;
 }
 
-hr {
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
-}
+/* hr { */
+/*   box-sizing: content-box; */
+/*   height: 0; */
+/*   overflow: visible; */
+/* } */
 
 
 /* h1, h2, h3, h4, h5, h6 { */
@@ -257,11 +257,11 @@ button::-moz-focus-inner,
   border-style: none;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-}
+/* input[type="radio"], */
+/* input[type="checkbox"] { */
+/*   box-sizing: border-box; */
+/*   padding: 0; */
+/* } */
 
 input[type="date"],
 input[type="time"],

@@ -618,7 +618,7 @@ $(function(){
 						</div>
 	                 <!-- 이미지 반복 끝 -->
 	                </div>
-					<c:if test="${VoteTopicInfo.voteTopicNo= ''}">
+					<c:if test="${VoteTopicInfo.voteTopicNo != '0'}">
 				       <div id="view-vote-sector" class="mt-2 bbxb">
 				            <div id="vote-top">
 				                    <div class="vote-topic-div mt-1 mb-1 row bbxb">

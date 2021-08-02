@@ -306,8 +306,7 @@ public class BoardDaoImpl implements BoardDao {
 		
 		@Override
 	      public List<BoardCategoryVO> myWrite(int memberNo) {
-	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);  
-	         
+	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);
 	         return boardList;
 	      }
 
