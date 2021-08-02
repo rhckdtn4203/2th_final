@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <h1>이메일 입력 페이지</h1>
@@ -18,3 +20,5 @@
 		<br><a href="${pageContext.request.contextPath}/company/registCompany">회사 등록 신청하기</a>
 	</c:if>
 </form>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

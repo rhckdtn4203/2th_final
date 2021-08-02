@@ -11,10 +11,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>밤부-직장인들의 수다 놀이터</title>
+
   <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/bb.png" />
 	
-  <script 
-  src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous">
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,13 +22,41 @@
   rel="stylesheet">
 
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+	$(function(){
+		$.ajax({
+			url:"${rt}/search/keywordList",
+			type:"get",
+			dataType:"json",
+			success:function(resp){
+				$("#ranking").empty();
+				for(var i=0; i <10; i++){
+					var template = $("#template").html();
+					template = template.replace("{{rank}}",i+1+".");
+					template = template.replace("{{keyword}}", resp[i].keyword);
+					$("#ranking").append(template);	
+				}
+			}
+		});
+	});	
+</script>
+<script id="template" type="text/template">
+	<div class="row text-left">
+		<span>{{rank}} {{keyword}}</span>
+	</div>		
+</script>
+
 
   <style>
   html{
   background-color: white;
   }
   </style>
+
 </head>
+
 <body>
  <div id="wrap">
       <section id="header">

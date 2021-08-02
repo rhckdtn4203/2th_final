@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function() {
@@ -21,3 +23,5 @@
 	<input type="text" name="companyRegistDomain" placeholder="회사 이메일 주소">
 	<input class="insert-btn" type="submit" value="신청하기">
 </form>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

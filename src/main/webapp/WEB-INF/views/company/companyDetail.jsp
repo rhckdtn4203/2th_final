@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<span>{{회사 이미지}}</span>
+<img src="${pageContext.request.contextPath}/company/companyProfile?companyNo=${companyVO.companyNo}" width=200 height=200></img>
 <h1>${companyVO.companyName}</h1>
 
 <br><br>
 
+<a href="${pageContext.request.contextPath}/company/companyReview?companyNo=${param.companyNo}">리뷰</a>
+<br>
+<a href="${pageContext.request.contextPath}/company/companyBoard?companyNo=${param.companyNo}">게시판</a>
+
+<br><br>
+
 <!-- 별 이미지 추가 -->
-<span>{{별점}}</span>
-<span>{{리뷰 개수}}개의 리뷰</span>
+<span>${reviewRate}</span>
+<span>${reviewCount}개의 리뷰</span>
 
 <hr>
 
@@ -20,3 +28,5 @@
 <span>설립일 : ${companyVO.companyEstablishment}</span>
 <br>
 <span>회사 소개 : ${companyVO.companyIntroduce}</span>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -36,12 +36,13 @@ public class VoteDataController {
 		System.out.println("투표했나요?" + didYouVote);
 		if(!didYouVote) {//투표 결과가 없으면
 			//투표하기
-			System.out.println("투표합니다");
 			voteResultDto.setMemberNo(memberNo);
+			System.out.println("투표합니다 | 데이터 정보  = " + voteResultDto );
+			
 			voteDao.voting(voteResultDto);
 		}
 		
-		int boardNo=2;
+		int boardNo= voteDao.getboardNo(voteResultDto.getVoteTopicNo());
 		
 		//최신값 반환하기(어찌되었건)
 		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
@@ -64,7 +65,7 @@ public class VoteDataController {
 	@GetMapping("/realtimeGetVoteTest")
 	public List<VoteOptionInfoVo> realtimeGetVoteTest(VoteResultDto voteResultDto, HttpSession session) {
 		
-		int boardNo=2;
+		int boardNo=voteDao.getboardNo(voteResultDto.getVoteTopicNo());
 		
 		//최신값 반환하기(어찌되었건)
 		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
