@@ -43,7 +43,7 @@ public class CompanyReviewDaoImpl implements CompanyReviewDao {
 	}
 
 	@Override
-	public List<HashMap<String, Integer>> companyScoreCount(int companyNo) {
+	public List<HashMap<String, String>> companyScoreCount(int companyNo) {
 		return sqlSession.selectList("companyReview.scoreCount", companyNo);
 	}
 

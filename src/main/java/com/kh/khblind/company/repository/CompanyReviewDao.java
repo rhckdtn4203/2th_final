@@ -12,5 +12,5 @@ public interface CompanyReviewDao {
 	List<ReviewMemberCategoryVO> companyReviewList(int companyNo);
 	double companyReviewRate(int companyNo);
 	int companyReviewCount(int companyNo);
-	List<HashMap<String, Integer>> companyScoreCount(int companyNo);
+	List<HashMap<String, String>> companyScoreCount(int companyNo);
 }
