@@ -1,8 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -97,11 +93,50 @@
 
 	}
 	
-	
 	.bbxb{
 	box-sizing: border-box;
 
-	}   
+	}  
+	.z{
+	font-family: 'Raleway', Arial, sans-serif;
+    position: absolute;
+    top: 10px;
+    left: -65px;
+    overflow: hidden;
+    margin: 0px;
+    width: 132%;
+    height:650px;
+    background: bisque;
+    color: #1e3932;
+    /* text-align: center; */
+    box-shadow: 0 0 5px rgb(0 0 0 / 15%);
+    font-size: 16px;
+    border-radius: 1em;
+	}
+	
+	.kk-color-1{
+	background-color : rgb(237, 245, 128);
+	}
+	
+	.kk-color-2{
+	background-color : #29bb55;
+	}
+	
+	.empty-div{
+	height: 50px;
+	}
+	
+	#wrap{
+    height: 1300px !important;
+	}
+	
+	#modiBox {
+    height: 75% !important;
+    }
+    
+    body{
+    height: 1400px !important;
+    }
 
 </style>
 
@@ -127,139 +162,85 @@ function setImageFromFile(input, expression) {
 })
 </script>
 </head>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/style4.css">
 
-<body>
-
-
-	<div id="image-cert-zone" class="row mt-3">
- 		<div class="offset-3 col-6 row mt-3">
-
-			<div class="col-12 image-title-area text-center primary-background-color">
-				<div><p id="image-title" class="font-color-khblind-gold">사원증 인증 페이지</p></div>
-			</div>
-
-  			<div class="offset-2 col-8">
-				<div id="preview-div" class="mt-3 text-center">
-					<c:if test="${imageCertProgress == 'didnt' || imageCertProgress == 'ing'}">
-					<img src="${root}/img/image-cert-before.png" id="preview-image">
-					</c:if>
-					<c:if test="${imageCertProgress == 'reject'}">
-						<img src="${root}/img/image-cert-reject.png" id="preview-image">
-					</c:if>
-					<c:if test="${imageCertProgress == 'end'}">
-						<img src="${root}/img/image-cert-end.png" id="preview-image">					
-					</c:if>
-				</div>
-
-					<div class=""><br><br></div>
-					
-							<div class="text-center">
-								<c:if test="${imageCertProgress == 'didnt'}">
-									<form action="imageInsert"  id="file-upload" method="post" enctype="multipart/form-data">
-										<div class="input-group">
-											<div class="custom-file">
-												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input" required accept=".jpg, .png">
-												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
-											</div>
-<!-- 											<div class="job-category-no-select-div"> -->
-<!-- 												<select name="jobCategoryNo" class="form-control" required> -->
-<!-- 													<option>업종을 선택해주세요.</option> -->
-<!-- 													<option value="1">고객서비스 전문가</option> -->
-<!-- 													<option value="2">상품기획/HD 디자이너</option> -->
-<!-- 													<option value="3">영업 전문가</option> -->
-<!-- 													<option value="4">구매/물류/SCM 전문가</option> -->
-<!-- 													<option value="5">마케팅/홍보 전문가</option> -->
-<!-- 													<option value="6">경영지원/관리 전문가</option> -->
-<!-- 													<option value="7">경영전략/사업기획/분석전문가</option> -->
-<!-- 													<option value="8">해외영업/사업개발/마케팅</option> -->
-<!-- 													<option value="9">IT 엔지니어</option> -->
-<!-- 													<option value="10">IT 기획/매니지먼트 전문가</option> -->
-<!-- 													<option value="11">품질관리/보증 전문가</option> -->
-<!-- 													<option value="12">환경/안전/보건 전문가</option> -->
-<!-- 													<option value="13">정보보안/IT 보안</option> -->
-<!-- 													<option value="14">건축/공간 디자이너</option> -->
-<!-- 													<option value="15">고객상담 전문가</option> -->
-<!-- 													<option value="16">회계/세무/재무 전문가</option> -->
-<!-- 													<option value="17">법무/지적재산권 전문가</option> -->
-<!-- 												</select> -->
-<!-- 											</div> -->
-											<div class="input-group-append">
-												<input id="upload-reset-btn" class="btn btn-warning" type="reset" value="초기화">
-												<input id="upload-submit-btn" class="btn btn-primary" type="submit" value="보내기">
-											</div>
-										</div>
-									</form>
-												
-									<p class="cert-progress-msg-positive col-12">사원증을 업로드 하시면</p>
-									<p class="cert-progress-msg-positive col-12">빠른 시일 내에 인증을 도와 드립니다.</p>
-								</c:if>
-								<c:if test="${imageCertProgress == 'ing'}">
-									<p class="cert-progress-msg-ing col-12">현재 심사중 입니다.</p>
-									<p class="cert-progress-msg-ing col-12">조금만 더 기다려주세요</p>
-								</c:if>
-								<c:if test="${imageCertProgress == 'end'}">		
-									<p class="cert-progress-msg-positive col-12">인증이 완료 되었습니다!</p>
-									<p class="cert-progress-msg-positive col-12">감사합니다.</p>
-								</c:if>
-								<c:if test="${imageCertProgress == 'reject'}">
-									<form action="imageInsertAgain"  id="file-upload" method="post" enctype="multipart/form-data">
-										<div class="input-group">
-											<div class="custom-file">
-												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input bbxb" required accept=".jpg, .png">
-												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
-											</div>
-<!-- 											<div class="job-category-no-select-div"> -->
-<!-- 												<select name="jobCategoryNo" class="form-control" required> -->
-<!-- 													<option>업종을 선택해주세요.</option> -->
-<!-- 													<option value="1">고객서비스 전문가</option> -->
-<!-- 													<option value="2">상품기획/HD 디자이너</option> -->
-<!-- 													<option value="3">영업 전문가</option> -->
-<!-- 													<option value="4">구매/물류/SCM 전문가</option> -->
-<!-- 													<option value="5">마케팅/홍보 전문가</option> -->
-<!-- 													<option value="6">경영지원/관리 전문가</option> -->
-<!-- 													<option value="7">경영전략/사업기획/분석전문가</option> -->
-<!-- 													<option value="8">해외영업/사업개발/마케팅</option> -->
-<!-- 													<option value="9">IT 엔지니어</option> -->
-<!-- 													<option value="10">IT 기획/매니지먼트 전문가</option> -->
-<!-- 													<option value="11">품질관리/보증 전문가</option> -->
-<!-- 													<option value="12">환경/안전/보건 전문가</option> -->
-<!-- 													<option value="13">정보보안/IT 보안</option> -->
-<!-- 													<option value="14">건축/공간 디자이너</option> -->
-<!-- 													<option value="15">고객상담 전문가</option> -->
-<!-- 													<option value="16">회계/세무/재무 전문가</option> -->
-<!-- 													<option value="17">법무/지적재산권 전문가</option> -->
-<!-- 												</select> -->
-<!-- 											</div> -->
-											<div class="input-group-append">
-												<input id="upload-reset-btn" class="btn btn-warning" type="reset" value="초기화">
-												<input id="upload-submit-btn" class="btn btn-primary" type="submit" value="보내기">
-											</div>
-										</div>
-									</form>
-									<div class="mt-3">
-										<span class="cert-progress-msg-error col-12">인증이 거절 되었습니다.</span><br>
-										<span class="cert-progress-msg-error col-12">관리자에게 문의하시거나</span><br>
-										<span class="cert-progress-msg-error col-12">정확한 사진을 보내주세요!</span><br>
-									</div>
-									<c:if test="${imageCertMessage != ''}">
-										<div class="mt-3">
-											<span class="cert-progress-msg-error-message">사유: ${imageCertMessage}</span>
-										</div>
-									</c:if>
-								</c:if>
-							</div>
-						</div>
+<section id="modiBox">
+	<div class="modiBack" id="modiBack">
+		<div id="modititle">
+			<h3>ID-CARD VERIFICATION</h3>
+		</div>
+		<figure class="snip1200">
+			<div id="a">
+				<img src="http://localhost:8080/khblind/img/img3.png"
+				alt="backgroung-img" />
+				<figcaption>
+					<p>
+					사원증 인증 후 정회원으로 등업하실 수 있습니다! <br> 만약 사내 메일이 있는 경우,<br><span><button id="veri-btn">
+					이메일 인증</button></span>에서 진행하실 수 있습니다
+					</p>
+					<div class="heading">
+						<h3>'사원증'으로 회사인증</h3>
 					</div>
-				<div>
+				</figcaption>
+			</div>
+		</figure>
+		
+		<div class="input-modiBox">
+			<div id="group-back">
+				<c:if test="${imageCertProgress == 'didnt'}">
+					<div class="form-area" class="mb-5">
+						<form action="imageInsert"  id="file-upload" method="post" enctype="multipart/form-data">
+							<div class="custom-file">
+								<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input mb-3" required accept=".jpg, .png">
+								<label class="custom-file-label" for="inputGroupFile04">파일을 선택해주세요</label>
+								<div id="btn-zone" >
+									<input id="upload-reset-btn" class="btn btn-warning kk-color-1" type="reset" value="초기화">
+								<input id="upload-submit-btn" class="btn btn-primary kk-color-2" type="submit" value="보내기">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="empty-div"></div>
+				</c:if>
+				
+				<c:if test="${imageCertProgress == 'ing'}">
+					<p class="cert-progress-msg-ing col-12">현재 심사중 입니다.</p>
+					<p class="cert-progress-msg-ing col-12">조금만 더 기다려주세요</p>
+				</c:if>
+				
+				<c:if test="${imageCertProgress == 'end'}">		
+					<p class="cert-progress-msg-positive col-12">인증이 완료 되었습니다!</p>
+					<p class="cert-progress-msg-positive col-12">감사합니다.</p>
+				</c:if>
+				<c:if test="${imageCertProgress == 'reject'}">
+					<p class="cert-progress-msg-error col-12">인증이 거절 되었습니다.</p>
+					<p class="cert-progress-msg-error-message">사유: 
+						<c:if test="${imageCertMessage != ''}">${imageCertMessage}</c:if>
+					</p>
+				</c:if>
+
+			<!-- 사진 -->
+				<c:if test="${imageCertProgress == 'didnt' || imageCertProgress == 'ing'}">
+					<img src="${root}/img/image-cert-before.png" id="preview-image">
+				</c:if>
+				<c:if test="${imageCertProgress == 'reject'}">
+					<img src="${root}/img/image-cert-reject.png" id="preview-image">
+				</c:if>
+				<c:if test="${imageCertProgress == 'end'}">
+					<img src="${root}/img/image-cert-end.png" id="preview-image">					
+				</c:if>
+			<!-- 사진 끝 -->			
+			
+
+
+						
+
+
 			</div>
 		</div>
+	</div>
+</section>
 
-        
-		<div>
-
-
-		</div>
-		</div>
-</html>
 	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </html>
