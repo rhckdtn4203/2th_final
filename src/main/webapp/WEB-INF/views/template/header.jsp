@@ -55,7 +55,7 @@
 	});	
 </script>
 <script id="template" type="text/template">
-		<h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}} {{keyword}}</a></h5>
+		<h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}}{{keyword}}</a></h5>
 </script>
 
   <script>
@@ -77,11 +77,14 @@
   	.rank-keyword:hover{
   		color: wheat;
   	}
+  </style>
+
+
+  <style>
   html{
   background-color: white;
   }
   </style>
-
 </head>
 
 <body>
