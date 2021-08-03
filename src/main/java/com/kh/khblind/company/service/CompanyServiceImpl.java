@@ -34,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 				.companyName(companyVO.getCompanyName())
 				.companyUrl(companyVO.getCompanyUrl())
 				.companyDomain(companyVO.getCompanyDomain())
-				.companyAddr(companyVO.getCompanyDomain())
+				.companyAddr(companyVO.getCompanyAddr())
 				.companyIndustry(companyVO.getCompanyIndustry())
 				.companyEstablishment(companyVO.getCompanyEstablishment())
 				.companyIntroduce(companyVO.getCompanyIntroduce())

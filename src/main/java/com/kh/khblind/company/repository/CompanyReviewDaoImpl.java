@@ -33,17 +33,17 @@ public class CompanyReviewDaoImpl implements CompanyReviewDao {
 	}
 
 	@Override
-	public double companyReviewRate(int companyNo) {
+	public Double companyReviewRate(int companyNo) {
 		return sqlSession.selectOne("companyReview.reviewRate", companyNo);
 	}
 
 	@Override
-	public int companyReviewCount(int companyNo) {
+	public Integer companyReviewCount(int companyNo) {
 		return sqlSession.selectOne("companyReview.reviewCount", companyNo);
 	}
 
 	@Override
-	public List<HashMap<String, Integer>> companyScoreCount(int companyNo) {
+	public List<HashMap<String, String>> companyScoreCount(int companyNo) {
 		return sqlSession.selectList("companyReview.scoreCount", companyNo);
 	}
 

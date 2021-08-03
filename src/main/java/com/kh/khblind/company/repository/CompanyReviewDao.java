@@ -10,7 +10,7 @@ public interface CompanyReviewDao {
 	void reviewWrite(CompanyReviewDto companyReviewDto);
 	CompanyReviewDto companyFind(int companyNo);
 	List<ReviewMemberCategoryVO> companyReviewList(int companyNo);
-	double companyReviewRate(int companyNo);
-	int companyReviewCount(int companyNo);
-	List<HashMap<String, Integer>> companyScoreCount(int companyNo);
+	Double companyReviewRate(int companyNo);
+	Integer companyReviewCount(int companyNo);
+	List<HashMap<String, String>> companyScoreCount(int companyNo);
 }
