@@ -688,7 +688,8 @@ public class BoardController {
 			HttpSession session,  Model model, 
 			@RequestParam String type, 
 			@RequestParam(required = false) Integer boardCategoryNo,
-			@RequestParam(required = false) String keyword
+			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) int jobCategoryNo
 			) {
 		
 			
@@ -699,10 +700,11 @@ public class BoardController {
 		//type=jobCategoryBoard 라는 파라미터가 들어오면 data에 "job"을 넣겠다
 		if(type.equals("jobCategoryBoard")) {
 			model.addAttribute("boardType", "job");
+			model.addAttribute("jobCategoryNo", jobCategoryNo);
 			
 			if(keyword != null) {
 				//keyword 값을 넘겨주겠다
-				model.addAttribute("boardKeyword", keyword); 
+				model.addAttribute("boardKeyword", keyword);
 			}
 
 			return "/board/boardList";

@@ -34,7 +34,8 @@ public class BoardRestController {
 			@RequestParam int startNo,
 			@RequestParam int endNo,
 			@RequestParam(required = false) Integer boardCategoryNo,
-			@RequestParam(required = false) String boardKeyword			
+			@RequestParam(required = false) String boardKeyword,
+			@RequestParam(required = false) Integer jobCategoryNo
 			) {
 
 		System.out.println("startNo = " + startNo + "|" +  endNo);
@@ -45,7 +46,12 @@ public class BoardRestController {
 		//업종별 게시판 목록
 
 		if(boardType.equals("job")) {
-			int jobCategoryNo = memberDto.getJobCategoryNo();
+			if(memberDto.getGradeNo()==1 || memberDto.getGradeNo()==3) {
+				jobCategoryNo = memberDto.getJobCategoryNo();
+			}
+			else{//+회원 2,4
+			
+			}
 			StartEndVoForAjax startEndVoForAjax  = StartEndVoForAjax.builder()
 					.startNo(startNo)
 					.endNo(endNo)
