@@ -377,5 +377,11 @@ public class BoardDaoImpl implements BoardDao {
 			return getCompanyKeywordList;
 		}
 
+		@Override
+		public List<BoardCategoryAllCountDto> boardCategoryAllCountSize() {
+			List<BoardCategoryAllCountDto> boardCategoryAllCountSizeList = sqlSession.selectList("board.boardCategoryAllCountSize");
+			return boardCategoryAllCountSizeList;
+		}
+
 
 	}
