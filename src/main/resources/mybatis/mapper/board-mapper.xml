@@ -119,6 +119,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	) where rn = #{rn}
 	 </select>
 	 
+	 <select id="boardCategoryAllCountSize" resultType='BoardCategoryAllCountDto'>
+	 	select * from board_category_all_count_view
+	 </select>
+	 
 	 <select id="mainCategoryData" parameterType="int" resultType="MainCategoryDataVO">
 	 	select * from (
 	 				select rownum rn, TMP.* from(

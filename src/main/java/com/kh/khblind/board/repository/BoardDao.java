@@ -101,6 +101,8 @@ public interface BoardDao {
 	
 	//조회수 많은 토픽 DTO 가져오기 기능
 	BoardCategoryAllCountDto getBoardCategoryByAllCount(int rn);
+	//조회수 많은 토픽 갯수 가져오기 기능
+	List<BoardCategoryAllCountDto> boardCategoryAllCountSize();
 	//토픽 조회수 베스트 6개 목록 기능
 	List<MainCategoryDataVO> mainBoardCegoryList(int boardCategoryNo);
 	
