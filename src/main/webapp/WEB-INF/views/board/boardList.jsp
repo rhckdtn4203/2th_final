@@ -40,7 +40,8 @@
  				boardCategoryNo : "${boardCategoryNo}",
  				startNo : startNo,
  				endNo : endNo,
- 				boardKeyword : "${boardKeyword}"
+ 				boardKeyword : "${boardKeyword}",
+ 				jobCategoryNo : "${jobCategoryNo}"
  				},
  				
 	  		success: function(resp) {
@@ -92,7 +93,8 @@
  		       				boardCategoryNo : "${boardCategoryNo}",
  		       				startNo : startNo,
  			 				endNo : endNo,
- 			 				boardKeyword : "${boardKeyword}"
+ 			 				boardKeyword : "${boardKeyword}",
+ 			 				jobCategoryNo : "${jobCategoryNo}"
  		       				},
  		       				
  			       		success: function(resp) {
