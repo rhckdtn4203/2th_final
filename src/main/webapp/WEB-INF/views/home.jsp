@@ -39,9 +39,9 @@
              
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
+                  <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${BestTopicDto.boardCategoryNo}" class="tit-title">${BestTopicDto.boardCategoryName}</a>
                 </span>
-                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
+                <a href="${rt}/board/boardDetail?boardNo=${BestTopicDto.boardNo}" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
               </div>
               <div class="b2">
                 <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
