@@ -65,7 +65,7 @@
 
     .cert-progress-msg-ing{
     font-size: 1.2em;
-    color: rgb(255, 166, 0);
+    color: rgb(255, 140, 0);
     }
 
     .cert-progress-msg-positive{
@@ -76,12 +76,12 @@
     .cert-progress-msg-error{
     font-size: 1.2em;
 
-    color: rgb(180, 45, 50);
+    color: rgb(220, 70, 70);
     }
     
     .cert-progress-msg-error-message{
     font-size: 1.0em;
-    color: rgb(180, 45, 50);
+    color: rgb(220, 70, 70);
     }
     
 	.font-color-khblind-gold {
@@ -195,8 +195,9 @@ function setImageFromFile(input, expression) {
 								<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input mb-3" required accept=".jpg, .png">
 								<label class="custom-file-label" for="inputGroupFile04">파일을 선택해주세요</label>
 								<div id="btn-zone" >
-									<input id="upload-reset-btn" class="btn btn-warning kk-color-1" type="reset" value="초기화">
-								<input id="upload-submit-btn" class="btn btn-primary kk-color-2" type="submit" value="보내기">
+								<div class="login-btn-box mt-3">
+              						<input type="submit" value="보내기" class="login-btn">
+            					</div>
 								</div>
 							</div>
 						</form>
@@ -205,19 +206,33 @@ function setImageFromFile(input, expression) {
 				</c:if>
 				
 				<c:if test="${imageCertProgress == 'ing'}">
-					<p class="cert-progress-msg-ing col-12">현재 심사중 입니다.</p>
-					<p class="cert-progress-msg-ing col-12">조금만 더 기다려주세요</p>
+					<p class="cert-progress-msg-ing col-12"><b>현재 심사중 입니다.</b></p>
+					<p class="cert-progress-msg-ing col-12"><b>조금만 더 기다려주세요</b></p>
 				</c:if>
 				
 				<c:if test="${imageCertProgress == 'end'}">		
-					<p class="cert-progress-msg-positive col-12">인증이 완료 되었습니다!</p>
-					<p class="cert-progress-msg-positive col-12">감사합니다.</p>
+					<p class="cert-progress-msg-positive col-12"><b>인증이 완료 되었습니다!</b></p>
+					<p class="cert-progress-msg-positive col-12"><b>감사합니다.</b></p>
 				</c:if>
 				<c:if test="${imageCertProgress == 'reject'}">
-					<p class="cert-progress-msg-error col-12">인증이 거절 되었습니다.</p>
-					<p class="cert-progress-msg-error-message">사유: 
-						<c:if test="${imageCertMessage != ''}">${imageCertMessage}</c:if>
+					<p class="cert-progress-msg-error col-12"><b>인증이 거절 되었습니다.</b></p>
+					<p class="cert-progress-msg-error-message"><b>사유: </b>
+						<c:if test="${imageCertMessage != ''}"><b>${imageCertMessage}</b></c:if>
 					</p>
+					
+					<div class="form-area" class="mb-5">
+						<form action="imageInsertAgain"  id="file-upload" method="post" enctype="multipart/form-data">
+							<div class="custom-file">
+								<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input bbxb" required accept=".jpg, .png">
+								<label class="custom-file-label" for="inputGroupFile04">파일을 선택해주세요</label>
+								<div id="btn-zone" >
+								<div class="login-btn-box mt-3">
+              						<input type="submit" value="보내기" class="login-btn">
+            					</div>
+								</div>
+							</div>
+						</form>
+					</div>
 				</c:if>
 
 			<!-- 사진 -->
