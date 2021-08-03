@@ -114,7 +114,7 @@ position: relative;
   margin: 5px;
   border: none;
   color: wheat;
-  background-color: var(--color-green);
+  background-color: yellow;
   font-size: 20px;
   font-weight: var(--weight-6);
   
@@ -123,6 +123,7 @@ position: relative;
   text-transform: uppercase;
   transition: 0.5s;
 }
+
 .login-btn:hover{
 	background: #fbfdfa;
   color: #050801;
@@ -130,7 +131,7 @@ position: relative;
               0 0 25px #fbfdfa,
               0 0 50px #fbfdfa,
               0 0 200px #fbfdfa;
-   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+  -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
 }
 
 

@@ -61,12 +61,12 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<HashMap<String, Integer>> searchKeyword(String keyword) {
+	public List<HashMap<String, String>> searchKeyword(String keyword) {
 		return sqlSession.selectList("company.searchKeyword", keyword);
 	}
 
 	@Override
-	public List<HashMap<String, Integer>> rateTopSix() {
+	public List<HashMap<String, String>> rateTopSix() {
 		return sqlSession.selectList("company.rateTopSix");
 	}
 

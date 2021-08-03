@@ -8,18 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-            <!-- 부트스트랩을 가져온다 -->
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+            
             <!-- 제이쿼리를 가져온다 -->
             <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <!-- UI제이쿼리를  가져온다 -->
             <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-            <!-- Popper를 가져온다 -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
             <!-- 폰트어썸 아이콘을 가져온다-->
             <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-            <!-- 부트와치를 가져온다.-->
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+            
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
+            
+            
    <script>
    //로드되면 한 번 실행
    $(document).ready(function(){
@@ -38,7 +40,8 @@
  				boardCategoryNo : "${boardCategoryNo}",
  				startNo : startNo,
  				endNo : endNo,
- 				boardKeyword : "${boardKeyword}"
+ 				boardKeyword : "${boardKeyword}",
+ 				jobCategoryNo : "${jobCategoryNo}"
  				},
  				
 	  		success: function(resp) {
@@ -46,15 +49,18 @@
 	  			console.log(resp.length);
 	  			for(var i=0; i < resp.length; i++){
 	  				var template = $("#list-board-template").html();
-	  				template = template.replace("{{boardNo}}", resp[i].boardNo);
-	  				template = template.replace("{{boardCategoryBoardName}}", resp[i].boardCategoryBoardName);
+	  				template = template.replace("{{boardNo1}}", resp[i].boardNo);
+       				template = template.replace("{{boardNo2}}", resp[i].boardNo);
+       				template = template.replace("{{boardNo3}}", resp[i].boardNo);
+	  				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
 	       		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
 	       		template = template.replace("{{boardContent}}", resp[i].boardContent);
-	       		template = template.replace("{{companyName}}", resp[i].companyName);
+// 	       		template = template.replace("{{companyName}}", resp[i].companyName);
+                template = template.replace("{{likeCount}}", resp[i].likeCount);
 	       		template = template.replace("{{memberNick}}", resp[i].memberNick);
 	       		template = template.replace("{{boardCount}}", resp[i].boardCount);
-	       		template = template.replace("{{commentCount}}", resp[i].commentCount);
-	       		template = template.replace("{{uploadTime}}", resp[i].uploadTime);
+	       		template = template.replace("{{commentsCount}}", resp[i].commentsCount);
+	       		template = template.replace("{{boardDate}}", resp[i].boardDate);
 	       		$("#here").append(template);
 	  			}
 			}
@@ -75,7 +81,7 @@
  		       
  		       console.log(rate + " \%");
  		       
- 		       	if(rate>75){
+ 		       	if(rate>50){
  		   		startNo = startNo+per;
  		        endNo = endNo+per;
  		       		$.ajax({
@@ -87,7 +93,8 @@
  		       				boardCategoryNo : "${boardCategoryNo}",
  		       				startNo : startNo,
  			 				endNo : endNo,
- 			 				boardKeyword : "${boardKeyword}"
+ 			 				boardKeyword : "${boardKeyword}",
+ 			 				jobCategoryNo : "${jobCategoryNo}"
  		       				},
  		       				
  			       		success: function(resp) {
@@ -95,15 +102,18 @@
  			       			console.log("길이" + resp.length);
  			       			for(var i=0; i < resp.length; i++){
  			       				var template = $("#list-board-template").html();
- 			       				template = template.replace("{{boardNo}}", resp[i].boardNo);
- 			       				template = template.replace("{{boardCategoryBoardName}}", resp[i].boardCategoryBoardName);
+ 			       				template = template.replace("{{boardNo1}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardNo2}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardNo3}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
  			            		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
  			            		template = template.replace("{{boardContent}}", resp[i].boardContent);
- 			            		template = template.replace("{{companyName}}", resp[i].companyName);
+//  			            		template = template.replace("{{companyName}}", resp[i].companyName);
+                                template = template.replace("{{likeCount}}", resp[i].likeCount);
  			            		template = template.replace("{{memberNick}}", resp[i].memberNick);
  			            		template = template.replace("{{boardCount}}", resp[i].boardCount);
- 			            		template = template.replace("{{commentCount}}", resp[i].commentCount);
- 			            		template = template.replace("{{uploadTime}}", resp[i].uploadTime);
+ 			            		template = template.replace("{{commentsCount}}", resp[i].commentsCount);
+ 			            		template = template.replace("{{boardDate}}", resp[i].boardDate);
  			            		$("#here").append(template);
  			       			}
  			  			}
@@ -163,38 +173,38 @@
    	= script 영역에 id를 부여하여 불러와서 사용한다.
      -->
    <script id="list-board-template" type="text/template">
-   	<div id="board-{{boardNo}}|" class="board-cell col-6">
+   	<div id="board-{{boardNo1}}|" class="board-cell col-6 bbxb">
 
-                <div class="board-area row">
-                    <!-- <div class="board-type col-12"><small>{{boardCategoryBoardName}}</small></div> -->
-                    <div class="board-title col-12 mt-2"><b>{{boardTitle}}</b></div>
-                    <div class="baord-content col-12 p-2 px-4"><small>{{boardContent}}</small></div>
+                <div class="board-area row bbxb">
+                    <!-- <div class="board-type col-12 bbxb"><small>{{boardCategoryName}}</small></div> -->
+                    <div class="kk-bamboo-color board-title col-12 mt-2 bbxb"><a href = ${root}/board/boardDetail?boardNo={{boardNo2}}><b class="font-size-1p5 p-1">{{boardTitle}}</b></a></div>
+                    <div class="baord-content col-12 p-2 px-4 bbxb"><a href = ${root}/board/boardDetail?boardNo={{boardNo3}}><small class="font-size-1p2 pl-1">{{boardContent}}</small></a></div>
                 </div>
 
-                <div class="writer-area row">
-                    <div class="writer-info">
-                        <small><span>{{companyName}} | {{memberNick}}</span></small>
+                <div class="writer-area row bbxb">
+                    <div class="writer-info bbxb  ml-auto">
+                        <small><span class="kk-bamboo-color font-size-1p1 pr-3"><b>{{memberNick}}</b></span></small>
                     </div>
                 </div>
 
-                <div class="info-area row">
-                    <div class="view-count col-2">
-                        <small><i class="fas fa-mouse fa-1x">{{boardCount}}</i></small>
+                <div class="info-area row bbxb mb-2">
+                    <div class="view-count col-2 bbxb">
+                        <i class="fas fa-mouse fa-1x">{{boardCount}}</i>
                     </div>
 
-                    <div class="like-count col-2">
-                        <small><i class="far fa-thumbs-up fa-1x">{{좋아요수}}</i></small>
+                    <div class="like-count col-2 bbxb">
+                        <i class="far fa-thumbs-up fa-1x">{{likeCount}}</i>
                     </div>
 
-                    <div class="like-count col-2">
-                        <small><i class="far fa-comment-dots fa-1x">{{commentCount}}</i></small>
+                    <div class="like-count col-2 bbxb">
+                        <i class="far fa-comment-dots fa-1x">{{commentsCount}}</i>
                     </div>
 
-                    <div class="empty col-5"></div>
+                    <div class="empty col-5 bbxb"></div>
 
-                    <div class="write-time-col-3">
-                        <small><i class="far fa-clock">&nbsp;{{uploadTime}}</i></small>
-                    </div>
+                     <!--<div class="write-time-col-3 bbxb">-->
+                         <!--<small><i class="far fa-clock">&nbsp;{{boardDate}}</i></small>-->
+                    <!-- </div>-->
                 </div>
             </div>
 
@@ -205,12 +215,38 @@
         } */
 
         .board-cell{
-        border-bottom: #f2f2f3 solid;
+        border: #ffffff solid;
+        background-color: #fafad0;
         }
 
         .board-title{
         font-weight: 700;
         }
+        
+       #wrap{
+      text-align: left;
+      }
+      
+	       .bbxb{
+	   box-sizing: border-box;
+	
+	   }   
+	   
+	   .font-size-1p5{
+	   font-size: 1.5em;
+	   }
+	   
+	  .font-size-1p2{
+	   font-size: 1.2em;
+	   }
+	   
+   	  .font-size-1p1{
+	   font-size: 1.1em;
+	   }
+	   
+       .kk-bamboo-color{
+       color: #1e3932;
+       }    
     </style>
 </head>
 <!-- <button id="test-btn">TEST</button> -->
@@ -251,134 +287,11 @@
 
 	
 
-<%-- 	<c:if test="${companyBoardList != null}"> --%>
-<!-- 	<ul id="posts"> -->
-<!-- 	 <li> -->
-<!-- 	 <article> -->
-<!-- 	<p> -->
-<%-- 		<c:forEach var="companyBoardDto" items="${companyBoardList}"> --%>
-		
-<!-- 		<!-- 셀시작--> -->
-<%-- 		<div id="board-${companyBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<%-- 			<div class="board-title col-12 mt-2"><b>"${companyBoardDto.boardTitle}"</b></div> --%>
-<%-- 			<div class="board-content col-12 p-2 px-4"><small>"${companyBoardDto.companyNo}"</small></div> --%>
-<%-- 			<div class="board-content col-12 p-2 px-4"><small>"${companyBoardDto.boardContent}"</small></div> --%>
-<!-- 		</div> -->
-		
-<!-- 		<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--         </div> -->
-        
-<!--         <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
 
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<!--     </p> -->
-<!--     </article> -->
-<!--     </li> -->
-<!--     </ul> -->
-    
-<%-- 	</c:if> --%>
-	
-  
-		
-<%-- 	<c:if test="${jobCategoryBoardList != null}"> --%>
-	<div id="here" class="offset-3 col-6 row mt-5">
-	</div>
+	<div id="here" class="offset-1 col10- row mt-5">	</div>
 	
 	
-<%-- 		<c:forEach var="jobCategoryBoardDto" items="${jobCategoryBoardList}"> --%>
-		
-<!--         셀시작 -->
-<%-- 		<div id="board-${jobCategoryBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<%-- 				<div class="board-title col-12 mt-2"><b>"${jobCategoryBoardDto.boardTitle}"</b></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${jobCategoryBoardDto.jobCategoryNo}"</small></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${jobCategoryBoardDto.boardContent}"</small></div> --%>
-<!-- 			</div> -->
 
-
-<!-- 			<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<%-- 	</c:if> --%>
-	
-	
-<%-- 	<c:if test="${boardCategoryBoardList != null}"> --%>
-<%-- 		<c:forEach var="boardCategoryBoardDto" items="${boardCategoryBoardList}"> --%>
-		
-<!-- 		<!-- 셀시작--> -->
-<%-- 		<div id="board-${boardCategoryBoardDto.boardNo}" class="board-cell col-6"> --%>
-<!-- 			<div class="board-area row"> -->
-<!-- 			<div class="board-type col-12"><small>토픽이름</small></div> -->
-<%-- 			<div class="board-title col-12 mt-2"><b>"${boardCategoryBoardDto.boardTitle}"</b></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${boardCategoryBoardDto.boardCategoryNo}"</small></div> --%>
-<%-- 				<div class="board-content col-12 p-2 px-4"><small>"${boardCategoryBoardDto.boardContent}"</small></div> --%>
-<!-- 			</div> -->
-			
-<!-- 			<div class="writer-area row"> -->
-<!--             	<div class="writer-info"> -->
-<!-- 					<small><span>닉***</span></small> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="info-area row"> -->
-<!-- 				<div class="view-count col-2"> -->
-<!-- 					<small><i class="fas fa-mouse fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="like-count col-2"> -->
-<!--                         <small><i class="far fa-thumbs-up fa-1x">444</i></small> -->
-<!-- 				</div> -->
-
-<!-- 				<div class="empty col-5"></div> -->
-
-<!-- 				<div class="write-time-col-3"> -->
-<!-- 					<small><i class="far fa-clock">&nbsp;1시간</i></small> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<!-- 셀 끝 --> -->
-<%--         </c:forEach> --%>
-<%-- 	</c:if> --%>
 	
 
 

@@ -18,8 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(member_seq.nextval,
 		default, default, default, #{memberName},
 		#{memberNick}, #{memberId}, #{memberPw},
-		#{memberPhone},
-		#{memberEmail})
+		#{memberPhone},#{memberEmail})
 	</insert>
 
 	<select id="mypage" parameterType="int" resultType="MemberDto">
@@ -31,13 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set
 		member_nick = #{memberNick},
 		member_phone = #{memberPhone},
-		member_email = #{memberEmail}
 		where member_no = #{memberNo}
 	</update>
 	
 	<update id="change_pw" parameterType="map">
-	update member set member_pw= #{changePw} 
-	where member_no= #{memberNo} and member_pw= #{memberPw} 
+	update member set member_pw= #{newPw} 
+	where member_no= #{memberNo} and member_pw= #{curPw} 
 	</update>
 
 	<select id="find_id" parameterType="map"

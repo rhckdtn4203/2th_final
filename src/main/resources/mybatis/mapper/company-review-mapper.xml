@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="reviewList" parameterType="int" resultType="ReviewMemberCategoryVO">
-		select * from review_member_category_view where company_no = #{companyNo}
+		select * from review_member_category_view where company_no = #{companyNo} order by company_review_no desc
 	</select>
 	
 	<select id="reviewRate" parameterType="int" resultType="double">

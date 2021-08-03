@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Data @Builder
 public class BookmarkVO {
 	private int boardNo,memberNo;
-	private String boardTitle,boardContent;
+	private String boardTitle,boardContent,boardCategoryName,boardCategoryIcon;
 	private Date boardDate;
 }

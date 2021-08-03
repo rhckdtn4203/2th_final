@@ -1,135 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<style>
-	.my-board-list {
-		margin: 0;
-		padding:0;
-		list-style: none;
-		border:1px solid black;
-	}
-	.my-board-list > li{
-		padding:0.5rem;
-	}
-	.my-board-list > li:nth-child(2n) {
-		background-color:rgba(0, 0, 0, 0.1);
-	}
-	.my-board-list > li > a{
-		text-decoration: none;
-		color:black;
-	}
-	.my-board-list > li > a:hover{
-		color:red;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style3.css">
 
-<script>
-	$(function(){
-		$("#confirm-link").click(function(e){
-			
-			//var message=$(this).attr("data-message")||"이동하시겠습니까?";
-			var choice = window.confirm("정말 탈퇴하시겠습니까?");
-			if(!choice){
-			e.preventDefault();				
-			}
-		});
-	}); 
-
-</script>
-
-<script>
-
-/* function deleteCheck(){
-	if(window.confirm("정말 탈퇴하시겠습니까?")==true){
-		return;
-	}
-	else{
-		return false;
-	}
-} */
-</script>
-
-<div class="container-600">
-	<div class="row">
-		<h2>나의 정보</h2>
+<section id="pageBox">
+	<div class="bookMark">
+		<a href="${pageContext.request.contextPath}/board/mybookmark"><i class="far fa-bookmark"></i><span>BOOK<br>MARK
+		</span></a>
 	</div>
-	<div class="row">
-			<table class="table table-border">
-				<tr>
-					<th>아이디:</th>
-					<td>${dtoss.memberId}</td>
-				</tr>
-				<tr>
-					<th>닉네임:</th>
-					<td>${dtoss.memberNick}</td>
-				</tr>
-			
-				<tr>
-					<th>전화번호:</th>
-					<td>${dtoss.memberPhone}</td>
-				</tr>
-				<tr>
-					<th>이메일:</th>
-					<td>${dtoss.memberEmail}</td>
-				</tr>
-				<tr>
-			
-			</table>
-	</div>
-	
-	<!-- 이용 가능한 메뉴 구성 -->
-	<div class="row">
 
-		<c:if test="${dtoss.gradeNo == 1 || dtoss.gradeNo == 2}">
-			<a href="${pageContext.request.contextPath}/cert/emailInsert" class="link-btn">이메일 인증</a>
-		</c:if>
-		<a href="${pageContext.request.contextPath}/member/change_pw" class="link-btn">비밀번호 변경</a>
+	<div class="page-wrap">
 
-		<a href="${pageContext.request.contextPath}/member/changeinfo" class="link-btn">개인정보 변경</a>
-		<a href="${pageContext.request.contextPath}/member/exit" class="link-btn" id="confirm-link" onclick="deleteCheck">회원 탈퇴</a>
-	
+		<div class="pageLeft">
+
+			<div class="container">
+				<div class="stage" id="stage1">
+					<div class="pageimg">
+						<img id="stimg" src="http://localhost:8080/khblind/img/star.PNG">
+					</div>
+
+					<div class="pageimg-description">
+						<h3>
+							"${dtoss.memberName}"님은<br> 현재 "회사"의 스타<i class="fas fa-star"></i>입니다 ;)
+						</h3>
+					</div>
+				</div>
+			</div>
+		<!-- pageLeft end -->
+		</div>
+
+		<div class="pageRight">
+			<div class="info-box">
+				<div class="ib1">
+					<div class="infoItem">
+						<a href="${pageContext.request.contextPath}/member/changeinfo">개인정보변경</a>
+					</div>
+					<div class="infoItem">
+						<a href="${pageContext.request.contextPath}/member/change_pw">비밀번호변경</a>
+					</div>
+				</div>
+				<div class="ib1">
+					<div class="infoItem">
+						<a href="${pageContext.request.contextPath}/cert/emailInsert">정회원인증</a>
+					</div>
+					<div class="infoItem">
+						<a href="${pageContext.request.contextPath}/cert/imageInsert">사원증인증</a>
+					</div>
+					
+					
+				</div>
+			</div>
+
+			<section id="wrapper">
+				<div class="b-container">
+					<div class="container">
+						<ul class="accordion">
+							<li class="item">
+								<h2 class="accordionTitle">
+									내가 작성한 게시글 <span class="accIcon"></span>
+								</h2>
+								<div class="text">
+									<ul>
+										<li>게시글2</li>
+										<li>게시글3</li>
+										<li>게시글3</li>
+										<li>게시글3</li>
+										<li>게시글3</li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<!-- pageRight end -->	
+			</div>
+	<!-- .page-wrap end -->	
 	</div>
-	
-	<div class="row text-left">
-		<h4>내가 작성한 게시글</h4>
-	</div>
-	<div class="row text-left">
-		<ul class="my-board-list">
-			<c:forEach var="boardListDto"  items="${boardList}">
-				<li>
-					<a href="${pageContext.request.contextPath}/board/boardDetail.jsp?boardNo=${boardListDto.boardNo}"></a>
-				</li>
-			</c:forEach>
-		</ul>
-	</div>
-	
-	<div class="row text-left">
-		<h4>내가 좋아요한 게시글</h4>
-	</div>
-	<div class="row text-left">
-		<ul class="my-board-list">
-			<c:forEach var="boardListDto" items="${boardList}">
-				<li>
-					<a href="${pageContext.request.contextPath}/board/boardDetail.jsp?boardNo=${boardListDto.boardNo}">
-					</a>
-				</li>
-			</c:forEach>
-		</ul>
-	</div>
-</div>
+<!-- pageBox end -->	
+</section>
 
 
-<script>
 
-function preventClick(e){
-	e.preventDefalut()
-}
-</script>
+<!-- 별 효과 주기 -->    
+<script src="${pageContext.request.contextPath}/js/st.js"></script>    
+
+<!--내가 쓴 게시글 아코디언 -->    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/st2.js"></script>	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
-
-
-
+    

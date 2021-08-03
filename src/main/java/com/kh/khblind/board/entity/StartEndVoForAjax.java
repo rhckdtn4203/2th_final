@@ -10,4 +10,6 @@ public class StartEndVoForAjax {
 int startNo, endNo, jobCategoryNo, companyNo;
 Integer boardCategoryNo;
 String keyword;
+
+
 }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Data @Builder
 public class CategoryDto {
 private int boardCategoryNo;
-private String boardCategoryName;
+private String boardCategoryName,boardCategoryIcon;
 
 }
