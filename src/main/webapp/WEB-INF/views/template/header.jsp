@@ -39,12 +39,26 @@
 					template = template.replace("{{keyword}}", resp[i].keyword);
 					$("#ranking").append(template);	
 				}
+				
+
+				//만들어낸 뒤
+				$(".rank-keyword").click(function(e){
+					console.log("click");
+		 			var keywordarr = $(this).text().split('.');
+		 			var keyword = keywordarr[1];
+		 			console.log(keywordarr);
+		 			console.log(keyword);
+		 			location.href = "${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword;
+		 			//$("a").attr("href","${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword);
+					
+					e.preventDefault();
+				});	
 			}
 		});
 	});	
 </script>
 <script id="template" type="text/template">
-		<h5 class="rank-list">{{rank}} {{keyword}}</h5>
+		<h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}} {{keyword}}</a></h5>
 </script>
 
   <script>
@@ -56,8 +70,15 @@
   </script>
   <style>
   	.rank-list{
-  		font-size: 11px;
-  		margin-top: 0.5px;
+  		font-size: 15px;
+  		margin: 8.5px auto;
+  	}
+  	#ranking{
+  		padding-left:45px;
+  		text-align: left;
+  	}
+  	.rank-keyword:hover{
+  		color: wheat;
   	}
   </style>
 </head>
