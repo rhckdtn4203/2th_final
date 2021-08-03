@@ -91,7 +91,7 @@ public class BoardController {
 		}
 		
 		else {
-		return "redirect:pleaseLogin";
+		return "error/errorpage";
 		}
 	}
 	
@@ -186,11 +186,10 @@ public class BoardController {
 		}else {System.out.println("이미지 없음");}
 
 		
-		
 		//2-3.투표 등록(투표가 있다면)
-		if(boardWriteFullVO.getVoteTopicOption().size()!=0 || boardWriteFullVO.getVoteTopicTitle()!=null) {
+		if(!boardWriteFullVO.getVoteTopicTitle().equals("")) {
 			//파라미터값들로 받은 데이터가 담긴 "voteInsertInfoVo"를 쪼갭니다.(1.투표 주제 추가에 필요한 Dto / 2.투표 선택지(들) 추가에 필요한 VO)
-
+			System.out.println("투표가 있어 " + boardWriteFullVO.getVoteTopicTitle());
 			//2-3-1. 투표 주제 추가
 			VoteTopicDto voteTopicDto = VoteTopicDto.builder()
 												.boardNo(boardNo)
@@ -272,7 +271,7 @@ public class BoardController {
 		boardDto = boardDao.getBoardDetail(boardNo);
 		}
 		else {
-			return "글없다 페이지";
+			return "error/errorpage";
 		}
 	
 		
@@ -344,7 +343,7 @@ public class BoardController {
 			typeName = boardDao.getCompanyName(typeNo);
 		}
 		else {//이유는 모르겠지만 어디에도 등록되어 있지 않은 페이지
-			return "글 분류 에러 페이지!";
+			return "error/errorpage";
 		}
 		
 //		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
@@ -593,10 +592,10 @@ public class BoardController {
 				if(memberDto!=null) {
 					memberNo=memberDto.getMemberNo();
 				}else {
-					return "로그인페이지";
+					return "member/login";
 				}
 				if(writerMemberNo!=memberNo) {
-					return "비정상접근";
+					return "error/errorpage";
 				}
 				
 				CheckBoardTypeDto checkBoardTypeDto = boardDao.getBoardType(boardNo);
@@ -729,7 +728,7 @@ public class BoardController {
 		}
 		//type = 이도저도 아닌거 들어올때의 경우의 수
 		else {
-			return "에러페이지 404";
+			return "error/errorpage";
 		}
 	}
 	
