@@ -57,7 +57,7 @@ public class CertServiceImpl implements CertService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 		
 		helper.setTo(email);
-		helper.setSubject("[khblind] 인증번호 발송 메일");
+		helper.setSubject("[Bamboo] 인증번호 발송 메일");
 		
 		ClassPathResource resource = new ClassPathResource("email/template.html");
 		File file = resource.getFile();

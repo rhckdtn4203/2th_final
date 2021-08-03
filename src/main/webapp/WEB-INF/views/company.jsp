@@ -23,7 +23,7 @@
 	.company-box {
 		border:1px solid black;
 		padding:20px 0px;
-		margin:0px 5px;
+		margin:5px 5px;
 	}
 	
 	.company-title {
@@ -75,7 +75,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<c:forEach var="company" items="${topSixList}">
-							<div class="col-4 company-box">
+							<div class="col-3 company-box">
 								<c:forEach var="v" items="${company}">
 									<c:choose>
 										<c:when test="${v.key == 'COMPANY_NAME'}">
@@ -109,27 +109,69 @@
 						
 						<h3 id="popular-title">인기 회사</h3>
 						
-						<c:forEach var="company" items="${topSixList}">
-							<span>
-								<c:forEach var="v" items="${company}">
-									<c:if test="${v.key != 'RN'}">
-										${v.value} 
-									</c:if>
+						<div class="container-fluid">
+							<div class="row">
+								<c:forEach var="company" items="${topSixList}">
+									<div class="col-3 company-box">
+										<c:forEach var="v" items="${company}">
+											<c:choose>
+												<c:when test="${v.key == 'COMPANY_NAME'}">
+													<span style="font-size:18px; font-weight:bold">${v.value}</span>
+												</c:when>
+												<c:when test="${v.key == 'RATE_AVG'}">
+													<div style="margin:0 auto;">
+														<div class="one-star">
+															<span>★</span>
+															<span style="font-size:18px; font-weight:bold">${v.value}</span>
+														</div>
+													</div>
+												</c:when>
+												<c:when test="${v.key == 'COMPANY_NO'}">
+													<a href="${pageContext.request.contextPath}/company/companyDetail?companyNo=${v.value}" style="text-decoration:underline">회사 정보</a>
+													<a href="${pageContext.request.contextPath}/company/companyReview?companyNo=${v.value}" style="text-decoration:underline">리뷰</a>
+													<a href="${pageContext.request.contextPath}/company/companyBoard?companyNo=${v.value}" style="text-decoration:underline">게시물</a>
+													<br>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+									</div>
 								</c:forEach>
-							</span><br>
-						</c:forEach>
+							</div>
+						</div>
 					</c:when>
 					<c:otherwise>
 						<!-- 3*2로 보여주기 -->
 						<h3 id="popular-title">'${param.keyword}'가 들어간 회사 목록</h3><br><br>
 						
-						<c:forEach var="company" items="${searchList}">
-							<span>
-								<c:forEach var="v" items="${company}">
-									${v.value} 
+						<div class="container-fluid">
+							<div class="row">
+								<c:forEach var="company" items="${searchList}">
+									<div class="col-3 company-box">
+										<c:forEach var="v" items="${company}">
+											<c:choose>
+												<c:when test="${v.key == 'COMPANY_NAME'}">
+													<span style="font-size:18px; font-weight:bold">${v.value}</span>
+												</c:when>
+												<c:when test="${v.key == 'RATE_AVG'}">
+													<div style="margin:0 auto;">
+														<div class="one-star">
+															<span>★</span>
+															<span style="font-size:18px; font-weight:bold">${v.value}</span>
+														</div>
+													</div>
+												</c:when>
+												<c:when test="${v.key == 'COMPANY_NO'}">
+													<a href="${pageContext.request.contextPath}/company/companyDetail?companyNo=${v.value}" style="text-decoration:underline">회사 정보</a>
+													<a href="${pageContext.request.contextPath}/company/companyReview?companyNo=${v.value}" style="text-decoration:underline">리뷰</a>
+													<a href="${pageContext.request.contextPath}/company/companyBoard?companyNo=${v.value}" style="text-decoration:underline">게시물</a>
+													<br>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+									</div>
 								</c:forEach>
-							</span><br>
-						</c:forEach>	
+							</div>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

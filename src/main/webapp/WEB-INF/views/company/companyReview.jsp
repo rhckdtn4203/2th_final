@@ -155,7 +155,7 @@
 				</div>
 				<span> 
 					<c:forEach var="count" items="${reviewCountList}">
-						<c:if test="${count.key != 'RATE'}">
+						<c:if test="${count.key != 'RATE' && reviewCount != 0}">
 							${count.value}개 (${(count.value * 100) / reviewCount} %)
 						</c:if>
 					</c:forEach>

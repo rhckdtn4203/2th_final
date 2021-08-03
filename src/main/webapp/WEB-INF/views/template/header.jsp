@@ -79,7 +79,7 @@
               <a href="${rt}" class="menu-item">홈</a>
             </li>
             <li class="menu-list">
-              <a href=""class="menu-item">기업리뷰</a>
+              <a href="${pageContext.request.contextPath}/company/" class="menu-item">기업리뷰</a>
               <!-- <ul>
                 <li><a href="">서브1</a></li>
                 <li><a href="">서브2</a></li>

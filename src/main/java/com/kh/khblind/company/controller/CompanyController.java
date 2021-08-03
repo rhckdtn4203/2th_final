@@ -136,14 +136,21 @@ public class CompanyController {
 	@GetMapping("/companyDetail")
 	public String companyDetail(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
-		DecimalFormat form = new DecimalFormat("#.##");
-		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {;
+			DecimalFormat form = new DecimalFormat("#.##");
+			int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		
 			model.addAttribute("companyVO", companyVO);
 			model.addAttribute("reviewRate", form.format(reviewRate));
 			model.addAttribute("reviewCount", reviewCount);
+			return "company/companyDetail";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
 			return "company/companyDetail";
 		}
 		else {
@@ -156,23 +163,31 @@ public class CompanyController {
 	public String companyReview(int companyNo, HttpSession session, Model model) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		int memberGrade = memberDto.getGradeNo();
-		
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
-		DecimalFormat form = new DecimalFormat("#.##");
-		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
 		model.addAttribute("grade", memberGrade);
-		model.addAttribute("list", companyReviewDao.companyReviewList(companyNo));
-		model.addAttribute("reviewRate", form.format(reviewRate));
-		model.addAttribute("reviewCount", reviewCount);
 
 		List<HashMap<String, String>> reviewCountList = companyReviewDao.companyScoreCount(companyNo);
 		System.out.println(reviewCountList);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {
+			DecimalFormat form = new DecimalFormat("#.##");
+			int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+			
 			model.addAttribute("companyVO", companyVO);
 			model.addAttribute("reviewCountList", reviewCountList);
+			model.addAttribute("reviewRate", form.format(reviewRate));
+			model.addAttribute("reviewCount", reviewCount);
+			model.addAttribute("list", companyReviewDao.companyReviewList(companyNo));
+			
+			return "company/companyReview";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewCountList", reviewCountList);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
 			return "company/companyReview";
 		}
 		else {
@@ -211,15 +226,39 @@ public class CompanyController {
 	@GetMapping("/companyBoard")
 	public String companyBoard(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		DecimalFormat form = new DecimalFormat("#.##");
 		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {;
 			model.addAttribute("companyVO", companyVO);
 			model.addAttribute("reviewRate", form.format(reviewRate));
 			model.addAttribute("reviewCount", reviewCount);
 			
+			//기업키워드 리스트 추가
+			String keyword = companyVO.getCompanyName();
+			System.out.println("keyword@@@@@" + keyword);
+			
+			List<BoardCategoryBoardDto> companyKeywordList = boardDao.getCompanyKeywordList(keyword);
+			
+			for(int i =0; i<companyKeywordList.size(); i++) {
+				String target = companyKeywordList.get(i).getBoardContent();
+				if(target.length() > 25) {
+					target = target.substring(0, 25) + "...";
+				}
+				
+				companyKeywordList.get(i).setBoardContent(target);
+			}
+			
+			model.addAttribute("companyKeywordList", companyKeywordList);
+			
+			return "company/companyBoard";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
+
 			//기업키워드 리스트 추가
 			String keyword = companyVO.getCompanyName();
 			System.out.println("keyword@@@@@" + keyword);
