@@ -22,13 +22,11 @@
             color: royalblue;
         }
     }
-
     @media screen and (max-width:1199px){
         .test{
             color: red;   
         }
     }
-
     @media screen and (max-width:991px){
         .test{
             color: orange;
@@ -40,34 +38,27 @@
             font-weight: 500 !important;
             font-size: 2.2rem;
         }
-
     }
-
     @media screen and (max-width:767px){
         .test{
             color: green;
         }
-
     }
     @media screen and (max-width:575px){
         .test{
             color: rgb(255, 0, 242);
         }
     }
-
     #image-title{
     font-size: 1.8em;
     }
-
     #preview-image{
 	width : 90%;
     }
-
     .cert-progress-msg-ing{
     font-size: 1.2em;
     color: rgb(255, 140, 0);
     }
-
     .cert-progress-msg-positive{
     font-size: 1.2em;
     color: rgb(16, 45, 141);
@@ -75,7 +66,6 @@
     
     .cert-progress-msg-error{
     font-size: 1.2em;
-
     color: rgb(220, 70, 70);
     }
     
@@ -90,12 +80,10 @@
 	
 	.primary-background-color {
 	background-color: #1e3932;
-
 	}
 	
 	.bbxb{
 	box-sizing: border-box;
-
 	}  
 	.z{
 	font-family: 'Raleway', Arial, sans-serif;
@@ -137,7 +125,6 @@
     body{
     height: 1400px !important;
     }
-
 </style>
 
 <script>
@@ -148,12 +135,10 @@ $(function(){
     $("#upload-reset-btn").click(function(){
         $("#preview-image").attr("src", "${root}/img/image-cert-before.png" );
     })
-
 function setImageFromFile(input, expression) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-
         	$(expression).attr("src", e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
