@@ -37,7 +37,14 @@
 		<interceptor>
 			<mapping path="/board/boardEdit"></mapping>
 			<mapping path="/board/boardDelete"></mapping>
+			
 			<beans:bean class="com.kh.khblind.board.interceptor.BoardEditInterceptor"></beans:bean>
+			
+		</interceptor>
+			
+		<interceptor>
+			<mapping path="/plus/plusPage"></mapping>
+			<beans:bean class="com.kh.khblind.board.interceptor.PlusMemberInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
 	
