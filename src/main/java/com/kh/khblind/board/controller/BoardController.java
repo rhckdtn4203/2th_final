@@ -689,7 +689,7 @@ public class BoardController {
 			@RequestParam String type, 
 			@RequestParam(required = false) Integer boardCategoryNo,
 			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false) int jobCategoryNo
+			@RequestParam(required = false) Integer jobCategoryNo
 			) {
 		
 			
