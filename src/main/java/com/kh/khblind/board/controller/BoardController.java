@@ -46,6 +46,7 @@ import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
+import com.kh.khblind.search.entity.SearchDto;
 import com.kh.khblind.search.repository.SearchDao;
 
 @RequestMapping("/board")
@@ -691,7 +692,24 @@ public class BoardController {
 			@RequestParam(required = false) Integer jobCategoryNo
 			) {
 		
-			
+			if(keyword !=null) {
+				// 키워드 카운트 
+				if(searchDao.get(keyword)!=null) {
+					searchDao.update(keyword);
+				}
+				else {
+					// 시퀀스번호
+					int searchNo = searchDao.getSequence();
+
+					SearchDto searchDto = SearchDto.builder()
+							.searchNo(searchNo)					
+							.keyword(keyword)
+							.build();
+
+					searchDao.insert(searchDto);	
+				}
+			}	
+		
 //		if(타입=잡) {모델.더하기("보드타입", "job")};
 //		if(타입=회사) {모델.더하기("보드타입", "com")};
 //		if(타입=토픽) {모델.더하기("보드타입", "topic")};
