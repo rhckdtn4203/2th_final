@@ -676,7 +676,7 @@ arrow.addEventListener('click', () => {
               </h3>  
               <hr>
             </div>
-            <!-- content -->
+            <!-- contenttttttt -->
              <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList4}">
             <div class="arti1">  
               <div class="m1">
