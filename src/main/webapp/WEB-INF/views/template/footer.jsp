@@ -34,9 +34,12 @@ background-color: transparent;
       </section>
 </div>
 
+
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
+   
  <script>
 $(document).ready(function() {
-	var floatPosition = parseInt($("#floatMenu").css('top'));
+	var floatPosition = parseInt($(".FT").css('top'));
 
 	$(window).scroll(function() {
 		// 현재 스크롤 위치를 가져온다.
@@ -44,7 +47,7 @@ $(document).ready(function() {
 		var newPosition = scrollTop + floatPosition + "px";
 
 
-		$("#floatMenu").stop().animate({
+		$(".FT").stop().animate({
 			"top" : newPosition
 		}, 500);
 
@@ -52,9 +55,9 @@ $(document).ready(function() {
 
 });
 </script>
-
- <script>
-const arrow = document.querySelector('#arrow');
+ 
+  <script>
+const arrow = document.querySelector('.arrows');
 
 function scroll(selector){
    const scrollTo = document.querySelector(selector);
@@ -62,13 +65,8 @@ function scroll(selector){
 }
 
 arrow.addEventListener('click', () => {
-   scroll('.headerBox');
+   scroll('#header');
 });
-</script> 
-
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
-    
-
-
+</script>
 </body>
 </html>

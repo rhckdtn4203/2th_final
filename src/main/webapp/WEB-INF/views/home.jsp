@@ -29,10 +29,10 @@
 </div>
     </c:if>   
     
-<c:if test="${dtoss == null}">
+<%-- <c:if test="${dtoss == null}">
     <div id="floatMenu1">
 	
-	<div id="fTitle">
+	<div id="fTitle" class="FT">
 	<p style="font-size: 25px; margin:0;">Quick!</p>
 	<p id="fTitle-p1">menu</p>
 	</div>
@@ -42,11 +42,11 @@
 	</div>
 	
 	<div>
-	<button id="arrow1"><i class="far fa-arrow-alt-circle-up"></i>top</button>
+	<button id="arrow1" class="arrows"><i class="far fa-arrow-alt-circle-up"></i>top</button>
 	</div>
 	
 	</div>
-</c:if>
+</c:if> --%>
     
     <section id="searchBar">
         <div id="inputBar">
@@ -356,6 +356,39 @@
   
         </section>
       </section>
+
+   
+ <script>
+$(document).ready(function() {
+	var floatPosition = parseInt($("#floatMenu").css('top'));
+
+	$(window).scroll(function() {
+		// 현재 스크롤 위치를 가져온다.
+		var scrollTop = $(window).scrollTop();
+		var newPosition = scrollTop + floatPosition + "px";
+
+
+		$("#floatMenu").stop().animate({
+			"top" : newPosition
+		}, 500);
+
+	}).scroll();
+
+});
+</script>
+ 
+  <script>
+const arrow = document.querySelector('#arrow');
+
+function scroll(selector){
+   const scrollTo = document.querySelector(selector);
+   scrollTo.scrollIntoView({ behavior: 'smooth' });
+}
+
+arrow.addEventListener('click', () => {
+   scroll('#header');
+});
+</script>
 
      
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
