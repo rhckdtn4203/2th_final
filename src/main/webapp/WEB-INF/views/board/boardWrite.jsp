@@ -268,7 +268,7 @@ textarea {
 						<input id="board-title" class="form-control p-4 bbxb" type="text" name="boardTitle" placeholder="제목을 입력하세요" >
 					</div>
 					<div id="board-content-input">
-						<textarea id="board-content-textarea" class="form-control mt-3 p-4 bbxb" name="boardContent" placeholder="욕쓰지마라"></textarea>
+						<textarea id="board-content-textarea" class="form-control mt-3 p-4 bbxb" name="boardContent" placeholder="내용을 입력하세요"></textarea>
 					</div>
 				</div>
 
