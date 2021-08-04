@@ -1,26 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-	<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+
+    <!-- 제이쿼리를 가져온다 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- UI제이쿼리를  가져온다 -->
+    <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+    <!-- 폰트어썸 아이콘을 가져온다-->
+    <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
+  	
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
 <style>
     @media screen and (min-width:1200px){
         .test{
             color: royalblue;
         }
     }
-
     @media screen and (max-width:1199px){
         .test{
             color: red;   
         }
     }
-
     @media screen and (max-width:991px){
         .test{
             color: orange;
@@ -32,34 +38,27 @@
             font-weight: 500 !important;
             font-size: 2.2rem;
         }
-
     }
-
     @media screen and (max-width:767px){
         .test{
             color: green;
         }
-
     }
     @media screen and (max-width:575px){
         .test{
             color: rgb(255, 0, 242);
         }
     }
-
     #image-title{
-    font-size: 2.5em;
+    font-size: 1.8em;
     }
-
     #preview-image{
 	width : 90%;
     }
-
     .cert-progress-msg-ing{
     font-size: 1.2em;
     color: rgb(255, 166, 0);
     }
-
     .cert-progress-msg-positive{
     font-size: 1.2em;
     color: rgb(16, 45, 141);
@@ -81,8 +80,12 @@
 	
 	.primary-background-color {
 	background-color: #1e3932;
+	}
+	
+	
+	.bbxb{
+	box-sizing: border-box;
 	}   
-
 </style>
 
 <script>
@@ -93,12 +96,10 @@ $(function(){
     $("#upload-reset-btn").click(function(){
         $("#preview-image").attr("src", "${root}/img/image-cert-before.png" );
     })
-
 function setImageFromFile(input, expression) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-
         	$(expression).attr("src", e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
@@ -110,8 +111,10 @@ function setImageFromFile(input, expression) {
 
 <body>
 
-	<div id="image-cert-zone" class="row">
- 		<div class="offset-3 col-6 row">
+
+	<div id="image-cert-zone" class="row mt-3">
+ 		<div class="offset-3 col-6 row mt-3">
+
 			<div class="col-12 image-title-area text-center primary-background-color">
 				<div><p id="image-title" class="font-color-khblind-gold">사원증 인증 페이지</p></div>
 			</div>
@@ -137,7 +140,7 @@ function setImageFromFile(input, expression) {
 										<div class="input-group">
 											<div class="custom-file">
 												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input" required accept=".jpg, .png">
-												<label class="custom-file-label" for="inputGroupFile04">파일선택</label>
+												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
 											</div>
 <!-- 											<div class="job-category-no-select-div"> -->
 <!-- 												<select name="jobCategoryNo" class="form-control" required> -->
@@ -183,8 +186,8 @@ function setImageFromFile(input, expression) {
 									<form action="imageInsertAgain"  id="file-upload" method="post" enctype="multipart/form-data">
 										<div class="input-group">
 											<div class="custom-file">
-												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input" required accept=".jpg, .png">
-												<label class="custom-file-label" for="inputGroupFile04">파일선택</label>
+												<input id="upload-idcard" type="file" name="imageCertFile" class="custom-file-input bbxb" required accept=".jpg, .png">
+												<label class="custom-file-label bbxb" for="inputGroupFile04">파일선택</label>
 											</div>
 <!-- 											<div class="job-category-no-select-div"> -->
 <!-- 												<select name="jobCategoryNo" class="form-control" required> -->
@@ -226,14 +229,12 @@ function setImageFromFile(input, expression) {
 									</c:if>
 								</c:if>
 							</div>
-						
-
-							
-                    
-
-
+						</div>
+					</div>
+				<div>
 			</div>
 		</div>
+
         
 		<div>
 
@@ -241,4 +242,5 @@ function setImageFromFile(input, expression) {
 		</div>
 		</div>
 </html>
->>>>>>> refs/remotes/origin/kangmijin
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+</html>

@@ -1,0 +1,99 @@
+#floatMenu {
+	position: absolute;
+	padding: 7px 4px;
+	width: 100px;
+	height: 220px;
+	left: 89em;
+	top: 15em;
+	background-color: white;
+	border: 5px double var(--color-green);
+	color: black;
+	border-radius: 0.5em;
+}
+
+#fTitle-p{
+	margin: 0;
+	font-size: 15px;
+	font-weight:bolder;
+	background-color: #ffa27d;
+	color: black;
+}
+#fItems{
+margin: 0px auto;
+border:2px solid coral;
+border-radius: 1em;
+font-size:3px;
+font-weight: border;
+}
+.fItem span{
+font-size: 16px;
+font-weight: bolder;
+}
+.fItem{
+padding: 3px auto;
+margin: 3px auto;
+}
+#fItem{
+padding-top: 3px;
+border-top: 1px ridge coral;
+}
+#arrow{
+padding: 3px 3px;
+font-size: 18.5px;
+margin: 20px 0 0 33px;
+border: none;
+border-radius:0.5em;
+background-color: whitesmoke;
+
+}
+
+
+
+#floatMenu1{
+	padding: 20px 4px;
+	position: absolute;
+	
+	width: 100px;
+	height: 220px;
+	left: 89em;
+	top: 15em;
+	background-color: white;
+	border: 5px double var(--color-green);
+	color: black;
+	border-radius: 0.5em;
+}
+#fTitle-p1{
+	margin: 10px 0 0 0;
+	font-size: 15px;
+	font-weight:bolder;
+	background-color: #ffa27d;
+	color: black;
+}
+#arrow1{
+padding: 3px 3px;
+margin: 90px 0 0 33px;
+
+font-size: 18.5px;
+border: none;
+border-radius:0.5em;
+background-color: whitesmoke;
+
+}
+  @media (max-width: 1200px){
+      body{}
+    }
+
+    @media (max-width: 1024px){
+    #floatMenu {
+	position: absolute;
+	left: 0;
+	top: 0px;
+    }
+
+    @media (max-width: 768px){
+      body{}
+    }
+
+    @media (max-width: 480px){
+      body{}
+    }

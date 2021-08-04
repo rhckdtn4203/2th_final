@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<<<<<<< HEAD
-=======
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
->>>>>>> refs/remotes/origin/kangmijin
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 #modiBack {
 	height: 700px;
@@ -16,7 +9,6 @@
 	padding-bottom: 10px;
 }
 
-<<<<<<< HEAD
 #aa {
 	padding-bottom: 30px;
 	margin-bottom: 0 0 60px 0;
@@ -26,6 +18,15 @@
 	height: 240px;
 }
 </style>
+
+<script>
+ const moveEI= document.querySelector('#veri-btn');
+ 
+ moveEI.addEventListener("click", () => {
+	 location.href="http://localhost:8080/khblind/cert/imageInsert";
+ });
+</script>
+
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style4.css">
 

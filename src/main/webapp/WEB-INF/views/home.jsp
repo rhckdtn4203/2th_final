@@ -5,7 +5,48 @@
 	<c:set var="rt" value="${pageContext.request.contextPath}"></c:set>
 	
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-   
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
+
+<c:if test="${dtoss != null}">
+
+<div id="floatMenu">
+	
+	<div id="fTitle">
+	<p style="font-size: 25px; margin:0;">Quick!</p>
+	<p id="fTitle-p">menu</p>
+	</div>
+	
+	<div id="fItems">
+		<div class="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 회사'</span><br>이야기</a></div>
+		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 업종'</span><br>이야기</a></div>
+		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
+	</div>
+	
+	<div>
+	<button id="arrow"><i class="far fa-arrow-alt-circle-up"></i>top</button>
+	</div>
+
+</div>
+    </c:if>   
+    
+<c:if test="${dtoss == null}">
+    <div id="floatMenu1">
+	
+	<div id="fTitle">
+	<p style="font-size: 25px; margin:0;">Quick!</p>
+	<p id="fTitle-p1">menu</p>
+	</div>
+	
+	<div id="fItems">
+		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
+	</div>
+	
+	<div>
+	<button id="arrow1"><i class="far fa-arrow-alt-circle-up"></i>top</button>
+	</div>
+	
+	</div>
+</c:if>
     
     <section id="searchBar">
         <div id="inputBar">
@@ -315,5 +356,6 @@
   
         </section>
       </section>
-      
+
+     
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

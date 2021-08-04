@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
 
@@ -19,6 +20,8 @@ import com.kh.khblind.member.repository.MemberDao;
 public class MemberController {
 	@Autowired
 	private MemberDao dao;
+	@Autowired
+	private BoardDao boardDao;
 
 	@GetMapping("/signup")
 	public String signup() {
@@ -69,31 +72,64 @@ public class MemberController {
 		int memberNo = dto.getMemberNo();
 		MemberDto dtoPack = dao.mypage(memberNo);
 		model.addAttribute("dtoPack", dtoPack);
+		
+		
+	     if(dto !=null) {
+	         int companyNo = dto.getCompanyNo();
+	         int jobCategoryNo = dto.getJobCategoryNo();
+	         String companyName = boardDao.getCompanyName(companyNo);
+	         String jobCategoryName = boardDao.getJobCategoryName(jobCategoryNo);
+	         model.addAttribute("companyName", companyName);
+	         model.addAttribute("jobCategoryName", jobCategoryName);
+	      }   
 
 		return "member/mypage";
 	}
 
 	// 마이페이지 수정
 
-	@GetMapping("/changeinfo")
-	public String changeinfo(HttpSession session, Model model) {
-		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
-		model.addAttribute("dtoPack", dao.mypage(dto.getMemberNo()));
+//	@GetMapping("/changeinfo")
+//	public String changeinfo(HttpSession session, Model model) {
+//		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+//		model.addAttribute("dtoPack", dao.mypage(dto.getMemberNo()));
+//
+//		return "member/changeinfo";
+//	}
+//
+//	@PostMapping("/changeinfo")
+//	public String changeinfo(@ModelAttribute MemberDto dto) {
+//		boolean result = dao.changeinfo(dto);
+//
+//		if (result) {
+//			return "redirect:changeinfo";
+//
+//		} else {
+//			return "redirect:changeinfo?error";
+//		}
+//
+//	}
+//
+//	@GetMapping("/changeinfo_success")
+//	public String changeinfo() {
+//
+//		return "member/changeinfo_success";
+//	}
 
+	@GetMapping("/changeinfo")
+	public String changeinfo1() {
+		
 		return "member/changeinfo";
 	}
 
 	@PostMapping("/changeinfo")
-	public String changeinfo(@ModelAttribute MemberDto dto) {
-		boolean result = dao.changeinfo(dto);
-
+	public String changeinfo(HttpSession session, @RequestParam String memberNick, @RequestParam String memberPhone) {
+		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+		boolean result = dao.changeinfo(dto.getMemberNick(), dto.getMemberNo(), dto.getMemberPhone());
 		if (result) {
-			return "redirect:changeinfo";
-
+			return "redirect:changeinfo_success";
 		} else {
 			return "redirect:changeinfo?error";
 		}
-
 	}
 
 	@GetMapping("/changeinfo_success")
@@ -101,7 +137,7 @@ public class MemberController {
 
 		return "member/changeinfo_success";
 	}
-
+	
 	// 아이디찾기
 
 	@GetMapping("/find_id")
@@ -111,20 +147,14 @@ public class MemberController {
 	}
 
 	@PostMapping("/find_id")
-	public String find_id(HttpSession session, @RequestParam String memberName, @RequestParam String memberPhone) {
-		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
-		boolean result = dao.find_id(memberName, dto.getMemberNo(), memberPhone);
-		if (result) {
-			return "redirect:show_id";
+	public String find_id(@RequestParam String memberName, @RequestParam String memberPhone, Model model) {
+		String result = dao.find_id(memberName, memberPhone);
+		model.addAttribute("idresult", result);
+		if (result!="") {
+			return "member/show_id";
 		} else {
 			return "redirect:show_id?error";
 		}
-	}
-
-	@GetMapping("/show_id")
-	public String show_id() {
-
-		return "member/show_id";
 	}
 
 	// 비밀번호 변경

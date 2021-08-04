@@ -26,10 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		member where member_no = #{memberNo}
 	</select>
 
-	<update id="changeinfo" parameterType="MemberDto">
+	<update id="changeinfo" parameterType="map">
 		update member set
 		member_nick = #{memberNick},
-		member_phone = #{memberPhone},
+		member_phone = #{memberPhone}
 		where member_no = #{memberNo}
 	</update>
 	
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="find_id" parameterType="map"
-		resultType="MemberDto">
+		resultType="String">
 		select member_id from member
 		where member_name= #{memberName} and
         member_phone= #{memberPhone}

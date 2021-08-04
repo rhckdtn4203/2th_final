@@ -29,6 +29,7 @@
 //	 }
 //
 
+
 //회원탈퇴
 		$(function(){
 			$("#delete-a").click(function(e){

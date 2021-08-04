@@ -25,7 +25,7 @@
 
 					<div class="pageimg-description">
 						<h3>
-							"${dtoss.memberName}"님은<br> 현재 "회사"의 스타<i class="fas fa-star"></i>입니다 ;)
+							"${dtoss.memberName}"님은<br> 현재 "${companyName}"의 스타<i class="fas fa-star"></i>입니다 ;)
 						</h3>
 					</div>
 				</div>

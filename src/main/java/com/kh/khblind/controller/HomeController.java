@@ -64,7 +64,7 @@ public class HomeController {
 
 		//메인에 토픽 6개 조회수순으로 목록 코드
 		
-		for(int i =1 ; i<=6; i++) {
+		for(int i =1 ; i<=2; i++) {
 			int rn = i;
 			BoardCategoryAllCountDto boardCategoryAllCountDto = boardDao.getBoardCategoryByAllCount(rn);
 			int boardCategoryNo = boardCategoryAllCountDto.getBoardCategoryNo();

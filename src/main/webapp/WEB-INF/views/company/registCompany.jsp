@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-<<<<<<< HEAD
-	pageEncoding="UTF-8"%>
-
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-=======
     pageEncoding="UTF-8"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
->>>>>>> refs/remotes/origin/kangmijin
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function() {
@@ -84,12 +78,6 @@ padding-bottom: 5px;
 
 		</div>
 </section>
-=======
-<form action="registCompany" method="post">
-	<input type="text" name="companyRegistName" placeholder="회사 이름">
-	<input type="text" name="companyRegistDomain" placeholder="회사 이메일 주소">
-	<input class="insert-btn" type="submit" value="신청하기">
-</form>
->>>>>>> refs/remotes/origin/kangmijin
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

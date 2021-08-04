@@ -149,13 +149,12 @@
     // toggle-btn
     const toggleButton = document.querySelector('#toggle-btn');
     const menus = document.querySelector('#menu');
-      
+
        toggleButton.addEventListener('click', () => {
           menus.classList.toggle('open')
-       });
-
-    </script>
-      
+       }
+       );
+</script>
 
     <hr>
     
