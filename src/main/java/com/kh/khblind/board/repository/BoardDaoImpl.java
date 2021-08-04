@@ -15,6 +15,7 @@ import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
 import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryGroupDto;
 import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
+import com.kh.khblind.board.entity.BoardCategoryVO;
 import com.kh.khblind.board.entity.BoardCountDto;
 import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.board.entity.BoardMemberVO;
@@ -303,9 +304,18 @@ public class BoardDaoImpl implements BoardDao {
 			sqlSession.delete("hashtag.deleteHash", boardNo);			
 		}
 
+
+		@Override
+	      public List<BoardCategoryVO> myWrite(int memberNo) {
+	         List<BoardCategoryVO> boardList = sqlSession.selectList("board.myWrite",memberNo);
+	         return boardList;
+	      }
+
+
 		@Override
 		public List<MetamonBoardListVO> ajaxCompanyBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> companyBoardList = sqlSession.selectList("board.getCompanyBoardList", startEndVoForAjax);
+			System.out.println("/&&&&&&7"  + companyBoardList);			
 			return companyBoardList;
 		}
 
@@ -314,12 +324,14 @@ public class BoardDaoImpl implements BoardDao {
 		public List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			System.out.println("페이지대신" + startEndVoForAjax);
 			List<MetamonBoardListVO> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", startEndVoForAjax);
+			
 			return jobCategoryBoardList;
 		}
 
 		@Override
 		public List<MetamonBoardListVO> ajaxBoardCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
 			List<MetamonBoardListVO> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", startEndVoForAjax);
+			
 			return boardCategoryBoardList;
 		}
 
@@ -357,6 +369,12 @@ public class BoardDaoImpl implements BoardDao {
 		public List<BoardCategoryListByLikeCountVO> getBoardCategoryListByLikeCount() {
 			List<BoardCategoryListByLikeCountVO> boardCategoryListByLikeCount = sqlSession.selectList("board.BoardCategoryListByLikeCount");
 			return boardCategoryListByLikeCount;
+		}
+
+		@Override
+		public List<BoardCategoryBoardDto> getCompanyKeywordList(String keyword) {
+			List<BoardCategoryBoardDto> getCompanyKeywordList = sqlSession.selectList("board.getCompanyKeywordList", keyword);
+			return getCompanyKeywordList;
 		}
 
 

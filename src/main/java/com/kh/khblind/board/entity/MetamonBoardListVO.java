@@ -25,5 +25,8 @@ public class MetamonBoardListVO {
 	private int startNo;
 	private int endNo;
 	
+	private int likeCount;
+	private int commentsCount;
+	
 
 }

@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.board.entity.BoardCategoryBoardDto;
+import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.company.entity.CompanyProfileDto;
 import com.kh.khblind.company.entity.CompanyRegistDto;
 import com.kh.khblind.company.entity.CompanyReviewDto;
@@ -45,6 +47,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileDao profileDao;
+	
+	@Autowired
+	private BoardDao boardDao;
 	
 	@GetMapping("/")
 	public String company(Model model) {
@@ -167,7 +172,9 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/companyBoard")
-	public String companyBoard(int companyNo, Model model) {
+	public String companyBoard(
+			int companyNo, Model model
+			) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
 		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
@@ -176,6 +183,25 @@ public class CompanyController {
 			model.addAttribute("companyVO", companyVO);
 			model.addAttribute("reviewRate", reviewRate);
 			model.addAttribute("reviewCount", reviewCount);
+			
+			//기업키워드 리스트 추가
+			String keyword = companyVO.getCompanyName();
+			System.out.println("keyword@@@@@" + keyword);
+			
+			List<BoardCategoryBoardDto> companyKeywordList = boardDao.getCompanyKeywordList(keyword);
+			
+			for(int i =0; i<companyKeywordList.size(); i++) {
+				String target = companyKeywordList.get(i).getBoardContent();
+				if(target.length()>25) {
+					target = target.substring(0, 25) + "...";
+				}
+				
+				companyKeywordList.get(i).setBoardContent(target);
+			}
+			
+			
+			
+			model.addAttribute("companyKeywordList", companyKeywordList);
 			
 			return "company/companyBoard";
 		}

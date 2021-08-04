@@ -4,6 +4,7 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+	<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
     <!-- 제이쿼리를 가져온다 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -66,6 +67,7 @@
     
     .cert-progress-msg-error{
     font-size: 1.2em;
+
     color: rgb(180, 45, 50);
     }
     
@@ -80,6 +82,12 @@
 	
 	.primary-background-color {
 	background-color: #1e3932;
+	}
+	
+	
+	.bbxb{
+	box-sizing: border-box;
+
 	}
 	
 	
@@ -243,4 +251,6 @@ function setImageFromFile(input, expression) {
 		</div>
 </html>
 	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+</html>
+
 </html>

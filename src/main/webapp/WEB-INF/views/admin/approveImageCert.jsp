@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <!-- 부트스트랩을 가져온다 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
     <!-- 제이쿼리를 가져온다 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <!-- UI제이쿼리를  가져온다 -->
     <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-    <!-- Popper를 가져온다 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- 폰트어썸 아이콘을 가져온다-->
     <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-    <!-- 부트와치를 가져온다.-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
+  
+    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
+
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
     <style>
 		#image-frame{
@@ -113,8 +116,8 @@
         });
 
     </script>
-    <div class="row mt-5">
-        <div class="offset-3 col-6 row">
+    <div class="row mt-5 container">
+        <div class="offset-2 col-8 row">
 
             <div id="title-area" class="col-12 row">
                 <div id="board-write-title" class="col-12 text-center primary-background-color">
@@ -134,7 +137,9 @@
                     </select>
                 </div>
 
-                <div id="image-sector" class="col-9 row">
+
+                <div id="image-sector" class="col-7 row">
+
                     <img id="image-frame" class="col-12 img-fluid" src="${root}/img/default-id-card.png">
                 </div>
             </div>
@@ -182,3 +187,4 @@
             </div>
         </div>
     </div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
