@@ -136,7 +136,7 @@
           <div class="headerBox">
           <ul class="menu" id="menu">
             <li class="menu-list">
-              <a id="write" class="menu-item" href="${rt}/boardWrite">글쓰기</a>
+              <a id="write" class="menu-item" href="${rt}/board/boardWrite">글쓰기</a>
             </li>
             <li class="menu-list">
               <a href="${rt}/company/"class="menu-item">기업리뷰</a>
