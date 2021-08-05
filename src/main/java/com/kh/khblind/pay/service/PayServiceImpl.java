@@ -211,7 +211,7 @@ public class PayServiceImpl implements PayService{
 	@Override
 	public void gradeExipre() {
 		payDao.expire();
-		log.debug("제발");
+		//log.debug("제발");
 	}
 	
 }

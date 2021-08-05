@@ -49,6 +49,9 @@ import com.kh.khblind.member.repository.MemberDao;
 
 import lombok.extern.slf4j.Slf4j;
 
+import com.kh.khblind.search.entity.SearchDto;
+import com.kh.khblind.search.repository.SearchDao;
+
 @RequestMapping("/board")
 @Controller
 @Slf4j
@@ -672,16 +675,40 @@ public class BoardController {
 			HttpSession session,  Model model, 
 			@RequestParam String type, 
 			@RequestParam(required = false) Integer boardCategoryNo,
-			@RequestParam(required = false) String keyword
+			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) Integer jobCategoryNo
 			) {
+		
+			if(keyword !=null) {
+				// 키워드 카운트 
+				if(searchDao.get(keyword)!=null) {
+					searchDao.update(keyword);
+				}
+				else {
+					// 시퀀스번호
+					int searchNo = searchDao.getSequence();
+
+					SearchDto searchDto = SearchDto.builder()
+							.searchNo(searchNo)					
+							.keyword(keyword)
+							.build();
+
+					searchDao.insert(searchDto);	
+				}
+			}	
+		
+//		if(타입=잡) {모델.더하기("보드타입", "job")};
+//		if(타입=회사) {모델.더하기("보드타입", "com")};
+//		if(타입=토픽) {모델.더하기("보드타입", "topic")};
 		
 		//type=jobCategoryBoard 라는 파라미터가 들어오면 data에 "job"을 넣겠다
 		if(type.equals("jobCategoryBoard")) {
 			model.addAttribute("boardType", "job");
+			model.addAttribute("jobCategoryNo", jobCategoryNo);
 			
 			if(keyword != null) {
 				//keyword 값을 넘겨주겠다
-				model.addAttribute("boardKeyword", keyword); 
+				model.addAttribute("boardKeyword", keyword);
 			}
 
 			return "/board/boardList";

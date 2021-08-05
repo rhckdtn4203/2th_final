@@ -40,7 +40,7 @@
 						<a href="${pageContext.request.contextPath}/member/changeinfo">개인정보변경</a>
 					</div>
 					<div class="infoItem">
-						<a href="${pageContext.request.contextPath}/member/change_pw">비빌번호변경</a>
+						<a href="${pageContext.request.contextPath}/member/change_pw">비밀번호변경</a>
 					</div>
 				</div>
 				<div class="ib1">

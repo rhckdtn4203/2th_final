@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-<<<<<<< HEAD
-	pageEncoding="UTF-8"%>
-
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-=======
     pageEncoding="UTF-8"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
->>>>>>> refs/remotes/origin/kangmijin
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function() {
@@ -18,6 +11,7 @@
 		});
 	});
 </script>
+
 <style>
 /* #modiBack {
 	height: 700px;
@@ -34,13 +28,13 @@
 #group-back {
 	height: 240px;
 } */
-#modiBack{
-height: 650px;
-padding-bottom: 5px;
-}
+	#modiBack{
+		height: 650px;
+		padding-bottom: 5px;
+	}
 </style>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/style4.css">
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style4.css">
 
 <section id="modiBox">
 	<div class="modiBack" id="modiBack">
@@ -59,8 +53,8 @@ padding-bottom: 5px;
 						<h3>회사 신청하기</h3>
 					</div>
 				</figcaption>
+			</div>
 		</figure>
-
 
 		<div class="input-modiBox">
 			<div id="group-back">
@@ -74,7 +68,7 @@ padding-bottom: 5px;
 							placeholder="&nbsp사내 이메일 주소" required class="sb">
 					</div>
 
-					<div class="login-btn-box">
+					<div class="login-btn-box insert-btn">
 						<input type="submit" value="신청하기" class="login-btn">
 					</div>
 			
@@ -83,13 +77,13 @@ padding-bottom: 5px;
 
 
 		</div>
+	</div>
 </section>
-=======
+
 <form action="registCompany" method="post">
 	<input type="text" name="companyRegistName" placeholder="회사 이름">
 	<input type="text" name="companyRegistDomain" placeholder="회사 이메일 주소">
 	<input class="insert-btn" type="submit" value="신청하기">
 </form>
->>>>>>> refs/remotes/origin/kangmijin
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

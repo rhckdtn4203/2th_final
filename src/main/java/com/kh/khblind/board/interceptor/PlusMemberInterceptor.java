@@ -21,7 +21,7 @@ public class PlusMemberInterceptor implements HandlerInterceptor{
 	
 		
 		else 
-			response.sendRedirect(request.getContextPath()+"/board/boardList?type=jobCategoryBoard");
+			response.sendRedirect(request.getContextPath()+"/error/PayInfo");
 			return false;
 	}
 }
