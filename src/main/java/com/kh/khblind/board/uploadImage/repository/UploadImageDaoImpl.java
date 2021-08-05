@@ -192,7 +192,6 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			Graphics g = newImage.getGraphics();
 			g.drawImage(resizedImage, 0, 0, null);
 			g.dispose();
-			System.out.println(200);
 			ImageIO.write(newImage, imgFormat, new File(outputFilePath));
 
 			// 3. 이미지 회전해주기
@@ -200,7 +199,6 @@ public class UploadImageDaoImpl implements UploadImageDao {
 
 			File inputFile2 = new File(finalFolderName, randomFileName + "-ready.jpg");
 			BufferedImage finalImage = null;
-			System.out.println(204);
 			BufferedImage newImage2 = ImageIO.read(inputFile2);
 
 			int orientation = rotationValueList.get(i);
