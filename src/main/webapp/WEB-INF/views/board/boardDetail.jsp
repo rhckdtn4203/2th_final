@@ -21,7 +21,7 @@
  $(function(){ 
  $(".deleteLike").click(function(){ 
 	  $(".boardLikeInsertForm").submit(); 
-	   }); 
+	   })
 	   });
  </script> 
  <script>
@@ -197,7 +197,15 @@
 					console.log(message + "메시지")
 					var json = JSON.stringify(message);
 					window.socket.send(json);
-				})
+				});
+				
+				$(window).on("beforeunload", function(){
+					var topicNo = ${VoteTopicInfo.voteTopicNo};
+					var message = {receivePayloadType:3, voteTopicNo: topicNo};
+					console.log(message + "메시지")
+					var json = JSON.stringify(message);
+					window.socket.send(json);
+				});
 			
 		})
 	</script>
