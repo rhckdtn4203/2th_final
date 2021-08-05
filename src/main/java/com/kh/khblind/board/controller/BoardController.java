@@ -81,6 +81,9 @@ public class BoardController {
 	@Autowired
 	private BookmarkDao bookmarkDao;
 	
+	@Autowired
+	private SearchDao searchDao;
+	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model, HttpSession session) {
 		

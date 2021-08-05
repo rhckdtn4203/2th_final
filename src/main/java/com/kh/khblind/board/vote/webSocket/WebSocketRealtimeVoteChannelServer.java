@@ -71,8 +71,6 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 			server.send(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), realtimeVoteSingleInfoVo.getVoteOptionNo());
 		}
 		else if(realtimeVoteSingleInfoVo.getReceivePayloadType() == LEAVE) {
-//			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
-			System.out.println(realtimeVoteSingleInfoVo + "나가는중");
 			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo());
 		}
 	}

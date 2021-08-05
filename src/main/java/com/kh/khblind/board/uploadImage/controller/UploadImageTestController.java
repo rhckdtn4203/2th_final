@@ -50,7 +50,6 @@ public class UploadImageTestController {
 														.superFolderName(superFolderName)
 														.folderName(Integer.toString(tempBoardNo))
 														.build();
-		System.out.println("convertImageVo" + convertImageVo);
 		
 		List<String> readyFileNameList = uploadImageDao.convertImage(convertImageVo);
 		
