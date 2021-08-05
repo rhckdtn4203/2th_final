@@ -3,9 +3,11 @@ package com.kh.khblind.company.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
@@ -53,7 +55,16 @@ public class CompanyController {
 	
 	@GetMapping("/")
 	public String company(Model model) {
-		List<HashMap<String, Integer>> rateTopSix = companyDao.rateTopSix();
+		List<HashMap<String, String>> rateTopSix = companyDao.rateTopSix();
+		
+		for(int i = 0; i < rateTopSix.size(); i++) {
+			for(Entry<String, String> elem : rateTopSix.get(i).entrySet()){
+	            if(elem.getKey().equals("RATE_AVG")) {
+	            	DecimalFormat form = new DecimalFormat("#.##");
+	            	elem.setValue(form.format(elem.getValue()));
+	            }
+	        }
+		}
 		
 		model.addAttribute("topSixList", rateTopSix);
 		
@@ -62,8 +73,28 @@ public class CompanyController {
 	
 	@PostMapping("/")
 	public String company(@RequestParam String keyword, Model model) {
-		List<HashMap<String, Integer>> search = companyDao.searchKeyword(keyword);
-		List<HashMap<String, Integer>> rateTopSix = companyDao.rateTopSix();
+		List<HashMap<String, String>> search = companyDao.searchKeyword(keyword);
+		List<HashMap<String, String>> rateTopSix = companyDao.rateTopSix();
+		
+		for(int i = 0; i < search.size(); i++) {
+			for(Entry<String, String> elem : search.get(i).entrySet()){
+				if(elem.getKey().equals("RATE_AVG")) {
+	            	DecimalFormat form = new DecimalFormat("#.##");
+	            	elem.setValue(form.format(elem.getValue()));
+	            	System.out.println(elem.getValue());
+	            }
+	        }
+		}
+		
+		for(int i = 0; i < rateTopSix.size(); i++) {
+			for(Entry<String, String> elem : rateTopSix.get(i).entrySet()){
+				if(elem.getKey().equals("RATE_AVG")) {
+	            	DecimalFormat form = new DecimalFormat("#.##");
+	            	elem.setValue(form.format(elem.getValue()));
+	            	System.out.println(elem.getValue());
+	            }
+	        }
+		}
 		
 		model.addAttribute("searchList", search);
 		model.addAttribute("size", search.size());
@@ -105,13 +136,21 @@ public class CompanyController {
 	@GetMapping("/companyDetail")
 	public String companyDetail(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
-		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {;
+			DecimalFormat form = new DecimalFormat("#.##");
+			int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+		
 			model.addAttribute("companyVO", companyVO);
-			model.addAttribute("reviewRate", reviewRate);
+			model.addAttribute("reviewRate", form.format(reviewRate));
 			model.addAttribute("reviewCount", reviewCount);
+			return "company/companyDetail";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
 			return "company/companyDetail";
 		}
 		else {
@@ -121,21 +160,34 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/companyReview")
-	public String companyReview(int companyNo, Model model) {
+	public String companyReview(int companyNo, HttpSession session, Model model) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
+		int memberGrade = memberDto.getGradeNo();
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
-		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
-		model.addAttribute("list", companyReviewDao.companyReviewList(companyNo));
-		model.addAttribute("reviewRate", reviewRate);
-		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("grade", memberGrade);
 
-		List<HashMap<String, Integer>> reviewCountList = companyReviewDao.companyScoreCount(companyNo);
+		List<HashMap<String, String>> reviewCountList = companyReviewDao.companyScoreCount(companyNo);
 		System.out.println(reviewCountList);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {
+			DecimalFormat form = new DecimalFormat("#.##");
+			int reviewCount = companyReviewDao.companyReviewCount(companyNo);
+			
 			model.addAttribute("companyVO", companyVO);
 			model.addAttribute("reviewCountList", reviewCountList);
+			model.addAttribute("reviewRate", form.format(reviewRate));
+			model.addAttribute("reviewCount", reviewCount);
+			model.addAttribute("list", companyReviewDao.companyReviewList(companyNo));
+			
+			return "company/companyReview";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewCountList", reviewCountList);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
 			return "company/companyReview";
 		}
 		else {
@@ -172,16 +224,15 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/companyBoard")
-	public String companyBoard(
-			int companyNo, Model model
-			) {
+	public String companyBoard(int companyNo, Model model) {
 		CompanyVO companyVO = companyDao.companyFind(companyNo);
-		double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		Double reviewRate = companyReviewDao.companyReviewRate(companyNo);
+		DecimalFormat form = new DecimalFormat("#.##");
 		int reviewCount = companyReviewDao.companyReviewCount(companyNo);
 		
-		if(companyVO != null) {;
+		if(companyVO != null && reviewRate != null) {;
 			model.addAttribute("companyVO", companyVO);
-			model.addAttribute("reviewRate", reviewRate);
+			model.addAttribute("reviewRate", form.format(reviewRate));
 			model.addAttribute("reviewCount", reviewCount);
 			
 			//기업키워드 리스트 추가
@@ -192,14 +243,36 @@ public class CompanyController {
 			
 			for(int i =0; i<companyKeywordList.size(); i++) {
 				String target = companyKeywordList.get(i).getBoardContent();
-				if(target.length()>25) {
+				if(target.length() > 25) {
 					target = target.substring(0, 25) + "...";
 				}
 				
 				companyKeywordList.get(i).setBoardContent(target);
 			}
 			
+			model.addAttribute("companyKeywordList", companyKeywordList);
 			
+			return "company/companyBoard";
+		}
+		else if(reviewRate == null) {
+			model.addAttribute("companyVO", companyVO);
+			model.addAttribute("reviewRate", 0.0);
+			model.addAttribute("reviewCount", 0);
+
+			//기업키워드 리스트 추가
+			String keyword = companyVO.getCompanyName();
+			System.out.println("keyword@@@@@" + keyword);
+			
+			List<BoardCategoryBoardDto> companyKeywordList = boardDao.getCompanyKeywordList(keyword);
+			
+			for(int i =0; i<companyKeywordList.size(); i++) {
+				String target = companyKeywordList.get(i).getBoardContent();
+				if(target.length() > 25) {
+					target = target.substring(0, 25) + "...";
+				}
+				
+				companyKeywordList.get(i).setBoardContent(target);
+			}
 			
 			model.addAttribute("companyKeywordList", companyKeywordList);
 			

@@ -4,6 +4,7 @@
 	
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style4.css">
 
 <section class="section-3">
   
@@ -19,7 +20,7 @@
   
 	
     <div class="row">
-     <h3><a href="${pageContext.request.contextPath}/member/mypage">내 정보 페이지로 돌아가기</a></h3>
+     <h3><a href="${pageContext.request.contextPath}/member/login" id="delete-a"><span>로그인</span></a></h3>
     </div>
   </div>
 

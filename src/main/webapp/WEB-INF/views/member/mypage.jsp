@@ -40,15 +40,15 @@
 						<a href="${pageContext.request.contextPath}/member/changeinfo">개인정보변경</a>
 					</div>
 					<div class="infoItem">
-						<a href="${pageContext.request.contextPath}/member/change_pw">비빌번호변경</a>
+						<a href="${pageContext.request.contextPath}/member/change_pw">비밀번호변경</a>
 					</div>
 				</div>
 				<div class="ib1">
 					<div class="infoItem">
-						<a href="${pageContext.request.contextPath}/cert/emailInsert">Email인증</a>
+						<a href="${pageContext.request.contextPath}/cert/emailInsert">정회원인증</a>
 					</div>
 					<div class="infoItem">
-						<a href="${pageContext.request.contextPath}/member/exit" id="confirmLink">회원탈퇴</a>
+						<a href="${pageContext.request.contextPath}/cert/imageInsert">사원증인증</a>
 					</div>
 					
 					
@@ -84,8 +84,7 @@
 <!-- pageBox end -->	
 </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
+
 
 <!-- 별 효과 주기 -->    
 <script src="${pageContext.request.contextPath}/js/st.js"></script>    

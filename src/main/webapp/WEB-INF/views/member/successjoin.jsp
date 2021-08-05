@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 	
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style4.css">
 
 <section class="section-3">
   
@@ -14,12 +14,12 @@
   <div class="success-box">
     
     <div class="row">
-      <h3><a href="${pageContext.request.contextPath}"><i class="fas fa-laptop-house"></i>홈</a></h3>
+  <h3><a href="${pageContext.request.contextPath}"><i class="fas fa-laptop-house"></i>홈</a></h3>
     </div>
   
 	
     <div class="row">
-<h3><a href="${pageContext.request.contextPath}/member/login">로그인</a></h3>
+<h3><a href="${pageContext.request.contextPath}/member/login" id="delete-a"><span>로그인</span></a></h3>
     </div>
   </div>
 
