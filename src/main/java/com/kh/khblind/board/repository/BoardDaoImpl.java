@@ -27,9 +27,13 @@ import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.board.entity.JobCategoryInfoDto;
 import com.kh.khblind.board.entity.MainCategoryDataVO;
 import com.kh.khblind.board.entity.MetamonBoardListVO;
 import com.kh.khblind.board.entity.StartEndVoForAjax;
+
+import com.kh.khblind.company.entity.JobCategoryDto;
+import com.kh.khblind.member.entity.MemberDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -369,6 +373,12 @@ public class BoardDaoImpl implements BoardDao {
 		public List<BoardCategoryAllCountDto> boardCategoryAllCountSize() {
 			List<BoardCategoryAllCountDto> boardCategoryAllCountSizeList = sqlSession.selectList("board.boardCategoryAllCountSize");
 			return boardCategoryAllCountSizeList;
+		}
+
+		@Override
+		public List<JobCategoryDto> getPlusJobCategoryInfo() {
+			List<JobCategoryDto> getPlusJobCategoryInfoList = sqlSession.selectList("board.getPlusJobCategoryInfo");
+			return getPlusJobCategoryInfoList;
 		}
 
 

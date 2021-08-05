@@ -40,7 +40,8 @@
  				boardCategoryNo : "${boardCategoryNo}",
  				startNo : startNo,
  				endNo : endNo,
- 				boardKeyword : "${boardKeyword}"
+ 				boardKeyword : "${boardKeyword}",
+ 				jobCategoryNo : "${jobCategoryNo}"
  				},
  				
 	  		success: function(resp) {
@@ -92,7 +93,8 @@
  		       				boardCategoryNo : "${boardCategoryNo}",
  		       				startNo : startNo,
  			 				endNo : endNo,
- 			 				boardKeyword : "${boardKeyword}"
+ 			 				boardKeyword : "${boardKeyword}",
+ 			 				jobCategoryNo : "${jobCategoryNo}"
  		       				},
  		       				
  			       		success: function(resp) {
@@ -244,7 +246,7 @@
 	   
        .kk-bamboo-color{
        color: #1e3932;
-       }    
+       } 
     </style>
 </head>
 <!-- <button id="test-btn">TEST</button> -->
@@ -267,14 +269,14 @@
 	<form action="${root}/board/boardList" method="get">
 		<input type="hidden" name="type" value="jobCategoryBoard" class="form-control">
 		<input type="text" name="keyword" required class="form-control" placeholder="업종 게시판에서 검색">
-		<input type="submit" value="검색" class="btn btn-primary">
+		<input type="submit" value="검색" class="btn btn-primary">	
 	</form>
 	</c:if>
 	
 	<c:if test="${boardType == 'boardCategory'}">
 	<form action="${root}/board/boardList" method="get">
 		<input type="hidden" name="type" value="boardCategoryBoard" class="form-control">
-		<input type="hidden" name="boardCategoryNo" value="${boardCategoryNo}" class="form-control">
+		<input type="hidden" name="boardCategoryNo" value="${boardCategoryNo}" class="form-control">	
 		<input type="text" name="keyword" required class="form-control" placeholder="에서 검색">
 		<input type="submit" value="검색" class="btn btn-primary">
 	</form>
