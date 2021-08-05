@@ -46,10 +46,12 @@ import com.kh.khblind.board.vote.entity.VoteTopicDto;
 import com.kh.khblind.board.vote.repository.VoteDao;
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
-import com.kh.khblind.search.repository.SearchDao;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/board")
 @Controller
+@Slf4j
 public class BoardController {
 	
 	@Autowired
@@ -75,9 +77,6 @@ public class BoardController {
 	
 	@Autowired
 	private BookmarkDao bookmarkDao;
-	
-	@Autowired
-	private SearchDao searchDao;
 	
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model, HttpSession session) {
@@ -109,7 +108,7 @@ public class BoardController {
 		 * 3.그룹등록 
 		 */
 		
-		System.out.println(boardWriteFullVO);
+		log.debug("사용자에게 받은 글 데이터 {}" + boardWriteFullVO);
 		
 		//재료 모으기1-1. 회원번호
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
@@ -152,7 +151,10 @@ public class BoardController {
 			List<MultipartFile> images = boardWriteFullVO.getImages();
 			
 			List<String> fileNameList = uploadImageDao.uploadOriginalFile(images, memberNo);
-			if(fileNameList==null) {return "/board/파일업로드실패/이유는-서버에업로드가되지않음";}	
+			if(fileNameList==null) {
+				log.error("서버에업로드가되지않음");
+				return "/erorr/errorpage/";
+				}	
 			
 			//2-2-2. 1에서 받은 리스트를 활용하여 각 이미지의 로테이션 번호로 회전해야할 각도 리스트를 가져온다.
 			List<Integer> rotationValueList = uploadImageDao.getRotationValue(fileNameList);
@@ -168,28 +170,26 @@ public class BoardController {
 															.superFolderName(superFolderName)
 															.folderName(Integer.toString(boardNo))
 															.build();
-			System.out.println("convertImageVo" + convertImageVo);
 			
 			List<String> readyFileNameList = uploadImageDao.convertImage(convertImageVo);
 			
 			//2-2-5. 삭제하기
-			boolean deleteSuccess = uploadImageDao.deleteOrigin(convertImageVo, readyFileNameList);
-			System.out.println("삭제?" + deleteSuccess);
+			uploadImageDao.deleteOrigin(convertImageVo, readyFileNameList);
 			
 			//2-2-6. 썸네일 만들기
 			String firstFileFullName = readyFileNameList.get(0);
 			String firstFileFinalName = firstFileFullName.replace("-ready", "");
-			boolean makeThumbSuccess = uploadImageDao.makeThumb(convertImageVo, firstFileFinalName);
-			System.out.println("썸네일 생성?" + makeThumbSuccess);
+			uploadImageDao.makeThumb(convertImageVo, firstFileFinalName);
 			
 			//2-2-7. DB에 등록
-		}else {System.out.println("이미지 없음");}
+		}else {
+			log.error("이미지 없음");
+			}
 
 		
 		//2-3.투표 등록(투표가 있다면)
 		if(!boardWriteFullVO.getVoteTopicTitle().equals("")) {
 			//파라미터값들로 받은 데이터가 담긴 "voteInsertInfoVo"를 쪼갭니다.(1.투표 주제 추가에 필요한 Dto / 2.투표 선택지(들) 추가에 필요한 VO)
-			System.out.println("투표가 있어 " + boardWriteFullVO.getVoteTopicTitle());
 			//2-3-1. 투표 주제 추가
 			VoteTopicDto voteTopicDto = VoteTopicDto.builder()
 												.boardNo(boardNo)
@@ -289,19 +289,19 @@ public class BoardController {
 		//1-3-1. 내 글이 아니면 *****처리를 해준다. 
 		int writerMemberNo = boardDto.getMemberNo();
 		
-//		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
-//			String memberNick = boardMemberVO.getMemberNick();
-//			char firstChar = memberNick.charAt(0);
-//			int nickLength = memberNick.length();
-//			
-//			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
-//			stringBuilderForBlindedNick.append(firstChar);
-//			for(int i = 0; i <nickLength-1; i++) {
-//				stringBuilderForBlindedNick.append("*");
-//				}
-//			String blindedNick = stringBuilderForBlindedNick.toString();
-//			boardMemberVO.setMemberNick(blindedNick);
-//		}
+		if(memberNo != writerMemberNo && boardDao.find(boardNo)!=null) {
+			String memberNick = boardMemberVO.getMemberNick();
+			char firstChar = memberNick.charAt(0);
+			int nickLength = memberNick.length();
+			
+			StringBuilder stringBuilderForBlindedNick = new StringBuilder();
+			stringBuilderForBlindedNick.append(firstChar);
+			for(int i = 0; i <nickLength-1; i++) {
+				stringBuilderForBlindedNick.append("*");
+				}
+			String blindedNick = stringBuilderForBlindedNick.toString();
+			boardMemberVO.setMemberNick(blindedNick);
+		}
 		
 		model.addAttribute("boardMemberVO", boardMemberVO);
 		//2. 분류이름을 가져오는 과정
@@ -345,10 +345,6 @@ public class BoardController {
 		else {//이유는 모르겠지만 어디에도 등록되어 있지 않은 페이지
 			return "error/errorpage";
 		}
-		
-//		if(boardType.equals("") || typeNo==0 || typeName.equals("")) { //변화가 없다면
-//			return "글 분류 에러 페이지!";
-//		}
 		
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("typeName", typeName);
@@ -401,21 +397,16 @@ public class BoardController {
 		boardContent= boardContent.replaceAll("\'", "\\u0022");
 		
 		//5-2. 해시태그에 앵커태그 붙이기
-		System.out.println("수슬대에 오른 " + boardContent);
 		
 		List<String> hashTag  = boardDao.getHash(boardDto.getBoardContent());
-		System.out.println("검색된 해시태그" + hashTag);
 		
 		for(int i = 0; i<hashTag.size(); i++) {
 			
 			String before = hashTag.get(i);
-//			System.out.println("이거를 찾아서할거다" + hashTag.get(i));
 			String after = "<a href="+"검색매핑주소/"+hashTag.get(i)+">"+hashTag.get(i)+"</a>";
 			
-//			System.out.println("만들어진건 =" + after);
 			boardContent = boardContent.replaceFirst(before, after);
 			
-//			System.out.println("해시태그 변환중" + boardContent);
 		}
 		boardDto.setBoardContent(boardContent);
 		
@@ -451,10 +442,9 @@ public class BoardController {
 	      	}  	
 	      }  
 		
-		//7.이미지
-//		List<ResponseEntity<ByteArrayResource>> imageFileList = uploadImageDao.getImageToJsp(boardNo);
-//		model.addAttribute("imageFileList", imageFileList);
-
+	    //7.이미지
+	    //ajax로 구현되면서 삭제
+	      
 		//8. 투표1
 		//토픽 정보를 가져온다
 		VoteTopicDto voteTopicDto = new VoteTopicDto();
@@ -470,8 +460,6 @@ public class BoardController {
 							.memberNo(memberNo)
 							.build();
 					boolean didYouVote = voteDao.didYouVote(voteResultDto);
-					
-					System.out.println("투표 여부" + didYouVote);
 					
 					if(didYouVote) {
 						
@@ -489,13 +477,11 @@ public class BoardController {
 				}
 				
 				model.addAttribute("VoteTopicInfo", voteTopicDto);
-				System.out.println("voteTopicDto = " + voteTopicDto);
 
 				//8-2선택지 정보를 가져온다
 				
 				List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
 				
-				System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
 				model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
 			}
 			else {
@@ -528,7 +514,6 @@ public class BoardController {
 			else {
 				commentsList.get(i).setOwnComments(1);
 			}
-			System.out.println("이번 댓글 " + commentsList.get(i));
 	    }
 		
 		
@@ -690,11 +675,6 @@ public class BoardController {
 			@RequestParam(required = false) String keyword
 			) {
 		
-			
-//		if(타입=잡) {모델.더하기("보드타입", "job")};
-//		if(타입=회사) {모델.더하기("보드타입", "com")};
-//		if(타입=토픽) {모델.더하기("보드타입", "topic")};
-		
 		//type=jobCategoryBoard 라는 파라미터가 들어오면 data에 "job"을 넣겠다
 		if(type.equals("jobCategoryBoard")) {
 			model.addAttribute("boardType", "job");
@@ -812,9 +792,7 @@ public class BoardController {
 	   
       @GetMapping("commentsDelete")
       public String commentsDelete(int commentsNo, int boardNo) {
-    	  System.out.println(commentsNo + "들어옴" + boardNo);
          commentDao.delete(commentsNo);
-         System.out.println("댓글삭제");
          return "redirect:boardDetail?boardNo="+boardNo;
       }
 }
