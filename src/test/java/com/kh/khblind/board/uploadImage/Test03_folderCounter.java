@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class Test03_folderCounter {
 	
-	private final File resDir = new File("D:/proj/khblind/resources");
+	private final File resDir = new File("D:/upload/kh7b");
 	
 	@Test
 	public void test1() {
