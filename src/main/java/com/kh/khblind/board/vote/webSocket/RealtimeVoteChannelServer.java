@@ -14,17 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 public class RealtimeVoteChannelServer {
 
 	private List<RealtimeVoterVo> waiting = new ArrayList<>();//대기실
-	private List<RealtimeVoteChannel> channels = new ArrayList<>();//채널저장소
+	private List<RealtimeVoteChannel> realtimeVoteChannels = new ArrayList<>();//채널저장소
 	
 	//채널탐색
 	public boolean exist(Integer voteChannelNo) {
-		return findChannel(voteChannelNo) != null;
+//		voteChannelNo=175;
+		return find(voteChannelNo) != null;
 	}
 	
-	public RealtimeVoteChannel findChannel(Integer voteChannelNo) {
-		for(RealtimeVoteChannel realtimeVoteChannel : channels) {
-			if(realtimeVoteChannel.getRealtimeVoteChannelNo()==voteChannelNo) {
-				return realtimeVoteChannel;
+	public RealtimeVoteChannel find(Integer voteChannelNo) {
+		for(int i = 0; i<realtimeVoteChannels.size(); i++) {
+			if(realtimeVoteChannels.get(i).getRealtimeVoteChannelNo().equals(voteChannelNo)) {
+				return realtimeVoteChannels.get(i);
 			}
 		}
 		return null;
@@ -36,23 +37,42 @@ public class RealtimeVoteChannelServer {
 		log.debug("대기실 입장 - 현재 대기자 {} 명", waiting.size());
 	}
 	
-	//투표채널입장
+	//투표권자가 투표채널입장
 	public void enter(int memberNo, Integer voteChannelNo) {
+//		voteChannelNo = 175;
 		RealtimeVoterVo voter = findWaiting(memberNo);
-		System.out.println("세션이나 있냐...? voter = "+ voter);
 		waiting.remove(voter);
 		
-		RealtimeVoteChannel realtimeVoteChannel = findChannel(voteChannelNo);
-		System.out.println("realtimeVoteChannel = " + realtimeVoteChannel);
-		if(realtimeVoteChannel == null) {//채널이 없는 경우에는 채널을 추가한다
-			
+		RealtimeVoteChannel realtimeVoteChannel = find(voteChannelNo);
+		if(realtimeVoteChannel == null) {//채널이 없는 경우에는 채널을 추가한당...
 			realtimeVoteChannel = new RealtimeVoteChannel(voteChannelNo);
-
-			channels.add(realtimeVoteChannel);
+			realtimeVoteChannels.add(realtimeVoteChannel);
+			
 			log.debug("신규 채널 생성 : {}", voteChannelNo);
+			for(int i = 0; i< realtimeVoteChannels.size(); i++) {
+				log.debug("채널 번호 {}", realtimeVoteChannels.get(i).getRealtimeVoteChannelNo());
+			}
+
 		}
 
 		realtimeVoteChannel.enter(voter);
+	}
+	
+	//투표권자 퇴장
+	public void leave(int memberNo, int voteChannelNo) {
+		RealtimeVoteChannel realtimeVoteChannel = find(voteChannelNo);
+		realtimeVoteChannel.leave(memberNo);
+		
+		if(realtimeVoteChannel.isEmpty()) {
+			realtimeVoteChannels.remove(realtimeVoteChannel);
+			log.debug("{}채널 삭제 = ", realtimeVoteChannel);
+		}
+	}
+	
+	public void leave(int memberNo) {
+		for(RealtimeVoteChannel realtimeVoteChannel : realtimeVoteChannels) {
+			leave(memberNo, realtimeVoteChannel.getRealtimeVoteChannelNo());
+		}
 	}
 	
 	//대기실안에서 member 탐색
@@ -67,30 +87,11 @@ public class RealtimeVoteChannelServer {
 	
 	//투표정보 전송
 	public void send(int memberNo, int voteChannelNo, int voteOptionNo) throws IOException {
-		RealtimeVoteChannel realtimeVoteChannel = findChannel(voteChannelNo);
+		RealtimeVoteChannel realtimeVoteChannel = find(voteChannelNo);
+//		realtimeVoteChannel.setRealtimeVoteChannelNo(175);
 		if(realtimeVoteChannel != null) {
 			realtimeVoteChannel.sendVoteInfo(memberNo, voteOptionNo);
 		}
 	}
-	
-	//사용자 퇴장(+ 투표채널 삭제)
-	//= 채널 탐색 + 사용자 제거 + (채널 삭제)
-//	public void leave(int memberNo, int voteChannelNo, WebSocketSession session) {
-	public void leave(int memberNo, int voteChannelNo) {
-		RealtimeVoteChannel realtimeVoteChannel = findChannel(voteChannelNo);
-	
-		
-//		realtimeVoteChannel.leave(memberNo, session);
-		realtimeVoteChannel.leave(memberNo);		
-		
-		if(realtimeVoteChannel.getRealtimeVoters().size() ==0) {
-			channels.remove(realtimeVoteChannel);
-			log.debug("채널 삭제 : {}", realtimeVoteChannel);
-		}
-	}
-//	public void leave(int memberNo) {
-//		for(RealtimeVoteChannel realtimeVoteChannel : channels) {
-//			leave(memberNo, realtimeVoteChannel.getRealtimeVoteChannelNo(), session);
-//		}
-//	}
+
 }

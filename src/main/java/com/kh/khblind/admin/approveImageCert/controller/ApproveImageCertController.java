@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.khblind.admin.approveImageCert.entity.ApproveImageCertDto;
 import com.kh.khblind.admin.approveImageCert.repository.ApproveImageCertDao;
-import com.kh.khblind.admin.approveImageCert.repository.ApproveImageCertDaoImpl;
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
-import com.kh.khblind.member.cert.entity.CertDto;
 import com.kh.khblind.member.cert.repository.CertDao;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class ApproveImageCertController {
 	
 	@Autowired
@@ -28,7 +29,7 @@ public class ApproveImageCertController {
 	
 	@Autowired
 	private UploadImageDao uploadImageDao;
-	
+
 	@GetMapping("/approveImageCert")
 	public String approveImageCert(Model model) {
 		
@@ -41,23 +42,22 @@ public class ApproveImageCertController {
 	
 	@PostMapping("/approveImageCert")
 	public String approveImageCert(int memberNo) {
-		System.out.println("승인하는 중입니다.");
-		//승인 (+2)
-		certDao.upgrade(memberNo);
-	
+		log.debug("{}번 회원의  사원증을 회원 승인하는 중 ", memberNo);
+		//승인 후 등업 (+2)
+		certDao.upgrade(memberNo);	
+		
 		//DB변경 ing-> end
-		certDao.approveImageCert(memberNo);
+		certDao.approveImageCert(memberNo); 
 		
 		//원본 파일 삭제
-		uploadImageDao.deleteImageChainToImageCert(memberNo);
-		
+		uploadImageDao.deleteImageChainToImageCert(memberNo); 
 		return "redirect:approveImageCert";
 		
 	}
 	
 	@PostMapping("/rejectImageCert")
 	public String rejectImageCert(int memberNo, String imageCertMessage) {
-		System.out.println("거절하는 중입니다.");
+		log.debug("{}번 회원의  사원증을 회원 거절하는 중 ", memberNo);
 		certDao.rejectImageCert(memberNo, imageCertMessage);
 		
 		return "redirect:approveImageCert";
