@@ -1,17 +1,10 @@
 package com.kh.khblind.board.uploadImage.repository;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -40,10 +33,10 @@ import com.kh.khblind.board.uploadImage.entity.BoardImageDto;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
 import com.kh.khblind.member.cert.entity.ImageCertDto;
 
-//import com.drew.imaging.ImageMetadataReader;
-//import com.drew.metadata.Metadata;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
+@Slf4j
 public class UploadImageDaoImpl implements UploadImageDao {
 
 	@Autowired
@@ -62,7 +55,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		for (int i = 0; i < images.size(); i++) {
 			String fileName = "(" + memberNo + "'s)" + images.get(i).getOriginalFilename();
-			System.out.println(fileName + "- 작업합니다.");
+			log.debug("업로드 파일 작업 대상 {}", fileName);
 			File target = new File(RawDir, fileName);
 
 			try {
@@ -71,10 +64,10 @@ public class UploadImageDaoImpl implements UploadImageDao {
 
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-				System.out.println("업로드 실패 : 'IllegalStateException' or 'IOException'");
+				log.error("업로드 실패 : 'IllegalStateException' or 'IOException'");
 				return null;
 			}
-			System.out.println(fileName + "- 업로드 완료(원본:" + images.get(i).getOriginalFilename() + ")");
+			log.debug("파일명 {}의 업로드 완료 (원본 : {})", fileName, images.get(i).getOriginalFilename());
 		}
 		return fileNameList;
 	}
@@ -82,7 +75,6 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	@Override
 	public List<Integer> getRotationValue(List<String> fileNameList) {
 
-//		File s = new File(resDir + "/1.raw-image/");
 		List<Integer> rotationValueList = new ArrayList<>();
 
 		for (int i = 0; i < fileNameList.size(); i++) {
@@ -98,19 +90,19 @@ public class UploadImageDaoImpl implements UploadImageDao {
 				}
 			} catch (ImageProcessingException e) {
 				e.printStackTrace();
-				System.out.println("ImageProcessingException" + "이미지 문제");
+				log.error("ImageProcessingException" + "이미지 문제");
 			} catch (IOException e) {
-				System.out.println("IOException" + "파일 문제");
+				log.error("IOException" + "파일 문제");
 			} catch (NullPointerException e) {
 				e.printStackTrace();
-				System.out.println("NullPointerException " + "오리엔테이션이 없다.");
+				log.debug("NullPointerException " + "오리엔테이션이 없음 기본값인 1을 부여");
 				orientation = 1;
-				rotationValueList.add(orientation);// 없으니 1을 넣는다.
+				rotationValueList.add(orientation);
 			} catch (MetadataException e) {
 				e.printStackTrace();
-				System.out.println("MetadataException " + "메타데이터오류... 이건 언제 일어날까");
+				log.debug("MetadataException " + "메타데이터오류");
 			}
-			rotationValueList.add(orientation);// 이건 정상값
+			rotationValueList.add(orientation);// 정상값
 		}
 		return rotationValueList;
 	}
@@ -123,14 +115,14 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		boolean reCalc = true;
 
 		while (reCalc) {
-			System.out.println(no + "하고" + k * folderNo + "를 비교");
+			log.debug("{}하고 {}를 비교", no, folderNo);
 			if (no <= k * folderNo) {
 				reCalc = false;
 			} else {
 				folderNo++;
 			}
 		}
-		System.out.println("folderNo = " + folderNo);
+		log.debug("folderNo = " + folderNo);
 		return Integer.toString(folderNo);
 	}
 
@@ -144,18 +136,18 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			File checkFolder = new File(finalFolderName);
 			if(!checkFolder.exists()) {
 				checkFolder.mkdirs();
-				System.out.println("없어서 만듦" + checkFolder);
-				System.out.println("그래서 있어?" + checkFolder.exists());
+				log.debug("{} 없어서 만듦", checkFolder );
+				log.debug("폴더 생성 여부 {},  checkFolder.exists())");
 			}
 			else {
-				System.out.println("있어서 안 만들어!" + checkFolder);
+				log.debug("{} 폴더가 이미 있음", checkFolder );
 			}
 			
 			// 1. 랜덤 파일이름 만들기 (겹치지 않을 때까지)
 			boolean isSameName = true;
 			String randomFileName = "";
 
-			System.out.println("최종 목적지" + finalFolderName);
+			log.debug("최종 목적지 {}", finalFolderName);
 
 			while (isSameName) {
 				int start = 97; // a
@@ -168,9 +160,9 @@ public class UploadImageDaoImpl implements UploadImageDao {
 				File sameNameFile = new File(finalFolderName, randomFileName + ".jpg");
 				if (!sameNameFile.exists()) {
 					isSameName = false;
-					System.out.println("만들어진 파일명 : " + randomFileName);
+					log.debug("만들어진 파일명 : {}", randomFileName);
 				} else {
-					System.out.println("겹치는 파일 있음 (" + randomFileName + ") 반복");
+					log.debug("겹치는 파일 있음 {} - 따라서 반복", randomFileName);
 				}
 			}
 
@@ -179,25 +171,19 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			int setWidth = 1024;
 
 			File inputFile = new File(RawDir, convertImageVo.getFileNameList().get(i));
-//			File outputFile = new File(finalFolderName, randomFileName);
 			String outputFilePath = finalFolderName + "\\" + randomFileName + "-ready.jpg";
-			System.out.println("최종 파일 경로 가 있나요? " + outputFilePath);
-//			String outputPath2 = outputFile.getPath();
-
-//			System.out.println("outputPath" + outputPath);
-//			System.out.println("outputPath2" + outputPath2);
+			log.debug("최종 파일 경로 존재 여부{}", outputFilePath);
 
 			BufferedImage inputBufferdImage = ImageIO.read(inputFile);
 			int originWidth = inputBufferdImage.getWidth(null);
 			int originHeight = inputBufferdImage.getHeight(null);
 
-			System.out.println(originWidth + " !! " + originHeight);
 			double ratio = (double) setWidth / (double) originWidth;
-			System.out.println(ratio);
+			log.debug("원본파일의 W,H {},{} 바율 {}", originWidth, originHeight, ratio);
 			int newWidth = (int) (originWidth * ratio);
 			int newHeight = (int) (originHeight * ratio);
 
-			System.out.println(newWidth + "|" + newHeight);
+			log.debug("변환된 {},{}", newWidth, newHeight);
 
 			Image resizedImage = inputBufferdImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
 
@@ -219,36 +205,28 @@ public class UploadImageDaoImpl implements UploadImageDao {
 
 			int orientation = rotationValueList.get(i);
 			int radians = 0;
-			System.out.println(208);
 			if (orientation == 1) {
 				finalImage = new BufferedImage(newImage2.getWidth(), newImage2.getHeight(), newImage2.getType());
 				radians = 0;
-				System.out.println("아무것도");// 아무것도
 			} else if (orientation == 6) {// 90
 				finalImage = new BufferedImage(newImage2.getHeight(), newImage2.getWidth(), newImage2.getType());
 				radians = 90;
-				System.out.println("6-90");
 			} else if (orientation == 3) {// 180
 				finalImage = new BufferedImage(newImage2.getWidth(), newImage2.getHeight(), newImage2.getType());
 				radians = 180;
-				System.out.println("3-180");
 			} else { // (orientation ==8) //270
 				finalImage = new BufferedImage(newImage2.getHeight(), newImage2.getWidth(), newImage2.getType());
 				radians = 270;
-				System.out.println("8-270");
 			}
 
 			Graphics2D graphics2d = (Graphics2D) finalImage.getGraphics();
 			graphics2d.rotate(Math.toRadians(radians), finalImage.getWidth() / 2, finalImage.getHeight() / 2);
-			System.out.println(radians + "||" + finalImage.getWidth() + "||" + finalImage.getHeight());
 			graphics2d.translate((finalImage.getWidth() - newImage2.getWidth()) / 2,
 					(finalImage.getHeight() - newImage2.getHeight()) / 2);
 			graphics2d.drawImage(newImage2, 0, 0, newImage2.getWidth(), newImage2.getHeight(), null);
-			System.out.println("여기는 온다");
 			ImageIO.write(finalImage, "jpg", new File(finalFolderName, randomFileName + ".jpg"));
 			
 			readyFileNameList.add(randomFileName + "-ready.jpg");
-			System.out.println("끝");
 			
 			BoardImageDto boardImageDto = BoardImageDto.builder()
 					.boardNo(convertImageVo.getBoardNo())
@@ -273,7 +251,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			//1. raw파일부터 지웁니다.
 			for(int i = 0; i<convertImageVo.getFileNameList().size(); i++) {
 				File deleteOriginFile = new File(RawDir, convertImageVo.getFileNameList().get(i));
-				System.out.println("삭제할 파일은 " +deleteOriginFile+"존재하는가? " + deleteOriginFile.exists());
+				log.debug("삭제할 파일은 {} 존재하는가? {}", deleteOriginFile, deleteOriginFile.exists());
 				deleteOriginFile.delete();
 			}
 			
@@ -282,7 +260,6 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			//2. ready파일을 지웁니다.
 			for(int i = 0; i<readyFileNameList.size(); i++) {
 				File deleteReadyFile = new File(finalFolderName, readyFileNameList.get(i));
-				System.out.println("삭제할 파일은 " +deleteReadyFile+"존재하는가? " + deleteReadyFile.exists());
 				deleteReadyFile.delete();
 			}
 		} catch (Exception e) {
@@ -297,7 +274,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		
 		File inputFile = new File(finalFolderName, firstFileFinalName);
 		File outputFile = new File(finalFolderName, "thumb.jpg");
-		System.out.println("썸네일 재료가 있니? " + inputFile);
+		log.debug("썸네일 재료 존재여부 {} ", inputFile);
 		BufferedImage inputBufferdImage = ImageIO.read(inputFile);
 
 		Image resizedImage = inputBufferdImage.getScaledInstance(120, 120, Image.SCALE_AREA_AVERAGING);
@@ -316,7 +293,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	@Override
 	public List<BoardImageDto> getBoardImageInfo (int boardNo){
 		List<BoardImageDto> boardImageInfoList = sqlSession.selectList("upload-image.getmageInfoInBoard", boardNo);
-		System.out.println("이미지 리스트를 가져오는중" + boardImageInfoList);
+		log.debug("이미지 리스트를 가져오는중 {}", boardImageInfoList);
 		return boardImageInfoList;
 	}
 	
@@ -324,10 +301,6 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	@Override
 	public List<ResponseEntity<ByteArrayResource>> getImageToJsp(int boardNo) throws IOException {
 		List<ResponseEntity<ByteArrayResource>> imageFileList = new ArrayList<>();
-		
-//		String folderName = getImageFolderName(boardNo); //후.. 내가 왜 미래를 보지 못하고
-//		int SuperFolderNo = Integer.parseInt(folderName); // 굳이 이렇게 두번 일하는가...
-//		int subFolderNo = boardNo;
 		
 		List<BoardImageDto> boardImageList =sqlSession.selectList("upload-image.getmageInfoInBoard", boardNo);
 		for(int i =0; i<boardImageList.size(); i++) {
@@ -343,19 +316,16 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+URLEncoder.encode(target.getName(), "UTF-8")+"\"")
 			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
 			.body(resource);
-			System.out.println("생성된 엔티티" + responseEntity);
 			imageFileList.add(responseEntity);
 		}
 		
-		
-		System.out.println("이미지 엔티티 담는 DAO종료");
 		return imageFileList;
 	}
 
 	@Override
 	public boolean deleteImageChainToBoard(int boardNo) {
 		String folderName = getImageFolderName(boardNo);
-		System.out.println(folderName + "를 삭제 합니다.");
+		log.debug("{}를 삭제 합니다.", folderName);
 		
 		String fullPath = SavedDir +"\\" + folderName + "\\" + boardNo;
 		
@@ -386,12 +356,11 @@ public class UploadImageDaoImpl implements UploadImageDao {
 			image.transferTo(targetFile);// 파일을 업로드 한다
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-			System.out.println("업로드 실패 : 'IllegalStateException' or 'IOException'");
+			log.error("업로드 실패 : 'IllegalStateException' or 'IOException'");
 			return null;
 		}
 		
 		//업로드를 성공하면 후에 DB에 저장할 정보를 모은다.
-
 		String imageUrl = finalFolderName+"\\"+"certImage";
 		
 		return imageUrl;
@@ -409,11 +378,8 @@ public class UploadImageDaoImpl implements UploadImageDao {
 		String memberNoFolder = String.valueOf(memberNo);
 		String finalFolderName= ImageCertDir+"\\"+superFolderName+"\\"+memberNoFolder;
 		
-//		File targetFolder = new File(finalFolderName);
-//		targetFolder.mkdirs();
-		
 		File targetFile = new File (finalFolderName, "certImage");
-		System.out.println("@@@ 파일은 존재 합니까?" + targetFile.exists());
+		log.debug("{} 파일은 존재 여부 {}", targetFile, targetFile.exists());
 		
 		byte[] data = FileUtils.readFileToByteArray(targetFile);
 		

@@ -7,28 +7,29 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 import com.kh.khblind.board.uploadImage.vo.ConvertImageVo;
 
+/*테스트를 위해 만들었던 콘트롤러 - 현재 BoardContoller에 통합 되었습니다*/
 @Controller
-@RequestMapping("/board")
-public class UploadImageController {
+//@RequestMapping("/board")
+public class UploadImageTestController {
 	
 	@Autowired
 	private UploadImageDao uploadImageDao; 
 	
-	@GetMapping("/imageUploadTest")
+//	@GetMapping("/imageUploadTest")
 	public String imageUploadTest() {
 		return "/board/imageUploadTest";
 	}
 	
-	@PostMapping("/imageUploadTest")
+//	@PostMapping("/imageUploadTest")
 	public String uploadImageFile(@RequestParam List<MultipartFile> images, HttpSession session) throws IOException {
 		//1. 단순 업로드를 하면서 파일이름 리스트를 내뱉는다.
 		int memberNo = 2;
@@ -63,7 +64,12 @@ public class UploadImageController {
 
 
 		
+		if(deleteSuccess && makeThumbSuccess) {
 		return "/board/사진 업로드 성공!";
+		}
+		else {
+		return "erorr/사진 업로드 실패!";
+		}
 	}
 	
 
