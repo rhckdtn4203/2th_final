@@ -75,13 +75,11 @@ public class VoteController {
 		
 		
 		model.addAttribute("VoteTopicInfo", voteTopicDto);
-		System.out.println("voteTopicDto = " + voteTopicDto);
 
 		//선택지 정보를 가져온다
 		
 		List<VoteOptionInfoVo> voteOptionInfoVoList = voteDao.getVoteOptionInfo(boardNo);
 		
-		System.out.println("voteOptionInfoVoList = " + voteOptionInfoVoList);		
 		model.addAttribute("VoteOptionInfo", voteOptionInfoVoList);
 		
 		

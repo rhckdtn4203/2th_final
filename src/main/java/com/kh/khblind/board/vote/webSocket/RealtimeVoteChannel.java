@@ -16,6 +16,7 @@ import com.kh.khblind.board.vote.entity.VoteResultDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /* 
  * 		개별 실시간투표채널
@@ -23,7 +24,7 @@ import lombok.Setter;
  * 		메소드 : 채널입장, 채널퇴장, 투표정보 전송
  */
 
-
+@Slf4j
 public class RealtimeVoteChannel {
 	
 	//요소들
@@ -52,10 +53,7 @@ public class RealtimeVoteChannel {
 	//1.실시간투표채널 입장
 	public void enter(RealtimeVoterVo voteRealtimeVoterVo) {
 		realtimeVoters.add(voteRealtimeVoterVo);
-		System.out.println("[RV-Ch]");
-		System.out.println("채널은 존재하는가? realtimeVoters = " +realtimeVoters);
-		System.out.println("voteRealtimeVoterVo = " + voteRealtimeVoterVo);
-		System.out.println("채널 사용자 입장 : 이용자 " + realtimeVoters.size() + "명!");
+		log.debug("채널{} 사용자 입장 : 이용자 {}명", realtimeVoters, realtimeVoters.size());
 	};
 	
 
@@ -64,8 +62,6 @@ public class RealtimeVoteChannel {
 
 		for(RealtimeVoterVo realtimeVoter : realtimeVoters) {
 			if(realtimeVoter.getMemberNo() == memberNo) {
-				System.out.println("[RV-Ch]");
-				System.out.println("이 사람을 내보낼 예정, realtimeVoter = " +realtimeVoter);
 				leave(realtimeVoter);
 				break;
 			}
@@ -75,13 +71,10 @@ public class RealtimeVoteChannel {
 																	.build();
 		
 		realtimeVoters.remove(realtimeVoterVoToLeave);
-		System.out.println("이후 = " + realtimeVoters);
 	}
 	
 	public void leave (RealtimeVoterVo realtimeVoter) {
 		realtimeVoters.remove(realtimeVoter);
-		System.out.println("[RV-Ch]");
-		System.out.println("이 사람을 내보냄, realtimeVoter = " +realtimeVoter);
 	}
 
 	
@@ -99,9 +92,7 @@ public class RealtimeVoteChannel {
 		String json = mapper.writeValueAsString(realtimeVoteSingleInfoVo);
 				
 		TextMessage tm = new TextMessage(json);
-		
-		System.out.println("[RV-Ch]");		
-		System.out.println("realtimeVoters???" + realtimeVoters);
+	
 		
 		for(RealtimeVoterVo realtimeVoterVo : realtimeVoters) {
 			realtimeVoterVo.getSession().sendMessage(tm);
