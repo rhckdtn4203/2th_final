@@ -54,7 +54,7 @@
             <span id="input-icon"><i class="fas fa-search"></i></span> 
             <input type="hidden" name="type" value="boardCategoryBoard">  
             <input id="search-input" type="text" name="keyword" required
-         	autocomplete="on" placeholder="관심있는 내용을 검색해보세요!">
+         	autocomplete="off" placeholder="관심있는 내용을 검색해보세요!">
          	<!-- <input type="submit" value="검색"> -->
           </form>
           
@@ -108,7 +108,7 @@
 <!--             <div class="article-best"> -->
 <!--               <div class="b1"> -->
 <!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">반려동물</a>걍 추가가!! -->
+<!--                   <a href="#" class="tit-title">반려동물</a> -->
 <!--                 </span> -->
 <!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
 <!--               </div> -->
@@ -131,7 +131,7 @@
 <!--               </div> -->
 <!--             </div> -->
             
-<!--             <div class="article-best">걍추가 -->
+<!--             <div class="article-best"> -->
 <!--               <div class="b1"> -->
 <!--                 <span class="topic"> -->
 <!--                   <a href="#" class="tit-title">스포츠</a> -->

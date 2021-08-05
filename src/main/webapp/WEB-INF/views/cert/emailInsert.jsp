@@ -64,7 +64,7 @@
 					</div>
 					<c:if test="${param.error != null}">
 						<br>
-						<span style="color: red;">메일 정보가 없는 회사입니다.</span>
+						<!-- <span style="color: red;">메일 정보가 없는 회사입니다.</span> -->
 
 					</c:if>
 				</form>

@@ -3,786 +3,186 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<c:set var="rt" value="${pageContext.request.contextPath}"></c:set>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>밤부-직장인들의 수다 놀이터</title>
+
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/bb.png" />
 	
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
-
-<c:if test="${dtoss != null}">
-
-<div id="floatMenu">
-	
-	<div id="fTitle">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p">menu</p>
-	</div>
-	
-	<div id="fItems">
-		<div class="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 회사'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 업종'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-
-</div>
-    </c:if>   
-    
-<%-- <c:if test="${dtoss == null}">
-    <div id="floatMenu1">
-	
-	<div id="fTitle" class="FT">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p1">menu</p>
-	</div>
-	
-	<div id="fItems">
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow1" class="arrows"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-	
-	</div>
-</c:if> --%>
-    
-    <section id="searchBar">
-        <div id="inputBar">
-          <form id="bar" action="${rt}/board/boardList" method="get" class="search">
-            <span id="input-icon"><i class="fas fa-search"></i></span> 
-            <input type="hidden" name="type" value="boardCategoryBoard">  
-            <input id="search-input" type="text" name="keyword" required
-         	autocomplete="on" placeholder="관심있는 내용을 검색해보세요!">
-         	<!-- <input type="submit" value="검색"> -->
-          </form>
-          
-        </div>    
-        <div class="welcome-box">	
-			<c:if test="${dtoss != null }">
-				<p id="p-search"><span id="p-span">${dtoss.memberNick}</span>님  환영합니다!</p>
-			</c:if>
-		</div>
-     </section>
-
-
-      <section id="section1">
-        <div class="s1Box" id="sb1">
-          <div class="topic-best">
-            <div class="topic-best-titme">
-              <h2 id="jj"><i class="fas fa-crown"></i> 토픽베스트</h2>
-              <a href="#">>더보기</a>
-            </div>
-            
-           <c:forEach var="BestTopicDto" items="${BoardCategoryListByLikeCount}"> 
-            <div class="article-best">
-             
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
-                </span>
-                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
-                <i class="far fa-comment-alt"><span>${BestTopicDto.commentsCount}</span></i>
-              </div>
-              
-            </div>
-            </c:forEach>
-            
-<!-- 			<div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">유머</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>아이스크림 주세여</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">반려동물</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직장인 취미생활</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 탁구짱</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">스포츠</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">코로나 바이러스</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 이것도 그닥..</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직접홍보</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-
-          </div> 
-        </div>
-
-            
-
-        <div class="s1Box" id="sb2">
-           	<div id="aside">
-					<div class="row text-left"><h3 style="font-weight:bold;"> 실시간 검색 순위</h3></div>
-					<div id="ranking" class="row"></div>
-			</div>
-        </div>
-
-      </section>
-
-      <section id="section2">
-        <section id="section2s">
-        <div class="m1Box" id="mb1">
-        
-          <div class="article" id="a1">
-            <!-- title -->
-            <div class="articleTitle"> 
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList1[0].boardCategoryNo}">
-              ${mainBoardCategoryList1[0].boardCategoryIcon}
-              ${mainBoardCategoryList1[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList1}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-         	</c:forEach>
-          </div>
-          
-  
-  
-  		
-          <div class="article" id="a2">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList2[0].boardCategoryNo}">
-               ${mainBoardCategoryList2[0].boardCategoryIcon}
-               ${mainBoardCategoryList2[0].boardCategoryName}</a>
-              </h3> 
-              
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList2}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  			</c:forEach>
-          </div>
-          
-  
-          <div class="article" id="a3">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList3[0].boardCategoryNo}">
-              ${mainBoardCategoryList3[0].boardCategoryIcon}
-              ${mainBoardCategoryList3[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-				<c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList3}">
-					<div class="arti1">
-						<div class="m1">
-							<span class="article-description"> 
-							<a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-							</span>
-						</div>
-						<div class="m2">
-							<i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-      </div>
-  
-  
-          <div class="m1Box" id="mb2">
-         
-          <div class="article" id="bb1">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList4[0].boardCategoryNo}">
-              ${mainBoardCategoryList4[0].boardCategoryIcon}
-              ${mainBoardCategoryList4[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-             <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList4}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach>
-          </div>
-          
-  
-  
-          <div class="article" id="bb2">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList5[0].boardCategoryNo}">
-                ${mainBoardCategoryList5[0].boardCategoryIcon}
-              	${mainBoardCategoryList5[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList5}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach>
-          </div>       
-  
-  
-          <div class="article" id="bb3">
-            <!-- title -->
-            <div class="articleTitle"> 
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList6[0].boardCategoryNo}">
-             	${mainBoardCategoryList6[0].boardCategoryIcon}
-              	${mainBoardCategoryList6[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList6}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach> 
-          </div>
-        </div>
-  
-        </section>
-      </section>
-
-   
- <script>
-$(document).ready(function() {
-	var floatPosition = parseInt($("#floatMenu").css('top'));
-
-	$(window).scroll(function() {
-		// 현재 스크롤 위치를 가져온다.
-		var scrollTop = $(window).scrollTop();
-		var newPosition = scrollTop + floatPosition + "px";
-
-
-		$("#floatMenu").stop().animate({
-			"top" : newPosition
-		}, 500);
-
-	}).scroll();
-
-});
+  <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous">
 </script>
- 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" 
+  rel="stylesheet">
+
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+   $(function(){
+      $.ajax({
+         url:"${rt}/search/keywordList",
+         type:"get",
+         dataType:"json",
+         success:function(resp){
+            $("#ranking").empty();
+            for(var i=0; i <10; i++){
+               var template = $("#template").html();
+               template = template.replace("{{rank}}",i+1+".");
+               template = template.replace("{{keyword}}", resp[i].keyword);
+               $("#ranking").append(template);   
+            }
+            
+
+            //만들어낸 뒤
+            $(".rank-keyword").click(function(e){
+               console.log("click");
+                var keywordarr = $(this).text().split('.');
+                var keyword = keywordarr[1];
+                location.href = "${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword;
+                //$("a").attr("href","${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword);
+               
+               e.preventDefault();
+            });   
+         }
+      });
+   });   
+</script>
+<script id="template" type="text/template">
+      <h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}}{{keyword}}</a></h5>
+</script>
+
   <script>
-const arrow = document.querySelector('#arrow');
+    $('form input').keydown(function(e) {
+       if (e.keyCode == 13) {
+           $('.search').submit();
+       }
+   });
+  </script>
+  <style>
+     .rank-list{
+        font-size: 15px;
+        margin: 8.5px auto;
+     }
+     #ranking{
+        padding-left:45px;
+        text-align: left;
+     }
+     .rank-keyword:hover{
+        color: wheat;
+     }
+  
+  html{
+  background-color: white;
+  }
+  </style>
 
-function scroll(selector){
-   const scrollTo = document.querySelector(selector);
-   scrollTo.scrollIntoView({ behavior: 'smooth' });
-}
+</head>
 
-arrow.addEventListener('click', () => {
-   scroll('#header');
-});
-</script>
-
-     
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-<%@page import="java.net.URLDecoder"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<c:set var="rt" value="${pageContext.request.contextPath}"></c:set>
-	
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
-
-<c:if test="${dtoss != null}">
-
-<div id="floatMenu">
-	
-	<div id="fTitle">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p">menu</p>
-	</div>
-	
-	<div id="fItems">
-		<div class="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 회사'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 업종'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-
-</div>
-    </c:if>   
-    
-<%-- <c:if test="${dtoss == null}">
-    <div id="floatMenu1">
-	
-	<div id="fTitle" class="FT">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p1">menu</p>
-	</div>
-	
-	<div id="fItems">
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow1" class="arrows"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-	
-	</div>
-</c:if> --%>
-    
-    <section id="searchBar">
-        <div id="inputBar">
-          <form id="bar" action="${rt}/board/boardList" method="get" class="search">
-            <span id="input-icon"><i class="fas fa-search"></i></span> 
-            <input type="hidden" name="type" value="boardCategoryBoard">  
-            <input id="search-input" type="text" name="keyword" required
-         	autocomplete="on" placeholder="관심있는 내용을 검색해보세요!">
-         	<!-- <input type="submit" value="검색"> -->
-          </form>
-          
-        </div>    
-        <div class="welcome-box">	
-			<c:if test="${dtoss != null }">
-				<p id="p-search"><span id="p-span">${dtoss.memberNick}</span>님  환영합니다!</p>
-			</c:if>
-		</div>
-     </section>
-
-
-      <section id="section1">
-        <div class="s1Box" id="sb1">
-          <div class="topic-best">
-            <div class="topic-best-titme">
-              <h2 id="jj"><i class="fas fa-crown"></i> 토픽베스트</h2>
-              <a href="#">>더보기</a>
+<body>
+ <div id="wrap">
+      <section id="header">
+        <div class="headerBox">
+          <div class="logo-box">
+            <div class="logo-sub">
+              <h3 class="logo-sub1">밤</h3>
+              <h3 class="logo-sub1">부</h3>
             </div>
-            
-           <c:forEach var="BestTopicDto" items="${BoardCategoryListByLikeCount}"> 
-            <div class="article-best">
-             
-              <div class="b1">
-                <span class="topic">
-                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
-                </span>
-                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
-              </div>
-              <div class="b2">
-                <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
-                <i class="far fa-comment-alt"><span>${BestTopicDto.commentsCount}</span></i>
-              </div>
-              
-            </div>
-            </c:forEach>
-            
-<!-- 			<div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">유머</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>아이스크림 주세여</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
 
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">반려동물</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직장인 취미생활</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 탁구짱</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">스포츠</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">코로나 바이러스</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 이것도 그닥..</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직접홍보</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-
-          </div> 
+            <h1><a href="${pageContext.request.contextPath}">BamBo</a></h1>
+            <h1><i class="far fa-eye"></i></h1>
+          </div>
         </div>
-
-            
-
-        <div class="s1Box" id="sb2">
-           	<div id="aside">
-					<div class="row text-left"><h3 style="font-weight:bold;"> 실시간 검색 순위</h3></div>
-					<div id="ranking" class="row"></div>
-			</div>
-        </div>
-
-      </section>
-
-      <section id="section2">
-        <section id="section2s">
-        <div class="m1Box" id="mb1">
         
-          <div class="article" id="a1">
-            <!-- title -->
-            <div class="articleTitle"> 
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList1[0].boardCategoryNo}">
-              ${mainBoardCategoryList1[0].boardCategoryIcon}
-              ${mainBoardCategoryList1[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList1}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-         	</c:forEach>
-          </div>
+         <c:if test="${dtoss == null }">
+        <div class="headerBox">
+          <ul class="menu" id="menu">
+            <li class="menu-list">
+              <a href="${rt}" class="menu-item">홈</a>
+            </li>
+            <li class="menu-list">
+              <a href=""class="menu-item">기업리뷰</a>
+              <!-- <ul>
+                <li><a href="">서브1</a></li>
+                <li><a href="">서브2</a></li>
+              </ul> -->
+            </li>
+            <li class="menu-list">
+              <a href="${rt}" class="menu-item" id="invisable">로그인</a>
+            </li>
+            <li class="menu-list">
+              <a href="${rt}" class="menu-item" id="invisable">회원가입</a>
+            </li>
+          </ul> 
           
-  
-  
-  		
-          <div class="article" id="a2">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList2[0].boardCategoryNo}">
-               ${mainBoardCategoryList2[0].boardCategoryIcon}
-               ${mainBoardCategoryList2[0].boardCategoryName}</a>
-              </h3> 
-              
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList2}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  			</c:forEach>
+          <div class="btn-box">
+            <a href="${rt}/member/login" id="btn-top">로그인</a>
+            <a href="${rt}/member/signup" id="btn-top">회원가입</a>
           </div>
-          
-  
-          <div class="article" id="a3">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList3[0].boardCategoryNo}">
-              ${mainBoardCategoryList3[0].boardCategoryIcon}
-              ${mainBoardCategoryList3[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-				<c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList3}">
-					<div class="arti1">
-						<div class="m1">
-							<span class="article-description"> 
-							<a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-							</span>
-						</div>
-						<div class="m2">
-							<i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-      </div>
-  
-  
-          <div class="m1Box" id="mb2">
-         
-          <div class="article" id="bb1">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList4[0].boardCategoryNo}">
-              ${mainBoardCategoryList4[0].boardCategoryIcon}
-              ${mainBoardCategoryList4[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- contenttttttt -->
-             <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList4}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach>
-          </div>
-          
-  
-  
-          <div class="article" id="bb2">
-            <!-- title -->
-            <div class="articleTitle">
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList5[0].boardCategoryNo}">
-                ${mainBoardCategoryList5[0].boardCategoryIcon}
-              	${mainBoardCategoryList5[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList5}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach>
-          </div>       
-  
-  
-          <div class="article" id="bb3">
-            <!-- title -->
-            <div class="articleTitle"> 
-              <h3 id="qq">
-                <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${mainBoardCategoryList6[0].boardCategoryNo}">
-             	${mainBoardCategoryList6[0].boardCategoryIcon}
-              	${mainBoardCategoryList6[0].boardCategoryName}</a>
-              </h3>  
-              <hr>
-            </div>
-            <!-- content -->
-            <c:forEach var="mainBoardCategoryDto" items="${mainBoardCategoryList6}">
-            <div class="arti1">  
-              <div class="m1">
-                <span class="article-description">
-                <a href="${rt}/board/boardDetail?boardNo=${mainBoardCategoryDto.boardNo}">${mainBoardCategoryDto.boardTitle}</a>
-                </span>
-              </div>  
-              <div class="m2">
-                  <i class="fas fa-mouse"></i><span>${mainBoardCategoryDto.boardCount}</span>     
-              </div> 
-            </div>  
-  
-          </c:forEach> 
-          </div>
-        </div>
-  
-        </section>
-      </section>
-
-   
- <script>
-$(document).ready(function() {
-	var floatPosition = parseInt($("#floatMenu").css('top'));
-
-	$(window).scroll(function() {
-		// 현재 스크롤 위치를 가져온다.
-		var scrollTop = $(window).scrollTop();
-		var newPosition = scrollTop + floatPosition + "px";
-
-
-		$("#floatMenu").stop().animate({
-			"top" : newPosition
-		}, 500);
-
-	}).scroll();
-
-});
-</script>
+         </div> 
  
-  <script>
-const arrow = document.querySelector('#arrow');
+          </c:if>
+          
+          
+        <c:if test="${dtoss != null}">
+          <div class="headerBox">
+          <ul class="menu" id="menu">
+            <li class="menu-list">
+              <a id="write" class="menu-item" href="${rt}/boardWrite">글쓰기</a>
+            </li>
+            <li class="menu-list">
+              <a href=""class="menu-item">기업리뷰</a>
+              <!-- <ul>
+                <li><a href="">서브1</a></li>
+                <li><a href="">서브2</a></li>
+              </ul> -->
+            </li>
+            <li class="menu-list">
+            <a class="menu-item" href="${rt}/pay/upgrade">
+         	회원<span id="plus"><i class="fas fa-plus"></i></span>결제</a>
+         	</li>
+         	
+         	 <li class="menu-list">
+              <a href="${rt}" class="menu-item" id="invisable">내 정보</a>
+            </li>
+            <li class="menu-list">
+              <a href="${rt}" class="menu-item" id="invisable">로그아웃</a>
+            </li>
+            
+          </ul> 
+          
+          <div class="btn-box">
+             <a href="${rt}/member/mypage" id="btn-top">내 정보</a>
+            <a href="${rt}/member/logout" id="btn-top">로그아웃</a>
+          </div>
+          </div>
+          </c:if>
+       
+           <!-- toggle btn -->
+        <button id="toggle-btn">
+          <i class="fas fa-bars"></i>
+        </button>
 
-function scroll(selector){
-   const scrollTo = document.querySelector(selector);
-   scrollTo.scrollIntoView({ behavior: 'smooth' });
-}
+      </section>
+    
+    
+    <script type="text/javascript">
+ 
+    // toggle-btn
+    const toggleButton = document.querySelector('#toggle-btn');
+    const menus = document.querySelector('#menu');
 
-arrow.addEventListener('click', () => {
-   scroll('#header');
-});
+       toggleButton.addEventListener('click', () => {
+          menus.classList.toggle('open')
+       }
+       );
 </script>
 
-     
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+    <hr>
+    

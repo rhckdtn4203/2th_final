@@ -39,13 +39,13 @@ padding-bottom: 5px;
             <div class="group">
               <label>닉네임<span>&nbsp</span></label>
               <input type="text" name="memberNick" required class="sb"
-                    placeholder="&nbsp 2~10자 이내의 한글,영문 대·소문자,숫자 ">
+                    placeholder="&nbsp 2~10자 이내의 한글,영문 대·소문자,숫자 " autocomplete="off">
             </div>
       
             <div class="group">
               <label>전화번호<span>&nbsp</span></label>
               <input type="text" name="memberPhone" required class="sb"
-                    placeholder="&nbsp-를 포함하여 입력 (예 : 010-XXXX-XXXX)">
+                    placeholder="&nbsp-를 포함하여 입력 (예 : 010-XXXX-XXXX)" autocomplete="off">
             </div>
           </div>   
             <div class="login-btn-box">
