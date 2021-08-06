@@ -105,7 +105,7 @@
 		<form action="upgrade" method="post">
 			<div class="set text-left" style="margin-right:25%;">
 				<span  class="plus"> 회원 플러스 </span> <!-- 상품의 이름 -->
-				<!-- 결제 수량 버튼 없애고 hidden처리  -->
+				
 				<input type="hidden" name="item_name" value="회원 플러스">
 	
 				<input type="hidden" name="quantity" value="1">
