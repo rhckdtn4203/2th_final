@@ -39,7 +39,7 @@ import com.kh.khblind.member.entity.MemberDto;
 @RequestMapping("/company")
 public class CompanyController {
 	
-	private final File ResDir = new File("D:/proj/khblind/resources/5.company-logo-image/");
+	private final File ResDir = new File("D:/upload/kh7b/resources/5.company-logo-image/");
 	
 	@Autowired
 	private CompanyDao companyDao;
