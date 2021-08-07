@@ -49,9 +49,18 @@ public class HomeController {
 		
 		List<CategoryDto> categoryList = categoryDao.list();
 		model.addAttribute("categoryList", categoryList);
-	
+		
+		System.out.println("if전 = " + keyword);
+//		//토픽 검색 기능 연습
+//		if(keyword !=null) {
+//		System.out.println("if 안=" + keyword);
+//		List<BoardCategoryBoardDto> boardCategoryboardList = boardDao.BoardCategorySearch(keyword);
+//		model.addAttribute("boardCategoryboardList", boardCategoryboardList);
+//		}
+
 
 		//메인에 토픽 6개 조회수순으로 목록 코드
+
 		List<BoardCategoryAllCountDto> boardCategoryAllCountSizeList = boardDao.boardCategoryAllCountSize();
 		for(int i =1 ; i<=boardCategoryAllCountSizeList.size(); i++) {
 			int rn = i;

@@ -1,5 +1,8 @@
 package com.kh.khblind.member.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.khblind.board.entity.BoardCategoryVO;
+import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.member.entity.MemberDto;
 import com.kh.khblind.member.repository.MemberDao;
 
@@ -20,6 +25,8 @@ public class MemberController {
 	@Autowired
 	private MemberDao dao;
 
+	@Autowired
+	private BoardDao boardDao;
 	@GetMapping("/signup")
 	public String signup() {
 		return "member/signup";
@@ -60,18 +67,22 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-// 마이페이지
+	// 마이페이지
 
-	@GetMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
+		@GetMapping("/mypage")
+		public String mypage(HttpSession session, Model model) {
 
-		MemberDto dto = (MemberDto) session.getAttribute("dtoss");
-		int memberNo = dto.getMemberNo();
-		MemberDto dtoPack = dao.mypage(memberNo);
-		model.addAttribute("dtoPack", dtoPack);
+			MemberDto dto = (MemberDto) session.getAttribute("dtoss");
+			int memberNo = dto.getMemberNo();
+			MemberDto dtoPack = dao.mypage(memberNo);
+			List<BoardCategoryVO> myWriteList = new ArrayList<>();
+			
+			myWriteList = boardDao.myWrite(memberNo);
+			model.addAttribute("dtoPack", dtoPack);
+			model.addAttribute("myWriteList",myWriteList);
+			return "member/mypage";
+		}
 
-		return "member/mypage";
-	}
 
 	// 마이페이지 수정
 
