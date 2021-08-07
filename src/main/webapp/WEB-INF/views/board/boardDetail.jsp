@@ -130,8 +130,6 @@
 						var json = JSON.stringify(message);
 						window.socket.send(json);
 						
-						console.log("이런!" + json)
-						
 						//2. 갱신보여주기
 						$.ajax({
 							url: "${pagecontext.request.contextpath}/khblind/board/voting",
@@ -141,7 +139,6 @@
 								},
 								type: "GET",
 								success:function(resp){
-									console.log("에이젝스 간다으");
 									for(var i=0; i<resp.length; i++){
 										console.log(resp[i])
 										var target = $("#option-"+ resp[i].voteOptionNo +"-gauge");
@@ -241,7 +238,6 @@
 		//이미지 불러오기 테스트
 		$("#image-load").click(function(){
 			$(this).hide();
-			console.log("이미지 로딩중! 버튼 삭제")
 			var boardNo = ${boardDto.boardNo};
 			$.ajax({
 					url: "${pagecontext.request.contextpath}/khblind/board/getImageInfo",
@@ -250,15 +246,12 @@
 					},
 					type: "GET",
 					success:function(resp){
-						console.log("성공");
 						console.log(resp);
 						
 						for(var i=0; i < resp.length; i++){
 							var fileUrlInLocal = resp[i].boardImageUrl;
 							
 							console.log(typeof(fileUrlInLocal));
-							console.log("full경로는 " + fileUrlInLocal);
-							console.log("길이는 "+fileUrlInLocal.length)
 							
 							var lengthFull = fileUrlInLocal.length;
 							var lengthExceptFileName=lengthFull-14;	//파일이름 길이는 총 14개
