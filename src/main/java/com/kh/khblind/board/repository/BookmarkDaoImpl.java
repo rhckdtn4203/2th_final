@@ -24,9 +24,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	public void BookmarkDelete(BookmarkDto bookmarkDto) {
 		sqlSession.delete("bookmark.delete",bookmarkDto);
 	}
-//	public boolean bookmarkExist(BookmarkDto bookmarkDto) {
-//		return sqlSession.selectOne("bookmark.search",bookmarkDto);
-//	}
+	
 	@Override
 	public boolean bookmarkExist(BookmarkDto bookmarkDto) {
 		BookmarkDto bookmarkExistDto  = sqlSession.selectOne("bookmark.search", bookmarkDto);

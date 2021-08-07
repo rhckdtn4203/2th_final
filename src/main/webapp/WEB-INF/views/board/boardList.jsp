@@ -40,7 +40,8 @@
  				boardCategoryNo : "${boardCategoryNo}",
  				startNo : startNo,
  				endNo : endNo,
- 				boardKeyword : "${boardKeyword}"
+ 				boardKeyword : "${boardKeyword}",
+ 				jobCategoryNo : "${jobCategoryNo}"
  				},
  				
 	  		success: function(resp) {
@@ -48,7 +49,9 @@
 	  			console.log(resp.length);
 	  			for(var i=0; i < resp.length; i++){
 	  				var template = $("#list-board-template").html();
-	  				template = template.replace("{{boardNo}}", resp[i].boardNo);
+	  				template = template.replace("{{boardNo1}}", resp[i].boardNo);
+       				template = template.replace("{{boardNo2}}", resp[i].boardNo);
+       				template = template.replace("{{boardNo3}}", resp[i].boardNo);
 	  				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
 	       		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
 	       		template = template.replace("{{boardContent}}", resp[i].boardContent);
@@ -78,7 +81,7 @@
  		       
  		       console.log(rate + " \%");
  		       
- 		       	if(rate>75){
+ 		       	if(rate>50){
  		   		startNo = startNo+per;
  		        endNo = endNo+per;
  		       		$.ajax({
@@ -90,7 +93,8 @@
  		       				boardCategoryNo : "${boardCategoryNo}",
  		       				startNo : startNo,
  			 				endNo : endNo,
- 			 				boardKeyword : "${boardKeyword}"
+ 			 				boardKeyword : "${boardKeyword}",
+ 			 				jobCategoryNo : "${jobCategoryNo}"
  		       				},
  		       				
  			       		success: function(resp) {
@@ -98,7 +102,9 @@
  			       			console.log("길이" + resp.length);
  			       			for(var i=0; i < resp.length; i++){
  			       				var template = $("#list-board-template").html();
- 			       				template = template.replace("{{boardNo}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardNo1}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardNo2}}", resp[i].boardNo);
+ 			       				template = template.replace("{{boardNo3}}", resp[i].boardNo);
  			       				template = template.replace("{{boardCategoryName}}", resp[i].boardCategoryName);
  			            		template = template.replace("{{boardTitle}}", resp[i].boardTitle);
  			            		template = template.replace("{{boardContent}}", resp[i].boardContent);
@@ -167,38 +173,38 @@
    	= script 영역에 id를 부여하여 불러와서 사용한다.
      -->
    <script id="list-board-template" type="text/template">
-   	<div id="board-{{boardNo}}|" class="board-cell col-6 bbxb">
+   	<div id="board-{{boardNo1}}|" class="board-cell col-6 bbxb">
 
                 <div class="board-area row bbxb">
                     <!-- <div class="board-type col-12 bbxb"><small>{{boardCategoryName}}</small></div> -->
-                    <div class="board-title col-12 mt-2 bbxb"><b>{{boardTitle}}</b></div>
-                    <div class="baord-content col-12 p-2 px-4 bbxb"><small>{{boardContent}}</small></div>
+                    <div class="kk-bamboo-color board-title col-12 mt-2 bbxb"><a href = ${root}/board/boardDetail?boardNo={{boardNo2}}><b class="font-size-1p5 p-1">{{boardTitle}}</b></a></div>
+                    <div class="baord-content col-12 p-2 px-4 bbxb"><a href = ${root}/board/boardDetail?boardNo={{boardNo3}}><small class="font-size-1p2 pl-1">{{boardContent}}</small></a></div>
                 </div>
 
                 <div class="writer-area row bbxb">
-                    <div class="writer-info bbxb">
-                        <small><span>{{memberNick}}</span></small>
+                    <div class="writer-info bbxb  ml-auto">
+                        <small><span class="kk-bamboo-color font-size-1p1 pr-3"><b>{{memberNick}}</b></span></small>
                     </div>
                 </div>
 
-                <div class="info-area row bbxb">
+                <div class="info-area row bbxb mb-2">
                     <div class="view-count col-2 bbxb">
-                        <small><i class="fas fa-mouse fa-1x">{{boardCount}}</i></small>
+                        <i class="fas fa-mouse fa-1x">{{boardCount}}</i>
                     </div>
 
                     <div class="like-count col-2 bbxb">
-                        <small><i class="far fa-thumbs-up fa-1x">{{likeCount}}</i></small>
+                        <i class="far fa-thumbs-up fa-1x">{{likeCount}}</i>
                     </div>
 
                     <div class="like-count col-2 bbxb">
-                        <small><i class="far fa-comment-dots fa-1x">{{commentsCount}}</i></small>
+                        <i class="far fa-comment-dots fa-1x">{{commentsCount}}</i>
                     </div>
 
                     <div class="empty col-5 bbxb"></div>
 
-                    <div class="write-time-col-3 bbxb">
-                        <small><i class="far fa-clock">&nbsp;{{boardDate}}</i></small>
-                    </div>
+                     <!--<div class="write-time-col-3 bbxb">-->
+                         <!--<small><i class="far fa-clock">&nbsp;{{boardDate}}</i></small>-->
+                    <!-- </div>-->
                 </div>
             </div>
 
@@ -209,7 +215,8 @@
         } */
 
         .board-cell{
-        border-bottom: #f2f2f3 solid;
+        border: #ffffff solid;
+        background-color: #fafad0;
         }
 
         .board-title{
@@ -224,6 +231,22 @@
 	   box-sizing: border-box;
 	
 	   }   
+	   
+	   .font-size-1p5{
+	   font-size: 1.5em;
+	   }
+	   
+	  .font-size-1p2{
+	   font-size: 1.2em;
+	   }
+	   
+   	  .font-size-1p1{
+	   font-size: 1.1em;
+	   }
+	   
+       .kk-bamboo-color{
+       color: #1e3932;
+       } 
     </style>
 </head>
 <!-- <button id="test-btn">TEST</button> -->
@@ -246,14 +269,14 @@
 	<form action="${root}/board/boardList" method="get">
 		<input type="hidden" name="type" value="jobCategoryBoard" class="form-control">
 		<input type="text" name="keyword" required class="form-control" placeholder="업종 게시판에서 검색">
-		<input type="submit" value="검색" class="btn btn-primary">
+		<input type="submit" value="검색" class="btn btn-primary">	
 	</form>
 	</c:if>
 	
 	<c:if test="${boardType == 'boardCategory'}">
 	<form action="${root}/board/boardList" method="get">
 		<input type="hidden" name="type" value="boardCategoryBoard" class="form-control">
-		<input type="hidden" name="boardCategoryNo" value="${boardCategoryNo}" class="form-control">
+		<input type="hidden" name="boardCategoryNo" value="${boardCategoryNo}" class="form-control">	
 		<input type="text" name="keyword" required class="form-control" placeholder="에서 검색">
 		<input type="submit" value="검색" class="btn btn-primary">
 	</form>
@@ -265,8 +288,7 @@
 	
 
 
-	<div id="here" class="offset-3 col-6 row mt-5">
-	</div>
+	<div id="here" class="offset-1 col10- row mt-5">	</div>
 	
 	
 

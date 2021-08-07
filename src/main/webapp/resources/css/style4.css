@@ -51,6 +51,7 @@ body{
 
 #modiBox{
   width: 1200px; 
+  height:60%;
 text-align: center;     
 background-color: transparent;
 }
@@ -202,7 +203,13 @@ figure.snip1200.hover p {
   -webkit-transition-delay: 0.35s;
   transition-delay: 0.35s;
 }
-
+#veri-btn{
+	background-color: var(--color-green);
+	color:white;
+	font-weight: border;
+	border:none;
+	outline: none;
+}
 .input-signBox{
   padding-top: 80px;
   height: 500px;
@@ -220,7 +227,7 @@ background-color: white;
 }
 #group-back{
 
-  height: 100%;
+
   padding-top: 100px;
   padding-bottom: 50px;
   background-color: rgb(253, 234, 210);
@@ -228,6 +235,51 @@ background-color: white;
 #repw{
   margin-top: 0px;
 }
+.delete,.move{
+	padding: 50px 30px 0px 30px;
+	text-align: right;
+}
+.delete,.move h5{
+	margin: 1px;
+}
+#delete-a,
+#delete-b{
+	font-size: 18.8px;
+	font-weight: 700;
+}
+#delete-a,#delete-b span{
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+#delete-a,#delete-b span::after{
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+#delete-a,#delete-b:hover span{
+padding-right: 15px;
+}
+#delete-a,#delete-b:hover span::after{
+  opacity: 1;
+  right: 0;
+  }
+  
+  
+
+.section-3{
+	padding: 30px 0;
+}  
+.success-box{
+	margin: 50px auto;
+}
+.row h3{
+	margin: 30px auto;
+}
+
 @media (max-width: 1200px){
   #modiBox {
     max-width: 100%;

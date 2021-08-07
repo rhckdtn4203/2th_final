@@ -15,9 +15,6 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 
 	private RealtimeVoteChannelServer server = new RealtimeVoteChannelServer();
 	
-	@Autowired
-	private VoteDao voteDao;
-	
 	//상수?
 	public static final int JOIN = 1;
 	public static final int SENDINFO = 2;
@@ -31,10 +28,13 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 		MemberDto memberDto = (MemberDto) session.getAttributes().get("dtoss");
 		Integer memberNo = memberDto.getMemberNo();
 		
-		Integer voteChannelNo = (Integer) session.getAttributes().get("voteChannelNo");
+		/*고정값 가능?*/
+//		Integer voteChannelNo = 175;
+		Integer voteChannelNo = (Integer)session.getAttributes().get("voteChannelNo");
 		
 		if(memberNo == null) {
 			return;} //비회원 고려하지 않음, 근데 이미 jsp상에서 안뜨게 했지만 또 막자.
+		
 		RealtimeVoterVo realtimeVoterVo = RealtimeVoterVo.builder()
 																	.memberNo(memberNo)
 																	.voteChannelNo(voteChannelNo)
@@ -71,8 +71,6 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 			server.send(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), realtimeVoteSingleInfoVo.getVoteOptionNo());
 		}
 		else if(realtimeVoteSingleInfoVo.getReceivePayloadType() == LEAVE) {
-//			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
-			System.out.println(realtimeVoteSingleInfoVo + "나가는중");
 			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo());
 		}
 	}

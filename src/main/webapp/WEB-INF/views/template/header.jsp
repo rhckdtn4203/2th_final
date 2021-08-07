@@ -109,28 +109,63 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-   $(function(){
-      $.ajax({
-         url:"${rt}/search/keywordList",
-         type:"get",
-         dataType:"json",
-         success:function(resp){
-            $("#ranking").empty();
-            for(var i=0; i <10; i++){
-               var template = $("#template").html();
-               template = template.replace("{{rank}}",i+1+".");
-               template = template.replace("{{keyword}}", resp[i].keyword);
-               $("#ranking").append(template);   
-            }
-         }
-      });
-   });   
+  
+	$(function(){
+		$.ajax({
+			url:"${rt}/search/keywordList",
+			type:"get",
+			dataType:"json",
+			success:function(resp){
+				$("#ranking").empty();
+				for(var i=0; i <10; i++){
+					var template = $("#template").html();
+					template = template.replace("{{rank}}",i+1+".");
+					template = template.replace("{{keyword}}", resp[i].keyword);
+					$("#ranking").append(template);	
+				}
+				
+
+				//만들어낸 뒤
+				$(".rank-keyword").click(function(e){
+					console.log("click");
+		 			var keywordarr = $(this).text().split('.');
+		 			var keyword = keywordarr[1];
+		 			location.href = "${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword;
+		 			//$("a").attr("href","${rt}/board/boardList?type=boardCategoryBoard&keyword="+keyword);
+					
+					e.preventDefault();
+				});	
+			}
+		});
+	});	
 </script>
 <script id="template" type="text/template">
    <div class="row text-left">
       <span>{{rank}} {{keyword}}</span>
    </div>      
+		<h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}}{{keyword}}</a></h5>
 </script>
+
+  <script>
+    $('form input').keydown(function(e) {
+	    if (e.keyCode == 13) {
+	        $('.search').submit();
+	    }
+	});
+  </script>
+  <style>
+  	.rank-list{
+  		font-size: 15px;
+  		margin: 8.5px auto;
+  	}
+  	#ranking{
+  		padding-left:45px;
+  		text-align: left;
+  	}
+  	.rank-keyword:hover{
+  		color: wheat;
+  	}
+  </style>
 
 
   <style>
@@ -141,7 +176,6 @@
   text-align:left;
   }
   </style>
-
 </head>
 
 <body>
@@ -166,7 +200,7 @@
               <a href="${rt}" class="menu-item">홈</a>
             </li>
             <li class="menu-list">
-              <a href="${rt}/company/"class="menu-item">기업리뷰</a>
+              <a href="${pageContext.request.contextPath}/company/" class="menu-item">기업리뷰</a>
               <!-- <ul>
                 <li><a href="">서브1</a></li>
                 <li><a href="">서브2</a></li>
@@ -197,10 +231,6 @@
             </li>
             <li class="menu-list">
               <a href="${rt}/company/"class="menu-item">기업리뷰</a>
-              <!-- <ul>
-                <li><a href="">서브1</a></li>
-                <li><a href="">서브2</a></li>
-              </ul> -->
             </li>
             <li class="menu-list">
             <a class="menu-item" href="${rt}/pay/upgrade">

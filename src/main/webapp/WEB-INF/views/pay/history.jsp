@@ -10,6 +10,8 @@
             font-weight:bold;
             text-align:center;
             border:1px solid black;
+            background-color: var(--color-green);
+            color: wheat;
         }
         table,td{
             border:1px solid black;
@@ -19,6 +21,9 @@
         	height: 100px;
         	margin: auto;
         	text-align: center;
+        }
+        .history-link:hover{
+        	color: wheat;
         } 
 
 </style>
@@ -32,7 +37,7 @@
 <c:forEach var="payDto" items="${list}">
 		<tr>
 			<td>
-				<a href="historyDetail?payNo=${payDto.payNo}">${payDto.payNo}</a> 
+				<a href="historyDetail?payNo=${payDto.payNo}" class="history-link">${payDto.payNo}</a> 
 			</td>
 			<td> ${payDto.payStatus} </td>
 			<td> ${payDto.payExpire} </td>

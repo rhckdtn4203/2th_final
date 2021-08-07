@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.kh.khblind.board.entity.BoardDto;
 import com.kh.khblind.member.entity.MemberDto;
 
 public class BoardNotLoginInterceptor implements HandlerInterceptor{

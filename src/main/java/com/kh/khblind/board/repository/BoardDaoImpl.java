@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,9 +27,12 @@ import com.kh.khblind.board.entity.HashtagDto;
 import com.kh.khblind.board.entity.HashtagLinkDto;
 import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.JobCategoryGroupDto;
+import com.kh.khblind.board.entity.JobCategoryInfoDto;
 import com.kh.khblind.board.entity.MainCategoryDataVO;
 import com.kh.khblind.board.entity.MetamonBoardListVO;
 import com.kh.khblind.board.entity.StartEndVoForAjax;
+
+import com.kh.khblind.company.entity.JobCategoryDto;
 import com.kh.khblind.member.entity.MemberDto;
 
 @Repository
@@ -74,7 +75,6 @@ public class BoardDaoImpl implements BoardDao {
 	public BoardDto getBoardDetail(int boardNo) {
 		
 		BoardDto boardDto = sqlSession.selectOne("board.getBoardDetail", boardNo);
-		System.out.println(boardDto);
 		
 		return boardDto;
 		
@@ -151,16 +151,13 @@ public class BoardDaoImpl implements BoardDao {
 	      
 	         String HashRegex = "([#][a-zA-Z가-힣0-9]{1,})"; //정규표현식
 	         
-//	         List<String> HashtagInBoardContentList = new ArrayList<>();
 	         Pattern p = Pattern.compile(HashRegex);
 	         Matcher m = p.matcher(searchWord);
 	         String hashtag = null;
 	         if(m.find()) {
 	           hashtag = m.group(1);
-	           System.out.println("hashtag = " + hashtag);
 	          
 	         }
-	         System.out.println("hashtag = " + hashtag);
 	         return hashtag;
 	   }
 	//검색어에 해시태그가 있다면 해시태그로 검색하는 검색메소드
@@ -229,14 +226,12 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public List<BoardCategoryBoardDto> getBoardCategoryBoardList(Integer boardCategoryNo) {
 			List<BoardCategoryBoardDto> boardCategoryBoardList = sqlSession.selectList("board.getBoardCategoryBoardList", boardCategoryNo);
-			System.out.println("[임] boardCategoryBoardList = " + boardCategoryBoardList);
 			return boardCategoryBoardList;
 		}
 		
 		@Override
 		public List<BoardCategoryBoardDto> BoardCategorySearch(String keyword) {
 			List<BoardCategoryBoardDto> boardCategoryboardList = sqlSession.selectList("board.SearchBoardCategoryBoardList", keyword);
-			System.out.println("boardCategoryboardList" + boardCategoryboardList);
 			return boardCategoryboardList;
 		}
 		
@@ -296,7 +291,6 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public void addViewCount(int boardNo) {
 			sqlSession.update("board.addCount",boardNo);
-			System.out.println("조회수 증가");
 		}
 
 		@Override
@@ -321,7 +315,6 @@ public class BoardDaoImpl implements BoardDao {
 
 		@Override
 		public List<MetamonBoardListVO> ajaxJobCategoryBoardList(StartEndVoForAjax startEndVoForAjax) {
-			System.out.println("페이지대신" + startEndVoForAjax);
 			List<MetamonBoardListVO> jobCategoryBoardList = sqlSession.selectList("board.getJobCategoryBoardList", startEndVoForAjax);
 			
 			return jobCategoryBoardList;
@@ -374,6 +367,18 @@ public class BoardDaoImpl implements BoardDao {
 		public List<BoardCategoryBoardDto> getCompanyKeywordList(String keyword) {
 			List<BoardCategoryBoardDto> getCompanyKeywordList = sqlSession.selectList("board.getCompanyKeywordList", keyword);
 			return getCompanyKeywordList;
+		}
+
+		@Override
+		public List<BoardCategoryAllCountDto> boardCategoryAllCountSize() {
+			List<BoardCategoryAllCountDto> boardCategoryAllCountSizeList = sqlSession.selectList("board.boardCategoryAllCountSize");
+			return boardCategoryAllCountSizeList;
+		}
+
+		@Override
+		public List<JobCategoryDto> getPlusJobCategoryInfo() {
+			List<JobCategoryDto> getPlusJobCategoryInfoList = sqlSession.selectList("board.getPlusJobCategoryInfo");
+			return getPlusJobCategoryInfoList;
 		}
 
 
