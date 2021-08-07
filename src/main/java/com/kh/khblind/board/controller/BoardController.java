@@ -1,4 +1,3 @@
-
 package com.kh.khblind.board.controller;
 
 import java.io.IOException;
