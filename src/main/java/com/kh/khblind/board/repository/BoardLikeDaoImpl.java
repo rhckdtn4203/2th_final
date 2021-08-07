@@ -19,7 +19,6 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 			return true;
 		}
 		else return false;
-		 
 	}
 	@Override
 	public void boardLike(BoardLikeDto boardLikeDto) {

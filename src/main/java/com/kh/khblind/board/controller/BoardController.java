@@ -810,6 +810,11 @@ public class BoardController {
 	   public String imageDownloadTest() {
 		   return "board/imageDownloadTest";
 	   }
+	   @PostMapping("commentsEdit")
+	   public String commentsEdit(CommentsVO commentsVO,int boardNo) {
+		   commentDao.edit(commentsVO);
+		   return "redirect:boardDetail?boardNo="+boardNo;
+	   }
 	   
       @GetMapping("commentsDelete")
       public String commentsDelete(int commentsNo, int boardNo) {

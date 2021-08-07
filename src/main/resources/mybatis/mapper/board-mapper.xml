@@ -143,5 +143,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	) where rn between 1 and 5 order by board_count desc, board_date desc
 	 </select>
      
-                
+          <select resultType="BoardCategoryVO" id="myWrite">select * from board_category_view where member_no=#{memberNo} order by board_date desc</select>      
 </mapper>

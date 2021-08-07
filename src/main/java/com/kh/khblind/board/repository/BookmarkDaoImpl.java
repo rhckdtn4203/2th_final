@@ -43,9 +43,4 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		
 		return BookmarkList;
 	}
-
-
-
-
 }
-
