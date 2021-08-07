@@ -6,13 +6,9 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
  
  
-	<!-- 제이쿼리를 가져온다 -->
-       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-       <!-- UI제이쿼리를  가져온다 -->
-       <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-       <!-- 폰트어썸 아이콘을 가져온다-->
-       <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
-       
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
