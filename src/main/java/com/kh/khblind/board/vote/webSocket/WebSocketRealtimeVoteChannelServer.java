@@ -1,14 +1,11 @@
 package com.kh.khblind.board.vote.webSocket;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.khblind.board.vote.entity.VoteOptionInfoVo;
-import com.kh.khblind.board.vote.entity.VoteViewInfoVo;
-import com.kh.khblind.board.vote.repository.VoteDao;
+
 import com.kh.khblind.member.entity.MemberDto;
 
 public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
@@ -28,12 +25,7 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 		MemberDto memberDto = (MemberDto) session.getAttributes().get("dtoss");
 		Integer memberNo = memberDto.getMemberNo();
 		
-		/*고정값 가능?*/
-//		Integer voteChannelNo = 175;
 		Integer voteChannelNo = (Integer)session.getAttributes().get("voteChannelNo");
-		
-		if(memberNo == null) {
-			return;} //비회원 고려하지 않음, 근데 이미 jsp상에서 안뜨게 했지만 또 막자.
 		
 		RealtimeVoterVo realtimeVoterVo = RealtimeVoterVo.builder()
 																	.memberNo(memberNo)
@@ -71,6 +63,8 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 			server.send(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), realtimeVoteSingleInfoVo.getVoteOptionNo());
 		}
 		else if(realtimeVoteSingleInfoVo.getReceivePayloadType() == LEAVE) {
+//			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
+			System.out.println(realtimeVoteSingleInfoVo + "나가는중");
 			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo());
 		}
 	}

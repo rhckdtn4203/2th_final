@@ -41,16 +41,20 @@ public class RealtimeVoteChannelServer {
 	public void enter(int memberNo, Integer voteChannelNo) {
 //		voteChannelNo = 175;
 		RealtimeVoterVo voter = findWaiting(memberNo);
+		System.out.println("[RV-Ch-Ser]");		
+		System.out.println("세션이 있는가? voter = "+ voter);
 		waiting.remove(voter);
 		
 		RealtimeVoteChannel realtimeVoteChannel = find(voteChannelNo);
+		System.out.println("realtimeVoteChannel = " + realtimeVoteChannel);
 		if(realtimeVoteChannel == null) {//채널이 없는 경우에는 채널을 추가한당...
 			realtimeVoteChannel = new RealtimeVoteChannel(voteChannelNo);
 			realtimeVoteChannels.add(realtimeVoteChannel);
-			
+			System.out.println("[RV-Ch-Ser]");	
 			log.debug("신규 채널 생성 : {}", voteChannelNo);
+			System.out.println("시발? 이게 뭔데?");
 			for(int i = 0; i< realtimeVoteChannels.size(); i++) {
-				log.debug("채널 번호 {}", realtimeVoteChannels.get(i).getRealtimeVoteChannelNo());
+				System.out.println(realtimeVoteChannels.get(i).getRealtimeVoteChannelNo());
 			}
 
 		}
@@ -65,7 +69,8 @@ public class RealtimeVoteChannelServer {
 		
 		if(realtimeVoteChannel.isEmpty()) {
 			realtimeVoteChannels.remove(realtimeVoteChannel);
-			log.debug("{}채널 삭제 = ", realtimeVoteChannel);
+			System.out.println("[RV-Ch-Ser]");	
+			System.out.println("채널 삭제 = " + realtimeVoteChannel); 
 		}
 	}
 	
