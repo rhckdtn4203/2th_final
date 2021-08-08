@@ -37,11 +37,20 @@ public class MemberDaoImpl implements MemberDao {
 
 //마이페이지 수정	
 	@Override
-	public boolean changeinfo(MemberDto dto) {
+//	public boolean changeinfo(MemberDto dto) {
+//		Map<String,Object>param = new HashMap<>();
+//		param.put("memberNick", dto.getMemberNick());
+//		param.put("memberPhone", dto.getMemberPhone());
+//		param.put("memberNo", dto.getMemberNo());
+//		int count = sqlss.update("member.changeinfo",param);
+//		return count>0;
+//		
+//		}
+	public boolean changeinfo(String memberNick, int memberNo, String memberPhone) {
 		Map<String,Object>param = new HashMap<>();
-		param.put("memberNick", dto.getMemberNick());
-		param.put("memberPhone", dto.getMemberPhone());
-		param.put("memberNo", dto.getMemberNo());
+		param.put("memberNick", memberNick);
+		param.put("memberPhone", memberPhone);
+		param.put("memberNo", memberNo);
 		int count = sqlss.update("member.changeinfo",param);
 		return count>0;
 		
@@ -62,13 +71,14 @@ public class MemberDaoImpl implements MemberDao {
 	}	
 //아이디찾기
 	@Override
-	public boolean find_id(String memberName, int memberNo, String memberPhone) {
+	public String find_id(String memberName,String memberPhone) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("memberName", memberName);
-		param.put("memberNo", memberNo);
 		param.put("memberPhone", memberPhone);
 		
-		return sqlss.selectOne("member.find_id",param);
+		String result = sqlss.selectOne("member.find_id",param);
+		if(result!=null) {return result;}
+		else return ""; 
 	}
 	
 //회원 탈퇴
@@ -91,6 +101,7 @@ public class MemberDaoImpl implements MemberDao {
 		sqlss.update("member.gradedown",memberNo);
 		
 	}
+
 	
 	
 	

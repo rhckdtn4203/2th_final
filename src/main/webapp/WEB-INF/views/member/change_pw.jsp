@@ -29,8 +29,6 @@ padding-right: 5px;
         </div>
       </figcaption>
       
-      <a href="#"></a>
-      </div>
       </figure>
 
 

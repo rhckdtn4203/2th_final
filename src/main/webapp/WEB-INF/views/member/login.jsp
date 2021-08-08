@@ -83,7 +83,7 @@ position: relative;
     <a href="${pageContext.request.contextPath}/member/find_id" class="side-info">아이디찾기</a>
     </div>
     <div class="inputside-1">
-    <a href="${pageContext.request.contextPath}/member/fidn_pw" class="side-info">비밀번호찾기</a>
+    <a href="${pageContext.request.contextPath}/member/find_pw" class="side-info">비밀번호찾기</a>
     </div>
     
       </div>
