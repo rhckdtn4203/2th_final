@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.khblind.admin.category.entity.CategoryDto;
 import com.kh.khblind.admin.category.repository.CategoryDao;
 import com.kh.khblind.board.entity.BoardCategoryAllCountDto;
-import com.kh.khblind.board.entity.BoardCategoryBoardDto;
 import com.kh.khblind.board.entity.BoardCategoryListByLikeCountVO;
 import com.kh.khblind.board.entity.MainCategoryDataVO;
 import com.kh.khblind.board.repository.BoardDao;
@@ -50,11 +48,9 @@ public class HomeController {
 		//카테고리 메뉴를 가져오는 코드
 		
 		List<CategoryDto> categoryList = categoryDao.list();
-		System.out.println("categoryList 비어있니?" + categoryList);
 		model.addAttribute("categoryList", categoryList);
 		
 		System.out.println("if전 = " + keyword);
-//		
 //		//토픽 검색 기능 연습
 //		if(keyword !=null) {
 //		System.out.println("if 안=" + keyword);
@@ -62,7 +58,9 @@ public class HomeController {
 //		model.addAttribute("boardCategoryboardList", boardCategoryboardList);
 //		}
 
+
 		//메인에 토픽 6개 조회수순으로 목록 코드
+
 		List<BoardCategoryAllCountDto> boardCategoryAllCountSizeList = boardDao.boardCategoryAllCountSize();
 		for(int i =1 ; i<=boardCategoryAllCountSizeList.size(); i++) {
 			int rn = i;
@@ -77,13 +75,7 @@ public class HomeController {
 			String finalModelName = modelName + modelOrderNo;
 
 			model.addAttribute(finalModelName, mainBoardCategoryList);
-			
-//			${mainBoardCategoryList-1}
-//			${mainBoardCategoryList-2}
-//			${mainBoardCategoryList-3}
-//			${mainBoardCategoryList-4}
-//			${mainBoardCategoryList-5}
-//			${mainBoardCategoryList-6}			
+	
 			
 			//토픽베스트 List 관련 코드
 			List<BoardCategoryListByLikeCountVO> BoardCategoryListByLikeCount = boardDao.getBoardCategoryListByLikeCount();
@@ -92,13 +84,6 @@ public class HomeController {
 			model.addAttribute("BoardCategoryListByLikeCount", BoardCategoryListByLikeCount);
 		}
 	
-	
-		
-//		BoardCategoryAllCountDto boardCategoryAllCountDto = boardDao.boardCategoryAllCount(rn);
-//				int boardCategoryNo = boardCategoryAllCountDto.getBoardCategoryNo();
-//				List<MainCategoryDataVO> mainBoardCategoryList = boardDao.mainBoardCegoryList(boardCategoryNo);
-//		
-//		model.addAttribute("mainBoardCategoryList", mainBoardCategoryList);
 		
 		return "/home";
 	}

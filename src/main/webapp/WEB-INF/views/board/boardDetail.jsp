@@ -22,11 +22,11 @@
 
  <script>
  $(function(){ 
- $(".board_unlike_btn").click(function(){ 
-	  $(".boardLikeDeleteForm").submit(); 
-	   }); 
-	   });
- </script> 
+ $(".board_unlike_btn").click(function(){  
+$(".boardLikeDeleteForm").submit();  
+ 	   }); 
+ 	   }); 
+</script>  
 
 <!-- 이미 투표한 항목 표시하기 -->
 	<script>
@@ -35,6 +35,21 @@
 			selectedVoteName.css("color", "red");
 		});
 	</script>
+	<script>
+$(function(){ 
+  $("#dis").hide();
+
+
+  $(".Editbtn-1").click(function(){
+    $("#dis").show();
+    $(".EditArea").hide();
+
+  })
+
+})
+  
+</script>
+	
 
 <!-- 실시간 투표-->
 	<script>
@@ -284,9 +299,9 @@
 	   	$(".nestedComment-area").hide();
 		$("#comment-id-"+originCmtNo).show();
 	   
-	// 				$("#comment-id-"+originCmtNo).submit(function(){
-	// 				   $("#comment-id-"+originCmtNo).hide();
-	// 				});
+	 				$("#comment-id-"+originCmtNo).submit(function(){
+					   $("#comment-id-"+originCmtNo).hide();
+					});
 	   });
 	});
 
@@ -452,8 +467,6 @@ $(function(){
 
         <!--반응형 웹 테스트-->
 
-
-
 <div class="container-fluid bbxb">
 	<div id="board-detail-zone" class="offset-1 col-10 row mt-4 bbxb">
 <!-- 		<div id="left-area" class="col-8 bbxb"> -->
@@ -518,11 +531,11 @@ $(function(){
 										<i class="far fa-bookmark fa-1x bbxb"></i>
 									</div>
 								</c:if>
-								
-								<c:if test="${not empty dtoss}">
+								<!-- 로그인 한상태 -->						
+									<c:if test="${not empty dtoss}">
 	                            	<!-- 비어있는 책갈피를 누르면  bookmarkInsert를 실행하게하기 -->
 									<c:if test="${isMarked == 1}">
-										<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x bbxb" ></i></small></a>
+									<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x bbxb" ></i></small></a>
 									</c:if>
 								
 									<!-- 차있는 책갈피를 누르면 bookmarkDelete를 실행하게 하기 -->
@@ -694,13 +707,28 @@ $(function(){
 			                            </p>
 			                        </div>
 			                        <div class="bottom col-12 row mb-3 bbxb">
-			                            <div class="col-3">
-			                                <small><i class="far fa-clock">&nbsp;</i></small>
-			                            </div>
+			                            
 <!-- 			                            <div class="col-2"></div> -->
 			                            <div class="col-2 text-right bbxb">
 	                            			<small><i id="edit-${commentsVO.commentsNo}" class="far fa-edit bbxb"></i></small>
 			                            </div>
+										
+										<!-- 댓글 수정부분 -->
+			                            <div class="EditArea col-2">
+  											<button class="btn btn-danger Editbtn-1" >수정</button>
+										</div>
+
+									<div id="dis" class="col-5">
+ 
+										  <form action="commentsEdit" class="commentsEditForm"  method="POST">
+										    <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
+										    <input type="hidden" name="commentsNo" value="${commentsVO.commentsNo}">
+											<textarea class="commentsEdit" name="commentsContent"></textarea>
+										    <input class="btn btn-danger Editbtn-2" type="submit"  value="수정">
+    
+  										  </form>
+									</div>
+			                            
 			                            <div class="col-2 text-right bbxb">
 				                            <form action="commentsDelete" method="get">
 											   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
@@ -708,7 +736,7 @@ $(function(){
 											   <input class="btn btn-secondary btn-sm"  type="submit" value="삭제">
 											</form>
 			                            </div>
-			                            <div class="col-4 text-right bbxb">
+			                            <div class="col-2 text-right bbxb">
 										<button class="btn btn-secondary btn-sm" id="write-comments2-to-${commentsVO.commentsNo}">대댓글</button>
 <%-- 			                                <small><i id="write-comments2-to-${commentsVO.commentsNo}" class="far fa-comment-dots fa-1x nestedComment-btn">&nbsp;</i></small> --%>
 			                            </div>
