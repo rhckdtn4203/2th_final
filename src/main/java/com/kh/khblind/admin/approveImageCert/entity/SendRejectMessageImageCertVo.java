@@ -1,6 +1,5 @@
 package com.kh.khblind.admin.approveImageCert.entity;
-//꾀부리려다가 결국 만들어 버리는VO...
-
+//메시지 전송을 위한Vo
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

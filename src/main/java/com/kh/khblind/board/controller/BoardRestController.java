@@ -6,22 +6,21 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.khblind.board.entity.BoardCategoryBoardDto;
-import com.kh.khblind.board.entity.CompanyBoardDto;
-import com.kh.khblind.board.entity.JobCategoryBoardDto;
 import com.kh.khblind.board.entity.MetamonBoardListVO;
 import com.kh.khblind.board.entity.StartEndVoForAjax;
 import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.member.entity.MemberDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/board")
+@Slf4j
 public class BoardRestController {
 	
 	@Autowired
@@ -34,28 +33,33 @@ public class BoardRestController {
 			@RequestParam int startNo,
 			@RequestParam int endNo,
 			@RequestParam(required = false) Integer boardCategoryNo,
-			@RequestParam(required = false) String boardKeyword			
+			@RequestParam(required = false) String boardKeyword,
+			@RequestParam(required = false) Integer jobCategoryNo
 			) {
-
-		System.out.println("startNo = " + startNo + "|" +  endNo);
-		System.out.println("session@@@@" + boardKeyword);
+		log.debug("startNo-{}, endNo", startNo, endNo);
+		log.debug("boardKeyword-{}", boardKeyword);
 		MemberDto memberDto = (MemberDto)session.getAttribute("dtoss");
 		
 
 		//업종별 게시판 목록
 
 		if(boardType.equals("job")) {
-			int jobCategoryNo = memberDto.getJobCategoryNo();
+			if(memberDto.getGradeNo()==1 || memberDto.getGradeNo()==3) {
+				jobCategoryNo = memberDto.getJobCategoryNo();
+			}
+			else{//+회원 2,4
+			
+			}
 			StartEndVoForAjax startEndVoForAjax  = StartEndVoForAjax.builder()
 					.startNo(startNo)
 					.endNo(endNo)
 					.jobCategoryNo(jobCategoryNo)
 					.keyword(boardKeyword)
 					.build();
-			System.out.println("[레컨] " +startEndVoForAjax);
+			log.debug("startEndVoForAjax - ", startEndVoForAjax);
 			//일단 저장소를 만든다.(자바가 멍청한건지 if문안에 변수가 있으면 모름)
 			List<MetamonBoardListVO> jobCategoryBoardList = new ArrayList<>();
-//			if(keyword == null) { 이거 안됌
+
 			if(boardKeyword.equals("")) { //키워드가 없으면 일반목록 조회
 				jobCategoryBoardList = boardDao.ajaxJobCategoryBoardList(startEndVoForAjax);
 			

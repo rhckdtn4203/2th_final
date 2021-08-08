@@ -3,7 +3,6 @@ package com.kh.khblind.board.uploadImage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -13,25 +12,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.khblind.board.repository.BoardDao;
 import com.kh.khblind.board.uploadImage.entity.BoardImageDto;
 import com.kh.khblind.board.uploadImage.repository.UploadImageDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/board")
+@Slf4j
 public class BoardImageDataController {
-	
-	@Autowired
-	private BoardDao boardDao;
-	
+		
 	@Autowired
 	private UploadImageDao uploadImageDao;
 	
-	private final File ResDir = new File("D:/proj/khblind/resources/");
+	private final File ResDir = new File("D:/upload/kh7b");
 	private final File SavedDir = new File(ResDir + "/4.saved-image/");
 	
 	@RequestMapping("getImageInfo")
@@ -45,10 +42,10 @@ public class BoardImageDataController {
 		
 		String superFolderName = uploadImageDao.getImageFolderName(boardNo); 
 		String finalFolderName = SavedDir+"\\"+superFolderName+"\\"+boardNo+"\\";
-		System.out.println("finalFolderName = " + finalFolderName);
 		
 		File target = new File(finalFolderName, fileName);
-		System.out.println(target + "파일이 존재하는가?" + target.exists());
+		log.debug("파일명 : {}의 파일 존재 여부 {}", target, target.exists());
+		
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource resource = new ByteArrayResource(data);
 

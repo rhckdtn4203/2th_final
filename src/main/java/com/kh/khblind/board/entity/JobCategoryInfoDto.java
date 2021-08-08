@@ -5,8 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
-public class HashtagDto {
-	private int hashtagNo;
-	private String hashtagName;
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class JobCategoryInfoDto {
+	private int jobCategoryNo;
+	private String jobCategoryName;
+
 }

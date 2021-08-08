@@ -22,12 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		select comments_no_seq.nextval from dual
    	</select>
 
-	<update id="Edit">
+	<update id="edit">
 		update comments set comments_content=#{commentsContent} where comments_no=#{commentsNo}   
 	</update>
 	
    <delete id="delete">
        delete comments where comments_no = #{commentsNo}
     </delete>
+    
 
 </mapper>

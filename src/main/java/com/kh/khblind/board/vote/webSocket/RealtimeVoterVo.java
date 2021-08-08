@@ -11,6 +11,5 @@ import lombok.Data;
 public class RealtimeVoterVo {
 	private Integer memberNo;
 	private Integer voteChannelNo;
-//	private Integer voteOptionNo;	
 	private WebSocketSession session;
 }

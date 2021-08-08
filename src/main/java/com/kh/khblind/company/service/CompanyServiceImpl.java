@@ -15,7 +15,7 @@ import com.kh.khblind.company.vo.CompanyVO;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 	
-	private final File ResDir = new File("D:/proj/khblind/resources/5.company-logo-image/");
+	private final File ResDir = new File("D:/upload/kh7b/resources/5.company-logo-image/");
 	
 	@Autowired
 	private CompanyDao companyDao;
@@ -34,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 				.companyName(companyVO.getCompanyName())
 				.companyUrl(companyVO.getCompanyUrl())
 				.companyDomain(companyVO.getCompanyDomain())
-				.companyAddr(companyVO.getCompanyDomain())
+				.companyAddr(companyVO.getCompanyAddr())
 				.companyIndustry(companyVO.getCompanyIndustry())
 				.companyEstablishment(companyVO.getCompanyEstablishment())
 				.companyIntroduce(companyVO.getCompanyIntroduce())

@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<!--			제이쿼리를 가져온다	 -->
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!--         UI제이쿼리를  가져온다 -->
-        <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-<!--         폰트어썸 아이콘을 가져온다 -->
-         <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
@@ -21,16 +16,17 @@
  $(function(){ 
  $(".deleteLike").click(function(){ 
 	  $(".boardLikeInsertForm").submit(); 
-	   }); 
+	   })
 	   });
  </script> 
+
  <script>
  $(function(){ 
- $(".board_unlike_btn").click(function(){ 
-	  $(".boardLikeDeleteForm").submit(); 
-	   }); 
-	   });
- </script> 
+ $(".board_unlike_btn").click(function(){  
+$(".boardLikeDeleteForm").submit();  
+ 	   }); 
+ 	   }); 
+</script>  
 
 <!-- 이미 투표한 항목 표시하기 -->
 	<script>
@@ -39,6 +35,21 @@
 			selectedVoteName.css("color", "red");
 		});
 	</script>
+	<script>
+$(function(){ 
+  $("#dis").hide();
+
+
+  $(".Editbtn-1").click(function(){
+    $("#dis").show();
+    $(".EditArea").hide();
+
+  })
+
+})
+  
+</script>
+	
 
 <!-- 실시간 투표-->
 	<script>
@@ -71,10 +82,8 @@
 						window.socket.send(json);
 					};
 					window.socket.onclose = function(){
-						//console.log(arguments);
 					};
 					window.socket.onerror = function(){
-						//console.log(arguments);
 					};
 					window.socket.onmessage = function(message){
 						console.log("누군가 투표함");
@@ -86,20 +95,13 @@
 							type: "GET",
 								success:function(resp){
 
-// 										console.log("얘구조부터알아보자" + resp.voteOptionNo); //66
-// 										console.log("얘구조부터알아보자" + resp.voteOptionCount); //22
 										var target = $("#option-"+ resp.voteOptionNo +"-gauge");
 										console.log(target);
 										target.removeClass("vote-progress-bg-2");
 										target.addClass("vote-progress-bg-4", {duration:500}).removeClass("vote-progress-bg-4", {duration:500});
-										
-// 										target.animate( {'background-color':'MediumSeaGreen'}, 2000, 'swing');
-
-
 								},
-								
+							
 								complete:function(){
-
 								}
 
 						})//ajax끝
@@ -108,7 +110,7 @@
 						$.ajax({//2-2. onmessage 중 최신 정보 받기
 							url: "${pagecontext.request.contextpath}/khblind/board/realtimeGetVoteTest",
 							data:{
-								voteTopicNo: topicNo//음 이거 정해야할듯
+								voteTopicNo: topicNo
 								},
 								type: "GET",
 								success:function(resp){
@@ -122,9 +124,7 @@
 									
 									}
 								},
-								
 								complete:function(){
-
 								}
 
 						})//ajax끝
@@ -137,18 +137,13 @@
 						if(!window.socket) return;
 
 						var topicNo = ${VoteTopicInfo.voteTopicNo};
-// 						var topicNo = $("#topic-id").data("topic-no");
 						var optionNo = $(this).data("option-no");
-						//var memberNo는 세션에서
 						
 						//1.서버에 정보 보내기
-						
 						//보낼 때 서버에서 이해할 수 있는 양식으로 보내야 한다
 						var message = {receivePayloadType:2, voteTopicNo: topicNo, voteOptionNo: optionNo};
 						var json = JSON.stringify(message);
 						window.socket.send(json);
-						
-						console.log("이런!" + json)
 						
 						//2. 갱신보여주기
 						$.ajax({
@@ -159,7 +154,6 @@
 								},
 								type: "GET",
 								success:function(resp){
-									console.log("에이젝스 간다으");
 									for(var i=0; i<resp.length; i++){
 										console.log(resp[i])
 										var target = $("#option-"+ resp[i].voteOptionNo +"-gauge");
@@ -167,15 +161,12 @@
 										target.css("width", resp[i].voteOptionPercent +"%");
 										target.attr("aria-valuenow", resp[i].voteOptionPercent);
 										target.text(resp[i].voteOptionPercent +"% "+"("+ resp[i].voteOptionCount +"표)");
-										
-
 									}
 								},
 								
 								complete:function(){
 
 								}
-								
 								
 						})//ajax끝
 
@@ -197,7 +188,15 @@
 					console.log(message + "메시지")
 					var json = JSON.stringify(message);
 					window.socket.send(json);
-				})
+				});
+				
+				$(window).on("beforeunload", function(){
+					var topicNo = ${VoteTopicInfo.voteTopicNo};
+					var message = {receivePayloadType:3, voteTopicNo: topicNo};
+					console.log(message + "메시지")
+					var json = JSON.stringify(message);
+					window.socket.send(json);
+				});
 			
 		})
 	</script>
@@ -211,9 +210,7 @@
 					return;} //소켓 연결동안 실행되지 않을...
 				$(".active-btn").attr("disabled", "disabled");
 				var topicNo = ${VoteTopicInfo.voteTopicNo};
-// 				var topicNo = $("#topic-id").data("topic-no");
 				var optionNo = $(this).data("option-no");
-				//memberNo는 세션에서
 				
 				$.ajax({
 					url: "${pagecontext.request.contextpath}/khblind/board/voting",
@@ -235,7 +232,7 @@
 							}
 							
 						}					
-				})//ajax끝
+				})
 
 			})
 			
@@ -248,7 +245,6 @@
 			})
 						
 		});
-	
 	</script>
 	
 	<!-- 이미지 불러오기 -->
@@ -257,7 +253,6 @@
 		//이미지 불러오기 테스트
 		$("#image-load").click(function(){
 			$(this).hide();
-			console.log("이미지 로딩중! 버튼 삭제")
 			var boardNo = ${boardDto.boardNo};
 			$.ajax({
 					url: "${pagecontext.request.contextpath}/khblind/board/getImageInfo",
@@ -266,20 +261,16 @@
 					},
 					type: "GET",
 					success:function(resp){
-						console.log("성공");
 						console.log(resp);
 						
 						for(var i=0; i < resp.length; i++){
 							var fileUrlInLocal = resp[i].boardImageUrl;
 							
 							console.log(typeof(fileUrlInLocal));
-							console.log("full경로는 " + fileUrlInLocal);
-							console.log("길이는 "+fileUrlInLocal.length)
 							
 							var lengthFull = fileUrlInLocal.length;
-							var lengthExceptFileName=lengthFull-14;
-							//파일이름 길이는 총 14개
-							//fileUrlInLocal.length() 
+							var lengthExceptFileName=lengthFull-14;	//파일이름 길이는 총 14개
+
 							var fileName =fileUrlInLocal.substr(lengthExceptFileName, 14);
 							var url = "${pagecontext.request.contextpath}/khblind/board/getImageFlie?boardNo="+ boardNo +"&" + "fileName="+fileName;
 							
@@ -308,12 +299,33 @@
 	   	$(".nestedComment-area").hide();
 		$("#comment-id-"+originCmtNo).show();
 	   
-	// 				$("#comment-id-"+originCmtNo).submit(function(){
-	// 				   $("#comment-id-"+originCmtNo).hide();
-	// 				});
+	 				$("#comment-id-"+originCmtNo).submit(function(){
+					   $("#comment-id-"+originCmtNo).hide();
+					});
 	   });
 	});
+
 	</script>
+	
+	<script>
+//대댓글 입력창 클릭시 대댓글 입력창 추가 스크립트
+$(function(){
+	$(".nestedComment-area").hide();
+	$(".nestedComment-btn").click(function(){
+   var originCmtNo= $(this).attr("id");
+   console.log(originCmtNo);
+
+	$("#comment-id-"+originCmtNo).show();
+   
+   
+// 				$("#comment-id-"+originCmtNo).submit(function(){
+// 				   $("#comment-id-"+originCmtNo).hide();
+// 				});
+   });
+
+});
+   </script>
+	
  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <script>
 $(function(){
@@ -454,66 +466,6 @@ $(function(){
         </style>
 
         <!--반응형 웹 테스트-->
-        <style>
-        
-        
-            @media screen and (min-width:1200px){
-                .test{
-                    color: royalblue;
-                }
-            }
-
-            @media screen and (max-width:1199px){
-                .test{
-                    color: red;   
-                }
-            }
-
-            @media screen and (max-width:991px){
-                .test{
-                    color: orange;
-                }
-                #board-type > small{
-                    font-size: 1.2rem;
-                }
-                #board-title > span{
-                    font-weight: 500 !important;
-                    font-size: 2.2rem;
-                }
-
-            }
-
-            @media screen and (max-width:767px){
-                .test{
-                    color: green;
-                }
-
-            }
-            @media screen and (max-width:575px){
-                .test{
-                    color: rgb(255, 0, 242);
-                }
-            }
-    </style>
-
-<script>
-//대댓글 입력창 클릭시 대댓글 입력창 추가 스크립트
-$(function(){
-	$(".nestedComment-area").hide();
-	$(".nestedComment-btn").click(function(){
-   var originCmtNo= $(this).attr("id");
-   console.log(originCmtNo);
-
-	$("#comment-id-"+originCmtNo).show();
-   
-   
-// 				$("#comment-id-"+originCmtNo).submit(function(){
-// 				   $("#comment-id-"+originCmtNo).hide();
-// 				});
-   });
-
-});
-   </script>
 
 <div class="container-fluid bbxb">
 	<div id="board-detail-zone" class="offset-1 col-10 row mt-4 bbxb">
@@ -540,7 +492,7 @@ $(function(){
 
                         <div id = "board-simple-info" class="col-12 mt-2 row bbxb">
                             <div class="col-xl-2 col-sm-3 col-3 bbxb">
-                                <small><i class="far fa-clock">&nbsp;망할!</i></small>
+                                <small><i class="far fa-clock">&nbsp;</i></small>
                             </div>
                             <div class="col-xl-2 col-sm-3 col-3 bbxb">
                                 <small><i class="fas fa-mouse">&nbsp; ${boardDto.boardCount}</i></small>
@@ -579,11 +531,11 @@ $(function(){
 										<i class="far fa-bookmark fa-1x bbxb"></i>
 									</div>
 								</c:if>
-								
-								<c:if test="${not empty dtoss}">
+								<!-- 로그인 한상태 -->						
+									<c:if test="${not empty dtoss}">
 	                            	<!-- 비어있는 책갈피를 누르면  bookmarkInsert를 실행하게하기 -->
 									<c:if test="${isMarked == 1}">
-										<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x bbxb" ></i></small></a>
+									<a href="${root}/board/bookmarkInsert?boardNo=${boardDto.boardNo}"><small><i class="far fa-bookmark fa-1x bbxb" ></i></small></a>
 									</c:if>
 								
 									<!-- 차있는 책갈피를 누르면 bookmarkDelete를 실행하게 하기 -->
@@ -755,13 +707,28 @@ $(function(){
 			                            </p>
 			                        </div>
 			                        <div class="bottom col-12 row mb-3 bbxb">
-			                            <div class="col-3">
-			                                <small><i class="far fa-clock">&nbsp;</i></small>
-			                            </div>
+			                            
 <!-- 			                            <div class="col-2"></div> -->
 			                            <div class="col-2 text-right bbxb">
 	                            			<small><i id="edit-${commentsVO.commentsNo}" class="far fa-edit bbxb"></i></small>
 			                            </div>
+										
+										<!-- 댓글 수정부분 -->
+			                            <div class="EditArea col-2">
+  											<button class="btn btn-danger Editbtn-1" >수정</button>
+										</div>
+
+									<div id="dis" class="col-5">
+ 
+										  <form action="commentsEdit" class="commentsEditForm"  method="POST">
+										    <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
+										    <input type="hidden" name="commentsNo" value="${commentsVO.commentsNo}">
+											<textarea class="commentsEdit" name="commentsContent"></textarea>
+										    <input class="btn btn-danger Editbtn-2" type="submit"  value="수정">
+    
+  										  </form>
+									</div>
+			                            
 			                            <div class="col-2 text-right bbxb">
 				                            <form action="commentsDelete" method="get">
 											   <input type="hidden" name="boardNo" value="${boardDto.boardNo}">
@@ -769,7 +736,7 @@ $(function(){
 											   <input class="btn btn-secondary btn-sm"  type="submit" value="삭제">
 											</form>
 			                            </div>
-			                            <div class="col-4 text-right bbxb">
+			                            <div class="col-2 text-right bbxb">
 										<button class="btn btn-secondary btn-sm" id="write-comments2-to-${commentsVO.commentsNo}">대댓글</button>
 <%-- 			                                <small><i id="write-comments2-to-${commentsVO.commentsNo}" class="far fa-comment-dots fa-1x nestedComment-btn">&nbsp;</i></small> --%>
 			                            </div>
@@ -821,9 +788,8 @@ $(function(){
    				</div>
    			</div>
    		</div>
-<!-- 		<div id="ad-area" class="col-4 aaaa bbxb"> -->
-<!-- 		         	광고가 나온다 -->
-<!-- 		</div> -->
+
+
    	</div>
 </div>
 

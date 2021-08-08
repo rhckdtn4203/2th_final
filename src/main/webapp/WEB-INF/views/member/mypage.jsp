@@ -40,7 +40,7 @@
 						<a href="${pageContext.request.contextPath}/member/changeinfo">개인정보변경</a>
 					</div>
 					<div class="infoItem">
-						<a href="${pageContext.request.contextPath}/member/change_pw">비빌번호변경</a>
+						<a href="${pageContext.request.contextPath}/member/change_pw">비밀번호변경</a>
 					</div>
 				</div>
 				<div class="ib1">
@@ -61,19 +61,15 @@
 						<ul class="accordion">
 							<li class="item">
 								<h2 class="accordionTitle">
-									내가 작성한 게시글 <span class="accIcon"></span>
-								</h2>
-								<div class="text">
-									<ul>
-										<li>게시글2</li>
-										<li>게시글3</li>
-										<li>게시글3</li>
-										<li>게시글3</li>
-										<li>게시글3</li>
-									</ul>
-								</div>
-							</li>
-						</ul>
+									   내가 작성한 게시글 <span class="accIcon"></span>
+                        </h2>
+                        <div class="text">
+                           <c:forEach var="BoardCategoryVO" items="${myWriteList}">
+                           <ul>
+                              <li><a href="${pageContext.request.contextPath}/board/boardDetail?boardNo=${BoardCategoryVO.boardNo}">[${BoardCategoryVO.boardCategoryName}]|${BoardCategoryVO.boardTitle}</a></li>
+                           </ul>
+                           </c:forEach>
+                        </div>
 					</div>
 				</div>
 			</section>
@@ -93,5 +89,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/st2.js"></script>	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-    

@@ -2,16 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <!-- 제이쿼리를 가져온다 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <!-- UI제이쿼리를  가져온다 -->
-    <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-    <!-- 폰트어썸 아이콘을 가져온다-->
-    <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 
-  
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
@@ -19,8 +15,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
     <style>
 		#image-frame{
-		width : 500px;
-		height : 500px;
+		width : 450px;
+		height : 450px;
 		}
 
         .primary-background-color {
@@ -42,10 +38,38 @@
 	        font-size: 1.0rem;
         }
 
-/*         .w-auto{ */
-/*         width: auto; */
-/*         } */
-
+		.modiBack {
+		    width: 70% !important;
+		    height: 720px !important;
+		}
+		
+		body{
+    	height: 134% !important;
+		}
+		
+		#a{
+		    width: 100% !important;
+    		height: 75px !important;
+    		left: 0 !important;
+		}
+		
+		.image-crop{
+		overflow: hidden;
+		}
+		
+        .bbxb{
+		box-sizing: border-box;
+		}
+	
+		.bgcolor-bq{
+		background-color: bisque;
+		}
+		
+		.color-stbgr{
+		color: #1e3932;
+		}
+		
+		
     </style>
 
     <script>
@@ -83,7 +107,6 @@
 				    	
                 }) //ajax끝
                
-                console.log("하나 끝 둘 시작");
                 console.log("1" + memberNo);
                 
                 
@@ -91,6 +114,7 @@
                 	type: "GET",
                 	url: "${pageContext.request.contextPath}/admin/getImageCertUrl",
                 	datatype: "text",
+                	
                 	data : {	 	
                 		memberNo : memberNo
                 		},
@@ -102,53 +126,45 @@
     				    	var fileName = "certImage";
     				    	var url = "${pagecontext.request.contextpath}/admin/getImageToImageCertJsp?memberNo="+ memberNo;
     				    	var finalUrl = "/khblind"+url;
-    				    	console.log("파일 유알엘" +url);
-    				    	console.log("파이널 유알엘" +finalUrl);
     				    	$("#image-frame").attr("src", finalUrl);
     				    },
     				    error: function(err){
     				    	console.log(err)
     				    }
                 })
-                console.log("끝?!")
 
             });
         });
 
     </script>
-    <div class="row mt-5 container">
-        <div class="offset-2 col-8 row">
-
-            <div id="title-area" class="col-12 row">
-                <div id="board-write-title" class="col-12 text-center primary-background-color">
-                    <h5 class="mt-3 mb-3 font-color-khblind-gold font-size-15 bold">인증사진으로 등업관리</h5>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/style4.css">
+<section id="modiBox">
+	<div class="modiBack" id="modiBack">
+		<div id="modititle">
+			<h3>ID-CART VERIFICATION</h3>
+			<div id="title-area" class="col-12 row">
+                <div id="board-write-title" class="col-12 text-center bgcolor-bq bbxb">
+                    <h5 class="mt-3 mb-3 fcolor-stbgr font-size-15 bold">인증사진으로 등업관리</h5>
                 </div>
-            </div>
-
-            <div id="info-area" class="col-12 row mt-3">
-                <div id="select-sector" class="col-3 frame form-group">
-<%--                     ${approveImageCertReadyList} --%>
-                    <select id="member-list" class="form-control"size="20">
-                        <option value="0">(대기 회원을 선택)</option>
-                        <c:forEach var="imageCertDto" items="${approveImageCertReadyList}">
-         
-                        	<option value="${imageCertDto.memberNo}" data-jobcategoryno="${imageCertDto.jobCategoryNo}">${imageCertDto.memberNick}(${imageCertDto.memberName})</option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-
-                <div id="image-sector" class="col-7 row">
-
-                    <img id="image-frame" class="col-12 img-fluid" src="${root}/img/default-id-card.png">
-                </div>
-            </div>
-
-            <div id="option-area" class="col-12 row">
-                <div id="success-sector" class="col-12 text-center">
-                    <form action="approveImageCert" class="form-group row" method="post">
-                        <div id="hidden-sector" class="col-12 row">
-                            <input id="inputMemberNo" class="col-6 memberNo" type="text" name="memberNo" value=""  hidden>
+                <div id="cert-area" class="col-12 row">
+	                <div id="select-sector" class="col-3 frame form-group ">
+	                	 <select id="member-list" class="form-control"size="20">
+	                        <option value="0">(대기 회원을 선택)</option>
+		                        <c:forEach var="imageCertDto" items="${approveImageCertReadyList}">
+		                        	<option value="${imageCertDto.memberNo}" data-jobcategoryno="${imageCertDto.jobCategoryNo}">${imageCertDto.memberNick}(${imageCertDto.memberName})</option>
+		                        </c:forEach>
+	                    </select>
+	                </div>
+	                <div id="member-id-card" class="col-8 bbxb">
+	                	<img id="image-frame" class="col-12 img-fluid bbxb" src="${root}/img/default-id-card.png">
+	                </div>
+	                
+                 <div id="option-area" class="col-12 row bbxb">
+                <div id="success-sector" class="col-12 text-center bbxb">
+                    <form action="approveImageCert" class="form-group row bbxb" method="post">
+                        <div id="hidden-sector" class="col-12 row bbxb">
+                            <input id="inputMemberNo" class="col-6 memberNo bbxb" type="text" name="memberNo" value=""  hidden>
 <!--                             <input id="inputJobCategoryNo"  class="col-6" type="text" name="jobCategoryNo" value="" > -->
                         </div>
                         
@@ -160,8 +176,8 @@
 <!-- 	                        	<span id="jobCategoryName">아무거나</span> -->
 <!-- 	                        </div> -->
 <!--                         </div> -->
-                        <div class="col-12 mt-3">
-                            <button class="btn btn-block btn-success">승인</button>
+                        <div class="col-12 mt-3 bbxb">
+                            <button class="btn btn-block btn-success bbxb">승인</button>
                         </div>
 
                     </form> 
@@ -169,22 +185,24 @@
 
 				<hr>
 			
-                <div id="fail-sector" class="col-12 text-center">
-                    <form action="rejectImageCert" class="form-group row" method="post" >
-                        <div class="col-12 mt-2">
+                <div id="fail-sector" class="col-12 text-center bbxb">
+                    <form action="rejectImageCert" class="form-group row bbxb" method="post" >
+                        <div class="col-12 mt-2 bbxb">
 							<input id="inputMemberNo" class="memberNo col-6" type="text" name="memberNo" value=""  hidden>
                             <input type="text" name="imageCertMessage" class="form-control" placeholder="거절 사유를 입력해주세요">
                         </div>
-                        <div class="col-12 mt-3">
-                            <button class="btn btn-block btn-warning ">거절</button>
+                        <div class="col-12 mt-3 bbxb">
+                            <button class="btn btn-block btn-warning bbxb">거절</button>
                         </div>
                     </form>
                 </div>
-                
-                
-                
-                
             </div>
-        </div>
-    </div>
+	                
+                </div>
+            </div>
+		
+		</div>
+	</div>
+</section>
+ 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

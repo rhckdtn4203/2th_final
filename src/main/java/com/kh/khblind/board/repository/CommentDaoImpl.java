@@ -31,7 +31,6 @@ public class CommentDaoImpl implements CommentDao {
    }
    @Override
    public boolean delete(int commentsNo) {
-	   System.out.println(commentsNo+ "댓글 삭제전");
       int count = sqlSession.delete("comments.delete", commentsNo);
       return count>0;
    }

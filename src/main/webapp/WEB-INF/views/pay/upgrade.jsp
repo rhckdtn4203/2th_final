@@ -9,6 +9,8 @@
             font-weight:bold;
             text-align:center;
             border:1px solid black;
+            background-color: var(--color-green);
+            color: wheat;
         }
         table,td{
             border:1px solid black;
@@ -23,7 +25,22 @@
 			width:100%;
 			margin-top: 10px;
 			margin-bottom: 10px;    
-        }   
+        }
+         .history-link:hover{
+        	color: wheat;
+        }
+        .pay-btn{
+        	 background-color: wheat;
+             color: var(--color-green);
+             margin-left:1%;
+             font-weight:bold;
+             font-size: 15px;
+        }
+        .plus{
+        	color: var(--color-green);
+        	font-size:20px;
+        	margin-top:1%;
+        }    
     </style>
     
   <script>
@@ -80,23 +97,22 @@
 		<h1 style="font-weight:bolder">회원 플러스 결제</h1>	
 	</div>   
 	<div class="set text-left" style="margin-right:25%;">	
-		<span style="font-size:20px;margin-top:1%;"> (현재 ${dtoss.memberNick}님은 ${dtoss.gradeNo} 등급 입니다.)</span>
-		<a href="history" class="link-btn" style="margin-left:1%;font-weight:bold;">지난 결제내역 보기</a>
+		<span style="font-size:20px;"> (현재 ${dtoss.memberNick}님은 ${dtoss.gradeNo} 등급 입니다.)</span>
+		<a href="history" class="history-link" style="margin-left:1%;font-weight:bold;">지난 결제내역 보기</a>
 	</div>
 
 	<div class ="set">
 		<form action="upgrade" method="post">
-			<div class="set">
-				<label> 회원 플러스 </label> <!-- 상품의 이름 -->
-			</div>
+			<div class="set text-left" style="margin-right:25%;">
+				<span  class="plus"> 회원 플러스 </span> <!-- 상품의 이름 -->
+				
 				<input type="hidden" name="item_name" value="회원 플러스">
-			<div class="set">	
-				<label>주문 수량</label>
-				<input type="number" name="quantity" value="0" max="1" min="0" required>
-			</div>
+	
+				<input type="hidden" name="quantity" value="1">
+	
 				<input type="hidden" name="total_amount" value="5000">
-			<div class="set">
-				<input type="submit" value="결제" class="form-btn form-btn-positive" id="send">
+			
+				<input type="submit" value="결제하기" class="pay-btn" id="send">
 			</div>
 		</form>
 	</div>

@@ -1,6 +1,5 @@
 package com.kh.khblind.admin.approveImageCert.entity;
-//뷰approve_image_cert_view 뷰 기준
-
+//뷰 "approve_image_cert_view" 참고
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
