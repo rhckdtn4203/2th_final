@@ -8,6 +8,7 @@
     	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
    
+ <!-- test -->  
 <!-- 리모컨 html 추가 -->          
  	<c:if test="${dtoss != null}">
 
