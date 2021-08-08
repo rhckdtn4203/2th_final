@@ -3,58 +3,42 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<c:set var="rt" value="${pageContext.request.contextPath}"></c:set>
+	 
 	
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
+    	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style6.css">
+   
+<!-- 리모컨 html 추가 -->          
+ 	<c:if test="${dtoss != null}">
 
-<c:if test="${dtoss != null}">
+	<div id="floatMenu">
+   
+	  <div id="fTitle">
+	  <p style="font-size: 25px; margin:0;">Quick!</p>
+	  <p id="fTitle-p">menu</p>
+	  </div>
+   
+   	<div id="fItems">
+      <div class="fItem"><a href="${pageContext.request.contextPath}/board/boardList?type=companyBoard"><span>'내 회사'</span><br>이야기</a></div>
+      <div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/board/boardList?type=jobCategoryBoard"><span>'내 업종'</span><br>이야기</a></div>
+      <div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
+  	</div>
+   
+   <div>
+   <button id="arrow"><i class="far fa-arrow-alt-circle-up"></i>top</button>
+   </div>
 
-<div id="floatMenu">
-	
-	<div id="fTitle">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p">menu</p>
 	</div>
-	
-	<div id="fItems">
-		<div class="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 회사'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/board/boardList"><span>'내 업종'</span><br>이야기</a></div>
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-
-</div>
-    </c:if>   
+    	</c:if>
     
-<%-- <c:if test="${dtoss == null}">
-    <div id="floatMenu1">
-	
-	<div id="fTitle" class="FT">
-	<p style="font-size: 25px; margin:0;">Quick!</p>
-	<p id="fTitle-p1">menu</p>
-	</div>
-	
-	<div id="fItems">
-		<div class="fItem" id="fItem"><a href="${pageContext.request.contextPath}/plus/plusPage"><span>모든 업종</span></a></div>
-	</div>
-	
-	<div>
-	<button id="arrow1" class="arrows"><i class="far fa-arrow-alt-circle-up"></i>top</button>
-	</div>
-	
-	</div>
-</c:if> --%>
-    
+ <!-- 검색창 -->   
     <section id="searchBar">
         <div id="inputBar">
           <form id="bar" action="${rt}/board/boardList" method="get" class="search">
             <span id="input-icon"><i class="fas fa-search"></i></span> 
             <input type="hidden" name="type" value="boardCategoryBoard">  
             <input id="search-input" type="text" name="keyword" required
-         	autocomplete="off" placeholder="관심있는 내용을 검색해보세요!">
+         	autocomplete="on" placeholder="관심있는 내용을 검색해보세요!">
          	<!-- <input type="submit" value="검색"> -->
           </form>
           
@@ -80,9 +64,9 @@
              
               <div class="b1">
                 <span class="topic">
-                  <a href="#" class="tit-title">${BestTopicDto.boardCategoryName}</a>
+                  <a href="${rt}/board/boardList?type=boardCategoryBoard&boardCategoryNo=${BestTopicDto.boardCategoryNo}" class="tit-title">${BestTopicDto.boardCategoryName}</a>
                 </span>
-                <a href="#" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
+                <a href="${rt}/board/boardDetail?boardNo=${BestTopicDto.boardNo}" class="tit"><span>${BestTopicDto.boardTitle}</span></a>
               </div>
               <div class="b2">
                 <i class="far fa-thumbs-up"></i><span>${BestTopicDto.likeCount}</span>     
@@ -91,85 +75,9 @@
               
             </div>
             </c:forEach>
-            
-<!-- 			<div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">유머</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>아이스크림 주세여</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">반려동물</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 블 라블라</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직장인 취미생활</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 탁구짱</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">스포츠</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span>이건 안해도되지 않을까?</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">코로나 바이러스</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 이것도 그닥..</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-            
-<!--             <div class="article-best"> -->
-<!--               <div class="b1"> -->
-<!--                 <span class="topic"> -->
-<!--                   <a href="#" class="tit-title">직접홍보</a> -->
-<!--                 </span> -->
-<!--                 <a href="#" class="tit"><span> 지금 안사면 백퍼 손해</span></a> -->
-<!--               </div> -->
-<!--               <div class="b2"> -->
-<!--                 <i class="far fa-thumbs-up"></i><span>1</span>      -->
-<!--                 <i class="far fa-comment-alt"><span>1</span></i> -->
-<!--               </div> -->
-<!--             </div> -->
-
+ 
+    
+       
           </div> 
         </div>
 
@@ -357,38 +265,30 @@
         </section>
       </section>
 
-   
- <script>
+ <!-- 리모컨 script 추가 -->     
+<script>
 $(document).ready(function() {
-	var floatPosition = parseInt($("#floatMenu").css('top'));
-
-	$(window).scroll(function() {
-		// 현재 스크롤 위치를 가져온다.
-		var scrollTop = $(window).scrollTop();
-		var newPosition = scrollTop + floatPosition + "px";
-
-
-		$("#floatMenu").stop().animate({
-			"top" : newPosition
-		}, 500);
-
-	}).scroll();
-
+   var floatPosition = parseInt($("#floatMenu").css('top'));
+   $(window).scroll(function() {
+      // 현재 스크롤 위치를 가져온다.
+      var scrollTop = $(window).scrollTop();
+      var newPosition = scrollTop + floatPosition + "px";
+      $("#floatMenu").stop().animate({
+         "top" : newPosition
+      }, 500);
+   }).scroll();
 });
 </script>
  
-  <script>
+ <script>
 const arrow = document.querySelector('#arrow');
-
 function scroll(selector){
    const scrollTo = document.querySelector(selector);
    scrollTo.scrollIntoView({ behavior: 'smooth' });
 }
-
 arrow.addEventListener('click', () => {
    scroll('#header');
 });
-</script>
-
-     
+</script>     
+      
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
