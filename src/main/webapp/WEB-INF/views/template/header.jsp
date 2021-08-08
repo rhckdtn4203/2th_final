@@ -17,6 +17,8 @@
   <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous">
 </script>
 <style>
+
+
         .modal {
            justify-content:center; 
   align-items:center;     
@@ -30,6 +32,7 @@
   padding:15px; 
          
         }
+
         .modal .bg {
           width: 100%;
           height: 100%;
@@ -39,6 +42,7 @@
         .bg{
         backdrop-filter: blur(4px);
         }
+
         .modalBox {
                         
   		  border-radius:10px;
@@ -73,14 +77,17 @@
   min-height:100px;         
   max-height:200px;         
 }
+
         .modalBox button {
           display: block;
           width: 80px;
           margin: 0 auto;
         }
+
         .hidden {
           display: none;
         }
+
 		.zzzz{
 		width: 500px;
 		margin: auto;
@@ -101,6 +108,7 @@
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
   
 	$(function(){
 		$.ajax({
@@ -116,6 +124,7 @@
 					$("#ranking").append(template);	
 				}
 				
+
 				//만들어낸 뒤
 				$(".rank-keyword").click(function(e){
 					console.log("click");
@@ -307,7 +316,9 @@
          document.querySelector(".openBtn").addEventListener("click", open);
          document.querySelector(".closeBtn").addEventListener("click", close);
          document.querySelector(".bg").addEventListener("click", close);
+
     </script>
       
 
     <hr>
+    
