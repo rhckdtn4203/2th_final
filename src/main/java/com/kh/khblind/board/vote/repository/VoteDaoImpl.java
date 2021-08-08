@@ -74,7 +74,6 @@ public class VoteDaoImpl implements VoteDao {
 			optionInfoToDB.add(option); //하나씩 집어 넣습니다.
 			}
 		
-			//			System.out.println("optionInfoToDB in [IMPL]= " + optionInfoToDB);
 		
 			//옵션 개수에 따라 반복횟수가 달라집니다.
 			for(int i =0;  i<optionInfoToDB.size(); i++) {
@@ -103,11 +102,9 @@ public class VoteDaoImpl implements VoteDao {
 	@Override
 	public VoteTopicDto getVoteTopicInfo(int boardNo) {
 		
-		System.out.println("boardNo" + boardNo);
 		VoteTopicDto voteTopicDto = new VoteTopicDto();
 		try {
 			voteTopicDto = sqlSession.selectOne("vote.getTopicInfo", boardNo);
-			System.out.println("voteTopicDto = [IMPLE]" + voteTopicDto);
 			return voteTopicDto;
 			
 		} catch (Exception e) {
@@ -128,10 +125,8 @@ public class VoteDaoImpl implements VoteDao {
 			
 			//일단 지가 지 기능 써서 전체 개수를 불러온다.
 			int allCount = getAllCount(boardNo);
-			System.out.println("allCount = " + allCount);
 			for(int i=0; i<voteOptionInfoVoList.size(); i++) {
 				int thisCount = voteOptionInfoVoList.get(i).getVoteOptionCount();
-				System.out.println("thisCount = " + thisCount);
 				int thisPercent = (int)((float)thisCount/(float)allCount*100)/1;
 				
 				voteOptionInfoVoList.get(i).setVoteOptionPercent(thisPercent);
@@ -165,7 +160,6 @@ public class VoteDaoImpl implements VoteDao {
 		
 		try {
 			int allCount = sqlSession.selectOne("vote.getAllCount", boardNo);
-			System.out.println("allCount = [get]" + allCount);
 			return allCount;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,7 +191,6 @@ public class VoteDaoImpl implements VoteDao {
 		try {
 				
 			int seletedOptionNo = sqlSession.selectOne("vote.getSelectedOptionNoThatTopic", voteResultDto);
-			System.out.println("seletedOptionNo = " + seletedOptionNo );
 			return seletedOptionNo;
 			
 		} catch (Exception e) {

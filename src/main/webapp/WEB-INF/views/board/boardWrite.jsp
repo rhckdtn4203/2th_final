@@ -8,15 +8,9 @@
 <html>
 <head>
 
-
-<!-- 제이쿼리를 가져온다 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!-- UI제이쿼리를  가져온다 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" 	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
-<!-- 폰트어썸 아이콘을 가져온다-->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" 	crossorigin="anonymous" />
-
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
@@ -268,7 +262,7 @@ textarea {
 						<input id="board-title" class="form-control p-4 bbxb" type="text" name="boardTitle" placeholder="제목을 입력하세요" >
 					</div>
 					<div id="board-content-input">
-						<textarea id="board-content-textarea" class="form-control mt-3 p-4 bbxb" name="boardContent" placeholder="욕쓰지마라"></textarea>
+						<textarea id="board-content-textarea" class="form-control mt-3 p-4 bbxb" name="boardContent" placeholder="내용을 입력하세요"></textarea>
 					</div>
 				</div>
 
@@ -358,10 +352,6 @@ textarea {
 			</form>
 		</div>
 	</div>
-
-
-
-
 
 	<script id="vote-option-div-template" type="text/template">
         <div class="vote-option-div row mt-1 mb-1">

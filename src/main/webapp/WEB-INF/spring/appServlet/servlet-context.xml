@@ -37,8 +37,33 @@
 		<interceptor>
 			<mapping path="/board/boardEdit"></mapping>
 			<mapping path="/board/boardDelete"></mapping>
+			
 			<beans:bean class="com.kh.khblind.board.interceptor.BoardEditInterceptor"></beans:bean>
+			
 		</interceptor>
+			
+		<interceptor>
+			<mapping path="/plus/plusPage"></mapping>
+			<beans:bean class="com.kh.khblind.board.interceptor.PlusMemberInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:bean class="com.kh.khblind.board.interceptor.AdminInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/plus/Pluspage"/>
+			<beans:bean class="com.kh.khblind.board.interceptor.PlusMemberInterceptor"></beans:bean>
+		</interceptor>
+			<interceptor>
+				<mapping path="/admin**"/>
+				<mapping path="/board**"/>
+				<mapping path="/cert**"/>
+				<mapping path="/company/reviewWrite"/>
+				
+				<exclude-mapping path="/board/boardDetail"/>
+				<exclude-mapping path="/board/boardList"/>
+				<beans:bean class="com.kh.khblind.member.interceptor.memberInterceptor"></beans:bean>
+			</interceptor>
 	</interceptors>
 	
 	<!-- 

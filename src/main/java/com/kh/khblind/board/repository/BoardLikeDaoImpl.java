@@ -14,12 +14,10 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 	@Override
 	public boolean boardLikeExist(BoardLikeDto boardLikeDto) {
 		BoardLikeDto boardLikeExistDto  = sqlSession.selectOne("boardLike.search", boardLikeDto);
-		System.out.println("boardLikeExistDto = " + boardLikeExistDto);
 		if(boardLikeExistDto == null) {
 			return true;
 		}
 		else return false;
-		 
 	}
 	@Override
 	public void boardLike(BoardLikeDto boardLikeDto) {

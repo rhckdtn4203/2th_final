@@ -13,7 +13,7 @@
 .mainArea{
     
     margin-top: 50px;
-    margin-left: 200px;
+    margin-left: 100px;
 /*     border-bottom: 2px solid lightgray; */
     width: 1000px;
 }

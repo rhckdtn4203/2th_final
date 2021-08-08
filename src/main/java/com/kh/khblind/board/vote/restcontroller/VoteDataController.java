@@ -33,11 +33,9 @@ public class VoteDataController {
 		
 		//투표하기 전 체크하기(
 		boolean didYouVote = voteDao.didYouVote(voteResultDto);
-		System.out.println("투표했나요?" + didYouVote);
 		if(!didYouVote) {//투표 결과가 없으면
 			//투표하기
 			voteResultDto.setMemberNo(memberNo);
-			System.out.println("투표합니다 | 데이터 정보  = " + voteResultDto );
 			
 			voteDao.voting(voteResultDto);
 		}
