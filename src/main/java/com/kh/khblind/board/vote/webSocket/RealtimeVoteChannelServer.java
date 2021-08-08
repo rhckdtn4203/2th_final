@@ -49,7 +49,6 @@ public class RealtimeVoteChannelServer {
 			realtimeVoteChannel = new RealtimeVoteChannel(voteChannelNo);
 			realtimeVoteChannels.add(realtimeVoteChannel);
 			log.debug("신규 채널 생성 : {}", voteChannelNo);
-			System.out.println("시발? 이게 뭔데?");
 			for(int i = 0; i< realtimeVoteChannels.size(); i++) {
 				log.debug("채녈 {}",realtimeVoteChannels.get(i).getRealtimeVoteChannelNo());
 			}
