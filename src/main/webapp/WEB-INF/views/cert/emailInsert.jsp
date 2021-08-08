@@ -20,6 +20,7 @@
 	#group-back {
 		height: 240px;
 	}
+
 	#box-padding {
 		padding:10px;
 	}
