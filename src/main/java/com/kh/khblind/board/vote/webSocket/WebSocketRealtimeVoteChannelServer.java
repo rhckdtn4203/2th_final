@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.kh.khblind.member.entity.MemberDto;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 
 	private RealtimeVoteChannelServer server = new RealtimeVoteChannelServer();
@@ -64,7 +66,7 @@ public class WebSocketRealtimeVoteChannelServer extends TextWebSocketHandler{
 		}
 		else if(realtimeVoteSingleInfoVo.getReceivePayloadType() == LEAVE) {
 //			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo(), session);
-			System.out.println(realtimeVoteSingleInfoVo + "나가는중");
+			log.debug("채널 나가는 중 {}",  realtimeVoteSingleInfoVo);
 			server.leave(memberNo, realtimeVoteSingleInfoVo.getVoteTopicNo());
 		}
 	}
