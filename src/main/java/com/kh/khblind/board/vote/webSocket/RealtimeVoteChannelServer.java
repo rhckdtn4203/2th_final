@@ -18,7 +18,6 @@ public class RealtimeVoteChannelServer {
 	
 	//채널탐색
 	public boolean exist(Integer voteChannelNo) {
-//		voteChannelNo=175;
 		return find(voteChannelNo) != null;
 	}
 	
