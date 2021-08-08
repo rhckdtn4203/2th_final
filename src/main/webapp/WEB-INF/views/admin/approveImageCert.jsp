@@ -2,16 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <!-- 제이쿼리를 가져온다 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <!-- UI제이쿼리를  가져온다 -->
-    <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
-    <!-- 폰트어썸 아이콘을 가져온다-->
-    <script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 
-  
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-    
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/77858aaef8.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
@@ -111,7 +107,6 @@
 				    	
                 }) //ajax끝
                
-                console.log("하나 끝 둘 시작");
                 console.log("1" + memberNo);
                 
                 
@@ -131,15 +126,12 @@
     				    	var fileName = "certImage";
     				    	var url = "${pagecontext.request.contextpath}/admin/getImageToImageCertJsp?memberNo="+ memberNo;
     				    	var finalUrl = "/khblind"+url;
-    				    	console.log("파일 유알엘" +url);
-    				    	console.log("파이널 유알엘" +finalUrl);
     				    	$("#image-frame").attr("src", finalUrl);
     				    },
     				    error: function(err){
     				    	console.log(err)
     				    }
                 })
-                console.log("끝?!")
 
             });
         });
