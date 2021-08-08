@@ -1,21 +1,22 @@
 #floatMenu {
-	position: absolute;
-	padding: 7px 4px;
-	width: 100px;
-	height: 220px;
-	left: 89em;
-	top: 15em;
-	background-color: white;
-	border: 5px double var(--color-green);
-	color: black;
-	border-radius: 0.5em;
+   position: absolute;
+   padding: 7px 4px;
+   width: 100px;
+   height: 220px;
+   left: 89em;
+   top: 15em;
+   background-color: white;
+   border: 5px double var(--color-green);
+   color: black;
+   border-radius: 0.5em;
 }
+
 #fTitle-p{
-	margin: 0;
-	font-size: 15px;
-	font-weight:bolder;
-	background-color: #ffa27d;
-	color: black;
+   margin: 0;
+   font-size: 15px;
+   font-weight:bolder;
+   background-color: #ffa27d;
+   color: black;
 }
 #fItems{
 margin: 0px auto;
@@ -43,30 +44,35 @@ margin: 20px 0 0 33px;
 border: none;
 border-radius:0.5em;
 background-color: whitesmoke;
+
 }
+
+
+
 #floatMenu1{
-	padding: 20px 4px;
-	position: absolute;
-	
-	width: 100px;
-	height: 220px;
-	left: 89em;
-	top: 15em;
-	background-color: white;
-	border: 5px double var(--color-green);
-	color: black;
-	border-radius: 0.5em;
+   padding: 20px 4px;
+   position: absolute;
+   
+   width: 100px;
+   height: 220px;
+   left: 89em;
+   top: 15em;
+   background-color: white;
+   border: 5px double var(--color-green);
+   color: black;
+   border-radius: 0.5em;
 }
 #fTitle-p1{
-	margin: 10px 0 0 0;
-	font-size: 15px;
-	font-weight:bolder;
-	background-color: #ffa27d;
-	color: black;
+   margin: 10px 0 0 0;
+   font-size: 15px;
+   font-weight:bolder;
+   background-color: #ffa27d;
+   color: black;
 }
 #arrow1{
 padding: 3px 3px;
 margin: 90px 0 0 33px;
+
 font-size: 18.5px;
 border: none;
 border-radius:0.5em;
@@ -75,7 +81,7 @@ background-color: whitesmoke;
 }
 
 aside{
-
+   
 }
   @media (max-width: 1200px){
       body{}
@@ -83,9 +89,9 @@ aside{
 
     @media (max-width: 1024px){
     #floatMenu {
-	position: absolute;
-	left: 0;
-	top: 0px;
+   position: absolute;
+   left: 0;
+   top: 0px;
     }
 
     @media (max-width: 768px){
@@ -95,24 +101,24 @@ aside{
     @media (max-width: 480px){
       body{}
     }#floatMenu {
-	position: absolute;
-	padding: 7px 4px;
-	width: 100px;
-	height: 220px;
-	left: 89em;
-	top: 15em;
-	background-color: white;
-	border: 5px double var(--color-green);
-	color: black;
-	border-radius: 0.5em;
+   position: absolute;
+   padding: 7px 4px;
+   width: 100px;
+   height: 220px;
+   left: 89em;
+   top: 15em;
+   background-color: white;
+   border: 5px double var(--color-green);
+   color: black;
+   border-radius: 0.5em;
 }
 
 #fTitle-p{
-	margin: 0;
-	font-size: 15px;
-	font-weight:bolder;
-	background-color: #ffa27d;
-	color: black;
+   margin: 0;
+   font-size: 15px;
+   font-weight:bolder;
+   background-color: #ffa27d;
+   color: black;
 }
 #fItems{
 margin: 0px auto;
@@ -146,24 +152,24 @@ background-color: whitesmoke;
 
 
 #floatMenu1{
-	padding: 20px 4px;
-	position: absolute;
-
-	width: 100px;
-	height: 220px;
-	left: 89em;
-	top: 15em;
-	background-color: white;
-	border: 5px double var(--color-green);
-	color: black;
-	border-radius: 0.5em;
+   padding: 20px 4px;
+   position: absolute;
+   
+   width: 100px;
+   height: 220px;
+   left: 89em;
+   top: 15em;
+   background-color: white;
+   border: 5px double var(--color-green);
+   color: black;
+   border-radius: 0.5em;
 }
 #fTitle-p1{
-	margin: 10px 0 0 0;
-	font-size: 15px;
-	font-weight:bolder;
-	background-color: #ffa27d;
-	color: black;
+   margin: 10px 0 0 0;
+   font-size: 15px;
+   font-weight:bolder;
+   background-color: #ffa27d;
+   color: black;
 }
 #arrow1{
 padding: 3px 3px;
@@ -176,21 +182,21 @@ background-color: whitesmoke;
 
 }
 
-aside{
-
-}
   @media (max-width: 1200px){
       body{}
     }
+
     @media (max-width: 1024px){
     #floatMenu {
-	position: absolute;
-	left: 0;
-	top: 0px;
+   position: absolute;
+   left: 0;
+   top: 0px;
     }
+
     @media (max-width: 768px){
       body{}
     }
+
     @media (max-width: 480px){
       body{}
     }
