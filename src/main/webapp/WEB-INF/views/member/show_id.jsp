@@ -20,13 +20,13 @@
           
             <div class="row-left">
            
-				<p id="p-search">회원님의 아이디는 <span id="p-span">${dtoss.memberId}</span>입니다</p>
+				<p id="p-search">회원님의 아이디는 <span id="p-span">${idresult}</span>입니다</p>
 	
             </div>
             
             <div class="row-left">
-            <a href="">로그인</a>
-            <a href="">비밀번호 찾기</a>
+            <a href="${pageContext.request.contextPath}/member/login">로그인</a>
+            <a href="${pageContext.request.contextPath}/member/find_pw">비밀번호찾기</a>
          	</div>
 
         </div>

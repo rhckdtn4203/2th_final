@@ -28,7 +28,7 @@ public class BoardImageDataController {
 	@Autowired
 	private UploadImageDao uploadImageDao;
 	
-	private final File ResDir = new File("D:/proj/khblind/resources/");
+	private final File ResDir = new File("D:/upload/kh7b");
 	private final File SavedDir = new File(ResDir + "/4.saved-image/");
 	
 	@RequestMapping("getImageInfo")

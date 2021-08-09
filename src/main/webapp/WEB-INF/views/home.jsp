@@ -266,37 +266,36 @@
       </section>
 
  <!-- 리모컨 script 추가 -->     
-	<script>
-	$(document).ready(function() {
-	   var floatPosition = parseInt($("#floatMenu").css('top'));
-	
-	   $(window).scroll(function() {
-	      // 현재 스크롤 위치를 가져온다.
-	      var scrollTop = $(window).scrollTop();
-	      var newPosition = scrollTop + floatPosition + "px";
-	
-	
-	      $("#floatMenu").stop().animate({
-	         "top" : newPosition
-	      }, 500);
-	
-	   }).scroll();
-	
-	});
-	</script>
+<script>
+$(document).ready(function() {
+   var floatPosition = parseInt($("#floatMenu").css('top'));
+
+   $(window).scroll(function() {
+      // 현재 스크롤 위치를 가져온다.
+      var scrollTop = $(window).scrollTop();
+      var newPosition = scrollTop + floatPosition + "px";
+
+
+      $("#floatMenu").stop().animate({
+         "top" : newPosition
+      }, 500);
+
+   }).scroll();
+
+});
+</script>
  
-	<script>
-	const arrow = document.querySelector('#arrow');
-	
-	function scroll(selector){
-	   const scrollTo = document.querySelector(selector);
-	   scrollTo.scrollIntoView({ behavior: 'smooth' });
-	}
-	
-	arrow.addEventListener('click', () => {
-	   scroll('#header');
-	});
-	</script>     
+ <script>
+const arrow = document.querySelector('#arrow');
+
+function scroll(selector){
+   const scrollTo = document.querySelector(selector);
+   scrollTo.scrollIntoView({ behavior: 'smooth' });
+}
+
+arrow.addEventListener('click', () => {
+   scroll('#header');
+});
+</script>     
       
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-

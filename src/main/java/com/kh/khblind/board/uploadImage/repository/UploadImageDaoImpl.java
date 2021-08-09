@@ -42,7 +42,7 @@ public class UploadImageDaoImpl implements UploadImageDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	private final File ResDir = new File("D:/proj/khblind/resources/");
+	private final File ResDir = new File("D:/upload/kh7b");
 	private final File RawDir = new File(ResDir + "/1.raw-image/");
 	private final File SavedDir = new File(ResDir + "/4.saved-image/");
 	

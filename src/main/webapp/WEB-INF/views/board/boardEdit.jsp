@@ -3,23 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<!-- 
-	수정페이지도 일단 입력, 상세보기 페이지랑 동일하게 진행됨 
-	번호를 받아서 사용자를 조회한다음에 사용자에게 먼저 보여주고(상세보기)
-	사용자가 보여진정보에서 고칠만한 것을 고치고 전송을 누름(입력)
--->
 
-<!-- 제이쿼리를 가져온다 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!-- UI제이쿼리를  가져온다 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="	crossorigin="anonymous"></script>
-<!-- 폰트어썸 아이콘을 가져온다-->
 <link rel="stylesheet"	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"	crossorigin="anonymous" />
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_reboot.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap_grid.css">
-
 
 <style>
 
@@ -134,14 +124,5 @@ textarea {
 		</div>	
 	</div>
 </body>
-
-
-
-
-
-
-
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

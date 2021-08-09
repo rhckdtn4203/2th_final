@@ -20,7 +20,7 @@
   
 	
     <div class="row">
-      <h3><a href="${pageContext.request.contextPath}/member/mypage" id="delete-a"><span>내 정보</span></a></h3>
+      <h3><a href="${pageContext.request.contextPath}/member/mypage"><span>내 정보</span></a></h3>
     </div>
   </div>
 

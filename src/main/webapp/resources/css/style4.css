@@ -235,24 +235,37 @@ background-color: white;
 #repw{
   margin-top: 0px;
 }
-.delete,.move{
+.move{
 	padding: 50px 30px 0px 30px;
 	text-align: right;
 }
-.delete,.move h5{
+.move h5{
 	margin: 1px;
 }
-#delete-a,
-#delete-b{
+.delete{
+	text-align: right;
+	margin-top: 50px; 
+	margin-right: 5px;
+}
+.delete h5{
+	margin: 3px 0;
+}
+
+#delete-a,#delete-b{
 	font-size: 18.8px;
 	font-weight: 700;
 }
-#delete-a,#delete-b span{
+#delete-b span{
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
-#delete-a,#delete-b span::after{
+#delete-a span{
+	 display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+#delete-b span::after{
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -260,14 +273,28 @@ background-color: white;
   right: -20px;
   transition: 0.5s;
 }
-#delete-a,#delete-b:hover span{
+#delete-a span::after{
+content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+#delete-a:hover span{
+	padding-right: 15px;
+}
+#delete-b:hover span{
 padding-right: 15px;
 }
-#delete-a,#delete-b:hover span::after{
+#delete-b:hover span::after{
   opacity: 1;
   right: 0;
   }
-  
+#delete-a:hover span::after{
+  opacity: 1;
+  right: 0;
+  }  
   
 
 .section-3{

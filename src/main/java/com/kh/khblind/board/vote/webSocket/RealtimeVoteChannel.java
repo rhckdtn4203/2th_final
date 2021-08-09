@@ -2,20 +2,16 @@ package com.kh.khblind.board.vote.webSocket;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.khblind.board.vote.entity.VoteOptionInfoVo;
-import com.kh.khblind.board.vote.entity.VoteResultDto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
 import lombok.extern.slf4j.Slf4j;
 
 /* 
@@ -27,8 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RealtimeVoteChannel {
 	
-	//요소들
-	
+	//요소2개 
 	//실시간투표채널이름 
 	@Setter @Getter
 	private Integer realtimeVoteChannelNo;
@@ -40,12 +35,12 @@ public class RealtimeVoteChannel {
 	//생성자
 	@Builder
 	public RealtimeVoteChannel(Integer voteTopicNo) {
+//		this.realtimeVoteChannelNo = 175;
 		this.realtimeVoteChannelNo = voteTopicNo;
 		this.realtimeVoters = new HashSet<>();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
 	/*
 	 *  기능들
 	 */
@@ -56,8 +51,11 @@ public class RealtimeVoteChannel {
 		log.debug("채널{} 사용자 입장 : 이용자 {}명", realtimeVoters, realtimeVoters.size());
 	};
 	
+	
+	
+	
+	//2.실시간투표채널 퇴장(memberNo로만 해야할 필요가 있을까?)
 
-	//2.실시간투표채널 퇴장
 	public void leave(int memberNo) {
 
 		for(RealtimeVoterVo realtimeVoter : realtimeVoters) {
@@ -66,11 +64,6 @@ public class RealtimeVoteChannel {
 				break;
 			}
 		}
-		RealtimeVoterVo realtimeVoterVoToLeave = RealtimeVoterVo.builder()
-																	.memberNo(memberNo)
-																	.build();
-		
-		realtimeVoters.remove(realtimeVoterVoToLeave);
 	}
 	
 	public void leave (RealtimeVoterVo realtimeVoter) {
@@ -92,7 +85,6 @@ public class RealtimeVoteChannel {
 		String json = mapper.writeValueAsString(realtimeVoteSingleInfoVo);
 				
 		TextMessage tm = new TextMessage(json);
-	
 		
 		for(RealtimeVoterVo realtimeVoterVo : realtimeVoters) {
 			realtimeVoterVo.getSession().sendMessage(tm);
