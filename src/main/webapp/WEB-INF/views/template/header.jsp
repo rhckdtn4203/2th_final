@@ -53,10 +53,10 @@
 			}
 		});
 	});	
-</script>
-<script id="template" type="text/template">
+	</script>
+	<script id="template" type="text/template">
 		<h5 class="rank-list"><a href="#" class="rank-keyword">{{rank}}{{keyword}}</a></h5>
-</script>
+	</script>
 
   <script>
     $('form input').keydown(function(e) {
